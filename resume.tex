@@ -1,0 +1,88 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Themes: Awesome-CV
+\documentclass[11pt, a4paper]{awesome-cv}
+
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{relsize}
+\usepackage{amsmath}
+
+\usepackage{verbatim}
+\usepackage{nth}
+\usepackage{tabu}
+\usepackage{longtable}
+\usepackage{multicol}
+
+%%% Override a directory location for fonts(default: 'fonts/')
+\fontdir[fonts/]
+
+%%% Configure a directory location for sections
+\newcommand*{\sectiondir}{resume/}
+
+%%% Override color
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
+%                 awesome-nephritis, awesome-concrete, awesome-darknight
+%% Color for highlight
+% Define your custom color if you don't like awesome colors
+\colorlet{awesome}{awesome-red}
+%\definecolor{awesome}{HTML}{CA63A8}
+%% Colors for text
+%\definecolor{darktext}{HTML}{414141}
+%\definecolor{text}{HTML}{414141}
+%\definecolor{graytext}{HTML}{414141}
+%\definecolor{lighttext}{HTML}{414141}
+
+%%% Override a separator for social informations in header(default: ' | ')
+%\headersocialsep[\quad\textbar\quad]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     3rd party packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Needed to divide into several files
+\usepackage{import}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Personal Data
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Essentials
+\name{EUGENE}{LERMAN}
+\address{Mivtza Litani St. 11/11, Rehovot {\enskip\textbar\enskip} Kalisher St. 48/38, Beersheba}
+\mobile{(+972) 52 3535 231} 
+%%% Social
+\email{lerman.gene@gmail.com}
+\homepage{krockkud.de}
+\github{airbugg}
+\linkedin{lerman-gene}
+%%% Optionals
+\position{FULL\_STACK\_DEVELOPER}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Content
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Make a footer for CV with three arguments(<left>, <center>, <right>)
+\makecvfooter
+  {\today}
+  {Eugene Lerman ~~~·~~~ CV}
+  {\thepage}
+
+\begin{document}
+
+%%% Make a header for CV with personal data
+\makecvheader
+\par\addvspace{1.5ex}
+
+%%% Import contents
+\import{\sectiondir}{cover.tex}
+\import{\sectiondir}{experience.tex}
+\import{\sectiondir}{education.tex}
+\import{\sectiondir}{skills.tex}
+\end{document}
