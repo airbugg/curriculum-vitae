@@ -1,12 +1,24 @@
 %!TEX TS-program = xelatex
 %!TEX encoding = UTF-8 Unicode
 
-
+%%% A slightly modified version of the fantastic awesome-cv
+%%% @ https://github.com/posquit0/Awesome-CV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Themes: Awesome-CV
 \documentclass[11pt, a4paper]{awesome-cv}
+\usepackage{epigraph}
+
+\epigraphsize{\small}% Default
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
 
 \usepackage{natbib}
 \usepackage{bibentry}
@@ -26,21 +38,11 @@
 \newcommand*{\sectiondir}{resume/}
 
 %%% Override color
-% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
-%                 awesome-nephritis, awesome-concrete, awesome-darknight
+% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete, awesome-darknight
+
 %% Color for highlight
 % Define your custom color if you don't like awesome colors
 \colorlet{awesome}{awesome-red}
-%\definecolor{awesome}{HTML}{CA63A8}
-%% Colors for text
-%\definecolor{darktext}{HTML}{414141}
-%\definecolor{text}{HTML}{414141}
-%\definecolor{graytext}{HTML}{414141}
-%\definecolor{lighttext}{HTML}{414141}
-
-%%% Override a separator for social informations in header(default: ' | ')
-%\headersocialsep[\quad\textbar\quad]
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     3rd party packages
@@ -52,17 +54,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Personal Data
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%% Essentials
 \name{EUGENE}{LERMAN}
-\address{Mivtza Litani St. 11/11, Rehovot {\enskip\textbar\enskip} Kalisher St. 48/38, Beersheba}
+\address{Kalisher Street 48/38, Beersheba}
 \mobile{(+972) 52 3535 231} 
+
 %%% Social
 \email{lerman.gene@gmail.com}
-\homepage{krockkud.de}
+\homepage{eugenelerman.net}
 \github{airbugg}
 \linkedin{lerman-gene}
-%%% Optionals
-\position{FULL\_STACK\_DEVELOPER}
+
+%%% Title
+\position{SOFTWARE DEVELOPER}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,8 +86,9 @@
 \par\addvspace{1.5ex}
 
 %%% Import contents
+
 \import{\sectiondir}{cover.tex}
 \import{\sectiondir}{experience.tex}
 \import{\sectiondir}{education.tex}
-\import{\sectiondir}{skills.tex}
+\import{\sectiondir}{publications.tex}
 \end{document}
