@@ -13,8 +13,8 @@ export const variants = [
     headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'ci', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: [
@@ -35,8 +35,8 @@ export const variants = [
     headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'onboarding', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys', 'ci'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: [
@@ -62,8 +62,8 @@ export const variants = [
     headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'agentSkills', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys', 'ci'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms'] },
     ],
     skills: [
@@ -83,8 +83,8 @@ export const variants = [
     headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys', 'ci'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
       { job: 'lab', bullets: ['sole'] },
     ],
@@ -116,13 +116,13 @@ export const variants = [
       },
       {
         job: 'remitlyStaff',
-        bullets: ['lead', 'l10n', 'semanticKeys', 'ci'],
+        bullets: ['lead', 'l10n', 'semanticKeys'],
         overrides: {
           l10n:
             'Designed and implemented a localization automation platform (i18next): dynamic translation delivery, version-scoped production hotfixes, and CI-driven string extraction and translator handoff.',
         },
       },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: [

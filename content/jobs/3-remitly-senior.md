@@ -15,3 +15,7 @@ dates: Jun 2020 – Dec 2022
   deposit, re-authentication) with over-the-air business-logic updates:
   changes reached users without an app release or store
   review. {#xstate}
+
+- Moved all client CI/CD from `GitLab` to `GitHub Actions`, cutting pipeline
+  runtimes roughly in half. The cutover took one weekend; teams started
+  Monday on the new system with nothing missing. {#ci}

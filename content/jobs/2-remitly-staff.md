@@ -22,9 +22,5 @@ dates: Dec 2022 – Feb 2026
   UI, changes applied as auto-generated PRs. The code changes themselves took
   hours. {#semanticKeys}
 
-- Moved all client CI/CD from `GitLab` to `GitHub Actions`, cutting pipeline
-  runtimes roughly in half. The cutover took one weekend; teams started
-  Monday on the new system with nothing missing. {#ci}
-
 - Built the shared `Apollo GraphQL` client infrastructure: generated types
   and client links for auth, caching and batching. {#apollo}
