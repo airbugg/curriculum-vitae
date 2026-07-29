@@ -1,7 +1,7 @@
 ---
 id: rylo
 company: Rylo
-blurb: AI communication platform for the Deaf and hard-of-hearing · $100M+ raised
+blurb: AI communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
