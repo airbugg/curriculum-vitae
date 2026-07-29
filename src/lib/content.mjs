@@ -60,3 +60,6 @@ export const person = front('person.md');
 export const education = front('education.md');
 export const jobs = loadJobs();
 export const skills = loadSkills();
+// Publications: one frontmatter block per paper. Returned as a list so the
+// component renders uniformly whether there is one paper or several.
+export const publications = [front('publications.md')];

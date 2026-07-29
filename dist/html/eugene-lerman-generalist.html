@@ -64,10 +64,11 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
 /* -------------------------------------------------- the braces identity ---- */
 /* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
    language of the original hand-written CV, opt-in via body.id-braces. */
-h1 .nb, h1 .nc { font-weight: 300; color: var(--brace, #4a5056); }
-h1 .nf { font-weight: 300; color: var(--name-first, #949ba1); letter-spacing: var(--ls-name, 1pt); }
+h1 .nb { font-weight: 700; color: var(--name-brace, var(--ink-strong, var(--ink))); }
+h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
+h1 .nf { font-weight: 300; color: var(--name-first, #999); letter-spacing: var(--ls-name, 1pt); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
-h2 .hb { font-weight: 300; color: var(--brace, #4a5056); }
+h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
 h2 .hc { color: var(--accent); }
 
 code { font-family: inherit; font-size: inherit; }
@@ -82,8 +83,8 @@ code { font-family: inherit; font-size: inherit; }
 .id-braces .entry-sub .role { font-variant: small-caps; letter-spacing: 0.4pt; }
 .id-braces .entry-sub .loc { color: var(--accent); font-style: italic; }
 .id-braces .dates { font-style: italic; }
-.id-braces .skill .val::before { content: '[ '; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
-.id-braces .skill .val::after { content: ' ]'; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
+/* Skill values carry their own literal [ brackets ] from content/skills.md, so
+   no CSS-generated brackets here — they would double up. */
 
 /* ------------------------------------------------------------ sections ---- */
 h2 {
@@ -93,7 +94,7 @@ h2 {
   font-weight: var(--fw-h2, 600);
   letter-spacing: var(--ls-h2, 1.4pt);
   text-transform: var(--tt-h2, uppercase);
-  color: var(--accent);
+  color: var(--ink-strong, var(--ink));
   border-bottom: var(--h2-rule, 0.35pt solid var(--rule, #cfd6dd));
   padding-bottom: var(--h2-pad, 0.9mm);
 }
@@ -140,9 +141,48 @@ h2 {
   letter-spacing: 0.3pt;
   color: var(--accent-soft, var(--accent));
   text-transform: var(--tt-cat, none);
+  text-align: var(--cat-align, right);
   padding-top: 0.2mm;
 }
 .skill .val { font-size: var(--fs-skill, 8.4pt); color: var(--ink); }
+
+/* -------------------------------------------------------- publications ---- */
+.pub { margin-bottom: var(--pub-gap, 1.6mm); break-inside: avoid; }
+.pub-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+.pub-title {
+  font-weight: 700;
+  font-size: var(--fs-co, 9.6pt);
+  color: var(--ink-strong, var(--ink));
+}
+.pub-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+.pub-journal {
+  color: var(--accent-soft, var(--accent));
+  font-style: italic;
+  font-size: var(--fs-role, 8.4pt);
+}
+.pub-year {
+  font-family: var(--font-dates, var(--font-body));
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  font-style: italic;
+}
+.pub-authors {
+  margin-top: 0.3mm;
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  font-variant: var(--pub-authors-variant, small-caps);
+  letter-spacing: 0.2pt;
+}
 
 /* ------------------------------------------------------------ education ---- */
 .edu-row { display: flex; align-items: baseline; gap: 2.5mm; }
@@ -189,9 +229,9 @@ h2 {
   --rule: #e0d5cb;
   --fs: 8.6pt;
   --lh: 1.26;
-  --fs-name: 20pt;
+  --fs-name: 18pt;
   --fw-name: 500;
-  --ls-name: 0.3pt;
+  --ls-name: 0.4pt;
   --tt-title: none;
   --ls-title: 0.4pt;
   --fs-title: 11pt;
@@ -213,4 +253,4 @@ h2::after {
   border-bottom: 1.6pt solid var(--accent);
   margin-top: 0.6mm;
 }
-</style></head><body class="generalist id-braces"><div class="page"><header><h1><span class="nb">{ </span><span class="nf">EUGENE</span><span class="nc"> : </span><span class="nl">LERMAN</span><span class="nb"> }</span></h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Tel Aviv, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span><span class="sep">·</span><span>eugenelerman.net</span></div></header><p class="intro">Curious individual, voracious reader, collector of hats: client infrastructure, native and React Native apps, release engineering, and the occasional genuinely hairy onboarding flow. Happiest with small teams, large ownership, and rewrites measured in months.</p><section class="xp"><h2><span class="hb">{ </span><span class="hc">E</span>XPERIENCE<span class="hb"> }</span></h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing · $100M+ raised</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Part of the five-person crew that rewrote the entire client stack — native iOS (<code>Swift</code>), Android (<code>Kotlin</code>) and <code>React Native</code> — in three months, working spec-first with 3–5 coding agents running implement–review–validate loops in parallel.</li><li>Owned the rebuilt app’s onboarding — its hairiest flow — modeled as an <code>XState</code> machine until it stopped being hairy.</li><li>Built the platform under the rewrite: a monorepo housing the apps, a design system with automated <code>Figma</code> sync, and client CI/CD — all from scratch.</li><li>Re-architected mobile release engineering on my own initiative: an automated release pipeline with a web UI for cutting branches and shipping builds, feeding an internal app-distribution system I built when Firebase’s stopped earning its keep.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div><div class="dates">Dec 2022 – Feb 2026</div></div><div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives spanning ~10 teams and three products (~10M MAUs).</li><li>Designed the localization platform: translations delivered dynamically with version-scoped production hotfixes (previously: cut a release), plus a diff-driven CI pipeline that extracts changed strings, files translator tasks, and stops blocking merges.</li><li>Migrated tens of thousands of strings to semantic keys with an AI service I built — model-suggested names, human-approved in a purpose-built UI, applied as auto-generated PRs. Two weeks of talking to product; hours of actual migration.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code> across 4–6 teams: runtimes down 50%+, cutover done in a weekend. Monday passed without comment, which was the goal.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div><div class="dates">Jun 2020 – Dec 2022</div></div><div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, carrying the company into its mobile-first era.</li><li>Designed an <code>XState</code>-based orchestration engine modeling financial flows — send money, deposit, re-authentication — with over-the-air business-logic updates: no redeploys, no app-store queue.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Frontend architecture and modernization across Contacts, Forms, Editor and Bookings, through the company-wide <code>AngularJS</code> → <code>React</code>/<code>MobX</code> migration.</li><li>Tech lead on Wix Forms: designed the first first-party app on the Editor platform SDK; its patterns became the template for the first-party apps that followed.</li><li>Extracted and externalized the Editor’s monolithic authentication — foundational code under every editor-built site, and still one of my proudest pieces of surgery.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div><div class="dates">Feb 2015 – Feb 2017</div></div><div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div><ul><li>Sole engineer for the lab’s software: open-source visualization tools for protein-interaction networks (<code>D3</code>, <code>Cytoscape.js</code>) over <code>Python</code>/<code>Flask</code>/<code>Celery</code> APIs.</li><li>Co-author: “TissueNet 2: a quantitative view of protein interactions across human tissues”, Nucleic Acids Research, 2016.</li></ul></article></section><section class="skills"><h2><span class="hb">{ </span><span class="hc">S</span>KILLZ, MATURED<span class="hb"> }</span></h2><div class="skill"><span class="cat">Languages</span><span class="val">TypeScript &amp; JavaScript (native tongue) · Python · Swift, Kotlin, Objective-C (productive; agents cover the accent)</span></div><div class="skill"><span class="cat">Client</span><span class="val">React · React Native · Expo / EAS / Nitro · XState · Apollo GraphQL · Tailwind · Reanimated · Svelte</span></div><div class="skill"><span class="cat">Infra</span><span class="val">Node · Bun · GitHub Actions · GitLab CI · Terraform · Pulumi · AWS · Kubernetes + Helm</span></div><div class="skill"><span class="cat">AI</span><span class="val">Claude Code · Codex · Cursor · multi-agent loops (Ralph, software-factory setups) · MCP &amp; skill authoring · context management that respects the window</span></div></section><section class="edu"><h2><span class="hb">{ </span><span class="hc">E</span>DUCATION<span class="hb"> }</span></h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div></section></div></body></html>
+</style></head><body class="generalist id-braces"><div class="page"><header><h1><span class="nb">{ </span><span class="nf">EUGENE</span><span class="nc"> : </span><span class="nl">LERMAN</span><span class="nb"> }</span></h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Ramat Gan, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span></div></header><p class="intro">Software engineer, twelve years. I have owned client infrastructure, native and React Native apps, release engineering and the occasional gnarly product flow. I like small teams and large ownership.</p><section class="xp"><h2><span class="hb">{ </span><span class="hc">E</span>XPERIENCE<span class="hb"> }</span></h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>One of five engineers on a ground-up rewrite of the company&#x27;s client apps: native iOS (<code>Swift</code>), Android (<code>Kotlin</code>) and <code>React Native</code>. Shipped in three months, working spec-first with coding agents handling much of the implementation and review in parallel.</li><li>Owned onboarding in the rebuilt app, its most complex flow; modeled it as an explicit <code>XState</code> state machine to keep every branch testable.</li><li>Built the client platform for the rewrite from scratch: the apps monorepo, a design system with automated <code>Figma</code> sync, and all client CI/CD.</li><li>Rebuilt the mobile release process: an automated pipeline with a web UI for cutting release branches and shipping builds, and an in-house app-distribution service that replaced <code>Firebase App Distribution</code>.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div><div class="dates">Dec 2022 – Feb 2026</div></div><div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives across roughly ten teams and three products (~10M monthly users).</li><li>Designed the localization platform: translations fetched dynamically, with hotfixes scoped to specific app versions in production (previously a translation fix required a full release), and a CI pipeline that extracts changed strings from each PR and files translator tasks automatically. Translations stopped blocking merges.</li><li>Migrated tens of thousands of UI strings to semantic keys with an LLM service I built: model-suggested names, human approval in a small review UI, changes applied as auto-generated PRs. The code changes themselves took hours.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code>, cutting pipeline runtimes roughly in half. The cutover took one weekend; teams started Monday on the new system with nothing missing.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div><div class="dates">Jun 2020 – Dec 2022</div></div><div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, the company&#x27;s first mobile-first architecture.</li><li>Designed an <code>XState</code> orchestration engine for financial flows (send money, deposit, re-authentication) with over-the-air business-logic updates: changes reached users without an app release or store review.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Tech lead on Wix Forms, the first first-party app built on the Editor platform SDK; its architecture became the reference for the first-party apps that followed.</li><li>Extracted the Editor&#x27;s user authentication out of the monolith into a standalone module, code that runs under every editor-built site. Still one of my proudest projects.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div><div class="dates">Feb 2015 – Feb 2017</div></div><div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div><ul><li>Sole engineer for the lab&#x27;s software: interactive visualization tools for protein-interaction networks (<code>D3</code>, <code>Cytoscape.js</code>) over <code>Python</code>/<code>Flask</code>/<code>Celery</code> APIs.</li></ul></article></section><section class="edu"><h2><span class="hb">{ </span><span class="hc">E</span>DUCATION<span class="hb"> }</span></h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div></section><section class="pubs"><h2><span class="hb">{ </span><span class="hc">P</span>UBLICATIONS<span class="hb"> }</span></h2><article class="pub"><div class="pub-head"><span class="pub-title">TissueNet2: A quantitative view of proteins and their interactions across human tissues</span><span class="pub-meta"><span class="pub-journal">Nucleic Acids Research</span><span class="pub-year">2016</span></span></div><div class="pub-authors">Basha O, Barshir R, Sharon M, Lerman E, Kirson B, Hekselman I and Yeger-Lotem E</div></article></section><section class="skills"><h2><span class="hb">{ </span><span class="hc">S</span>KILLS<span class="hb"> }</span></h2><div class="skill"><span class="cat">Core</span><span class="val">daily driver [ <code>TypeScript</code>, <code>React Native</code>, <code>Node</code> ], at home in [ client infrastructure: release automation, mobile CI, localization ]</span></div><div class="skill"><span class="cat">Native</span><span class="val">[ <code>Swift</code>, <code>Kotlin</code>, <code>Objective-C</code> ], enough to write, patch and review native code</span></div><div class="skill"><span class="cat">AI practice</span><span class="val">shipping daily with [ <code>Claude Code</code>, <code>Codex</code>, <code>Cursor</code> ]; writing skills and MCP tooling, keeping agent context lean</span></div><div class="skill"><span class="cat">Languages</span><span class="val">fluent in [ English and Hebrew ], conversant in [ Russian ]</span></div></section></div></body></html>

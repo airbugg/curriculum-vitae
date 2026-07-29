@@ -54,10 +54,11 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
 /* -------------------------------------------------- the braces identity ---- */
 /* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
    language of the original hand-written CV, opt-in via body.id-braces. */
-h1 .nb, h1 .nc { font-weight: 300; color: var(--brace, #4a5056); }
-h1 .nf { font-weight: 300; color: var(--name-first, #949ba1); letter-spacing: var(--ls-name, 1pt); }
+h1 .nb { font-weight: 700; color: var(--name-brace, var(--ink-strong, var(--ink))); }
+h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
+h1 .nf { font-weight: 300; color: var(--name-first, #999); letter-spacing: var(--ls-name, 1pt); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
-h2 .hb { font-weight: 300; color: var(--brace, #4a5056); }
+h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
 h2 .hc { color: var(--accent); }
 
 code { font-family: inherit; font-size: inherit; }
@@ -72,8 +73,8 @@ code { font-family: inherit; font-size: inherit; }
 .id-braces .entry-sub .role { font-variant: small-caps; letter-spacing: 0.4pt; }
 .id-braces .entry-sub .loc { color: var(--accent); font-style: italic; }
 .id-braces .dates { font-style: italic; }
-.id-braces .skill .val::before { content: '[ '; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
-.id-braces .skill .val::after { content: ' ]'; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
+/* Skill values carry their own literal [ brackets ] from content/skills.md, so
+   no CSS-generated brackets here — they would double up. */
 
 /* ------------------------------------------------------------ sections ---- */
 h2 {
@@ -83,7 +84,7 @@ h2 {
   font-weight: var(--fw-h2, 600);
   letter-spacing: var(--ls-h2, 1.4pt);
   text-transform: var(--tt-h2, uppercase);
-  color: var(--accent);
+  color: var(--ink-strong, var(--ink));
   border-bottom: var(--h2-rule, 0.35pt solid var(--rule, #cfd6dd));
   padding-bottom: var(--h2-pad, 0.9mm);
 }
@@ -130,9 +131,48 @@ h2 {
   letter-spacing: 0.3pt;
   color: var(--accent-soft, var(--accent));
   text-transform: var(--tt-cat, none);
+  text-align: var(--cat-align, right);
   padding-top: 0.2mm;
 }
 .skill .val { font-size: var(--fs-skill, 8.4pt); color: var(--ink); }
+
+/* -------------------------------------------------------- publications ---- */
+.pub { margin-bottom: var(--pub-gap, 1.6mm); break-inside: avoid; }
+.pub-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+.pub-title {
+  font-weight: 700;
+  font-size: var(--fs-co, 9.6pt);
+  color: var(--ink-strong, var(--ink));
+}
+.pub-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  white-space: nowrap;
+}
+.pub-journal {
+  color: var(--accent-soft, var(--accent));
+  font-style: italic;
+  font-size: var(--fs-role, 8.4pt);
+}
+.pub-year {
+  font-family: var(--font-dates, var(--font-body));
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  font-style: italic;
+}
+.pub-authors {
+  margin-top: 0.3mm;
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  font-variant: var(--pub-authors-variant, small-caps);
+  letter-spacing: 0.2pt;
+}
 
 /* ------------------------------------------------------------ education ---- */
 .edu-row { display: flex; align-items: baseline; gap: 2.5mm; }

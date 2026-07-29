@@ -15,10 +15,10 @@
   --name-first: #9aa1a7;
   --rule: #e4e7e9;
   --chip-bg: #f2f2f2;
-  --fs: 8.8pt;
-  --lh: 1.34;
-  --fs-name: 23pt;
-  --ls-name: 1.6pt;
+  --fs: 8.5pt;
+  --lh: 1.26;
+  --fs-name: 18pt;
+  --ls-name: 1pt;
   --fs-title: 10pt;
   --ls-title: 3pt;
   --fs-small: 7.4pt;
@@ -27,11 +27,11 @@
   --ls-h2: 0.8pt;
   --h2-rule: none;
   --h2-pad: 0;
-  --h2-margin: 3.8mm 0 1.6mm;
-  --entry-gap: 2.6mm;
-  --pad: 9mm 13mm 8mm;
+  --h2-margin: 2.9mm 0 1.2mm;
+  --entry-gap: 2.1mm;
+  --pad: 8mm 13mm 7mm;
 }
 header { text-align: center; }
 header .contacts { margin-top: 2mm; }
 h2 { border-bottom: none; }
-.intro { margin-top: 3mm; line-height: 1.45; }
+.intro { margin-top: 2.4mm; line-height: 1.32; }

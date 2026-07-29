@@ -1,5 +1,5 @@
 import React from 'react';
-import { education, jobs, person, skills } from '../lib/content.mjs';
+import { education, jobs, person, publications, skills } from '../lib/content.mjs';
 
 // `tech` spans in content become <code> chips — the original CV's \mylib.
 export function Rich({ text }) {
@@ -44,7 +44,7 @@ function Header({ variant }) {
     person.github,
     person.linkedin,
     person.site,
-  ];
+  ].filter(Boolean);
   return (
     <header>
       <h1>
@@ -116,6 +116,28 @@ function Skills({ variant }) {
   );
 }
 
+// { PUBLICATIONS } — title bold on the left, journal accent-italic on the
+// right with the year beneath it, authors on a small muted line below.
+function Publications({ variant }) {
+  return (
+    <section className="pubs">
+      <Heading variant={variant}>{variant.headings.publications}</Heading>
+      {publications.map((p) => (
+        <article className="pub" key={p.title}>
+          <div className="pub-head">
+            <span className="pub-title">{p.title}</span>
+            <span className="pub-meta">
+              <span className="pub-journal">{p.journal}</span>
+              <span className="pub-year">{p.year}</span>
+            </span>
+          </div>
+          <div className="pub-authors">{p.authors}</div>
+        </article>
+      ))}
+    </section>
+  );
+}
+
 function Education({ variant }) {
   return (
     <section className="edu">
@@ -164,6 +186,7 @@ export function CVPage({ variant, css }) {
                 {intro}
                 <HowIWork variant={variant} />
                 <Experience variant={variant} />
+                <Publications variant={variant} />
               </div>
             </div>
           ) : (
@@ -171,8 +194,9 @@ export function CVPage({ variant, css }) {
               {intro}
               <HowIWork variant={variant} />
               <Experience variant={variant} />
-              <Skills variant={variant} />
               <Education variant={variant} />
+              <Publications variant={variant} />
+              <Skills variant={variant} />
             </>
           )}
         </div>

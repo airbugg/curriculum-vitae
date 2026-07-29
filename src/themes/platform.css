@@ -16,12 +16,14 @@
   --accent: #2b6a9b;
   --accent-soft: #35597a;
   --rule: #c8d2db;
-  --fs: 9pt;
-  --lh: 1.31;
-  --fs-name: 20pt;
-  --ls-name: 1.5pt;
+  --fs: 8.6pt;
+  --lh: 1.26;
+  --fs-name: 18pt;
+  --ls-name: 0.8pt;
   --fs-small: 7.4pt;
   --fs-h2: 9.5pt;
-  --entry-gap: 2.4mm;
+  --entry-gap: 2mm;
+  --h2-margin: 3.1mm 0 1.2mm;
+  --pad: 9mm 13mm 8mm;
 }
 .dates { letter-spacing: -0.2pt; font-style: normal !important; }
