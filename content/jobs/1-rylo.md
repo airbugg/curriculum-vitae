@@ -7,23 +7,25 @@ location: Tel Aviv
 dates: Feb 2026 – Present
 ---
 
-- Part of the five-person crew that rewrote the entire client stack — native
-  iOS (`Swift`), Android (`Kotlin`) and `React Native` — in three months,
-  working spec-first with 3–5 coding agents running implement–review–validate
-  loops in parallel. {#rewrite}
+- One of five engineers on a ground-up rewrite of the company's client apps:
+  native iOS (`Swift`), Android (`Kotlin`) and `React Native`. Shipped in
+  three months, working spec-first with coding agents handling much of the
+  implementation and review in parallel. {#rewrite}
 
-- Built the platform under the rewrite: a monorepo housing the apps, a design
-  system with automated `Figma` sync, and client CI/CD — all from
-  scratch. {#platform}
+- Built the client platform for the rewrite from scratch: the apps monorepo,
+  a design system with automated `Figma` sync, and all client
+  CI/CD. {#platform}
 
-- Re-architected mobile release engineering on my own initiative: an automated
-  release pipeline with a web UI for cutting branches and shipping builds,
-  feeding an internal app-distribution system I built when Firebase’s stopped
-  earning its keep. {#release}
+- Rebuilt the mobile release process: an automated pipeline with a web UI for
+  cutting release branches and shipping builds, and an in-house
+  app-distribution service that replaced `Firebase App
+  Distribution`. {#release}
 
-- Owned the rebuilt app’s onboarding — its hairiest flow — modeled as an
-  `XState` machine until it stopped being hairy. {#onboarding}
+- Owned onboarding in the rebuilt app, its most complex flow; modeled it as
+  an explicit `XState` state machine to keep every branch
+  testable. {#onboarding}
 
-- Put the team’s shared agent setup on a diet after noticing every fresh
-  session started 70k tokens in debt: lean, focused skills, progressively
-  disclosed, code as the source of truth. {#agentSkills}
+- Restructured the team's shared coding-agent setup after measuring ~70k
+  tokens of always-loaded context per session. Replaced it with small,
+  focused skills loaded on demand, with code as the source of
+  truth. {#agentSkills}
