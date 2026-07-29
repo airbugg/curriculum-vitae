@@ -63,6 +63,24 @@ function segments(s) {
   return out.length ? out : [['t', '']];
 }
 
+// Skills-only segmentation: a whole literal [ ... ] bracket group becomes one
+// "g" segment (backticks inside dropped) so the renderer can set the entire
+// group as a single continuous mono run — no per-chip boxes in skills.
+function skillSegments(s) {
+  const str = String(s);
+  const out = [];
+  const re = /\[[^\]]*\]/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(str))) {
+    if (m.index > last) out.push(...segments(str.slice(last, m.index)));
+    out.push(['g', m[0].slice(1, -1).replaceAll('`', '')]);
+    last = m.index + m[0].length;
+  }
+  if (last < str.length) out.push(...segments(str.slice(last)));
+  return out.length ? out : [['t', '']];
+}
+
 // --- person / education / publications --------------------------------------
 
 const person = parseFrontmatter(readFileSync(join(contentDir, 'person.md'), 'utf8')).data;
@@ -108,7 +126,7 @@ const skills = {};
   const flush = () => {
     if (key) {
       const val = buf.join(' ').replace(/[ \t]+/g, ' ').trim();
-      if (val) skills[key] = segments(val);
+      if (val) skills[key] = val; // raw string; segmented at use sites
     }
     buf.length = 0;
   };
@@ -154,10 +172,10 @@ const resolvedVariants = variants.map((v) => {
 
   // skills: either [label, rawStringValue] (skillsRaw) or [label, skills.md key]
   const skillRows = (v.skills || []).map(([label, ref]) => {
-    if (v.skillsRaw) return [label, segments(ref)];
-    const seg = skills[ref];
-    if (!seg) throw new Error(`Unknown skill key ${ref} in variant ${v.file}`);
-    return [label, seg];
+    if (v.skillsRaw) return [label, skillSegments(ref)];
+    const raw = skills[ref];
+    if (!raw) throw new Error(`Unknown skill key ${ref} in variant ${v.file}`);
+    return [label, skillSegments(raw)];
   });
 
   return {
