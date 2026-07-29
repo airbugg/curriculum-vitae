@@ -1,0 +1,31 @@
+/* The Parser — deliberately boring. Machines first, humans a close second. */
+:root {
+  --font-body: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+  --ink: #000;
+  --ink-strong: #000;
+  --muted: #333;
+  --accent: #000;
+  --accent-soft: #000;
+  --rule: #999;
+  --fs: 8.6pt;
+  --lh: 1.24;
+  --fs-name: 17pt;
+  --fw-name: 700;
+  --ls-name: 0;
+  --fs-title: 10.5pt;
+  --ls-title: 0;
+  --tt-title: none;
+  --fs-h2: 10.5pt;
+  --fw-h2: 700;
+  --ls-h2: 0;
+  --fs-small: 8pt;
+  --fs-role: 9pt;
+  --fs-skill: 8.6pt;
+  --entry-gap: 2mm;
+  --skill-col: 34mm;
+  --pad: 10mm 13mm 7mm;
+  --h2-margin: 2.8mm 0 1.2mm;
+  --fs-small: 7.7pt;
+}
+.entry li::marker { color: #000; }
+header .contacts .sep { color: #333; }

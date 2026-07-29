@@ -1,0 +1,20 @@
+/* The Platform Engineer — sober slate + steel blue, engineering-grade type. */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-dates: 'Source Code Pro', monospace;
+  --ink: #232a32;
+  --ink-strong: #14181d;
+  --muted: #5c6672;
+  --accent: #2b6a9b;
+  --accent-soft: #35597a;
+  --rule: #c8d2db;
+  --fs: 9.1pt;
+  --lh: 1.33;
+  --fs-name: 20pt;
+  --ls-name: 1.5pt;
+  --fs-small: 7.4pt;
+  --fs-h2: 9.5pt;
+  --entry-gap: 2.4mm;
+}
+header h1 { text-transform: uppercase; }
+.dates { letter-spacing: -0.2pt; }

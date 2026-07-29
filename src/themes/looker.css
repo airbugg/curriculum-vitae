@@ -1,0 +1,34 @@
+/* The Looker — design-forward: huge thin name, awesome-red callback, sidebar. */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-name: 'Roboto Thin', 'Roboto', sans-serif;
+  --ink: #26282b;
+  --ink-strong: #121316;
+  --muted: #71757b;
+  --accent: #c0392b;
+  --accent-soft: #8f3226;
+  --rule: #e2dede;
+  --fs: 8.7pt;
+  --lh: 1.32;
+  --fs-name: 31pt;
+  --fw-name: 100;
+  --ls-name: 2.5pt;
+  --fs-title: 9.5pt;
+  --ls-title: 2.6pt;
+  --fs-h2: 9pt;
+  --ls-h2: 2pt;
+  --fw-h2: 600;
+  --fs-small: 7.3pt;
+  --entry-gap: 2.5mm;
+  --intro-style: italic;
+  --aside-w: 52mm;
+  --pad: 10mm 12mm 8mm;
+}
+header { text-align: center; }
+header h1 { text-transform: uppercase; }
+header h1 strong { font-weight: 500; }
+header .title { margin-top: 1mm; }
+header .contacts { margin-top: 2mm; }
+header { border-bottom: 0.4pt solid var(--rule); padding-bottom: 3mm; }
+.cols aside h2:first-child { margin-top: 4mm; }
+.cols aside { border-right: 0.4pt solid var(--rule); padding-right: 6mm; }

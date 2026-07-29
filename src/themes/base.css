@@ -1,0 +1,136 @@
+/* Shared layout skeleton; themes supply fonts, colors, and personality. */
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs, 9pt);
+  line-height: var(--lh, 1.32);
+  color: var(--ink, #1d2229);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  min-height: 296.5mm;
+  padding: var(--pad, 11mm 13mm 9mm);
+}
+
+/* ------------------------------------------------------------- header ---- */
+header h1 {
+  margin: 0;
+  font-family: var(--font-name, var(--font-head, var(--font-body)));
+  font-size: var(--fs-name, 21pt);
+  font-weight: var(--fw-name, 700);
+  letter-spacing: var(--ls-name, 0.5pt);
+  color: var(--ink-strong, var(--ink));
+}
+header .title {
+  margin-top: 0.8mm;
+  font-size: var(--fs-title, 10.5pt);
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: var(--ls-title, 1.2pt);
+  text-transform: var(--tt-title, uppercase);
+}
+header .contacts {
+  margin-top: 1.6mm;
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+}
+header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
+
+.intro {
+  margin: var(--intro-margin, 3.2mm 0 0);
+  font-size: var(--fs-intro, 9.2pt);
+  line-height: 1.42;
+  color: var(--ink);
+  font-style: var(--intro-style, normal);
+}
+
+/* ------------------------------------------------------------ sections ---- */
+h2 {
+  margin: var(--h2-margin, 4mm 0 1.6mm);
+  font-family: var(--font-head, var(--font-body));
+  font-size: var(--fs-h2, 10pt);
+  font-weight: var(--fw-h2, 600);
+  letter-spacing: var(--ls-h2, 1.4pt);
+  text-transform: var(--tt-h2, uppercase);
+  color: var(--accent);
+  border-bottom: var(--h2-rule, 0.35pt solid var(--rule, #cfd6dd));
+  padding-bottom: var(--h2-pad, 0.9mm);
+}
+
+/* -------------------------------------------------------------- entries ---- */
+.entry { margin-bottom: var(--entry-gap, 2.6mm); break-inside: avoid; }
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+.company { font-weight: 700; font-size: var(--fs-co, 9.6pt); color: var(--ink-strong, var(--ink)); }
+.blurb { margin-left: 1.8mm; font-size: var(--fs-small, 7.6pt); color: var(--muted, #5a6470); }
+.dates {
+  font-family: var(--font-dates, var(--font-body));
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  white-space: nowrap;
+}
+.entry-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-role, 8.4pt);
+  margin-top: 0.2mm;
+}
+.entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
+.entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+
+.entry ul { margin: 1mm 0 0; padding-left: 3.6mm; }
+.entry li { margin-bottom: 0.7mm; padding-left: 0.4mm; }
+.entry li::marker { color: var(--accent); }
+
+/* --------------------------------------------------------------- skills ---- */
+.skill {
+  display: grid;
+  grid-template-columns: var(--skill-col, 21mm) 1fr;
+  gap: 3mm;
+  margin-bottom: 1mm;
+}
+.skill .cat {
+  font-weight: 600;
+  font-size: var(--fs-small, 7.6pt);
+  letter-spacing: 0.3pt;
+  color: var(--accent-soft, var(--accent));
+  text-transform: var(--tt-cat, none);
+  padding-top: 0.2mm;
+}
+.skill .val { font-size: var(--fs-skill, 8.4pt); color: var(--ink); }
+
+/* ------------------------------------------------------------ education ---- */
+.edu-row { display: flex; align-items: baseline; gap: 2.5mm; }
+.edu-row .degree { font-weight: 600; }
+.edu-row .school { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+.edu-row .dates { margin-left: auto; }
+
+/* ----------------------------------------------------------- how-i-work ---- */
+.how {
+  margin-top: 3mm;
+  background: var(--how-bg, transparent);
+  border: var(--how-border, none);
+  border-radius: 1.2mm;
+  padding: var(--how-pad, 0);
+}
+.how h2 { margin-top: 0; }
+.how p { margin: 0; font-size: var(--fs-skill, 8.4pt); line-height: 1.4; }
+
+/* -------------------------------------------------------------- sidebar ---- */
+.cols { display: grid; grid-template-columns: var(--aside-w, 56mm) 1fr; gap: 8mm; margin-top: 2mm; }
+.cols aside .skill { grid-template-columns: 1fr; gap: 0.4mm; margin-bottom: 2.2mm; }
+.cols .intro { margin-top: 0; }
+.cols aside .edu-row { display: block; }
+.cols aside .edu-row .degree,
+.cols aside .edu-row .school,
+.cols aside .edu-row .dates { display: block; margin: 0 0 0.6mm; }

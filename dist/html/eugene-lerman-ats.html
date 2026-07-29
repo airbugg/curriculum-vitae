@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Eugene Lerman — CV</title>
+<style>
+
+/* Shared layout skeleton; themes supply fonts, colors, and personality. */
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs, 9pt);
+  line-height: var(--lh, 1.32);
+  color: var(--ink, #1d2229);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 210mm;
+  min-height: 296.5mm;
+  padding: var(--pad, 11mm 13mm 9mm);
+}
+
+/* ------------------------------------------------------------- header ---- */
+header h1 {
+  margin: 0;
+  font-family: var(--font-name, var(--font-head, var(--font-body)));
+  font-size: var(--fs-name, 21pt);
+  font-weight: var(--fw-name, 700);
+  letter-spacing: var(--ls-name, 0.5pt);
+  color: var(--ink-strong, var(--ink));
+}
+header .title {
+  margin-top: 0.8mm;
+  font-size: var(--fs-title, 10.5pt);
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: var(--ls-title, 1.2pt);
+  text-transform: var(--tt-title, uppercase);
+}
+header .contacts {
+  margin-top: 1.6mm;
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+}
+header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
+
+.intro {
+  margin: var(--intro-margin, 3.2mm 0 0);
+  font-size: var(--fs-intro, 9.2pt);
+  line-height: 1.42;
+  color: var(--ink);
+  font-style: var(--intro-style, normal);
+}
+
+/* ------------------------------------------------------------ sections ---- */
+h2 {
+  margin: var(--h2-margin, 4mm 0 1.6mm);
+  font-family: var(--font-head, var(--font-body));
+  font-size: var(--fs-h2, 10pt);
+  font-weight: var(--fw-h2, 600);
+  letter-spacing: var(--ls-h2, 1.4pt);
+  text-transform: var(--tt-h2, uppercase);
+  color: var(--accent);
+  border-bottom: var(--h2-rule, 0.35pt solid var(--rule, #cfd6dd));
+  padding-bottom: var(--h2-pad, 0.9mm);
+}
+
+/* -------------------------------------------------------------- entries ---- */
+.entry { margin-bottom: var(--entry-gap, 2.6mm); break-inside: avoid; }
+.entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4mm;
+}
+.company { font-weight: 700; font-size: var(--fs-co, 9.6pt); color: var(--ink-strong, var(--ink)); }
+.blurb { margin-left: 1.8mm; font-size: var(--fs-small, 7.6pt); color: var(--muted, #5a6470); }
+.dates {
+  font-family: var(--font-dates, var(--font-body));
+  font-size: var(--fs-small, 7.6pt);
+  color: var(--muted, #5a6470);
+  white-space: nowrap;
+}
+.entry-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-role, 8.4pt);
+  margin-top: 0.2mm;
+}
+.entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
+.entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+
+.entry ul { margin: 1mm 0 0; padding-left: 3.6mm; }
+.entry li { margin-bottom: 0.7mm; padding-left: 0.4mm; }
+.entry li::marker { color: var(--accent); }
+
+/* --------------------------------------------------------------- skills ---- */
+.skill {
+  display: grid;
+  grid-template-columns: var(--skill-col, 21mm) 1fr;
+  gap: 3mm;
+  margin-bottom: 1mm;
+}
+.skill .cat {
+  font-weight: 600;
+  font-size: var(--fs-small, 7.6pt);
+  letter-spacing: 0.3pt;
+  color: var(--accent-soft, var(--accent));
+  text-transform: var(--tt-cat, none);
+  padding-top: 0.2mm;
+}
+.skill .val { font-size: var(--fs-skill, 8.4pt); color: var(--ink); }
+
+/* ------------------------------------------------------------ education ---- */
+.edu-row { display: flex; align-items: baseline; gap: 2.5mm; }
+.edu-row .degree { font-weight: 600; }
+.edu-row .school { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+.edu-row .dates { margin-left: auto; }
+
+/* ----------------------------------------------------------- how-i-work ---- */
+.how {
+  margin-top: 3mm;
+  background: var(--how-bg, transparent);
+  border: var(--how-border, none);
+  border-radius: 1.2mm;
+  padding: var(--how-pad, 0);
+}
+.how h2 { margin-top: 0; }
+.how p { margin: 0; font-size: var(--fs-skill, 8.4pt); line-height: 1.4; }
+
+/* -------------------------------------------------------------- sidebar ---- */
+.cols { display: grid; grid-template-columns: var(--aside-w, 56mm) 1fr; gap: 8mm; margin-top: 2mm; }
+.cols aside .skill { grid-template-columns: 1fr; gap: 0.4mm; margin-bottom: 2.2mm; }
+.cols .intro { margin-top: 0; }
+.cols aside .edu-row { display: block; }
+.cols aside .edu-row .degree,
+.cols aside .edu-row .school,
+.cols aside .edu-row .dates { display: block; margin: 0 0 0.6mm; }
+
+/* The Parser — deliberately boring. Machines first, humans a close second. */
+:root {
+  --font-body: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+  --ink: #000;
+  --ink-strong: #000;
+  --muted: #333;
+  --accent: #000;
+  --accent-soft: #000;
+  --rule: #999;
+  --fs: 8.6pt;
+  --lh: 1.24;
+  --fs-name: 17pt;
+  --fw-name: 700;
+  --ls-name: 0;
+  --fs-title: 10.5pt;
+  --ls-title: 0;
+  --tt-title: none;
+  --fs-h2: 10.5pt;
+  --fw-h2: 700;
+  --ls-h2: 0;
+  --fs-small: 8pt;
+  --fs-role: 9pt;
+  --fs-skill: 8.6pt;
+  --entry-gap: 2mm;
+  --skill-col: 34mm;
+  --pad: 10mm 13mm 7mm;
+  --h2-margin: 2.8mm 0 1.2mm;
+  --fs-small: 7.7pt;
+}
+.entry li::marker { color: #000; }
+header .contacts .sep { color: #333; }
+
+</style></head>
+<body><div class="page"><header>
+    <h1>Eugene Lerman</h1>
+    <div class="title">Senior Software Engineer</div>
+    <div class="contacts"><span>Tel Aviv, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span><span class="sep">·</span><span>eugenelerman.net</span></div>
+  </header><p class="intro">Senior Software Engineer with 10+ years in client infrastructure, frontend architecture and mobile development. Led CI/CD migrations, localization platforms, a React Native migration, and AI-assisted development workflows for products serving ~10M monthly active users.</p><section class="xp"><h2>Professional Experience</h2><article class="entry">
+    <div class="entry-head">
+      <div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing · $100M+ raised</span></div>
+      <div class="dates">Feb 2026 – Present</div>
+    </div>
+    <div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div>
+    <ul><li>Rewrote the client stack (native iOS/Swift, Android/Kotlin, React Native) with a five-person team in three months, using spec-driven, multi-agent AI development workflows.</li><li>Built the platform under the rewrite: a monorepo housing the apps, a design system with automated Figma sync, and client CI/CD — all from scratch.</li><li>Re-architected mobile release engineering: automated release pipeline with a web-based management UI and an internal app-distribution system replacing Firebase App Distribution.</li><li>Owned the rebuilt application’s onboarding flow, modeled and simplified with XState state machines.</li></ul>
+  </article><article class="entry">
+    <div class="entry-head">
+      <div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div>
+      <div class="dates">Dec 2022 – Feb 2026</div>
+    </div>
+    <div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div>
+    <ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives spanning ~10 teams and three products (~10M MAUs).</li><li>Designed and implemented a localization automation platform: dynamic translation delivery with version-scoped production hotfixes and CI-driven string extraction and translator handoff (i18next).</li><li>Built an AI-assisted migration service converting tens of thousands of translation strings to semantic keys via model suggestions, a review UI, and auto-generated pull requests.</li><li>Migrated all client CI/CD pipelines from GitLab to GitHub Actions across 4–6 teams, cutting pipeline runtimes by over 50% with a zero-disruption weekend cutover.</li><li>Rolled out Apollo GraphQL client infrastructure — generated types plus client links for auth, caching and batching.</li></ul>
+  </article><article class="entry">
+    <div class="entry-head">
+      <div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div>
+      <div class="dates">Jun 2020 – Dec 2022</div>
+    </div>
+    <div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div>
+    <ul><li>Led the migration of the core product from an AngularJS/React web app to React Native, carrying the company into its mobile-first era.</li><li>Designed an XState-based orchestration engine modeling financial flows — send money, deposit, re-authentication — with over-the-air business-logic updates: no redeploys, no app-store queue.</li></ul>
+  </article><article class="entry">
+    <div class="entry-head">
+      <div class="entry-co"><span class="company">Wix.com</span></div>
+      <div class="dates">Feb 2017 – Nov 2019</div>
+    </div>
+    <div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div>
+    <ul><li>Frontend architecture and modernization across Contacts, Forms, Editor and Bookings, through the company-wide AngularJS → React/MobX migration.</li><li>Tech lead on Wix Forms: designed the first first-party app on the Editor platform SDK; its patterns became the template for the first-party apps that followed.</li><li>Extracted and externalized the Editor’s monolithic authentication — foundational code under every editor-built site, and still one of my proudest pieces of surgery.</li></ul>
+  </article><article class="entry">
+    <div class="entry-head">
+      <div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div>
+      <div class="dates">Feb 2015 – Feb 2017</div>
+    </div>
+    <div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div>
+    <ul><li>Sole engineer for the lab’s software: open-source visualization tools for protein-interaction networks (D3, Cytoscape.js) over Python/Flask/Celery APIs.</li><li>Co-author: “TissueNet 2: a quantitative view of protein interactions across human tissues”, Nucleic Acids Research, 2016.</li></ul>
+  </article></section><section class="skills"><h2>Skills</h2><div class="skill"><span class="cat">Languages</span><span class="val">TypeScript, JavaScript, Python, Swift, Kotlin, Objective-C, SQL, Bash</span></div><div class="skill"><span class="cat">Frontend</span><span class="val">React, React Native, Expo, EAS, Nitro Modules, XState, Apollo GraphQL, Redux, MobX, Tailwind CSS, Reanimated, Svelte, Angular, i18next</span></div><div class="skill"><span class="cat">Backend &amp; Infrastructure</span><span class="val">Node.js, Bun, GitHub Actions, GitLab CI, Jenkins, Terraform, Pulumi, AWS, Kubernetes, Helm, Docker</span></div><div class="skill"><span class="cat">AI Tooling</span><span class="val">Claude Code, Codex, Cursor, multi-agent workflows, MCP, agent skill authoring, spec-driven development</span></div></section><section class="edu"><h2>Education</h2>
+    <div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div>
+  </section></div></body></html>
