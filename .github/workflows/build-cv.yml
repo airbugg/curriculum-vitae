@@ -1,5 +1,5 @@
-# Build all CV variants with both toolchains on every push to a PR,
-# upload the PDFs as workflow artifacts, and upsert a PR comment with links.
+# Build all CV variants on every push to a PR, upload the PDFs as a
+# workflow artifact, and upsert a PR comment with links.
 name: Build CV
 
 on:
@@ -29,12 +29,6 @@ jobs:
           node-version: 22
           cache: npm
 
-      # typst/build.sh verifies the one-page invariant with pdfinfo.
-      - name: Install poppler-utils (pdfinfo)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends poppler-utils
-
       # Prefer the Chrome that ships on ubuntu-latest; fall back to apt Chromium.
       # build.mjs honors CHROME_PATH, so export it for later steps via GITHUB_ENV.
       - name: Resolve Chromium
@@ -48,61 +42,33 @@ jobs:
           "$CHROME" --version
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
-      # typst/build.sh looks for `typst` on PATH or in ~/.local/bin — install there.
-      - name: Install Typst
-        run: |
-          curl -fsSL -o /tmp/typst.tar.xz \
-            https://github.com/typst/typst/releases/latest/download/typst-x86_64-unknown-linux-musl.tar.xz
-          mkdir -p "$HOME/.local/bin"
-          tar -xJf /tmp/typst.tar.xz --strip-components=1 \
-            -C "$HOME/.local/bin" typst-x86_64-unknown-linux-musl/typst
-          "$HOME/.local/bin/typst" --version
-
       - name: Install npm dependencies
         run: npm ci
 
-      # Both builders exit non-zero if any variant fails the one-page check,
+      # The builder exits non-zero if any variant fails the one-page check,
       # which fails this job. Output is captured for the PR comment summary.
-      - name: Build web PDFs (HTML -> Chromium -> PDF)
+      - name: Build PDFs (HTML -> Chromium -> PDF)
         id: web
         run: node build.mjs 2>&1 | tee web-summary.txt
 
-      # Runs even if the web build failed, so both summaries/artifacts exist.
-      - name: Build Typst PDFs
-        id: typst
-        if: ${{ !cancelled() }}
-        run: bash typst/build.sh 2>&1 | tee typst-summary.txt
-
-      - name: Upload web PDFs
+      - name: Upload PDFs
         id: upload-web
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: cv-web
+          name: cv-pdfs
           path: dist/*.pdf
           retention-days: 30
           if-no-files-found: warn
 
-      - name: Upload Typst PDFs
-        id: upload-typst
-        if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: cv-typst
-          path: dist/typst/*.pdf
-          retention-days: 30
-          if-no-files-found: warn
-
       # Upsert a single marker-tagged PR comment with links to the run and
-      # the uploaded artifacts (artifact-url outputs from upload-artifact@v4).
+      # the uploaded artifact (artifact-url output from upload-artifact@v4).
       - name: Post / update PR comment
         if: ${{ always() && github.event_name == 'pull_request' }}
         uses: actions/github-script@v7
         env:
           WEB_ARTIFACT_URL: ${{ steps.upload-web.outputs.artifact-url }}
-          TYPST_ARTIFACT_URL: ${{ steps.upload-typst.outputs.artifact-url }}
           WEB_OUTCOME: ${{ steps.web.outcome }}
-          TYPST_OUTCOME: ${{ steps.typst.outcome }}
         with:
           script: |
             const fs = require('fs');
@@ -116,9 +82,7 @@ jobs:
 
             const sections = [];
             const web = read('web-summary.txt');
-            const typst = read('typst-summary.txt');
-            if (web) sections.push(`<details><summary>Web build output</summary>\n\n\`\`\`\n${web}\n\`\`\`\n</details>`);
-            if (typst) sections.push(`<details><summary>Typst build output</summary>\n\n\`\`\`\n${typst}\n\`\`\`\n</details>`);
+            if (web) sections.push(`<details><summary>Build output</summary>\n\n\`\`\`\n${web}\n\`\`\`\n</details>`);
 
             const body = [
               marker,
@@ -128,8 +92,7 @@ jobs:
               ``,
               `| Artifact | Build | Download |`,
               `| --- | --- | --- |`,
-              `| cv-web (Chromium) | ${badge(process.env.WEB_OUTCOME)} | ${link('cv-web', process.env.WEB_ARTIFACT_URL)} |`,
-              `| cv-typst (Typst) | ${badge(process.env.TYPST_OUTCOME)} | ${link('cv-typst', process.env.TYPST_ARTIFACT_URL)} |`,
+              `| cv-pdfs (Chromium) | ${badge(process.env.WEB_OUTCOME)} | ${link('cv-pdfs', process.env.WEB_ARTIFACT_URL)} |`,
               ``,
               ...sections,
               ``,

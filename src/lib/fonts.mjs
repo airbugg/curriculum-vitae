@@ -38,7 +38,6 @@ const FONT_SETS = {
 
 const THEME_FONTS = {
   platform: ['sourceSans', 'codePro', 'mono'],
-  generalist: ['roboto', 'mono'],
   ai: ['sourceSans', 'mono'],
   looker: ['sourceSans', 'codePro', 'mono'],
   parser: [],

@@ -11,9 +11,9 @@ html, body { margin: 0; padding: 0; }
 
 body {
   font-family: var(--font-body);
-  font-size: var(--fs, 9pt);
+  font-size: var(--fs, 9.2pt);
   font-weight: var(--fw-body, 400);
-  line-height: var(--lh, 1.28);
+  line-height: var(--lh, 1.33);
   color: var(--ink, #1d2229);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -22,7 +22,7 @@ body {
 .page {
   width: 210mm;
   min-height: 296.5mm;
-  padding: var(--pad, 13mm 14mm 16mm);
+  padding: var(--pad, 13mm 16mm 16mm);
 }
 
 /* ------------------------------------------------------------- header ---- */
@@ -101,7 +101,7 @@ code { font-family: inherit; font-size: inherit; }
 /* ------------------------------------------------------------ sections ---- */
 /* 11pt heading, 12pt above, ~5pt below (asymmetric ~2.4:1). */
 h2 {
-  margin: var(--h2-margin, 4.2mm 0 1mm);
+  margin: var(--h2-margin, 4.6mm 0 1.1mm);
   font-family: var(--font-head, var(--font-body));
   font-size: var(--fs-h2, 11pt);
   font-weight: var(--fw-h2, 600);
@@ -115,10 +115,10 @@ h2 {
 /* De-busying the bottom third: the merges (Remitly into one block, Publications
    folded into Education) free vertical room — spend it as extra air above the
    Skills and Education headings (~13.5pt vs the default ~12pt section gap). */
-.skills > h2, .edu > h2 { margin-top: var(--h2-margin-lower, 4.8mm); }
+.skills > h2, .edu > h2 { margin-top: var(--h2-margin-lower, 5.2mm); }
 
 /* -------------------------------------------------------------- entries ---- */
-.entry { margin-bottom: var(--entry-gap, 2.8mm); break-inside: avoid; }
+.entry { margin-bottom: var(--entry-gap, 3.4mm); break-inside: avoid; }
 .entry-head {
   display: flex;
   justify-content: space-between;
@@ -149,13 +149,13 @@ h2 {
    compact role→dates line, so a promotion reads as two roles in one block. */
 .entry-co .loc { margin-left: 1.8mm; color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 .id-braces .entry-co .loc { color: var(--accent); font-style: italic; }
-.entry.group .role-block + .role-block { margin-top: 1.9mm; }
+.entry.group .role-block + .role-block { margin-top: 2.4mm; }
 .entry.group .role-row .dates { font-size: var(--fs-small, 8pt); }
 
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
-.entry ul { margin: 1.1mm 0 0; padding-left: 3.2mm; }
-.entry li { margin-bottom: var(--li-gap, 0.53mm); }
+.entry ul { margin: 1.3mm 0 0; padding-left: 3.2mm; }
+.entry li { margin-bottom: var(--li-gap, 0.8mm); }
 .entry li:last-child { margin-bottom: 0; }
 .entry li::marker { color: var(--accent); }
 

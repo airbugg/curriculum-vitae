@@ -26,28 +26,6 @@ export const variants = [
   },
 
   {
-    file: 'eugene-lerman-generalist',
-    label: 'The Startup Generalist',
-    theme: 'generalist',
-    layout: 'single',
-    intro:
-      'Software engineer, twelve years. I have owned client infrastructure, native and React Native apps, release engineering and the occasional gnarly product flow. I like small teams and large ownership.',
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'onboarding', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: [
-      ['Core', 'core'],
-      ['Native', 'native'],
-      ['AI tooling', 'ai'],
-      ['Languages', 'spoken'],
-    ],
-  },
-
-  {
     file: 'eugene-lerman-ai-native',
     label: 'The AI-Native Engineer',
     theme: 'ai',

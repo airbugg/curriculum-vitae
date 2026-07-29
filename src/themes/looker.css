@@ -6,7 +6,6 @@
   --fw-body: 300;
   /* The Looker carries the least content and the most bottom air — spend some
      of the reclaimed space on a slightly larger, calmer body (9.4 vs 9pt). */
-  --fs: 9.4pt;
   --font-mono: 'Source Code Pro', monospace;
   --font-name: 'Roboto Mono', monospace;
   --font-head: 'Roboto Mono', monospace;
@@ -40,3 +39,5 @@
 header { text-align: center; }
 header .title { font-variant: small-caps; }
 .intro { margin-left: auto; margin-right: auto; }
+/* Densest variant (extra lab entry): slightly tighter than base to fit. */
+:root { --lh: 1.3; --entry-gap: 3mm; --li-gap: 0.6mm; }
