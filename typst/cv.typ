@@ -33,8 +33,8 @@
 // --- page + base text --------------------------------------------------------
 
 #set page(paper: "a4", margin: (x: 12mm, top: 11mm, bottom: 9mm))
-#set text(font: th.sans, size: 8.7pt, fill: ink, lang: "en")
-#set par(leading: 3.6pt, spacing: 3.6pt, justify: false)
+#set text(font: th.sans, size: 9pt, fill: ink, lang: "en")
+#set par(leading: 0.64em, spacing: 0.64em, justify: false)
 
 // --- inline segment rendering ------------------------------------------------
 
@@ -96,9 +96,9 @@
 #let header = {
   let body = {
     if plain { plainName } else { bracedName }
-    v(2.5pt)
-    titleLine
     v(4pt)
+    titleLine
+    v(6pt)
     contactLine
   }
   if th.centered { align(center, body) } else { body }
@@ -108,7 +108,7 @@
 
 #let sectionHeading(title) = {
   let up = upper(title)
-  block(above: 8.5pt, below: 3pt)[
+  block(above: 11pt, below: 3.5pt)[
     #if plain {
       text(font: th.sans, size: 10.5pt, weight: "bold", fill: heavy, tracking: 0.5pt)[#up]
     } else {
@@ -122,13 +122,13 @@
     }
   ]
   line(length: 100%, stroke: 0.5pt + faint)
-  v(2.5pt)
+  v(4.5pt)
 }
 
 // --- job entry ---------------------------------------------------------------
 
 #let jobEntry(sec) = {
-  block(breakable: false, above: 5.5pt, below: 0pt)[
+  block(breakable: false, above: 7.5pt, below: 0pt)[
     #grid(
       columns: (1fr, auto), column-gutter: 6pt, align: (left + bottom, right + bottom),
       {
@@ -140,15 +140,16 @@
       },
       text(size: 8pt, fill: muted, style: "italic")[#sec.dates],
     )
-    #v(0.6pt)
+    #v(1.5pt)
     #grid(
       columns: (1fr, auto), column-gutter: 6pt, align: (left + top, right + top),
       text(size: 8pt, fill: accent)[#smallcaps(sec.role)],
       text(size: 8pt, fill: accent, style: "italic")[#sec.location],
     )
   ]
+  v(2pt)
   for b in sec.bullets {
-    block(above: 2.2pt, below: 0pt, breakable: false)[
+    block(above: 2.8pt, below: 0pt, breakable: false)[
       #grid(
         columns: (8pt, 1fr), column-gutter: 0pt, align: (left + top, left + top),
         text(fill: if plain { ink } else { accent })[#sym.bullet],
@@ -162,13 +163,13 @@
 
 #let howBox = if cvv.howIWork != none {
   block(
-    width: 100%, above: 6pt, below: 2pt,
+    width: 100%, above: 9pt, below: 2pt,
     fill: accent.lighten(92%), stroke: 0.5pt + accent.lighten(55%),
-    radius: 3pt, inset: (x: 8pt, y: 6pt),
+    radius: 3pt, inset: (x: 9pt, y: 7pt),
   )[
     #text(font: th.mono, size: 8pt, weight: "bold", fill: accent, tracking: 1pt)[\{ #upper(cvv.howIWork.heading) \}]
-    #v(2.5pt)
-    #text(size: 8.3pt, fill: ink)[#segs(cvv.howIWork.text)]
+    #v(3.5pt)
+    #text(size: 8.6pt, fill: ink)[#segs(cvv.howIWork.text)]
   ]
 }
 
@@ -206,7 +207,7 @@
 
 #let skillsBlock = {
   for row in cvv.skills {
-    block(above: 0pt, below: 2.2pt, breakable: false)[
+    block(above: 0pt, below: 3.4pt, breakable: false)[
       #grid(
         columns: (62pt, 1fr), column-gutter: 9pt, align: (right + top, left + top),
         text(fill: if plain { heavy } else { accent }, size: 8pt, weight: "medium")[#row.at(0)],
@@ -219,9 +220,9 @@
 // --- assemble ----------------------------------------------------------------
 
 #header
-#v(6pt)
+#v(10pt)
 
-#text(size: 8.7pt, fill: ink)[#segs(cvv.intro)]
+#par(leading: 0.7em)[#text(size: 9.4pt, fill: ink)[#segs(cvv.intro)]]
 
 #if cvv.howIWork != none { howBox }
 
