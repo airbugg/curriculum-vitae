@@ -10,7 +10,7 @@ export const variants = [
     layout: 'single',
     intro:
       'Software engineer, twelve years, most of them on client platforms and infrastructure: build and release systems, CI, localization, the machinery other engineers work on top of.',
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
+    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
@@ -32,7 +32,7 @@ export const variants = [
     layout: 'single',
     intro:
       'Software engineer, twelve years. I have owned client infrastructure, native and React Native apps, release engineering and the occasional gnarly product flow. I like small teams and large ownership.',
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
+    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'onboarding', 'platform', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
@@ -59,7 +59,7 @@ export const variants = [
       text:
         'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth. Harnesses in rotation: Claude Code, Codex, Cursor, OpenClaw, Hermes, Argent.',
     },
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
+    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'agentSkills', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
@@ -80,7 +80,7 @@ export const variants = [
     layout: 'single',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
+    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
@@ -104,7 +104,7 @@ export const variants = [
     nameStyle: 'plain',
     intro:
       'Senior Software Engineer with 12+ years in client infrastructure, frontend architecture and mobile development. Led CI/CD migrations, a localization platform, a React Native migration and AI-assisted development workflows for products serving millions of users.',
-    headings: { experience: 'Professional Experience', skills: 'Skills', education: 'Education', publications: 'Publications' },
+    headings: { experience: 'Professional Experience', skills: 'Skills', education: 'Education' },
     sections: [
       {
         job: 'rylo',

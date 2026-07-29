@@ -8,16 +8,18 @@ export function Rich({ text }) {
 }
 
 // { EUGENE : LERMAN } — the original header, a key:value pair with braces.
+// Word gaps come from CSS margins on .nb/.nc (see base.css), tuned to the
+// original PDF's tighter density — no literal monospace spaces here.
 function Name({ variant }) {
   if (variant.nameStyle === 'plain') return person.name;
   const [first, last] = person.name.toUpperCase().split(' ');
   return (
     <>
-      <span className="nb">{'{ '}</span>
+      <span className="nb">{'{'}</span>
       <span className="nf">{first}</span>
-      <span className="nc"> : </span>
+      <span className="nc">:</span>
       <span className="nl">{last}</span>
-      <span className="nb">{' }'}</span>
+      <span className="nb">{'}'}</span>
     </>
   );
 }
@@ -67,38 +69,86 @@ function Header({ variant }) {
   );
 }
 
-function Entry({ section }) {
-  const job = jobs[section.job];
+function Bullets({ section, job }) {
   return (
-    <article className="entry">
+    <ul>
+      {section.bullets.map((id) => (
+        <li key={id}>
+          <Rich text={section.overrides?.[id] ?? job.bullets[id]} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// A single-company block. One company header (company + blurb + location +
+// dates), then one role line per section. When a company holds two consecutive
+// roles (the Remitly promotion) they read as two role lines inside one block:
+// the company header, its location and the combined span appear ONCE, and each
+// role carries its own dates — the promotion is legible at a glance.
+function Group({ group }) {
+  const first = jobs[group[0].job];
+  const multi = group.length > 1;
+  // Combined span for a merged block: last role's start … first role's end
+  // (sections run newest-first). Dates fields are "Start – End" en-dash pairs.
+  const end = (String(first.dates).split('–')[1] || '').trim();
+  const start = (String(jobs[group[group.length - 1].job].dates).split('–')[0] || '').trim();
+  const spanDates = multi ? `${start} – ${end}` : first.dates;
+  return (
+    <article className={multi ? 'entry group' : 'entry'}>
       <div className="entry-head">
         <div className="entry-co">
-          <span className="company">{job.company}</span>
-          {job.blurb && <span className="blurb">{job.blurb}</span>}
+          <span className="company">{first.company}</span>
+          {first.blurb && <span className="blurb">{first.blurb}</span>}
+          {multi && first.location && <span className="loc">{first.location}</span>}
         </div>
-        <div className="dates">{job.dates}</div>
+        <div className="dates">{spanDates}</div>
       </div>
-      <div className="entry-sub">
-        <span className="role">{job.role}</span>
-        <span className="loc">{job.location}</span>
-      </div>
-      <ul>
-        {section.bullets.map((id) => (
-          <li key={id}>
-            <Rich text={section.overrides?.[id] ?? job.bullets[id]} />
-          </li>
-        ))}
-      </ul>
+      {multi ? (
+        group.map((s) => {
+          const job = jobs[s.job];
+          return (
+            <div className="role-block" key={s.job}>
+              <div className="entry-sub role-row">
+                <span className="role">{job.role}</span>
+                <span className="dates">{job.dates}</span>
+              </div>
+              <Bullets section={s} job={job} />
+            </div>
+          );
+        })
+      ) : (
+        <>
+          <div className="entry-sub">
+            <span className="role">{first.role}</span>
+            <span className="loc">{first.location}</span>
+          </div>
+          <Bullets section={group[0]} job={first} />
+        </>
+      )}
     </article>
   );
 }
 
+// Consecutive sections sharing a company merge into one Group.
+function groupSections(sections) {
+  const groups = [];
+  for (const s of sections) {
+    const co = jobs[s.job].company;
+    const last = groups[groups.length - 1];
+    if (last && jobs[last[0].job].company === co) last.push(s);
+    else groups.push([s]);
+  }
+  return groups;
+}
+
 function Experience({ variant }) {
+  const groups = groupSections(variant.sections);
   return (
     <section className="xp">
       <Heading variant={variant}>{variant.headings.experience}</Heading>
-      {variant.sections.map((s) => (
-        <Entry key={s.job} section={s} />
+      {groups.map((g) => (
+        <Group key={g[0].job} group={g} />
       ))}
     </section>
   );
@@ -118,7 +168,8 @@ function SkillValue({ text }) {
     if (m.index > last) {
       out.push(<Rich key={out.length} text={str.slice(last, m.index)} />);
     }
-    const inner = m[0].slice(1, -1).replaceAll('`', '');
+    // Trim the source's full spaces; the thin [\, …\,] inset is a CSS margin.
+    const inner = m[0].slice(1, -1).replaceAll('`', '').trim();
     out.push(
       <span className="bg" key={out.length}>
         <span className="bk">[</span>
@@ -148,12 +199,18 @@ function Skills({ variant }) {
   );
 }
 
-// { PUBLICATIONS } — title bold on the left, journal accent-italic on the
-// right with the year beneath it, authors on a small muted line below.
-function Publications({ variant }) {
+// { EDUCATION } — the degree row, then the publication folded in beneath it:
+// title semibold, journal accent-italic + year right-aligned, authors on a
+// small muted line below. One heading where there used to be two.
+function Education({ variant }) {
   return (
-    <section className="pubs">
-      <Heading variant={variant}>{variant.headings.publications}</Heading>
+    <section className="edu">
+      <Heading variant={variant}>{variant.headings.education}</Heading>
+      <div className="edu-row">
+        <span className="degree">{education.degree}</span>
+        <span className="school">{education.school}</span>
+        <span className="dates">{education.dates}</span>
+      </div>
       {publications.map((p) => (
         <article className="pub" key={p.title}>
           <div className="pub-head">
@@ -166,19 +223,6 @@ function Publications({ variant }) {
           <div className="pub-authors">{p.authors}</div>
         </article>
       ))}
-    </section>
-  );
-}
-
-function Education({ variant }) {
-  return (
-    <section className="edu">
-      <Heading variant={variant}>{variant.headings.education}</Heading>
-      <div className="edu-row">
-        <span className="degree">{education.degree}</span>
-        <span className="school">{education.school}</span>
-        <span className="dates">{education.dates}</span>
-      </div>
     </section>
   );
 }
@@ -218,7 +262,6 @@ export function CVPage({ variant, css }) {
                 {intro}
                 <HowIWork variant={variant} />
                 <Experience variant={variant} />
-                <Publications variant={variant} />
               </div>
             </div>
           ) : (
@@ -227,7 +270,6 @@ export function CVPage({ variant, css }) {
               <HowIWork variant={variant} />
               <Experience variant={variant} />
               <Education variant={variant} />
-              <Publications variant={variant} />
               <Skills variant={variant} />
             </>
           )}

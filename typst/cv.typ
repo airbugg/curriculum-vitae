@@ -72,7 +72,9 @@
 // Body 9pt at ~128% leading (spec floor). Typst leading is between tight
 // line boxes (~0.62em of glyph box at these fonts), so 0.62em leading gives
 // the spec's ~11.5pt baseline pitch — measured against the web renders.
-#let bodySize = 9pt
+// The Looker carries the least content and the most bottom air — spend some of
+// the reclaimed space on a slightly larger, calmer body (9.4 vs 9pt).
+#let bodySize = if cvv.theme == "looker" { 9.4pt } else { 9pt }
 #let bodyLeading = 0.62em
 
 #set page(paper: "a4", margin: (x: 14mm, top: 13mm, bottom: 16mm))
@@ -100,15 +102,17 @@
   }
 }
 
-// Skills-only segments: a "g" bracket group is one continuous mono run at
-// ~90% size — muted [ ] brackets, no boxes, no backgrounds.
+// Skills-only segments: a "g" bracket group is one continuous mono run at the
+// FULL value size (the old 90% read too small). Two inks only — value ink for
+// the content, muted label ink for the [ ] brackets — with a thin [\, x \,]
+// inset instead of a full space.
 #let skillSegs(s) = {
   for seg in s {
     if seg.at(0) == "t" { seg.at(1) }
     else if seg.at(0) == "g" {
-      text(font: th.mono, size: 0.9em)[#text(fill: th.labelInk)[\[]#text(fill: th.bgInk)[#seg.at(1)]#text(fill: th.labelInk)[\]]]
+      text(font: th.mono, size: 1em)[#text(fill: th.labelInk)[\[]#h(0.16em)#text(fill: th.valInk)[#seg.at(1)]#h(0.16em)#text(fill: th.labelInk)[\]]]
     } else {
-      if plain { seg.at(1) } else { text(font: th.mono, size: 0.9em, fill: th.bgInk)[#seg.at(1)] }
+      if plain { seg.at(1) } else { text(font: th.mono, size: 1em, fill: th.valInk)[#seg.at(1)] }
     }
   }
 }
@@ -123,15 +127,17 @@
 // bold dark, braces and colon dark, normal tracking, ~24pt.
 #let bracedName = {
   set text(font: th.head, size: 24pt)
+  // Word gaps matched to the original PDF (measured at 200dpi): generous air
+  // around the braces, a tight colon hugging both words — not uniform spacing.
   box[
     #text(fill: th.heavy, weight: th.braceWeight)[\{]
-    #h(0.25em)
+    #h(0.5em)
     #text(fill: th.nameFirst, weight: 100)[#firstName]
-    #h(0.25em)
+    #h(0.26em)
     #text(fill: th.heavy, weight: "regular")[:]
-    #h(0.25em)
+    #h(0.2em)
     #text(fill: th.heavy, weight: "bold")[#lastName]
-    #h(0.25em)
+    #h(0.5em)
     #text(fill: th.heavy, weight: th.braceWeight)[\}]
   ]
 }
@@ -215,45 +221,17 @@
 
 // --- job entry ---------------------------------------------------------------
 
-#let jobEntry(sec) = {
-  block(breakable: false, above: 13pt, below: 0pt)[
-    #grid(
-      columns: (1fr, auto), column-gutter: 6pt, align: (left + bottom, right + bottom),
-      {
-        text(weight: "bold", size: 9.5pt, fill: th.heavy)[#sec.company]
-        if sec.blurb != "" {
-          h(5pt)
-          text(size: 8pt, weight: 400, fill: th.muted)[#sec.blurb]
-        }
-      },
-      {
-        if th.datesMono {
-          text(font: th.mono, size: 8pt, fill: th.muted)[#sec.dates]
-        } else if plain {
-          text(size: 8pt, fill: th.muted)[#sec.dates]
-        } else {
-          text(size: 8pt, fill: th.muted, style: "italic")[#sec.dates]
-        }
-      },
-    )
-    #v(1.6pt)
-    #grid(
-      columns: (1fr, auto), column-gutter: 6pt, align: (left + top, right + top),
-      if plain {
-        text(size: 8.5pt, weight: "semibold")[#sec.role]
-      } else {
-        text(size: 8.5pt, weight: "semibold", fill: accent)[#smallcaps(sec.role)]
-      },
-      if plain {
-        text(size: 8pt, fill: th.muted)[#sec.location]
-      } else {
-        text(size: 8pt, fill: accent, style: "italic")[#sec.location]
-      },
-    )
-  ]
+// Dates cell styling, shared by the company span and the per-role dates.
+#let datesText(d) = {
+  if th.datesMono { text(font: th.mono, size: 8pt, fill: th.muted)[#d] }
+  else if plain { text(size: 8pt, fill: th.muted)[#d] }
+  else { text(size: 8pt, fill: th.muted, style: "italic")[#d] }
+}
+
+// A role's bullets — hanging indent 3.2mm, bullet-to-bullet ~leading+1.5pt.
+#let bulletList(sec) = {
   v(1pt) // role-line→first bullet ≈3pt visual
   for b in sec.bullets {
-    // bullet-to-bullet: leading + ~1.5pt; hanging indent 3.2mm
     block(above: 7.1pt, below: 0pt, breakable: false)[
       #grid(
         columns: (3.2mm, 1fr), column-gutter: 0pt, align: (left + top, left + top),
@@ -261,6 +239,71 @@
         [#segs(b)],
       )
     ]
+  }
+}
+
+// A compact role→right line (right = location for a single role, or that
+// role's own dates inside a merged company block).
+#let roleLine(role, rightItem, isLoc) = {
+  grid(
+    columns: (1fr, auto), column-gutter: 6pt, align: (left + top, right + top),
+    if plain {
+      text(size: 8.5pt, weight: "semibold")[#role]
+    } else {
+      text(size: 8.5pt, weight: "semibold", fill: accent)[#smallcaps(role)]
+    },
+    if isLoc {
+      if plain { text(size: 8pt, fill: th.muted)[#rightItem] }
+      else { text(size: 8pt, fill: accent, style: "italic")[#rightItem] }
+    } else {
+      datesText(rightItem)
+    },
+  )
+}
+
+// One company block. Consecutive sections sharing a company arrive here as a
+// group: the company header, its location and the combined span render ONCE,
+// then each role gets its own role→dates line + bullets — a promotion reads as
+// two roles in one block. A single-role group keeps the classic role→location.
+#let groupEntry(group) = {
+  let multi = group.len() > 1
+  let first = group.first()
+  let combined = if multi {
+    let firstEnd = first.dates.split("–").at(1, default: "").trim()
+    let lastStart = group.last().dates.split("–").at(0, default: "").trim()
+    lastStart + " – " + firstEnd
+  } else { first.dates }
+
+  block(breakable: false, above: 13pt, below: 0pt)[
+    #grid(
+      columns: (1fr, auto), column-gutter: 6pt, align: (left + bottom, right + bottom),
+      {
+        text(weight: "bold", size: 9.5pt, fill: th.heavy)[#first.company]
+        if first.blurb != "" {
+          h(5pt)
+          text(size: 8pt, weight: 400, fill: th.muted)[#first.blurb]
+        }
+        if multi and first.location != "" {
+          h(5pt)
+          if plain { text(size: 8pt, fill: th.muted)[#first.location] }
+          else { text(size: 8pt, fill: accent, style: "italic")[#first.location] }
+        }
+      },
+      datesText(combined),
+    )
+  ]
+  if multi {
+    for (i, sec) in group.enumerate() {
+      block(above: if i == 0 { 1.6pt } else { 5.4pt }, below: 0pt, breakable: false)[
+        #roleLine(sec.role, sec.dates, false)
+      ]
+      bulletList(sec)
+    }
+  } else {
+    block(above: 1.6pt, below: 0pt, breakable: false)[
+      #roleLine(first.role, first.location, true)
+    ]
+    bulletList(first)
   }
 }
 
@@ -303,7 +346,7 @@
   let p = data.publications
   grid(
     columns: (1fr, auto), column-gutter: 8pt, align: (left + top, right + top),
-    text(weight: "bold", size: 9.5pt, fill: th.heavy)[#p.title],
+    text(weight: "semibold", size: 8.7pt, fill: th.heavy)[#p.title],
     {
       align(right)[
         #if plain {
@@ -367,13 +410,28 @@
 
 #if cvv.howIWork != none { howBox }
 
-#sectionHeading(cvv.headings.experience, after: -7.5pt)
-#for sec in cvv.sections { jobEntry(sec) }
+// Group consecutive sections sharing a company (the two Remitly roles) into
+// one block before rendering.
+#let jobGroups = {
+  let groups = ()
+  for sec in cvv.sections {
+    if groups.len() > 0 and groups.last().first().company == sec.company {
+      groups.last().push(sec)
+    } else {
+      groups.push((sec,))
+    }
+  }
+  groups
+}
 
+#sectionHeading(cvv.headings.experience, after: -7.5pt)
+#for g in jobGroups { groupEntry(g) }
+
+// Education — with the publication folded in beneath the degree row (one
+// heading where there used to be two). Extra top air per the de-busying pass.
 #sectionHeading(cvv.headings.education)
 #eduBlock
-
-#sectionHeading(cvv.headings.publications)
+#v(3.5pt)
 #pubBlock
 
 #sectionHeading(cvv.headings.skills, after: -2.5pt)

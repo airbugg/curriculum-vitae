@@ -4,6 +4,9 @@
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
   --fw-body: 300;
+  /* The Looker carries the least content and the most bottom air — spend some
+     of the reclaimed space on a slightly larger, calmer body (9.4 vs 9pt). */
+  --fs: 9.4pt;
   --font-mono: 'Source Code Pro', monospace;
   --font-name: 'Roboto Mono', monospace;
   --font-head: 'Roboto Mono', monospace;

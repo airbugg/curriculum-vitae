@@ -74,7 +74,8 @@ function skillSegments(s) {
   let m;
   while ((m = re.exec(str))) {
     if (m.index > last) out.push(...segments(str.slice(last, m.index)));
-    out.push(['g', m[0].slice(1, -1).replaceAll('`', '')]);
+    // Trim the source's full spaces; the thin [\, …\,] inset is added at render.
+    out.push(['g', m[0].slice(1, -1).replaceAll('`', '').trim()]);
     last = m.index + m[0].length;
   }
   if (last < str.length) out.push(...segments(str.slice(last)));

@@ -68,8 +68,14 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
 /* -------------------------------------------------- the braces identity ---- */
 /* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
    language of the original hand-written CV, opt-in via body.id-braces. */
+/* Word gaps matched to the original PDF header (measured at 200dpi against
+   cap height): generous air around the braces, a tight colon hugging the two
+   words — not the old uniform monospace-space airiness. Values are em of the
+   24pt name, so they scale with --fs-name. */
 h1 .nb { font-weight: var(--fw-name-brace, 700); color: var(--name-brace, var(--ink-strong, var(--ink))); }
-h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
+h1 .nb:first-child { margin-right: 0.5em; }
+h1 .nb:last-child { margin-left: 0.5em; }
+h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); margin: 0 0.2em 0 0.26em; }
 h1 .nf { font-weight: var(--fw-name-first, 300); color: var(--name-first, #999); letter-spacing: var(--ls-name, 0); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
 h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
@@ -105,6 +111,10 @@ h2 {
   padding-bottom: var(--h2-pad, 0.8mm);
   line-height: 1.05;
 }
+/* De-busying the bottom third: the merges (Remitly into one block, Publications
+   folded into Education) free vertical room — spend it as extra air above the
+   Skills and Education headings (~13.5pt vs the default ~12pt section gap). */
+.skills > h2, .edu > h2 { margin-top: var(--h2-margin-lower, 4.8mm); }
 
 /* -------------------------------------------------------------- entries ---- */
 .entry { margin-bottom: var(--entry-gap, 2.8mm); break-inside: avoid; }
@@ -133,6 +143,14 @@ h2 {
 .entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
 .entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 
+/* Merged company block (e.g. the two Remitly roles): the company header,
+   its location and the combined span appear ONCE; each role gets its own
+   compact role→dates line, so a promotion reads as two roles in one block. */
+.entry-co .loc { margin-left: 1.8mm; color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
+.id-braces .entry-co .loc { color: var(--accent); font-style: italic; }
+.entry.group .role-block + .role-block { margin-top: 1.9mm; }
+.entry.group .role-row .dates { font-size: var(--fs-small, 8pt); }
+
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
 .entry ul { margin: 1.1mm 0 0; padding-left: 3.2mm; }
@@ -148,7 +166,7 @@ h2 {
   grid-template-columns: var(--skill-col, 19mm) 1fr;
   column-gap: 3.5mm;
   align-items: baseline;
-  margin-bottom: var(--skill-gap, 1.6mm);
+  margin-bottom: var(--skill-gap, 2mm);
 }
 .skill:last-child { margin-bottom: 0; }
 .skill .cat {
@@ -164,14 +182,18 @@ h2 {
   font-size: var(--fs-skill, 8.6pt);
   color: var(--skill-ink, #414141);
 }
-/* A whole [ ... ] bracket group is one continuous quiet mono run — no chip
-   backgrounds inside the skills section, brackets slightly muted. */
+/* A whole [ ... ] bracket group is one continuous mono run at the FULL value
+   size (~8.6pt — the old 90% shrink read too small). Two inks only: the value
+   ink for the content, the muted label ink for the brackets — no third gray.
+   Brackets hug the content with a thin [\, x \,] inset, not a full space. */
 .skills .bg {
   font-family: var(--font-mono, monospace);
-  font-size: 90%;
-  color: var(--bg-ink, #333);
+  font-size: 100%;
+  color: var(--skill-ink, #414141);
 }
 .skills .bg .bk { color: var(--label-ink, #5d5d5d); }
+.skills .bg .bk:first-child { margin-right: 0.16em; }
+.skills .bg .bk:last-child { margin-left: 0.16em; }
 .skills .val code {
   font: inherit;
   background: none;
@@ -180,8 +202,11 @@ h2 {
   border-radius: 0;
 }
 
-/* -------------------------------------------------------- publications ---- */
+/* ---------------------------------------- publication (inside education) ---- */
+/* Folded beneath the degree row: the paper title is semibold and a touch
+   smaller than the degree line, so the section reads as one calm block. */
 .pub { margin-bottom: var(--pub-gap, 1.4mm); break-inside: avoid; }
+.edu .pub { margin-top: 1.7mm; }
 .pub-head {
   display: flex;
   justify-content: space-between;
@@ -189,8 +214,8 @@ h2 {
   gap: 4mm;
 }
 .pub-title {
-  font-weight: 700;
-  font-size: var(--fs-co, 9.5pt);
+  font-weight: 600;
+  font-size: var(--fs-pub-title, 8.7pt);
   color: var(--ink-strong, var(--ink));
 }
 .pub-meta {

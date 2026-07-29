@@ -85,8 +85,14 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
 /* -------------------------------------------------- the braces identity ---- */
 /* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
    language of the original hand-written CV, opt-in via body.id-braces. */
+/* Word gaps matched to the original PDF header (measured at 200dpi against
+   cap height): generous air around the braces, a tight colon hugging the two
+   words — not the old uniform monospace-space airiness. Values are em of the
+   24pt name, so they scale with --fs-name. */
 h1 .nb { font-weight: var(--fw-name-brace, 700); color: var(--name-brace, var(--ink-strong, var(--ink))); }
-h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
+h1 .nb:first-child { margin-right: 0.5em; }
+h1 .nb:last-child { margin-left: 0.5em; }
+h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); margin: 0 0.2em 0 0.26em; }
 h1 .nf { font-weight: var(--fw-name-first, 300); color: var(--name-first, #999); letter-spacing: var(--ls-name, 0); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
 h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
@@ -122,6 +128,10 @@ h2 {
   padding-bottom: var(--h2-pad, 0.8mm);
   line-height: 1.05;
 }
+/* De-busying the bottom third: the merges (Remitly into one block, Publications
+   folded into Education) free vertical room — spend it as extra air above the
+   Skills and Education headings (~13.5pt vs the default ~12pt section gap). */
+.skills > h2, .edu > h2 { margin-top: var(--h2-margin-lower, 4.8mm); }
 
 /* -------------------------------------------------------------- entries ---- */
 .entry { margin-bottom: var(--entry-gap, 2.8mm); break-inside: avoid; }
@@ -150,6 +160,14 @@ h2 {
 .entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
 .entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 
+/* Merged company block (e.g. the two Remitly roles): the company header,
+   its location and the combined span appear ONCE; each role gets its own
+   compact role→dates line, so a promotion reads as two roles in one block. */
+.entry-co .loc { margin-left: 1.8mm; color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
+.id-braces .entry-co .loc { color: var(--accent); font-style: italic; }
+.entry.group .role-block + .role-block { margin-top: 1.9mm; }
+.entry.group .role-row .dates { font-size: var(--fs-small, 8pt); }
+
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
 .entry ul { margin: 1.1mm 0 0; padding-left: 3.2mm; }
@@ -165,7 +183,7 @@ h2 {
   grid-template-columns: var(--skill-col, 19mm) 1fr;
   column-gap: 3.5mm;
   align-items: baseline;
-  margin-bottom: var(--skill-gap, 1.6mm);
+  margin-bottom: var(--skill-gap, 2mm);
 }
 .skill:last-child { margin-bottom: 0; }
 .skill .cat {
@@ -181,14 +199,18 @@ h2 {
   font-size: var(--fs-skill, 8.6pt);
   color: var(--skill-ink, #414141);
 }
-/* A whole [ ... ] bracket group is one continuous quiet mono run — no chip
-   backgrounds inside the skills section, brackets slightly muted. */
+/* A whole [ ... ] bracket group is one continuous mono run at the FULL value
+   size (~8.6pt — the old 90% shrink read too small). Two inks only: the value
+   ink for the content, the muted label ink for the brackets — no third gray.
+   Brackets hug the content with a thin [\, x \,] inset, not a full space. */
 .skills .bg {
   font-family: var(--font-mono, monospace);
-  font-size: 90%;
-  color: var(--bg-ink, #333);
+  font-size: 100%;
+  color: var(--skill-ink, #414141);
 }
 .skills .bg .bk { color: var(--label-ink, #5d5d5d); }
+.skills .bg .bk:first-child { margin-right: 0.16em; }
+.skills .bg .bk:last-child { margin-left: 0.16em; }
 .skills .val code {
   font: inherit;
   background: none;
@@ -197,8 +219,11 @@ h2 {
   border-radius: 0;
 }
 
-/* -------------------------------------------------------- publications ---- */
+/* ---------------------------------------- publication (inside education) ---- */
+/* Folded beneath the degree row: the paper title is semibold and a touch
+   smaller than the degree line, so the section reads as one calm block. */
 .pub { margin-bottom: var(--pub-gap, 1.4mm); break-inside: avoid; }
+.edu .pub { margin-top: 1.7mm; }
 .pub-head {
   display: flex;
   justify-content: space-between;
@@ -206,8 +231,8 @@ h2 {
   gap: 4mm;
 }
 .pub-title {
-  font-weight: 700;
-  font-size: var(--fs-co, 9.5pt);
+  font-weight: 600;
+  font-size: var(--fs-pub-title, 8.7pt);
   color: var(--ink-strong, var(--ink));
 }
 .pub-meta {
@@ -269,6 +294,9 @@ h2 {
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
   --fw-body: 300;
+  /* The Looker carries the least content and the most bottom air — spend some
+     of the reclaimed space on a slightly larger, calmer body (9.4 vs 9pt). */
+  --fs: 9.4pt;
   --font-mono: 'Source Code Pro', monospace;
   --font-name: 'Roboto Mono', monospace;
   --font-head: 'Roboto Mono', monospace;
@@ -302,4 +330,4 @@ h2 {
 header { text-align: center; }
 header .title { font-variant: small-caps; }
 .intro { margin-left: auto; margin-right: auto; }
-</style></head><body class="looker id-braces"><div class="page"><header><h1><span class="nb">{ </span><span class="nf">EUGENE</span><span class="nc"> : </span><span class="nl">LERMAN</span><span class="nb"> }</span></h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Ramat Gan, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span></div></header><p class="intro">A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.</p><section class="xp"><h2><span class="hb">{ </span><span class="hw"><span class="hc">E</span>XPERIENCE</span><span class="hb"> }</span></h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>One of five engineers on a ground-up rewrite of the company&#x27;s client apps: native iOS (<code>Swift</code>), Android (<code>Kotlin</code>) and <code>React Native</code>. Shipped in three months, working spec-first with coding agents handling much of the implementation and review in parallel.</li><li>Built the client platform for the rewrite from scratch: the apps monorepo, a design system with automated <code>Figma</code> sync, and all client CI/CD.</li><li>Rebuilt the mobile release process: an automated pipeline with a web UI for cutting release branches and shipping builds, and an in-house app-distribution service that replaced <code>Firebase App Distribution</code>.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div><div class="dates">Dec 2022 – Feb 2026</div></div><div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives across roughly ten teams and three products (~10M monthly users).</li><li>Designed the localization platform: translations fetched dynamically, with hotfixes scoped to specific app versions in production (previously a translation fix required a full release), and a CI pipeline that extracts changed strings from each PR and files translator tasks automatically. Translations stopped blocking merges.</li><li>Migrated tens of thousands of UI strings to semantic keys with an LLM service I built: model-suggested names, human approval in a small review UI, changes applied as auto-generated PRs. The code changes themselves took hours.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div><div class="dates">Jun 2020 – Dec 2022</div></div><div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, the company&#x27;s first mobile-first architecture.</li><li>Designed an <code>XState</code> orchestration engine for financial flows (send money, deposit, re-authentication) with over-the-air business-logic updates: changes reached users without an app release or store review.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code>, cutting pipeline runtimes roughly in half. The cutover took one weekend; teams started Monday on the new system with nothing missing.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Tech lead on Wix Forms, the first first-party app built on the Editor platform SDK; its architecture became the reference for the first-party apps that followed.</li><li>Extracted the Editor&#x27;s user authentication out of the monolith into a standalone module, code that runs under every editor-built site. Still one of my proudest projects.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div><div class="dates">Feb 2015 – Feb 2017</div></div><div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div><ul><li>Sole engineer for the lab&#x27;s software: interactive visualization tools for protein-interaction networks (<code>D3</code>, <code>Cytoscape.js</code>) over <code>Python</code>/<code>Flask</code>/<code>Celery</code> APIs.</li></ul></article></section><section class="edu"><h2><span class="hb">{ </span><span class="hw"><span class="hc">E</span>DUCATION</span><span class="hb"> }</span></h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div></section><section class="pubs"><h2><span class="hb">{ </span><span class="hw"><span class="hc">P</span>UBLICATIONS</span><span class="hb"> }</span></h2><article class="pub"><div class="pub-head"><span class="pub-title">TissueNet2: A quantitative view of proteins and their interactions across human tissues</span><span class="pub-meta"><span class="pub-journal">Nucleic Acids Research</span><span class="pub-year">2016</span></span></div><div class="pub-authors">Basha O, Barshir R, Sharon M, Lerman E, Kirson B, Hekselman I and Yeger-Lotem E</div></article></section><section class="skills"><h2><span class="hb">{ </span><span class="hw"><span class="hc">S</span>KILLS</span><span class="hb"> }</span></h2><div class="skill"><span class="cat">Core</span><span class="val">daily driver <span class="bg"><span class="bk">[</span> TypeScript, React Native, Node <span class="bk">]</span></span>, at home in <span class="bg"><span class="bk">[</span> client infrastructure: release automation, mobile CI, localization <span class="bk">]</span></span></span></div><div class="skill"><span class="cat">Native</span><span class="val"><span class="bg"><span class="bk">[</span> Swift, Kotlin, Objective-C <span class="bk">]</span></span>, enough to write, patch and review native code</span></div><div class="skill"><span class="cat">AI practice</span><span class="val">shipping daily with <span class="bg"><span class="bk">[</span> Claude Code, Codex, Cursor <span class="bk">]</span></span>; writing skills and MCP tooling, keeping agent context lean</span></div><div class="skill"><span class="cat">Languages</span><span class="val">fluent in <span class="bg"><span class="bk">[</span> English and Hebrew <span class="bk">]</span></span>, conversant in <span class="bg"><span class="bk">[</span> Russian <span class="bk">]</span></span></span></div></section></div></body></html>
+</style></head><body class="looker id-braces"><div class="page"><header><h1><span class="nb">{</span><span class="nf">EUGENE</span><span class="nc">:</span><span class="nl">LERMAN</span><span class="nb">}</span></h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Ramat Gan, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span></div></header><p class="intro">A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.</p><section class="xp"><h2><span class="hb">{ </span><span class="hw"><span class="hc">E</span>XPERIENCE</span><span class="hb"> }</span></h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>One of five engineers on a ground-up rewrite of the company&#x27;s client apps: native iOS (<code>Swift</code>), Android (<code>Kotlin</code>) and <code>React Native</code>. Shipped in three months, working spec-first with coding agents handling much of the implementation and review in parallel.</li><li>Built the client platform for the rewrite from scratch: the apps monorepo, a design system with automated <code>Figma</code> sync, and all client CI/CD.</li><li>Rebuilt the mobile release process: an automated pipeline with a web UI for cutting release branches and shipping builds, and an in-house app-distribution service that replaced <code>Firebase App Distribution</code>.</li></ul></article><article class="entry group"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span><span class="loc">Tel Aviv</span></div><div class="dates">Jun 2020 – Feb 2026</div></div><div class="role-block"><div class="entry-sub role-row"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="dates">Dec 2022 – Feb 2026</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives across roughly ten teams and three products (~10M monthly users).</li><li>Designed the localization platform: translations fetched dynamically, with hotfixes scoped to specific app versions in production (previously a translation fix required a full release), and a CI pipeline that extracts changed strings from each PR and files translator tasks automatically. Translations stopped blocking merges.</li><li>Migrated tens of thousands of UI strings to semantic keys with an LLM service I built: model-suggested names, human approval in a small review UI, changes applied as auto-generated PRs. The code changes themselves took hours.</li></ul></div><div class="role-block"><div class="entry-sub role-row"><span class="role">Senior Software Engineer</span><span class="dates">Jun 2020 – Dec 2022</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, the company&#x27;s first mobile-first architecture.</li><li>Designed an <code>XState</code> orchestration engine for financial flows (send money, deposit, re-authentication) with over-the-air business-logic updates: changes reached users without an app release or store review.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code>, cutting pipeline runtimes roughly in half. The cutover took one weekend; teams started Monday on the new system with nothing missing.</li></ul></div></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Tech lead on Wix Forms, the first first-party app built on the Editor platform SDK; its architecture became the reference for the first-party apps that followed.</li><li>Extracted the Editor&#x27;s user authentication out of the monolith into a standalone module, code that runs under every editor-built site. Still one of my proudest projects.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div><div class="dates">Feb 2015 – Feb 2017</div></div><div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div><ul><li>Sole engineer for the lab&#x27;s software: interactive visualization tools for protein-interaction networks (<code>D3</code>, <code>Cytoscape.js</code>) over <code>Python</code>/<code>Flask</code>/<code>Celery</code> APIs.</li></ul></article></section><section class="edu"><h2><span class="hb">{ </span><span class="hw"><span class="hc">E</span>DUCATION</span><span class="hb"> }</span></h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div><article class="pub"><div class="pub-head"><span class="pub-title">TissueNet2: A quantitative view of proteins and their interactions across human tissues</span><span class="pub-meta"><span class="pub-journal">Nucleic Acids Research</span><span class="pub-year">2016</span></span></div><div class="pub-authors">Basha O, Barshir R, Sharon M, Lerman E, Kirson B, Hekselman I and Yeger-Lotem E</div></article></section><section class="skills"><h2><span class="hb">{ </span><span class="hw"><span class="hc">S</span>KILLS</span><span class="hb"> }</span></h2><div class="skill"><span class="cat">Core</span><span class="val"><span class="bg"><span class="bk">[</span>TypeScript, React Native, Node, client CI/CD<span class="bk">]</span></span></span></div><div class="skill"><span class="cat">Native</span><span class="val"><span class="bg"><span class="bk">[</span>Swift, Kotlin, Objective-C<span class="bk">]</span></span></span></div><div class="skill"><span class="cat">AI tooling</span><span class="val"><span class="bg"><span class="bk">[</span>Claude Code, Codex, Cursor<span class="bk">]</span></span></span></div><div class="skill"><span class="cat">Languages</span><span class="val"><span class="bg"><span class="bk">[</span>English, Hebrew, Russian (conversational)<span class="bk">]</span></span></span></div></section></div></body></html>
