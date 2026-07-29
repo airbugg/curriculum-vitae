@@ -28,6 +28,11 @@ const { renderVariant, variants } = await import(
 );
 
 function chromium() {
+  // 1. Explicit override (used by CI): CHROME_PATH=/path/to/chrome
+  const override = process.env.CHROME_PATH;
+  if (override && existsSync(override)) return override;
+
+  // 2. Local sandbox Playwright-style install.
   const base = '/opt/pw-browsers';
   for (const dir of ['chromium', 'chromium-1194']) {
     const direct = join(base, dir);
@@ -35,7 +40,19 @@ function chromium() {
     const inner = join(direct, 'chrome-linux', 'chrome');
     if (existsSync(inner)) return inner;
   }
-  throw new Error('Chromium not found under /opt/pw-browsers — adjust chromium() in build.mjs');
+
+  // 3. Common system binaries on PATH (Linux distros / CI runners).
+  for (const name of ['chromium-browser', 'chromium', 'google-chrome', 'google-chrome-stable']) {
+    try {
+      const found = execFileSync('which', [name], { stdio: 'pipe' }).toString().trim();
+      if (found) return found;
+    } catch { /* not found — try next */ }
+  }
+
+  throw new Error(
+    'Chromium not found. Set CHROME_PATH, install it under /opt/pw-browsers, ' +
+    'or put chromium/google-chrome on PATH.'
+  );
 }
 
 const pageCount = (pdf) =>
