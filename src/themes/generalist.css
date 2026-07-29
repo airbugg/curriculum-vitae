@@ -1,14 +1,22 @@
 /* The Startup Generalist — warmer, rounded, terracotta accent. */
 :root {
   --font-body: 'Roboto', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-name: 'Roboto Mono', monospace;
+  --font-head: 'Roboto Mono', monospace;
+  --font-title: 'Roboto Mono', monospace;
+  --chip-bg: #f5efe9;
+  --chip-ink: #4c4238;
+  --brace: #a08874;
+  --name-first: #a89a8c;
   --ink: #2a2622;
   --ink-strong: #16130f;
   --muted: #6e655c;
   --accent: #b4552d;
   --accent-soft: #8d4526;
   --rule: #e0d5cb;
-  --fs: 8.7pt;
-  --lh: 1.31;
+  --fs: 8.6pt;
+  --lh: 1.26;
   --fs-name: 20pt;
   --fw-name: 500;
   --ls-name: 0.3pt;
@@ -21,8 +29,9 @@
   --fs-h2: 11pt;
   --fw-h2: 500;
   --h2-rule: none;
-  --h2-margin: 3.6mm 0 1.2mm;
-  --entry-gap: 2.4mm;
+  --h2-margin: 3.1mm 0 1mm;
+  --entry-gap: 2.1mm;
+  --pad: 10mm 13mm 8mm;
 }
 h2 { border-bottom: none; }
 h2::after {

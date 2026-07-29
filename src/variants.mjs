@@ -79,7 +79,7 @@ export const variants = [
     file: 'eugene-lerman',
     label: 'The Looker',
     theme: 'looker',
-    layout: 'sidebar',
+    layout: 'single',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to software: build the platform well and the product stops being hard. Ten years of client infrastructure, migrations and rewrites that went quietly.',
     headings: { experience: 'Experience', skills: 'Toolbox', education: 'Education' },
@@ -103,6 +103,7 @@ export const variants = [
     label: 'The Parser',
     theme: 'parser',
     layout: 'single',
+    nameStyle: 'plain',
     intro:
       'Senior Software Engineer with 10+ years in client infrastructure, frontend architecture and mobile development. Led CI/CD migrations, localization platforms, a React Native migration, and AI-assisted development workflows for products serving ~10M monthly active users.',
     headings: { experience: 'Professional Experience', skills: 'Skills', education: 'Education' },

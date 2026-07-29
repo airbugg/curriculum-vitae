@@ -1,32 +1,41 @@
 #!/usr/bin/env node
-// Renders each CV variant to HTML, prints to PDF via headless Chromium,
-// and verifies every variant stays on one page.
+// Bundles the React entry with esbuild, renders each variant to HTML,
+// prints to PDF via headless Chromium, and verifies the one-page invariant.
 import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { renderVariant } from './src/render.mjs';
-import { variants } from './src/variants.mjs';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import * as esbuild from 'esbuild';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
+process.chdir(ROOT);
 const DIST = join(ROOT, 'dist');
 const HTML = join(DIST, 'html');
 mkdirSync(HTML, { recursive: true });
 
+await esbuild.build({
+  entryPoints: [join(ROOT, 'src', 'entry.jsx')],
+  bundle: true,
+  platform: 'node',
+  format: 'esm',
+  jsx: 'automatic',
+  packages: 'external',
+  outfile: join(ROOT, '.build', 'entry.mjs'),
+  logLevel: 'silent',
+});
+const { renderVariant, variants } = await import(
+  pathToFileURL(join(ROOT, '.build', 'entry.mjs'))
+);
+
 function chromium() {
   const base = '/opt/pw-browsers';
-  const candidates = [
-    join(base, 'chromium'),
-    ...['chromium-1194'].map((d) => join(base, d, 'chrome-linux', 'chrome')),
-  ];
-  for (const c of candidates) {
-    try {
-      if (existsSync(c) && statSync(c).isFile()) return c;
-      const inner = join(c, 'chrome-linux', 'chrome');
-      if (existsSync(inner)) return inner;
-    } catch {}
+  for (const dir of ['chromium', 'chromium-1194']) {
+    const direct = join(base, dir);
+    if (existsSync(direct) && statSync(direct).isFile()) return direct;
+    const inner = join(direct, 'chrome-linux', 'chrome');
+    if (existsSync(inner)) return inner;
   }
-  throw new Error('Chromium not found under /opt/pw-browsers');
+  throw new Error('Chromium not found under /opt/pw-browsers — adjust chromium() in build.mjs');
 }
 
 const pageCount = (pdf) =>

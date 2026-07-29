@@ -29,6 +29,7 @@ header h1 {
 }
 header .title {
   margin-top: 0.8mm;
+  font-family: var(--font-title, inherit);
   font-size: var(--fs-title, 10.5pt);
   font-weight: 400;
   color: var(--accent);
@@ -49,6 +50,30 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
   color: var(--ink);
   font-style: var(--intro-style, normal);
 }
+
+/* -------------------------------------------------- the braces identity ---- */
+/* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
+   language of the original hand-written CV, opt-in via body.id-braces. */
+h1 .nb, h1 .nc { font-weight: 300; color: var(--brace, #4a5056); }
+h1 .nf { font-weight: 300; color: var(--name-first, #949ba1); letter-spacing: var(--ls-name, 1pt); }
+h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
+h2 .hb { font-weight: 300; color: var(--brace, #4a5056); }
+h2 .hc { color: var(--accent); }
+
+code { font-family: inherit; font-size: inherit; }
+.id-braces code {
+  font-family: var(--font-mono, monospace);
+  font-size: 86%;
+  background: var(--chip-bg, #f1f1f1);
+  color: var(--chip-ink, #3c4247);
+  padding: 0 1.1mm 0.15mm;
+  border-radius: 0.6mm;
+}
+.id-braces .entry-sub .role { font-variant: small-caps; letter-spacing: 0.4pt; }
+.id-braces .entry-sub .loc { color: var(--accent); font-style: italic; }
+.id-braces .dates { font-style: italic; }
+.id-braces .skill .val::before { content: '[ '; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
+.id-braces .skill .val::after { content: ' ]'; font-family: var(--font-mono, monospace); color: var(--brace, #4a5056); }
 
 /* ------------------------------------------------------------ sections ---- */
 h2 {

@@ -1,7 +1,7 @@
 # circum vitae
 
-Five one-page CV variants built from a single source of facts, rendered
-HTML → CSS → headless Chromium → PDF.
+Five one-page CV variants built from a single source of facts:
+Markdown content → React components → CSS themes → headless Chromium → PDF.
 
 | PDF | Variant | For |
 | --- | --- | --- |
@@ -14,19 +14,24 @@ HTML → CSS → headless Chromium → PDF.
 ## Build
 
 ```sh
+npm install
 make            # or: node build.mjs
 ```
 
 Requires Node ≥ 18 and a Chromium binary (looked up under `/opt/pw-browsers`,
-adjust `build.mjs` for your machine). The build fails if any variant spills
-past one page.
+adjust `chromium()` in `build.mjs` for your machine). The build fails if any
+variant spills past one page.
 
 ## Layout
 
-- `src/content.mjs` — every fact, once
+- `content/` — every fact, once, in editable Markdown: frontmatter for the
+  header facts, list items with `{#id}` anchors for bullets, backticks for
+  tech chips
 - `src/variants.mjs` — what each variant selects, emphasizes, and says
-- `src/render.mjs` — HTML assembly, fonts embedded from `fonts/`
-- `src/themes/` — `base.css` skeleton + one CSS file per variant
+- `src/components/CV.jsx` — React components; rendered with
+  `react-dom/server`, bundled by esbuild, printed by Chromium
+- `src/themes/` — `base.css` skeleton (incl. the `{ EUGENE : LERMAN }`
+  braces identity) + one CSS file per variant
 - `dist/` — the PDFs
 
 The previous LaTeX (awesome-cv) toolchain lives on in git history and the
