@@ -1,5 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><title>Eugene Lerman — CV</title><style>
-/* Shared layout skeleton; themes supply fonts, colors, and personality. */
+/* Shared layout skeleton; themes supply fonts, colors, and personality.
+   Spacing follows the research spec. Preferred values are 16mm sides,
+   9.5pt body at 132% leading; this content is dense enough that every
+   variant runs at the spec FLOORS instead: 14mm sides, 9pt body at 128%,
+   tight end of every gap range. Gap hierarchy stays monotonic:
+   bullet (1.5pt) < role→bullets (3pt) < entry (8pt) < section (12pt). */
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -7,7 +12,8 @@ html, body { margin: 0; padding: 0; }
 body {
   font-family: var(--font-body);
   font-size: var(--fs, 9pt);
-  line-height: var(--lh, 1.32);
+  font-weight: var(--fw-body, 400);
+  line-height: var(--lh, 1.28);
   color: var(--ink, #1d2229);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -16,53 +22,64 @@ body {
 .page {
   width: 210mm;
   min-height: 296.5mm;
-  padding: var(--pad, 11mm 13mm 9mm);
+  padding: var(--pad, 13mm 14mm 16mm);
 }
 
 /* ------------------------------------------------------------- header ---- */
 header h1 {
   margin: 0;
   font-family: var(--font-name, var(--font-head, var(--font-body)));
-  font-size: var(--fs-name, 21pt);
+  font-size: var(--fs-name, 24pt);
   font-weight: var(--fw-name, 700);
-  letter-spacing: var(--ls-name, 0.5pt);
+  letter-spacing: var(--ls-name, 0);
   color: var(--ink-strong, var(--ink));
+  line-height: 1;
 }
 header .title {
-  margin-top: 0.8mm;
+  margin-top: 0.7mm; /* name→title 2pt */
   font-family: var(--font-title, inherit);
   font-size: var(--fs-title, 10.5pt);
-  font-weight: 400;
+  font-weight: var(--fw-title, 400);
   color: var(--accent);
   letter-spacing: var(--ls-title, 1.2pt);
   text-transform: var(--tt-title, uppercase);
+  line-height: 1.15;
 }
 header .contacts {
-  margin-top: 1.6mm;
-  font-size: var(--fs-small, 7.6pt);
+  margin-top: 0.7mm; /* title→contacts 2pt */
+  font-size: var(--fs-contacts, 7.8pt);
   color: var(--muted, #5a6470);
+  white-space: nowrap;
+  line-height: 1.2;
 }
 header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
 
+/* contacts→intro 10pt; ~90-char measure via max-width. */
 .intro {
-  margin: var(--intro-margin, 3.2mm 0 0);
-  font-size: var(--fs-intro, 9.2pt);
-  line-height: 1.42;
+  margin: var(--intro-margin, 3.5mm 0 0);
+  max-width: var(--intro-width, 150mm);
+  font-size: var(--fs-intro, 9.5pt);
+  line-height: 1.36;
   color: var(--ink);
   font-style: var(--intro-style, normal);
 }
+/* intro→first section (8pt), tighter than the 12pt section gap. */
+.intro + section > h2 { margin-top: 2.8mm; }
 
 /* -------------------------------------------------- the braces identity ---- */
 /* { EUGENE : LERMAN }, { E}XPERIENCE headings, `tech` chips — the visual
    language of the original hand-written CV, opt-in via body.id-braces. */
-h1 .nb { font-weight: 700; color: var(--name-brace, var(--ink-strong, var(--ink))); }
-h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
-h1 .nf { font-weight: 300; color: var(--name-first, #999); letter-spacing: var(--ls-name, 1pt); }
-h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 1pt); }
+h1 .nb { font-weight: var(--fw-name-brace, 700); color: var(--name-brace, var(--ink-strong, var(--ink))); }
+h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
+h1 .nf { font-weight: var(--fw-name-first, 300); color: var(--name-first, #999); letter-spacing: var(--ls-name, 0); }
+h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
 h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
 h2 .hc { color: var(--accent); }
+h2 .hw { position: relative; }
 
 code { font-family: inherit; font-size: inherit; }
+/* Chips keep their light-gray rounded background ONLY inside experience
+   bullets and prose — the original's \mylib boxes. */
 .id-braces code {
   font-family: var(--font-mono, monospace);
   font-size: 86%;
@@ -74,71 +91,98 @@ code { font-family: inherit; font-size: inherit; }
 .id-braces .entry-sub .role { font-variant: small-caps; letter-spacing: 0.4pt; }
 .id-braces .entry-sub .loc { color: var(--accent); font-style: italic; }
 .id-braces .dates { font-style: italic; }
-/* Skill values carry their own literal [ brackets ] from content/skills.md, so
-   no CSS-generated brackets here — they would double up. */
 
 /* ------------------------------------------------------------ sections ---- */
+/* 11pt heading, 12pt above, ~5pt below (asymmetric ~2.4:1). */
 h2 {
-  margin: var(--h2-margin, 4mm 0 1.6mm);
+  margin: var(--h2-margin, 4.2mm 0 1mm);
   font-family: var(--font-head, var(--font-body));
-  font-size: var(--fs-h2, 10pt);
+  font-size: var(--fs-h2, 11pt);
   font-weight: var(--fw-h2, 600);
-  letter-spacing: var(--ls-h2, 1.4pt);
+  letter-spacing: var(--ls-h2, 0.7pt);
   text-transform: var(--tt-h2, uppercase);
   color: var(--ink-strong, var(--ink));
   border-bottom: var(--h2-rule, 0.35pt solid var(--rule, #cfd6dd));
-  padding-bottom: var(--h2-pad, 0.9mm);
+  padding-bottom: var(--h2-pad, 0.8mm);
+  line-height: 1.05;
 }
 
 /* -------------------------------------------------------------- entries ---- */
-.entry { margin-bottom: var(--entry-gap, 2.6mm); break-inside: avoid; }
+.entry { margin-bottom: var(--entry-gap, 2.8mm); break-inside: avoid; }
 .entry-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 4mm;
+  line-height: 1.15;
 }
-.company { font-weight: 700; font-size: var(--fs-co, 9.6pt); color: var(--ink-strong, var(--ink)); }
-.blurb { margin-left: 1.8mm; font-size: var(--fs-small, 7.6pt); color: var(--muted, #5a6470); }
+.company { font-weight: 700; font-size: var(--fs-co, 9.5pt); color: var(--ink-strong, var(--ink)); }
+.blurb { margin-left: 1.8mm; font-size: var(--fs-small, 8pt); color: var(--muted, #5a6470); }
 .dates {
   font-family: var(--font-dates, var(--font-body));
-  font-size: var(--fs-small, 7.6pt);
+  font-size: var(--fs-small, 8pt);
   color: var(--muted, #5a6470);
   white-space: nowrap;
 }
 .entry-sub {
   display: flex;
   justify-content: space-between;
-  font-size: var(--fs-role, 8.4pt);
-  margin-top: 0.2mm;
+  font-size: var(--fs-role, 8.5pt);
+  margin-top: 0.4mm;
+  line-height: 1.15;
 }
 .entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
-.entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+.entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 
-.entry ul { margin: 1mm 0 0; padding-left: 3.6mm; }
-.entry li { margin-bottom: 0.7mm; padding-left: 0.4mm; }
+/* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
+   to the text; bullet-to-bullet +1.5pt beyond leading. */
+.entry ul { margin: 1.1mm 0 0; padding-left: 3.2mm; }
+.entry li { margin-bottom: var(--li-gap, 0.53mm); }
+.entry li:last-child { margin-bottom: 0; }
 .entry li::marker { color: var(--accent); }
 
 /* --------------------------------------------------------------- skills ---- */
+/* The original's quiet ledger: muted regular labels slightly LARGER than the
+   value, right-aligned in a narrow column; rows first-baseline aligned. */
 .skill {
   display: grid;
-  grid-template-columns: var(--skill-col, 21mm) 1fr;
-  gap: 3mm;
-  margin-bottom: 1mm;
+  grid-template-columns: var(--skill-col, 19mm) 1fr;
+  column-gap: 3.5mm;
+  align-items: baseline;
+  margin-bottom: var(--skill-gap, 1.6mm);
 }
+.skill:last-child { margin-bottom: 0; }
 .skill .cat {
-  font-weight: 600;
-  font-size: var(--fs-small, 7.6pt);
-  letter-spacing: 0.3pt;
-  color: var(--accent-soft, var(--accent));
+  font-family: var(--font-cat, inherit);
+  font-weight: 400;
+  font-size: var(--fs-cat, 9pt);
+  letter-spacing: var(--ls-cat, 0);
+  color: var(--label-ink, #5d5d5d);
   text-transform: var(--tt-cat, none);
   text-align: var(--cat-align, right);
-  padding-top: 0.2mm;
 }
-.skill .val { font-size: var(--fs-skill, 8.4pt); color: var(--ink); }
+.skill .val {
+  font-size: var(--fs-skill, 8.6pt);
+  color: var(--skill-ink, #414141);
+}
+/* A whole [ ... ] bracket group is one continuous quiet mono run — no chip
+   backgrounds inside the skills section, brackets slightly muted. */
+.skills .bg {
+  font-family: var(--font-mono, monospace);
+  font-size: 90%;
+  color: var(--bg-ink, #333);
+}
+.skills .bg .bk { color: var(--label-ink, #5d5d5d); }
+.skills .val code {
+  font: inherit;
+  background: none;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
 
 /* -------------------------------------------------------- publications ---- */
-.pub { margin-bottom: var(--pub-gap, 1.6mm); break-inside: avoid; }
+.pub { margin-bottom: var(--pub-gap, 1.4mm); break-inside: avoid; }
 .pub-head {
   display: flex;
   justify-content: space-between;
@@ -147,7 +191,7 @@ h2 {
 }
 .pub-title {
   font-weight: 700;
-  font-size: var(--fs-co, 9.6pt);
+  font-size: var(--fs-co, 9.5pt);
   color: var(--ink-strong, var(--ink));
 }
 .pub-meta {
@@ -159,38 +203,40 @@ h2 {
 .pub-journal {
   color: var(--accent-soft, var(--accent));
   font-style: italic;
-  font-size: var(--fs-role, 8.4pt);
+  font-size: var(--fs-role, 8.5pt);
 }
 .pub-year {
   font-family: var(--font-dates, var(--font-body));
-  font-size: var(--fs-small, 7.6pt);
+  font-size: var(--fs-small, 8pt);
   color: var(--muted, #5a6470);
   font-style: italic;
 }
 .pub-authors {
   margin-top: 0.3mm;
-  font-size: var(--fs-small, 7.6pt);
+  font-size: var(--fs-small, 8pt);
   color: var(--muted, #5a6470);
   font-variant: var(--pub-authors-variant, small-caps);
   letter-spacing: 0.2pt;
+  line-height: 1.2;
 }
 
 /* ------------------------------------------------------------ education ---- */
 .edu-row { display: flex; align-items: baseline; gap: 2.5mm; }
 .edu-row .degree { font-weight: 600; }
-.edu-row .school { color: var(--muted, #5a6470); font-size: var(--fs-small, 7.6pt); }
+.edu-row .school { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 .edu-row .dates { margin-left: auto; }
 
 /* ----------------------------------------------------------- how-i-work ---- */
 .how {
-  margin-top: 3mm;
+  margin-top: 2.8mm;
   background: var(--how-bg, transparent);
   border: var(--how-border, none);
   border-radius: 1.2mm;
   padding: var(--how-pad, 0);
 }
-.how h2 { margin-top: 0; }
-.how p { margin: 0; font-size: var(--fs-skill, 8.4pt); line-height: 1.4; }
+.how h2 { margin-top: 0; border-bottom: none; padding-bottom: 0; margin-bottom: 1.4mm; }
+.how h2 .hw::after { content: none; }
+.how p { margin: 0; font-size: var(--fs-how, 9pt); line-height: 1.28; }
 
 /* -------------------------------------------------------------- sidebar ---- */
 .cols { display: grid; grid-template-columns: var(--aside-w, 56mm) 1fr; gap: 8mm; margin-top: 2mm; }
@@ -201,7 +247,9 @@ h2 {
 .cols aside .edu-row .school,
 .cols aside .edu-row .dates { display: block; margin: 0 0 0.6mm; }
 
-/* The Parser — deliberately boring. Machines first, humans a close second. */
+/* The Parser — deliberately boring. Machines first, humans a close second.
+   Gets the spacing spec (margins, leading, gap hierarchy) but stays visually
+   plain: no mono, no chips, no accent. */
 :root {
   --font-body: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
   --ink: #000;
@@ -210,30 +258,27 @@ h2 {
   --accent: #000;
   --accent-soft: #000;
   --rule: #999;
-  --fs: 8.6pt;
-  --lh: 1.24;
-  --fs-name: 17pt;
+  --label-ink: #000;
+  --skill-ink: #000;
+  --fs-name: 24pt;
   --fw-name: 700;
   --ls-name: 0;
   --fs-title: 10.5pt;
   --ls-title: 0;
   --tt-title: none;
-  --fs-h2: 10.5pt;
+  --fs-h2: 11pt;
   --fw-h2: 700;
   --ls-h2: 0;
-  --fs-small: 8pt;
   --fs-role: 9pt;
-  --fs-skill: 8.6pt;
-  --entry-gap: 1.7mm;
+  --fs-cat: 9pt;
+  --fs-skill: 9pt;
   --skill-col: 34mm;
-  --pad: 9mm 13mm 6mm;
-  --h2-margin: 2.4mm 0 1mm;
-  --fs-small: 7.7pt;
+  --skill-gap: 1.7mm;
+  --cat-align: left;
 }
 .entry li::marker { color: #000; }
 header .contacts .sep { color: #333; }
 /* ATS: keep publications plain — no small-caps, no italics, labels left. */
 .pub-authors { font-variant: normal; }
 .pub-journal, .pub-year { font-style: normal; }
-.skill .cat { text-align: left; }
-</style></head><body class="parser"><div class="page"><header><h1>Eugene Lerman</h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Ramat Gan, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span></div></header><p class="intro">Senior Software Engineer with 12+ years in client infrastructure, frontend architecture and mobile development. Led CI/CD migrations, a localization platform, a React Native migration and AI-assisted development workflows for products serving millions of users.</p><section class="xp"><h2>Professional Experience</h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>One of five engineers on a ground-up rewrite of the company client apps (native iOS/Swift, Android/Kotlin, React Native), shipped in three months using spec-driven, multi-agent AI development workflows.</li><li>Built the client platform for the rewrite from scratch: the apps monorepo, a design system with automated <code>Figma</code> sync, and all client CI/CD.</li><li>Rebuilt the mobile release process: an automated pipeline with a web UI for cutting release branches and shipping builds, and an in-house app-distribution service that replaced <code>Firebase App Distribution</code>.</li><li>Owned onboarding in the rebuilt app, its most complex flow; modeled it as an explicit <code>XState</code> state machine to keep every branch testable.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div><div class="dates">Dec 2022 – Feb 2026</div></div><div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives across roughly ten teams and three products (~10M monthly users).</li><li>Designed and implemented a localization automation platform (i18next): dynamic translation delivery, version-scoped production hotfixes, and CI-driven string extraction and translator handoff.</li><li>Migrated tens of thousands of UI strings to semantic keys with an LLM service I built: model-suggested names, human approval in a small review UI, changes applied as auto-generated PRs. The code changes themselves took hours.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code>, cutting pipeline runtimes roughly in half. The cutover took one weekend; teams started Monday on the new system with nothing missing.</li><li>Built the shared <code>Apollo GraphQL</code> client infrastructure: generated types and client links for auth, caching and batching.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div><div class="dates">Jun 2020 – Dec 2022</div></div><div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, the company&#x27;s first mobile-first architecture.</li><li>Designed an <code>XState</code> orchestration engine for financial flows (send money, deposit, re-authentication) with over-the-air business-logic updates: changes reached users without an app release or store review.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Frontend work across Contacts, Forms, Editor and Bookings during the company-wide migration from <code>AngularJS</code> to <code>React</code>/<code>MobX</code>.</li><li>Tech lead on Wix Forms, the first first-party app built on the Editor platform SDK; its architecture became the reference for the first-party apps that followed.</li><li>Extracted the Editor&#x27;s user authentication out of the monolith into a standalone module, code that runs under every editor-built site. Still one of my proudest projects.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Yeger-Lotem Lab, Ben-Gurion University</span></div><div class="dates">Feb 2015 – Feb 2017</div></div><div class="entry-sub"><span class="role">Full-stack Developer (part-time)</span><span class="loc">Be’er Sheva</span></div><ul><li>Sole engineer for the lab&#x27;s software: interactive visualization tools for protein-interaction networks (<code>D3</code>, <code>Cytoscape.js</code>) over <code>Python</code>/<code>Flask</code>/<code>Celery</code> APIs.</li></ul></article></section><section class="edu"><h2>Education</h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div></section><section class="pubs"><h2>Publications</h2><article class="pub"><div class="pub-head"><span class="pub-title">TissueNet2: A quantitative view of proteins and their interactions across human tissues</span><span class="pub-meta"><span class="pub-journal">Nucleic Acids Research</span><span class="pub-year">2016</span></span></div><div class="pub-authors">Basha O, Barshir R, Sharon M, Lerman E, Kirson B, Hekselman I and Yeger-Lotem E</div></article></section><section class="skills"><h2>Skills</h2><div class="skill"><span class="cat">Languages</span><span class="val">TypeScript, JavaScript, Python, Swift, Kotlin, Objective-C, SQL, Bash</span></div><div class="skill"><span class="cat">Frontend</span><span class="val">React, React Native, Expo, EAS, Nitro Modules, XState, Apollo GraphQL, Redux, MobX, Tailwind CSS, Reanimated, Svelte, Angular, i18next</span></div><div class="skill"><span class="cat">Backend &amp; Infrastructure</span><span class="val">Node.js, Bun, GitHub Actions, GitLab CI, Jenkins, Terraform, Pulumi, AWS, Kubernetes, Helm, Docker</span></div><div class="skill"><span class="cat">AI Tooling</span><span class="val">Claude Code, Codex, Cursor, multi-agent workflows, MCP, agent skill authoring, spec-driven development</span></div><div class="skill"><span class="cat">Spoken Languages</span><span class="val">English (fluent), Hebrew (fluent), Russian (conversational)</span></div></section></div></body></html>
+</style></head><body class="parser"><div class="page"><header><h1>Eugene Lerman</h1><div class="title">Senior Software Engineer</div><div class="contacts"><span>Ramat Gan, Israel</span><span class="sep">·</span><span>(+972) 52-3535-231</span><span class="sep">·</span><span>lerman.gene@gmail.com</span><span class="sep">·</span><span>github.com/airbugg</span><span class="sep">·</span><span>linkedin.com/in/lerman-gene</span></div></header><p class="intro">Senior Software Engineer with 12+ years in client infrastructure, frontend architecture and mobile development. Led CI/CD migrations, a localization platform, a React Native migration and AI-assisted development workflows for products serving millions of users.</p><section class="xp"><h2>Professional Experience</h2><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Rylo</span><span class="blurb">AI communication platform for the Deaf and hard-of-hearing</span></div><div class="dates">Feb 2026 – Present</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>One of five engineers on a ground-up rewrite of the company client apps (native iOS/Swift, Android/Kotlin, React Native), shipped in three months using spec-driven, multi-agent AI development workflows.</li><li>Built the client platform for the rewrite from scratch: the apps monorepo, a design system with automated <code>Figma</code> sync, and all client CI/CD.</li><li>Rebuilt the mobile release process: an automated pipeline with a web UI for cutting release branches and shipping builds, and an in-house app-distribution service that replaced <code>Firebase App Distribution</code>.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span><span class="blurb">cross-border banking &amp; remittances</span></div><div class="dates">Dec 2022 – Feb 2026</div></div><div class="entry-sub"><span class="role">Staff Software Engineer · Client Infrastructure</span><span class="loc">Tel Aviv</span></div><ul><li>Lead engineer of the Client Infrastructure team: technical planning and cross-team initiatives across roughly ten teams and three products (~10M monthly users).</li><li>Designed and implemented a localization automation platform (i18next): dynamic translation delivery, version-scoped production hotfixes, and CI-driven string extraction and translator handoff.</li><li>Migrated tens of thousands of UI strings to semantic keys with an LLM service I built: model-suggested names, human approval in a small review UI, changes applied as auto-generated PRs. The code changes themselves took hours.</li><li>Moved all client CI/CD from <code>GitLab</code> to <code>GitHub Actions</code>, cutting pipeline runtimes roughly in half. The cutover took one weekend; teams started Monday on the new system with nothing missing.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Remitly Israel (formerly Rewire)</span></div><div class="dates">Jun 2020 – Dec 2022</div></div><div class="entry-sub"><span class="role">Senior Software Engineer</span><span class="loc">Tel Aviv</span></div><ul><li>Led the migration of the core product from an <code>AngularJS</code>/<code>React</code> web app to <code>React Native</code>, the company&#x27;s first mobile-first architecture.</li><li>Designed an <code>XState</code> orchestration engine for financial flows (send money, deposit, re-authentication) with over-the-air business-logic updates: changes reached users without an app release or store review.</li></ul></article><article class="entry"><div class="entry-head"><div class="entry-co"><span class="company">Wix.com</span></div><div class="dates">Feb 2017 – Nov 2019</div></div><div class="entry-sub"><span class="role">Software Engineer</span><span class="loc">Be’er Sheva / Tel Aviv</span></div><ul><li>Tech lead on Wix Forms, the first first-party app built on the Editor platform SDK; its architecture became the reference for the first-party apps that followed.</li><li>Extracted the Editor&#x27;s user authentication out of the monolith into a standalone module, code that runs under every editor-built site. Still one of my proudest projects.</li></ul></article></section><section class="edu"><h2>Education</h2><div class="edu-row"><span class="degree">BSc, Computer Science &amp; Bioinformatics</span><span class="school">Ben-Gurion University of the Negev</span><span class="dates">2013 – 2017</span></div></section><section class="pubs"><h2>Publications</h2><article class="pub"><div class="pub-head"><span class="pub-title">TissueNet2: A quantitative view of proteins and their interactions across human tissues</span><span class="pub-meta"><span class="pub-journal">Nucleic Acids Research</span><span class="pub-year">2016</span></span></div><div class="pub-authors">Basha O, Barshir R, Sharon M, Lerman E, Kirson B, Hekselman I and Yeger-Lotem E</div></article></section><section class="skills"><h2>Skills</h2><div class="skill"><span class="cat">Languages</span><span class="val">TypeScript, JavaScript, Python, Swift, Kotlin, Objective-C, SQL, Bash</span></div><div class="skill"><span class="cat">Frontend</span><span class="val">React, React Native, Expo, EAS, Nitro Modules, XState, Apollo GraphQL, Redux, MobX, Tailwind CSS, Reanimated, Svelte, Angular, i18next</span></div><div class="skill"><span class="cat">Backend &amp; Infrastructure</span><span class="val">Node.js, Bun, GitHub Actions, GitLab CI, Jenkins, Terraform, Pulumi, AWS, Kubernetes, Helm, Docker</span></div><div class="skill"><span class="cat">AI Tooling</span><span class="val">Claude Code, Codex, Cursor, multi-agent workflows, MCP, agent skill authoring, spec-driven development</span></div><div class="skill"><span class="cat">Spoken Languages</span><span class="val">English (fluent), Hebrew (fluent), Russian (conversational)</span></div></section></div></body></html>

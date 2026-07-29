@@ -1,4 +1,6 @@
-/* The Parser — deliberately boring. Machines first, humans a close second. */
+/* The Parser — deliberately boring. Machines first, humans a close second.
+   Gets the spacing spec (margins, leading, gap hierarchy) but stays visually
+   plain: no mono, no chips, no accent. */
 :root {
   --font-body: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
   --ink: #000;
@@ -7,29 +9,26 @@
   --accent: #000;
   --accent-soft: #000;
   --rule: #999;
-  --fs: 8.6pt;
-  --lh: 1.24;
-  --fs-name: 17pt;
+  --label-ink: #000;
+  --skill-ink: #000;
+  --fs-name: 24pt;
   --fw-name: 700;
   --ls-name: 0;
   --fs-title: 10.5pt;
   --ls-title: 0;
   --tt-title: none;
-  --fs-h2: 10.5pt;
+  --fs-h2: 11pt;
   --fw-h2: 700;
   --ls-h2: 0;
-  --fs-small: 8pt;
   --fs-role: 9pt;
-  --fs-skill: 8.6pt;
-  --entry-gap: 1.7mm;
+  --fs-cat: 9pt;
+  --fs-skill: 9pt;
   --skill-col: 34mm;
-  --pad: 9mm 13mm 6mm;
-  --h2-margin: 2.4mm 0 1mm;
-  --fs-small: 7.7pt;
+  --skill-gap: 1.7mm;
+  --cat-align: left;
 }
 .entry li::marker { color: #000; }
 header .contacts .sep { color: #333; }
 /* ATS: keep publications plain — no small-caps, no italics, labels left. */
 .pub-authors { font-variant: normal; }
 .pub-journal, .pub-year { font-style: normal; }
-.skill .cat { text-align: left; }

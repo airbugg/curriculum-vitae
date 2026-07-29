@@ -1,4 +1,5 @@
-/* The AI-Native Engineer — near-black ink, electric violet, mono accents. */
+/* The AI-Native Engineer — near-black ink, electric violet, mono accents.
+   Full-width hairline rules under section headings. */
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
   --font-mono: 'Roboto Mono', monospace;
@@ -8,28 +9,24 @@
   --font-dates: 'Roboto Mono', monospace;
   --chip-bg: #f3effb;
   --chip-ink: #43356b;
-  --brace: #8f83ab;
   --name-first: #9d94b5;
+  --fw-name-first: 100;
   --ink: #1e2126;
   --ink-strong: #0e1013;
   --muted: #5b616b;
   --accent: #6d28d9;
   --accent-soft: #4c2a8f;
-  --rule: #d8d3e6;
-  --fs: 8.4pt;
-  --lh: 1.25;
-  --fs-name: 18pt;
-  --ls-name: 0.6pt;
-  --fs-h2: 8.6pt;
+  --rule: #ddd6ea;
+  --label-ink: #5b616b;
+  --skill-ink: #2a2e35;
+  --bg-ink: #343048;
+  --fs-name: 24pt;
+  --ls-name: 0;
+  --fs-h2: 10pt;
   --fw-h2: 500;
   --ls-h2: 0.8pt;
-  --fs-small: 7.3pt;
-  --entry-gap: 1.9mm;
   --how-bg: #f5f2fb;
   --how-border: 0.35pt solid #ddd2f0;
-  --how-pad: 2.2mm 3mm;
-  --h2-margin: 2.9mm 0 1.1mm;
-  --pad: 9mm 13mm 7mm;
+  --how-pad: 2mm 3mm;
 }
-h2 { border-bottom: none; padding-bottom: 0; }
 .dates { letter-spacing: -0.3pt; font-style: normal !important; }

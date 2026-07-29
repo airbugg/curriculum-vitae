@@ -1,37 +1,39 @@
-/* The Looker — faithful modern homage to the original CV: centered mono
-   { EUGENE : LERMAN } header, teal accent, chips, quiet single column. */
+/* The Looker — faithful modern homage to the original awesome-cv CV:
+   centered { EUGENE : LERMAN } header (Roboto Mono Thin/Bold), Source Code
+   Pro small-caps title, Source Sans Pro Light body, emerald #00A388 accent. */
 :root {
-  --font-body: 'Roboto', sans-serif;
-  --font-mono: 'Roboto Mono', monospace;
+  --font-body: 'Source Sans Pro', sans-serif;
+  --fw-body: 300;
+  --font-mono: 'Source Code Pro', monospace;
   --font-name: 'Roboto Mono', monospace;
   --font-head: 'Roboto Mono', monospace;
-  --font-title: 'Roboto Mono', monospace;
-  --ink: #33393f;
-  --ink-strong: #1c2126;
+  --font-title: 'Source Code Pro', monospace;
+  --font-dates: 'Source Sans Pro', sans-serif;
+  --ink: #414141;
+  --ink-strong: #2b2b2b;
   --muted: #7b8288;
-  --accent: #00a19a;
-  --accent-soft: #0a8b85;
-  --brace: #3f464c;
-  --name-first: #9aa1a7;
-  --rule: #e4e7e9;
+  --accent: #00A388;
+  --accent-soft: #00937b;
+  --name-first: #999;
+  --fw-name-first: 100;
+  --fw-name-brace: 400;
+  --rule: #d8dbdd;
   --chip-bg: #f2f2f2;
-  --fs: 8.5pt;
-  --lh: 1.26;
-  --fs-name: 18pt;
-  --ls-name: 1pt;
-  --fs-title: 10pt;
-  --ls-title: 3pt;
-  --fs-small: 7.4pt;
-  --fs-h2: 10.5pt;
-  --fw-h2: 500;
-  --ls-h2: 0.8pt;
-  --h2-rule: none;
-  --h2-pad: 0;
-  --h2-margin: 2.9mm 0 1.2mm;
-  --entry-gap: 2.1mm;
-  --pad: 8mm 13mm 7mm;
+  --chip-ink: #333;
+  --fs-name: 24pt;
+  --ls-name: 0;
+  --fs-title: 11pt;
+  --ls-title: 0.8pt;
+  --tt-title: none;
+  --fs-h2: 11pt;
+  --fw-h2: 700;
+  --ls-h2: 0.7pt;
+  /* looker skills flavor: mono uppercase labels echoing the { S }KILLS head */
+  --font-cat: 'Roboto Mono', monospace;
+  --tt-cat: uppercase;
+  --fs-cat: 7pt;
+  --ls-cat: 0.6pt;
 }
 header { text-align: center; }
-header .contacts { margin-top: 2mm; }
-h2 { border-bottom: none; }
-.intro { margin-top: 2.4mm; line-height: 1.32; }
+header .title { font-variant: small-caps; }
+.intro { margin-left: auto; margin-right: auto; }

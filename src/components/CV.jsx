@@ -22,15 +22,19 @@ function Name({ variant }) {
   );
 }
 
-// { E}XPERIENCE-style headings: brace-wrapped, accent capital.
+// { E}XPERIENCE-style headings: brace-wrapped, accent capital. The heading
+// word itself is wrapped in .hw so themes can anchor decorations (e.g. the
+// generalist's short accent bar) to the first LETTER, not the brace.
 function Heading({ variant, children }) {
   if (variant.nameStyle === 'plain') return <h2>{children}</h2>;
   const t = String(children).toUpperCase();
   return (
     <h2>
       <span className="hb">{'{ '}</span>
-      <span className="hc">{t[0]}</span>
-      {t.slice(1)}
+      <span className="hw">
+        <span className="hc">{t[0]}</span>
+        {t.slice(1)}
+      </span>
       <span className="hb">{' }'}</span>
     </h2>
   );
@@ -100,6 +104,34 @@ function Experience({ variant }) {
   );
 }
 
+// Skill values: a whole literal [ ... ] group renders as ONE continuous mono
+// run (span.bg) with muted brackets — no per-chip backgrounds here. Backticks
+// inside a group are dropped (the group is already mono); text outside groups
+// falls back to normal Rich rendering.
+function SkillValue({ text }) {
+  const str = String(text);
+  const out = [];
+  const re = /\[[^\]]*\]/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(str))) {
+    if (m.index > last) {
+      out.push(<Rich key={out.length} text={str.slice(last, m.index)} />);
+    }
+    const inner = m[0].slice(1, -1).replaceAll('`', '');
+    out.push(
+      <span className="bg" key={out.length}>
+        <span className="bk">[</span>
+        {inner}
+        <span className="bk">]</span>
+      </span>,
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < str.length) out.push(<Rich key={out.length} text={str.slice(last)} />);
+  return out;
+}
+
 function Skills({ variant }) {
   return (
     <section className="skills">
@@ -108,7 +140,7 @@ function Skills({ variant }) {
         <div className="skill" key={cat}>
           <span className="cat">{cat}</span>
           <span className="val">
-            <Rich text={variant.skillsRaw ? key : skills[key] ?? key} />
+            <SkillValue text={variant.skillsRaw ? key : skills[key] ?? key} />
           </span>
         </div>
       ))}

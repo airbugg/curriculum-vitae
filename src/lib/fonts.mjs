@@ -5,6 +5,8 @@ const ROOT = process.cwd();
 
 const FONT_SETS = {
   sourceSans: [
+    ['Source Sans Pro', 'SourceSansPro-Light.otf', 300, 'normal'],
+    ['Source Sans Pro', 'SourceSansPro-LightIt.otf', 300, 'italic'],
     ['Source Sans Pro', 'SourceSansPro-Regular.otf', 400, 'normal'],
     ['Source Sans Pro', 'SourceSansPro-It.otf', 400, 'italic'],
     ['Source Sans Pro', 'SourceSansPro-Semibold.otf', 600, 'normal'],
@@ -17,8 +19,8 @@ const FONT_SETS = {
     ['Roboto', 'Roboto-Medium.ttf', 500, 'normal'],
     ['Roboto', 'Roboto-Bold.ttf', 700, 'normal'],
   ],
-  robotoThin: [['Roboto Thin', 'Roboto-Thin.ttf', 100, 'normal']],
   mono: [
+    ['Roboto Mono', 'RobotoMono-Thin.ttf', 100, 'normal'],
     ['Roboto Mono', 'RobotoMono-Light.ttf', 300, 'normal'],
     ['Roboto Mono', 'RobotoMono-Regular.ttf', 400, 'normal'],
     ['Roboto Mono', 'RobotoMono-Italic.ttf', 400, 'italic'],
@@ -26,8 +28,11 @@ const FONT_SETS = {
     ['Roboto Mono', 'RobotoMono-Bold.ttf', 700, 'normal'],
   ],
   codePro: [
+    ['Source Code Pro', 'SourceCodePro-ExtraLight.ttf', 200, 'normal'],
+    ['Source Code Pro', 'SourceCodePro-Light.ttf', 300, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Semibold.ttf', 600, 'normal'],
+    ['Source Code Pro', 'SourceCodePro-Bold.ttf', 700, 'normal'],
   ],
 };
 
@@ -35,7 +40,7 @@ const THEME_FONTS = {
   platform: ['sourceSans', 'codePro', 'mono'],
   generalist: ['roboto', 'mono'],
   ai: ['sourceSans', 'mono'],
-  looker: ['roboto', 'mono'],
+  looker: ['sourceSans', 'codePro', 'mono'],
   parser: [],
 };
 
