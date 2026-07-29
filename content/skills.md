@@ -1,20 +1,22 @@
 # Skill groups
 
 Variants pick groups by the heading key below; the body line is the value.
-Literal [ brackets ] and `backtick chips` are part of the rendered design.
+Rule (research-derived): exactly ONE [ bracket group ] per row, the whole
+value renders as a single mono run, no prose qualifiers, one line per row.
+Ordering carries emphasis: first item = strongest.
 
 ## core
 
-daily driver [ `TypeScript`, `React Native`, `Node` ], at home in [ client infrastructure: release automation, mobile CI, localization ]
+[ TypeScript, React Native, Node, client CI/CD ]
 
 ## native
 
-[ `Swift`, `Kotlin`, `Objective-C` ], enough to write, patch and review native code
+[ Swift, Kotlin, Objective-C ]
 
 ## ai
 
-shipping daily with [ `Claude Code`, `Codex`, `Cursor` ]; writing skills and MCP tooling, keeping agent context lean
+[ Claude Code, Codex, Cursor ]
 
 ## spoken
 
-fluent in [ English and Hebrew ], conversant in [ Russian ]
+[ English, Hebrew, Russian (conversational) ]

@@ -20,7 +20,7 @@ export const variants = [
     skills: [
       ['Core', 'core'],
       ['Native', 'native'],
-      ['AI practice', 'ai'],
+      ['AI tooling', 'ai'],
       ['Languages', 'spoken'],
     ],
   },
@@ -42,7 +42,7 @@ export const variants = [
     skills: [
       ['Core', 'core'],
       ['Native', 'native'],
-      ['AI practice', 'ai'],
+      ['AI tooling', 'ai'],
       ['Languages', 'spoken'],
     ],
   },
@@ -91,7 +91,7 @@ export const variants = [
     skills: [
       ['Core', 'core'],
       ['Native', 'native'],
-      ['AI practice', 'ai'],
+      ['AI tooling', 'ai'],
       ['Languages', 'spoken'],
     ],
   },
