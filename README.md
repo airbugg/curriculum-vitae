@@ -15,7 +15,8 @@ Markdown content → React components → CSS themes → headless Chromium → P
 
 ```sh
 npm install
-make            # or: node build.mjs
+make            # web toolchain → dist/*.pdf  (node build.mjs)
+make typst      # Typst toolchain → dist/typst/*.pdf  (typst/build.sh)
 ```
 
 Requires Node ≥ 18 and a Chromium binary (looked up under `/opt/pw-browsers`,
@@ -32,7 +33,11 @@ variant spills past one page.
   `react-dom/server`, bundled by esbuild, printed by Chromium
 - `src/themes/` — `base.css` skeleton (incl. the `{ EUGENE : LERMAN }`
   braces identity) + one CSS file per variant
-- `dist/` — the PDFs
+- `typst/` + `scripts/export-content.mjs` — the parallel Typst toolchain:
+  content is exported to JSON, `typst/cv.typ` renders the same five
+  variants (requires a `typst` binary; the build script expects it on
+  PATH or in `~/.local/bin`)
+- `dist/` — the PDFs (web); `dist/typst/` — the Typst renders
 
 The previous LaTeX (awesome-cv) toolchain lives on in git history and the
 `resume/` directory.
