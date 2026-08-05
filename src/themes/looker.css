@@ -25,3 +25,6 @@
   --fs-h2: 10.5pt;
 }
 .dates { letter-spacing: -0.2pt; font-style: normal !important; }
+/* Centered header, as in the original CV. */
+header { text-align: center; }
+.intro { margin-left: auto; margin-right: auto; }
