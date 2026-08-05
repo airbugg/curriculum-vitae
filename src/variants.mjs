@@ -53,25 +53,20 @@ export const variants = [
 
   {
     file: 'eugene-lerman',
-    label: 'The Looker',
+    label: 'The Flagship',
     theme: 'looker',
     layout: 'single',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'rylo', bullets: ['rewrite', 'onboarding', 'platform', 'release', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys', 'apollo'] },
       { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
-      { job: 'lab', bullets: ['sole'] },
     ],
-    skills: [
-      ['Core', 'core'],
-      ['Native', 'native'],
-      ['AI tooling', 'ai'],
-      ['Languages', 'spoken'],
-    ],
+    skills: null,
   },
 
   {

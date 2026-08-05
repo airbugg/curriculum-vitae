@@ -32,3 +32,6 @@ header .contacts .sep { color: #333; }
 /* ATS: keep publications plain — no small-caps, no italics, labels left. */
 .pub-authors { font-variant: normal; }
 .pub-journal, .pub-year { font-style: normal; }
+/* The pub subheading and unified role rows cost a few mm; recover them. */
+:root { --entry-gap: 3mm; --li-gap: 0.6mm; }
+:root { --lh: 1.3; --h2-margin: 4mm 0 1mm; --h2-margin-lower: 4.4mm; }

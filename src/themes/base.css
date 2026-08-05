@@ -78,7 +78,14 @@ h1 .nb:last-child { margin-left: 0.5em; }
 h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); margin: 0 0.2em 0 0.26em; }
 h1 .nf { font-weight: var(--fw-name-first, 300); color: var(--name-first, #999); letter-spacing: var(--ls-name, 0); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
-h2 .hb { font-weight: 400; color: var(--h2-brace, var(--ink-strong, var(--ink))); }
+/* Braces optically sit a hair low next to uppercase heading text (mono braces
+   center on the x-height); nudge them up to align with the caps. */
+h2 .hb {
+  font-weight: 400;
+  color: var(--h2-brace, var(--ink-strong, var(--ink)));
+  position: relative;
+  top: var(--hb-nudge, -0.055em);
+}
 h2 .hc { color: var(--accent); }
 h2 .hw { position: relative; }
 
@@ -141,15 +148,13 @@ h2 {
   line-height: 1.15;
 }
 .entry-sub .role { font-weight: 600; color: var(--accent-soft, var(--accent)); }
-.entry-sub .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
 
-/* Merged company block (e.g. the two Remitly roles): the company header,
-   its location and the combined span appear ONCE; each role gets its own
-   compact role→dates line, so a promotion reads as two roles in one block. */
-.entry-co .loc { margin-left: 1.8mm; color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); }
-.id-braces .entry-co .loc { color: var(--accent); font-style: italic; }
-.entry.group .role-block + .role-block { margin-top: 2.4mm; }
-.entry.group .role-row .dates { font-size: var(--fs-small, 8pt); }
+/* One alignment scheme for every workplace: the company line carries the
+   LOCATION on the right; each role line carries its own DATES on the right.
+   A promotion is just two stacked role blocks inside one company entry. */
+.entry-head > .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); white-space: nowrap; }
+.id-braces .entry-head > .loc { color: var(--accent); font-style: italic; }
+.entry .role-block + .role-block { margin-top: 2.4mm; }
 
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
@@ -203,10 +208,18 @@ h2 {
 }
 
 /* ---------------------------------------- publication (inside education) ---- */
-/* Folded beneath the degree row: the paper title is semibold and a touch
-   smaller than the degree line, so the section reads as one calm block. */
+/* Folded beneath the degree row under a small labeled subheading, so the
+   paper doesn't float unexplained under the degree line. */
+.pub-sub {
+  margin: 2.4mm 0 0.7mm;
+  font-family: var(--font-cat, inherit);
+  font-size: var(--fs-small, 8pt);
+  font-weight: 600;
+  font-variant: var(--pub-sub-variant, small-caps);
+  letter-spacing: 0.5pt;
+  color: var(--muted, #5a6470);
+}
 .pub { margin-bottom: var(--pub-gap, 1.4mm); break-inside: avoid; }
-.edu .pub { margin-top: 1.7mm; }
 .pub-head {
   display: flex;
   justify-content: space-between;

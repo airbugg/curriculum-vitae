@@ -50,6 +50,7 @@ function Header({ variant }) {
     person.github,
     person.linkedin,
     person.site,
+    variant.contactExtra,
   ].filter(Boolean);
   return (
     <header>
@@ -81,51 +82,35 @@ function Bullets({ section, job }) {
   );
 }
 
-// A single-company block. One company header (company + blurb + location +
-// dates), then one role line per section. When a company holds two consecutive
-// roles (the Remitly promotion) they read as two role lines inside one block:
-// the company header, its location and the combined span appear ONCE, and each
-// role carries its own dates — the promotion is legible at a glance.
+// A single-company block with one consistent alignment scheme everywhere:
+// the company line carries the LOCATION on the right; every role line carries
+// its own DATES on the right. A company holding two consecutive roles (the
+// Remitly promotion) simply stacks two role lines — no combined span, so
+// nothing on adjacent lines reads as accidentally related.
 function Group({ group }) {
   const first = jobs[group[0].job];
   const multi = group.length > 1;
-  // Combined span for a merged block: last role's start … first role's end
-  // (sections run newest-first). Dates fields are "Start – End" en-dash pairs.
-  const end = (String(first.dates).split('–')[1] || '').trim();
-  const start = (String(jobs[group[group.length - 1].job].dates).split('–')[0] || '').trim();
-  const spanDates = multi ? `${start} – ${end}` : first.dates;
   return (
     <article className={multi ? 'entry group' : 'entry'}>
       <div className="entry-head">
         <div className="entry-co">
           <span className="company">{first.company}</span>
           {first.blurb && <span className="blurb">{first.blurb}</span>}
-          {multi && first.location && <span className="loc">{first.location}</span>}
         </div>
-        <div className="dates">{spanDates}</div>
+        <div className="loc">{first.location}</div>
       </div>
-      {multi ? (
-        group.map((s) => {
-          const job = jobs[s.job];
-          return (
-            <div className="role-block" key={s.job}>
-              <div className="entry-sub role-row">
-                <span className="role">{job.role}</span>
-                <span className="dates">{job.dates}</span>
-              </div>
-              <Bullets section={s} job={job} />
+      {group.map((s) => {
+        const job = jobs[s.job];
+        return (
+          <div className="role-block" key={s.job}>
+            <div className="entry-sub role-row">
+              <span className="role">{job.role}</span>
+              <span className="dates">{job.dates}</span>
             </div>
-          );
-        })
-      ) : (
-        <>
-          <div className="entry-sub">
-            <span className="role">{first.role}</span>
-            <span className="loc">{first.location}</span>
+            <Bullets section={s} job={job} />
           </div>
-          <Bullets section={group[0]} job={first} />
-        </>
-      )}
+        );
+      })}
     </article>
   );
 }
@@ -184,6 +169,7 @@ function SkillValue({ text }) {
 }
 
 function Skills({ variant }) {
+  if (!variant.skills) return null;
   return (
     <section className="skills">
       <Heading variant={variant}>{variant.headings.skills}</Heading>
@@ -199,9 +185,9 @@ function Skills({ variant }) {
   );
 }
 
-// { EDUCATION } — the degree row, then the publication folded in beneath it:
-// title semibold, journal accent-italic + year right-aligned, authors on a
-// small muted line below. One heading where there used to be two.
+// { EDUCATION } — the degree row, then the publication beneath it under its
+// own small subheading (one top-level heading, but the publication is clearly
+// labeled instead of floating unexplained below the degree).
 function Education({ variant }) {
   return (
     <section className="edu">
@@ -211,6 +197,7 @@ function Education({ variant }) {
         <span className="school">{education.school}</span>
         <span className="dates">{education.dates}</span>
       </div>
+      <div className="pub-sub">Publications</div>
       {publications.map((p) => (
         <article className="pub" key={p.title}>
           <div className="pub-head">
