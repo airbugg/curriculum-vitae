@@ -89,7 +89,14 @@ header .contacts .sep { margin: 0 1.6mm; color: var(--accent); }
    cap height): generous air around the braces, a tight colon hugging the two
    words — not the old uniform monospace-space airiness. Values are em of the
    24pt name, so they scale with --fs-name. */
-h1 .nb { font-weight: var(--fw-name-brace, 700); color: var(--name-brace, var(--ink-strong, var(--ink))); }
+h1 .nb {
+  font-weight: var(--fw-name-brace, 700);
+  color: var(--name-brace, var(--ink-strong, var(--ink)));
+  /* Mono braces center on the x-height; against the all-caps name they sit
+     visibly low — lift them to center on the caps (same fix as h2 .hb). */
+  position: relative;
+  top: var(--nb-nudge, -0.06em);
+}
 h1 .nb:first-child { margin-right: 0.5em; }
 h1 .nb:last-child { margin-left: 0.5em; }
 h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); margin: 0 0.2em 0 0.26em; }
