@@ -13,10 +13,11 @@ Stable direct links:
 
 | Variant | For | Download |
 | --- | --- | --- |
-| Flagship | humans, referrals | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
+| Flagship (modernist grid) | humans, referrals | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
 | Platform | infra / DevEx roles | [eugene-lerman-platform.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-platform.pdf) |
 | AI-Native | AI-first companies | [eugene-lerman-ai-native.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ai-native.pdf) |
 | Parser | ATS / job boards | [eugene-lerman-ats.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ats.pdf) |
+| Classic | the previous flagship look | [eugene-lerman-classic.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-classic.pdf) |
 
 PDFs are build artifacts, not source — they aren't committed here.
 

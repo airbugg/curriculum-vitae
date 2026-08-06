@@ -399,9 +399,10 @@ function GridPage({ variant }) {
   const [first, last] = person.name.toUpperCase().split(' ');
   return (
     <div className="page grid-page">
-      {/* Centered identity above the grid: name + title only. The braces
-          stay quiet structural glyphs in the muted data ink; the title line
-          carries the emerald (the C accent family). */}
+      {/* Centered identity above the grid: name, title, and the contact run
+          organized C's way — one centered line under the title instead of a
+          stacked data-column block. The braces stay quiet structural glyphs
+          in the muted data ink; the title line carries the emerald. */}
       <header className="g-header">
         <h1>
           <span className="g-nb">{'{'}</span>
@@ -411,22 +412,21 @@ function GridPage({ variant }) {
           <span className="g-nb">{'}'}</span>
         </h1>
         <div className="g-title">{person.title}</div>
+        <div className="g-contactline">
+          {contacts.map((c, i) => (
+            <React.Fragment key={c}>
+              {i > 0 && <span className="sep">·</span>}
+              <span>{c}</span>
+            </React.Fragment>
+          ))}
+        </div>
       </header>
 
-      <div className="g-row g-introrow">
-        <div className="g-meta">
-          <div className="g-contacts">
-            {contacts.map((c) => (
-              <div key={c}>{c}</div>
-            ))}
-          </div>
-        </div>
-        <div className="g-content">
-          <p className="intro">
-            <NoBreakCompounds text={variant.intro} />
-          </p>
-        </div>
-      </div>
+      {/* With the contacts gone from the data column, the intro no longer
+          needs the grid row — it runs as a single full-measure lead. */}
+      <p className="intro g-intro">
+        <NoBreakCompounds text={variant.intro} />
+      </p>
 
       <section className="g-section">
         <GridSecMark>{variant.headings.experience}</GridSecMark>

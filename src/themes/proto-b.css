@@ -6,7 +6,9 @@
    (emerald) used only for section labels — signal, never decoration.
    The braces identity joins the grid as quiet structure: mono braces in
    the muted data-column ink around the name and section labels, never in
-   the accent. No chips. Own DOM (.grid-page); base.css is mostly bypassed.
+   the accent. Promoted to the canonical variant: it took C's centered
+   contact line and C's boxless emerald-mono tech chips on the way up.
+   Own DOM (.grid-page); base.css is mostly bypassed.
    ======================================================================= */
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
@@ -35,7 +37,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* ---- header: name + title, centered above the grid ---- */
 .g-header {
   text-align: center;
-  padding-bottom: 2.4mm;
+  padding-bottom: 3mm;
   border-bottom: 1pt solid var(--ink-strong);
 }
 .g-header h1 {
@@ -90,28 +92,33 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
      line half a track left; pad the same amount on the left to re-center. */
   padding-left: 2pt;
 }
-
-/* ---- intro sits on the same grid: contacts in the data column ---- */
-.g-introrow { margin-top: 3.8mm; }
-/* Sized so the longest line (linkedin.com/in/lerman-gene, 27 mono chars)
-   fits the 40mm data column — a URL must never break mid-token. */
-.g-contacts {
-  font-family: var(--font-data);
-  font-size: 6.8pt;
-  line-height: 1.55;
+/* Contacts organized C's way: one centered sans line under the title, all
+   six items separated by interpuncts. Sans (not the data mono) so the run
+   fits the measure on a single line; the seps take the accent — the same
+   functional-signal role it plays on the section labels. */
+.g-contactline {
+  margin-top: 1.5mm;
+  /* 7.5pt / 1.2mm seps: at C's 7.8pt / 1.6mm the six-item run measures
+     175.7mm — wider than the 174mm measure, so the centered nowrap line
+     overflowed the right margin (measured at 300dpi). This sizes the run
+     to ~166mm, ~4mm clear of each margin. */
+  font-size: 7.5pt;
   color: var(--muted);
+  white-space: nowrap;
 }
-.g-contacts div { white-space: nowrap; }
-.g-introrow .intro {
-  margin: 0;
-  max-width: 155mm;
+.g-contactline .sep { margin: 0 1.2mm; color: var(--accent); }
+
+/* ---- intro: a single full-measure lead under the header rule ---- */
+.intro.g-intro {
+  margin: 4.4mm 0 0;
+  max-width: 160mm;
   font-size: 9.5pt;
   line-height: 1.4;
   color: var(--ink);
 }
 
 /* ---- section marker: a full-width hairline row, label in the data column ---- */
-.g-section { margin-top: 4.4mm; }
+.g-section { margin-top: 5.2mm; }
 .g-secmark {
   font-family: var(--font-data);
   font-size: 8pt;
@@ -119,7 +126,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   text-transform: uppercase;
   color: var(--accent);
   padding-bottom: 1.5mm;
-  margin-bottom: 3.2mm;
+  margin-bottom: 3.6mm;
   border-bottom: 0.5pt solid var(--rule);
 }
 /* { EXPERIENCE } — the braces join the section mark as quiet structural
@@ -140,7 +147,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-secmark .g-sw { margin: 0 calc(0.42em - 2.5pt) 0 0.42em; }
 
 /* ---- entry rows ---- */
-.g-section .g-row { margin-bottom: 3.4mm; break-inside: avoid; }
+.g-section .g-row { margin-bottom: 4.1mm; break-inside: avoid; }
 .g-section .g-row:last-child { margin-bottom: 0; }
 /* A promotion row within the same employer sits tighter to its parent, so the
    lone dates block reads bound to the company above rather than floating. */
@@ -196,8 +203,16 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-content li:last-child { margin-bottom: 0; }
 .g-content li::marker { color: var(--accent); }
 
-/* tech spans stay plain — the grid, not colour, does the organising. */
-.proto-b code { font-family: inherit; background: none; color: inherit; padding: 0; }
+/* Tech terms in bullets get C's chip treatment — the data mono in the deep
+   emerald, no boxes. Subtle enough not to fight the grid, distinct enough
+   to read as terms of art rather than prose. */
+.proto-b code {
+  font-family: var(--font-data);
+  font-size: 92%;
+  color: var(--accent-deep);
+  background: none;
+  padding: 0;
+}
 
 /* ---- education / publications reuse the same module ----
    Journal + year are data (meta column); title and the authors line are

@@ -31,7 +31,10 @@
   --font-title: var(--font-display);
   --fs-title: 10pt;
   --ls-title: 2.4pt;
-  --fs-contacts: 7.8pt;
+  /* 7.5pt, with tighter seps below: at 7.8pt / 1.6mm seps the six-item
+     contact run measures 175.7mm against a 170mm measure — the centered
+     nowrap line overflowed the right margin by 6mm (measured at 300dpi). */
+  --fs-contacts: 7.5pt;
 }
 
 body.proto-c { font-family: var(--font-body); color: var(--ink); }
@@ -53,6 +56,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   padding-left: var(--ls-title);
 }
 .ed-page > header .contacts { margin-top: 1.4mm; }
+.ed-page > header .contacts .sep { margin: 0 1.2mm; }
 /* The colon keeps C's emerald — the identity's pivot glyph. */
 .proto-c h1 .nc { color: var(--accent); }
 

@@ -523,3 +523,45 @@ were re-tuned against D's own measurements.
 All **eight** variants build green at one page; brace contexts measured at
 300 dpi as above; full-page and 40 % passes on B, C, D confirm hierarchy at
 arm's length.
+
+## §9 · Prototype B promoted to canonical (owner decision)
+
+The owner settled on Prototype B as the default, canonical variant, with two
+modifications imported from C. B now builds as **`eugene-lerman.pdf`** (the
+stable release URL unchanged); the old looker-theme flagship moved to
+`eugene-lerman-classic.pdf`. The `eugene-lerman-proto-b` name is retired.
+
+### 9a. The two imports from C
+
+- **Tech chips restored** — B's original "no chips" stance is reversed: tech
+  terms in bullets get C's boxless treatment (data mono, 92 %, deep emerald
+  `#00735f`). Subtle enough not to fight the grid, distinct enough to read
+  as terms of art.
+- **Contact organization** — the stacked contact block leaves the data
+  column for C's arrangement: one centered sans line under the title, six
+  items with accent interpuncts, above the header rule. The intro then runs
+  as a single full-measure lead (no more grid row with an empty meta cell).
+
+### 9b. A latent overflow, found and fixed in three themes
+
+Measuring the new line at 300 dpi exposed a pre-existing defect: the
+six-item run at 7.8 pt with 1.6 mm sep margins is **175.7 mm** wide —
+wider than C's 170 mm and B/D's 174 mm measures — so the centered
+`nowrap` line silently overflowed the right margin (C by 6 mm, D by both
+margins). Fixed at 7.5 pt / 1.2 mm seps in `proto-b` (`.g-contactline`),
+`proto-c` and `proto-d`; the run now measures ~166 mm.
+
+| Page | contact-line slack L / R @300 dpi | before |
+|---|---|---|
+| B (canonical) | 48 / 47 px | −1 / −24 px (overflow) |
+| C | 25 / 24 px | 3 / −71 px (overflow) |
+| D | 48 / 47 px | −21 / −48 px (overflow) |
+
+### 9c. Fill redistribution
+
+The header reorg freed ~7.5 mm of page (contact stack taller than the
+intro it shared a row with), growing the trailing void to 9.5 mm past the
+bottom pad. Redistributed into the rhythm: header pad 2.4→3 mm, intro gap
+3.8→4.4 mm, section gaps 4.4→5.2 mm, secmark gap 3.2→3.6 mm, entry rows
+3.4→4.1 mm. Content now ends 3.2 mm past the pad; name/title/contacts
+measure centered to ≤1 px.

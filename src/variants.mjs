@@ -3,6 +3,35 @@
 // nameStyle 'plain' opts out of the { EUGENE : LERMAN } braces identity (ATS).
 
 export const variants = [
+  // THE FLAGSHIP — the canonical variant, promoted from Prototype B.
+  // Strict modernist grid: hard left meta-column (company / blurb / location
+  // / dates / tenure as a data column) against a right content column,
+  // visible structural asymmetry, one functional accent (emerald).
+  // Müller-Brockmann. The braces identity rendered as quiet structure — mono
+  // braces in the muted data ink around name and section labels. It took two
+  // things from Prototype C on the way up: the centered contact line under
+  // the title, and the boxless emerald-mono tech chips in the bullets.
+  // (nameStyle 'plain' only opts out of base.css's id-braces styling; the
+  // grid layout carries its own brace markup.)
+  {
+    file: 'eugene-lerman',
+    label: 'The Flagship · Modernist Grid',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
   {
     file: 'eugene-lerman-platform',
     label: 'The Platform Engineer',
@@ -52,8 +81,8 @@ export const variants = [
   },
 
   {
-    file: 'eugene-lerman',
-    label: 'The Flagship',
+    file: 'eugene-lerman-classic',
+    label: 'The Classic',
     theme: 'looker',
     layout: 'single',
     intro:
@@ -137,31 +166,8 @@ export const variants = [
     skills: null,
   },
 
-  // B — STRICT MODERNIST GRID. Hard left meta-column (company / location /
-  // dates as a data column) against a right content column, visible structural
-  // asymmetry, one functional accent. Müller-Brockmann. The braces identity
-  // rendered as quiet structure — mono braces in the muted data ink around
-  // name and section labels — no chips; colour is a signal, never decoration.
-  // (nameStyle 'plain' only opts out of base.css's id-braces styling; the
-  // grid layout carries its own brace markup.)
-  {
-    file: 'eugene-lerman-proto-b',
-    label: 'Prototype B · Modernist Grid',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
-    contactExtra: 'English · Hebrew · Russian',
-    headings: { experience: 'Experience', education: 'Education' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
+  // B — STRICT MODERNIST GRID: promoted to the canonical `eugene-lerman`
+  // at the top of this list. No longer built under a prototype name.
 
   // C — EDITORIAL / EXPRESSIVE. Strong scale contrast — a big quiet hero,
   // small dense text — and the braces identity amplified into the layout: giant

@@ -28,7 +28,10 @@
   --font-title: var(--font-display);
   --fs-title: 10pt;
   --ls-title: 2.4pt;
-  --fs-contacts: 7.8pt;
+  /* 7.5pt, with tighter seps below: at 7.8pt / 1.6mm seps the six-item
+     contact run measures 175.7mm against this page's 174mm measure — the
+     centered nowrap line overflowed both margins (measured at 300dpi). */
+  --fs-contacts: 7.5pt;
 }
 
 body.proto-d { font-family: var(--font-body); color: var(--ink); }
@@ -48,6 +51,7 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
   padding-left: var(--ls-title); /* re-center under trailing letter-spacing */
 }
 .hy-page > header .contacts { margin-top: 1.7mm; }
+.hy-page > header .contacts .sep { margin: 0 1.2mm; }
 .proto-d h1 .nc { color: var(--accent); }
 /* Header y-phase here rounds the brace overshoot 9-above/11-below @300dpi
    (C measures 10/10 from the same base metrics); a hair more lift evens it. */
