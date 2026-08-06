@@ -32,6 +32,22 @@ header .contacts .sep { color: #333; }
 /* ATS: keep publications plain — no small-caps, no italics, labels left. */
 .pub-authors { font-variant: normal; }
 .pub-journal, .pub-year { font-style: normal; }
+/* ATS: the at-a-glance summary stays plain text — no italics. */
+:root { --summary-style: normal; --fs-summary: 8.6pt; --summary-gap: 0.3mm; }
 /* The pub subheading and unified role rows cost a few mm; recover them. */
-:root { --entry-gap: 3mm; --li-gap: 0.6mm; }
-:root { --lh: 1.3; --h2-margin: 4mm 0 1mm; --h2-margin-lower: 4.4mm; }
+:root { --entry-gap: 2.8mm; --li-gap: 0.5mm; }
+:root { --lh: 1.28; --h2-margin: 3.4mm 0 0.9mm; --h2-margin-lower: 4.2mm; }
+/* The Remitly/Rewire split and the per-role summaries cost ~19mm; absorbed
+   at the spec floors (9pt body, 128% leading, 15mm sides) — content intact. */
+:root {
+  --fs: 9pt;
+  --pad: 12mm 15mm 14mm;
+  --intro-margin: 2.6mm 0 0;
+  --skill-gap: 1.4mm;
+}
+
+/* Round 2: remaining overflow absorbed in the secondary layer. */
+:root { --fs-name: 22pt; --skill-gap: 1.2mm; --li-gap: 0.35mm; --entry-gap: 2.2mm; --pad: 12mm 14mm 12mm; }
+header .contacts { margin-top: 0.5mm; }
+.entry ul { margin-top: 1.1mm; }
+.pub-sub { margin: 1.8mm 0 0.5mm; }

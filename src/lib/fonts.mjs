@@ -45,6 +45,7 @@ const THEME_FONTS = {
   'proto-a': ['sourceSans'], // reduction — one family only
   'proto-b': ['sourceSans', 'codePro'], // grid — sans content + mono data column
   'proto-c': ['sourceSans', 'codePro'], // editorial — sans text + mono braces/display
+  'proto-d': ['sourceSans', 'codePro'], // grid × editorial hybrid
 };
 
 export function fontFaces(theme) {

@@ -16,6 +16,22 @@
   --muted: #6a737e;
   --accent: #00A388;
   --accent-deep: #00735f;
+
+  /* Centered flagship-style header ("more like the original latex version"):
+     { EUGENE : LERMAN } at 24pt in the display mono, wearing C's emerald.
+     The brace/colon metrics (0.5em / 0.57em word gaps, -0.048em / -0.07em
+     lifts) live in base.css and were pixel-measured at this exact size and
+     face for the flagship — reused, then re-verified for this theme. */
+  --font-name: var(--font-display);
+  --fs-name: 24pt;
+  --ls-name: 0.3pt;
+  --name-brace: var(--accent);
+  --name-first: #93a39e;
+  --fw-name-first: 200;
+  --font-title: var(--font-display);
+  --fs-title: 10pt;
+  --ls-title: 2.4pt;
+  --fs-contacts: 7.8pt;
 }
 
 body.proto-c { font-family: var(--font-body); color: var(--ink); }
@@ -27,69 +43,30 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   flex-direction: column;
 }
 
-/* ---- HERO: big, quiet, lots of air. Occupies the top with intent. ----
-   36pt (down from the first pass's 44pt on owner feedback, -18%): still a
-   display moment against the 8.6pt body (4.2:1), no longer a poster. */
-.ed-hero { margin-bottom: 3mm; }
-.ed-name {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 36pt;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.4pt;
-  color: var(--ink-strong);
-}
-.ed-name .nb { color: var(--accent); font-weight: 400; }
-/* The base -0.048em lift overshoots at display sizes: measured overshoot was
-   22.5px above cap-top vs 15px below baseline @300dpi. -0.046em balances it
-   (re-verified after the 44pt→36pt reduction: 15 vs 15.5px). */
-.ed-name .nb { --nb-nudge: -0.046em; }
-.ed-name .nb:first-child { margin-right: 0.12em; }
-/* +0.044em vs the opening side: bold N's right sidebearing is tighter than
-   the light E's left sidebearing (measured 61px vs 53px at 300dpi). */
-.ed-name .nb:last-child { margin-left: 0.164em; }
-.ed-name .nf { color: #aeb7bd; font-weight: 300; }
-/* The colon is the pivot of the identity: mono colons centre on the x-height
-   and read low + small against 44pt caps. Lift it to the caps' optical centre
-   (transform, not top — see base.css h1 .nb) and weight it up so it reads as
-   a deliberate mark, not a stray one. The gaps are deliberately asymmetric:
-   the colon binds tight to LERMAN (the value in the key:value pair), with
-   the EUGENE-side gap ~1.4x the LERMAN-side gap. */
-.ed-name .nc {
-  color: var(--accent);
-  margin: 0 0.03em 0 0.2em;
-  font-weight: 700;
-  --nc-nudge: -0.057em;
-}
-.ed-name .nl { color: var(--ink-strong); font-weight: 600; }
-
-.ed-title {
-  margin-top: 3.2mm;
-  font-family: var(--font-display);
-  font-size: 10pt;
-  letter-spacing: 4pt;
-  text-transform: uppercase;
+/* ---- HEADER: centered, flagship structure, emerald voice ---- */
+.ed-page > header { text-align: center; }
+.ed-page > header .title {
   color: var(--accent-deep);
+  margin-top: 1.2mm;
+  /* Trailing letter-spacing after the last glyph would shift the centered
+     line half a track left; pad the same amount on the left to re-center. */
+  padding-left: var(--ls-title);
 }
+.ed-page > header .contacts { margin-top: 1.4mm; }
+/* The colon keeps C's emerald — the identity's pivot glyph. */
+.proto-c h1 .nc { color: var(--accent); }
 
-/* The intro is a display line — the big quiet moment of scale contrast. */
+/* The intro stays the display moment — the one big quiet line of scale
+   contrast — now a centered block under the centered header. */
 .ed-intro {
-  margin: 6.6mm 0 0;
+  margin: 6mm auto 0;
   max-width: 150mm;
-  font-size: 14pt;
+  font-size: 13pt;
   font-weight: 300;
   line-height: 1.34;
   color: var(--ink);
+  text-align: center;
 }
-.ed-contacts {
-  margin-top: 5mm;
-  font-size: 8pt;
-  color: var(--muted);
-  letter-spacing: 0.2pt;
-  line-height: 1.55;
-}
-.ed-contacts .ed-sep { margin: 0 1.6mm; color: var(--accent); }
 
 /* ---- SECTION MARKERS: the braces amplified into big structural glyphs ---- */
 /* Distribution: the page's surplus is spread as proportional inter-section
@@ -168,6 +145,16 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 .ed-role-row { display: flex; align-items: baseline; justify-content: space-between; margin-top: 0.6mm; }
 .ed-role { font-weight: 600; font-size: 8.8pt; color: var(--accent-deep); font-variant: small-caps; letter-spacing: 0.4pt; }
 .ed-dates { font-family: var(--font-display); font-size: 7.6pt; color: var(--muted); letter-spacing: -0.2pt; }
+
+/* At-a-glance summary between the role line and its bullets: subordinate to
+   the role, distinct from the bullets — italic, muted, no marker. */
+.ed-summary {
+  margin-top: 0.5mm;
+  font-size: 8.2pt;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.3;
+}
 
 .ed-body ul { margin: 1.4mm 0 0; padding-left: 3.6mm; }
 .ed-body li { margin-bottom: 1.1mm; line-height: 1.38; }

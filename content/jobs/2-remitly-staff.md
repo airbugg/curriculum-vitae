@@ -1,10 +1,11 @@
 ---
 id: remitlyStaff
-company: Remitly Israel (formerly Rewire)
-blurb: cross-border banking & remittances
+company: Remitly
+blurb: global remittances; acquired Rewire in 2022
 role: Staff Software Engineer · Client Infrastructure
 location: Tel Aviv
 dates: Dec 2022 – Feb 2026
+summary: Client infrastructure for three products: localization, CI, and the shared GraphQL layer.
 ---
 
 - Lead engineer of the Client Infrastructure team: technical planning and

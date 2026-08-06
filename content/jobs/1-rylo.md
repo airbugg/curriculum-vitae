@@ -5,6 +5,7 @@ blurb: AI communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
+summary: Client platform, release engineering and the most complex product flows of a ground-up app rewrite.
 ---
 
 - Was part of a four engineer task force working on a ground-up rewrite of the company's client apps:

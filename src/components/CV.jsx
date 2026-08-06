@@ -96,11 +96,18 @@ export function duration(dates) {
 }
 
 // Role lines carry the bare range; the derived tenure lives ONCE per company
-// on the company line (Tufte: the duration is redundant ink at role level —
-// within a company the ranges share endpoints — but earns its place for
-// "Present" arithmetic and cross-role totals).
-function Dates({ dates, className }) {
-  return <span className={className}>{dates}</span>;
+// (Tufte: the duration is redundant ink repeated per role — but earns its
+// place for "Present" arithmetic). Where it sits is a per-layout decision:
+// `withDur` renders it inline after the range ("Dec 2022 – Feb 2026 · 3 yr
+// 3 mo"), for layouts whose role line is the company line.
+function Dates({ dates, className, withDur }) {
+  const d = withDur ? duration(dates) : null;
+  return (
+    <span className={className}>
+      {dates}
+      {d && <span className="dur"> · {d}</span>}
+    </span>
+  );
 }
 
 // The company-level tenure: total span for multi-role groups, the single
@@ -156,6 +163,11 @@ function Group({ group }) {
               <span className="role">{job.role}</span>
               <Dates className="dates" dates={job.dates} />
             </div>
+            {job.summary && (
+              <div className="summary">
+                <NoBreakCompounds text={job.summary} />
+              </div>
+            )}
             <Bullets section={s} job={job} />
           </div>
         );
@@ -349,15 +361,23 @@ function GridEntry({ group }) {
               {i === 0 && (
                 <>
                   <div className="g-co">{tidyLabel(first.company)}</div>
-                  {first.blurb && <div className="g-mblurb">{first.blurb}</div>}
+                  {first.blurb && <div className="g-mblurb">{tidyLabel(first.blurb)}</div>}
                   <div className="g-loc">{first.location}</div>
-                  <div className="g-dur">{groupDuration(group)}</div>
                 </>
               )}
+              {/* The range, then the derived tenure on its own line directly
+                  BENEATH the dates it summarises (no leading interpunct — a
+                  line-initial dot reads as an orphaned bullet). */}
               <Dates className="g-dates" dates={job.dates} />
+              {i === 0 && <div className="g-dur">{groupDuration(group)}</div>}
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
+              {job.summary && (
+                <div className="g-summary">
+                  <NoBreakCompounds text={job.summary} />
+                </div>
+              )}
               <ul>
                 {s.bullets.map((id) => (
                   <li key={id}>
@@ -379,20 +399,18 @@ function GridPage({ variant }) {
   const [first, last] = person.name.toUpperCase().split(' ');
   return (
     <div className="page grid-page">
+      {/* Centered identity above the grid: name + title only. The braces
+          stay quiet structural glyphs in the muted data ink; the title line
+          carries the emerald (the C accent family). */}
       <header className="g-header">
-        <div className="g-idcol">
-          <div className="g-label">Curriculum Vitae</div>
-        </div>
-        <div className="g-idmain">
-          <h1>
-            <span className="g-nb">{'{'}</span>
-            <span className="g-nf">{first}</span>
-            <span className="g-nc">:</span>
-            <span className="g-nl">{last}</span>
-            <span className="g-nb">{'}'}</span>
-          </h1>
-          <div className="g-title">{person.title}</div>
-        </div>
+        <h1>
+          <span className="g-nb">{'{'}</span>
+          <span className="g-nf">{first}</span>
+          <span className="g-nc">:</span>
+          <span className="g-nl">{last}</span>
+          <span className="g-nb">{'}'}</span>
+        </h1>
+        <div className="g-title">{person.title}</div>
       </header>
 
       <div className="g-row g-introrow">
@@ -419,29 +437,39 @@ function GridPage({ variant }) {
 
       <section className="g-section">
         <GridSecMark>{variant.headings.education}</GridSecMark>
-        <div className="g-row">
-          <div className="g-meta">
-            <div className="g-co">{tidyLabel(education.school)}</div>
-            <div className="g-dates">{education.dates}</div>
-          </div>
-          <div className="g-content">
-            <div className="g-role">{education.degree}</div>
-          </div>
-        </div>
-        {/* Journal is data → meta column; title + authors are content. */}
-        <div className="g-row">
-          <div className="g-meta">
-            <div className="g-co">Publications</div>
-            <div className="g-mblurb">{publications[0].journal}</div>
-            <div className="g-dates">{publications[0].year}</div>
-          </div>
-          <div className="g-content">
-            <div className="g-pubtitle">{publications[0].title}</div>
-            <div className="g-pubmeta">{publications[0].authors}</div>
-          </div>
-        </div>
+        <GridEduRows />
       </section>
     </div>
+  );
+}
+
+// Education + publication on the same data/content grid module — shared by
+// the pure grid (B) and the grid × editorial hybrid (D).
+function GridEduRows() {
+  return (
+    <>
+      <div className="g-row">
+        <div className="g-meta">
+          <div className="g-co">{tidyLabel(education.school)}</div>
+          <div className="g-dates">{education.dates}</div>
+        </div>
+        <div className="g-content">
+          <div className="g-role">{education.degree}</div>
+        </div>
+      </div>
+      {/* Journal is data → meta column; title + authors are content. */}
+      <div className="g-row">
+        <div className="g-meta">
+          <div className="g-co">Publications</div>
+          <div className="g-mblurb">{publications[0].journal}</div>
+          <div className="g-dates">{publications[0].year}</div>
+        </div>
+        <div className="g-content">
+          <div className="g-pubtitle">{publications[0].title}</div>
+          <div className="g-pubmeta">{publications[0].authors}</div>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -465,10 +493,7 @@ function EdEntry({ group }) {
       <div className="ed-entry-head">
         <span className="ed-co">{first.company}</span>
         {first.blurb && <span className="ed-blurb">{first.blurb}</span>}
-        <span className="ed-loc">
-          {first.location}
-          <span className="dur"> · {groupDuration(group)}</span>
-        </span>
+        <span className="ed-loc">{first.location}</span>
       </div>
       {group.map((s) => {
         const job = jobs[s.job];
@@ -476,8 +501,15 @@ function EdEntry({ group }) {
           <div className="ed-role-block" key={s.job}>
             <div className="ed-role-row">
               <span className="ed-role">{job.role}</span>
-              <Dates className="ed-dates" dates={job.dates} />
+              {/* Tenure rides inline after the range — one dates line per
+                  role, nothing stacked or duplicated on the company line. */}
+              <Dates className="ed-dates" dates={job.dates} withDur />
             </div>
+            {job.summary && (
+              <div className="ed-summary">
+                <NoBreakCompounds text={job.summary} />
+              </div>
+            )}
             <ul>
               {s.bullets.map((id) => (
                 <li key={id}>
@@ -494,36 +526,15 @@ function EdEntry({ group }) {
 
 function EditorialPage({ variant }) {
   const groups = groupSections(variant.sections);
-  const [first, last] = person.name.toUpperCase().split(' ');
-  const contacts = contactList(variant);
   return (
     <div className="page ed-page">
-      <header className="ed-hero">
-        <h1 className="ed-name">
-          <span className="nb">{'{'}</span>
-          <span className="nf">{first}</span>
-          <span className="nc">:</span>
-          <span className="nl">{last}</span>
-          <span className="nb">{'}'}</span>
-        </h1>
-        <div className="ed-title">{person.title}</div>
-        <p className="ed-intro">
-          <NoBreakCompounds text={variant.intro} />
-        </p>
-        {/* Two intentionally balanced lines — never an accidental dangle. */}
-        <div className="ed-contacts">
-          {[contacts.slice(0, 3), contacts.slice(3)].map((line, li) => (
-            <div key={li}>
-              {line.map((c, i) => (
-                <React.Fragment key={c}>
-                  {i > 0 && <span className="ed-sep">·</span>}
-                  <span>{c}</span>
-                </React.Fragment>
-              ))}
-            </div>
-          ))}
-        </div>
-      </header>
+      {/* The flagship's centered header — { EUGENE : LERMAN } at 24pt with
+          the measured base.css brace metrics — wearing C's emerald. The
+          display intro below keeps the editorial scale contrast. */}
+      <Header variant={variant} />
+      <p className="ed-intro">
+        <NoBreakCompounds text={variant.intro} />
+      </p>
 
       <section className="ed-section">
         <EdBrace>{variant.headings.experience}</EdBrace>
@@ -555,6 +566,39 @@ function EditorialPage({ variant }) {
   );
 }
 
+// ---- D: GRID × EDITORIAL -----------------------------------------------
+// C's structure and voice — centered braces header, display intro, emerald,
+// brace section markers with the trailing rule — carrying B's per-entry
+// metadata treatment: a left data column stacking company / blurb / location
+// / dates / tenure, against a right column of role, summary and bullets.
+function HybridPage({ variant }) {
+  const groups = groupSections(variant.sections);
+  return (
+    <div className="page ed-page hy-page">
+      <Header variant={variant} />
+      <p className="ed-intro">
+        <NoBreakCompounds text={variant.intro} />
+      </p>
+
+      <section className="ed-section">
+        <EdBrace>{variant.headings.experience}</EdBrace>
+        <div className="hy-body">
+          {groups.map((g) => (
+            <GridEntry key={g[0].job} group={g} />
+          ))}
+        </div>
+      </section>
+
+      <section className="ed-section ed-footer">
+        <EdBrace>{variant.headings.education}</EdBrace>
+        <div className="hy-body">
+          <GridEduRows />
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export function CVPage({ variant, css }) {
   // Prototypes get compound-safe intros; originals keep their exact output.
   const intro = (
@@ -580,6 +624,7 @@ export function CVPage({ variant, css }) {
 
   if (variant.layout === 'grid') return shell(<GridPage variant={variant} />);
   if (variant.layout === 'editorial') return shell(<EditorialPage variant={variant} />);
+  if (variant.layout === 'hybrid') return shell(<HybridPage variant={variant} />);
 
   // single / sidebar / reduction all share the flow shell; reduction is a
   // CSS-only restraint pass over the single flow.

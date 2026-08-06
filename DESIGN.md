@@ -410,3 +410,116 @@ confirms the hierarchy still carries at arm's length.
 
 No content wording was edited. The four original variants are byte-for-byte
 unchanged in output.
+
+---
+
+## 8. Owner feedback round 2 — split employers, summaries, header convergence, and Prototype D
+
+Content changed upstream of this round (not part of the design work, but the
+design had to absorb it): Remitly's two roles became two independent
+employers — **Remitly** (Staff, Dec 2022 – Feb 2026) and **Rewire** (Senior,
+Jun 2020 – Dec 2022, acquired by Remitly in 2022) — and every job gained a
+one-line `summary:` in the owner's voice.
+
+### 8a. Where the tenure duration lives (per layout, one rule each)
+
+- **B (grid):** in the meta column, on its own line **directly beneath the
+  date range** it summarises — company / blurb / location / dates /
+  duration, one pair per employer. No leading interpunct: a line-initial
+  "·" reads as an orphaned bullet. Styled as data (mono, muted, 85 %).
+- **C (editorial):** **inline after the range on the role line**
+  ("Dec 2022 – Feb 2026 · 3 yr 3 mo", muted) — nothing duplicated on the
+  company line.
+- **D (hybrid):** B's treatment (its meta column is B's).
+- **Flow variants (flagship, platform, ai, parser, A):** unchanged — one
+  duration per company on the company line ("Tel Aviv · 3 yr 3 mo").
+
+### 8b. The summary line (all eight variants)
+
+`job.summary` renders between the role line and the bullets: subordinate to
+the role (muted ink, italic in most themes), clearly not a bullet (no
+marker, full measure, bound tighter to the role than to the list — Gestalt
+proximity). Prototype A keeps it roman in its second ink (no new voice);
+the ATS variant keeps it plain text.
+
+**Cost and consequence.** The split (+1 employer block) plus four to five
+summary lines cost 10–19 mm per variant. Absorbed by tightening to the
+research-spec floors — 9 pt body, 128 % leading, 14 mm side margins, tight
+gap ends — rather than cutting content. The flagship keeps its 9.2 pt body
+(130 % leading); platform / ai / parser now sit **at** the floors, and
+Prototype A had to give back roughly half of its extra air (leading 138 %
+→ 130 %, section gaps 6.6 → 4.4 mm). Flag for the owner: these pages are
+now denser than the calm the redesign was bought for; if the air matters
+more than the summaries, dropping one bullet per page buys it back.
+
+### 8c. Header convergence (B and C)
+
+- **C** replaced its left-aligned display hero with the flagship's centered
+  header — { EUGENE : LERMAN } at 24 pt in Source Code Pro with the
+  measured base.css brace metrics, small tracked title beneath, one
+  centered contacts line — "more like the original latex version" — wearing
+  C's emerald (braces + colon accent, title deep emerald). The display
+  intro survives as a centered 13 pt paragraph; the brace section markers
+  and their vertically-centred rules are untouched.
+- **B** dropped the "CURRICULUM VITAE" label; its header is now the name +
+  title centered above the grid. The braces keep B's grammar — quiet mono
+  glyphs in the muted data ink (never the accent) — and the title line
+  carries C's deep emerald. Centered tracked lines get a `padding-left`
+  equal to their letter-spacing so the trailing track doesn't shift them
+  half a step left.
+
+### 8d. Prototype D — Grid × Editorial (`eugene-lerman-proto-d`, theme `proto-d`, layout `hybrid`)
+
+The owner's requested convergence: **C's structure and voice** (centered
+braces header, display intro, emerald as the one accent family, amplified
+brace section markers with the trailing rule) carrying **B's per-entry
+metadata treatment** (a 38 mm left data column stacking company / blurb /
+location / dates / tenure-under-dates against a right column of role,
+summary, bullets). Education and the publication ride the same grid
+module. Distribution tuned so the page fills to a ~14 mm trailing margin
+against 18 mm sides (no stranded bottom void); rag in the narrow column is
+controlled (`tidyLabel` binds the last two words of company names and
+blurbs — "migrant workers" never orphans "workers").
+
+### 8e. Measured brace alignment, this round (px @300 dpi, tolerance ±2)
+
+| Context | brace overshoot above/below caps | gap open / close | colon |
+|---|---|---|---|
+| Flagship h1 | 10 / 10 | 74 / 74 | centre Δ0.25 px; gaps 56 / 54 |
+| Flagship h2 (Exp / Edu) | 4 / 5 · 4 / 5 | 38 / 36 · 38 / 37 | — |
+| B header (centered, new) | 5 / 5 | 38 / 37 | centre Δ0.5 px; gaps 38 / 38 |
+| B secmark (Exp / Edu) | 3 / 4 · 3 / 4 | 21 / 19 · 21 / 20 | — |
+| C header (24 pt, new) | 10 / 10 | 74 / 74 | centre Δ0.25 px; gaps 56 / 54 |
+| C secrow (Exp / Edu) | 30 / 30 · 30 / 30 | 41 / 40 · 41 / 40 | rule centreline Δ1 px |
+| D header | 10 / 10 (after −0.051 em nudge; was 9 / 11) | 74 / 74 | centre Δ0.5 px |
+| D secrow (Exp / Edu) | 30 / 30 · 31 / 29 (after 0.127 em; was 29 / 31) | 42 / 41 · 42 / 43 (after −2.9 pt cancel; was 42 / 39) | rule Δ0.5–1 px |
+
+D needed its own sub-pixel nudges because its elements sit at different
+x/y raster phases than C's: the same CSS rounded 1–2 px differently, so
+the brace lift (0.136 em → 0.127 em), the name-brace lift (−0.048 em →
+−0.051 em) and the heading's tracking cancellation (−3.4 pt → −2.9 pt)
+were re-tuned against D's own measurements.
+
+### 8f. Files changed in this round
+
+- `src/components/CV.jsx` — summary line in all four layout families;
+  `Dates` gains `withDur` (C's inline tenure); grid meta reordered
+  (dates → duration-below); B header rebuilt (centered, no CV label);
+  C header replaced by the shared flagship `Header`; new `HybridPage`
+  (layout `hybrid`) and shared `GridEduRows`; blurbs run through
+  `tidyLabel` in grid meta columns.
+- `src/themes/proto-d.css` — new theme (grid × editorial).
+- `src/themes/proto-b.css` — centered header, emerald title, duration/
+  summary styles, fit trims.
+- `src/themes/proto-c.css` — centered flagship-style header vars, inline
+  duration, summary style, fit adjustments.
+- `src/themes/base.css` — `.summary` primitive.
+- `src/themes/looker.css`, `platform.css`, `ai.css`, `parser.css`,
+  `proto-a.css` — summary styling + spec-floor fit packages for the
+  split + summaries.
+- `src/variants.mjs` — Prototype D entry; `src/lib/fonts.mjs` — proto-d
+  font set.
+
+All **eight** variants build green at one page; brace contexts measured at
+300 dpi as above; full-page and 40 % passes on B, C, D confirm hierarchy at
+arm's length.

@@ -186,6 +186,17 @@ h2 {
 .id-braces .entry-head > .loc { color: var(--accent); font-style: italic; }
 .entry .role-block + .role-block { margin-top: 2.4mm; }
 
+/* One-line at-a-glance summary between the role line and its bullets:
+   subordinate to the role (quieter ink, italic) but clearly not a bullet
+   (no marker, full measure, tighter to the role than to the list). */
+.summary {
+  margin-top: var(--summary-gap, 0.5mm);
+  font-size: var(--fs-summary, 8.6pt);
+  font-style: var(--summary-style, italic);
+  color: var(--summary-ink, var(--muted, #5a6470));
+  line-height: 1.28;
+}
+
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
 .entry ul { margin: 1.3mm 0 0; padding-left: 3.2mm; }

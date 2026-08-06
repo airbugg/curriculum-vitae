@@ -15,6 +15,7 @@
   --ink-strong: #0f1317;
   --muted: #6b7480;
   --accent: #00A388;
+  --accent-deep: #00735f; /* C's deep emerald — carried into the title line */
   --rule: #d3dbe1;
   --fs: 9pt;
 }
@@ -31,23 +32,13 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   align-items: start;
 }
 
-/* ---- header ---- */
+/* ---- header: name + title, centered above the grid ---- */
 .g-header {
-  display: grid;
-  grid-template-columns: 40mm 1fr;
-  column-gap: 9mm;
-  align-items: baseline;
-  padding-bottom: 3mm;
+  text-align: center;
+  padding-bottom: 2.4mm;
   border-bottom: 1pt solid var(--ink-strong);
 }
-.g-label {
-  font-family: var(--font-data);
-  font-size: 7.5pt;
-  letter-spacing: 1.5pt;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.g-idmain h1 {
+.g-header h1 {
   margin: 0;
   font-size: 23pt;
   font-weight: 700;
@@ -61,7 +52,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    reserved for the functional signals it already marks. Mono braces centre
    on the x-height, so they get a small lift to centre on the caps
    (verified by pixel measurement at 300dpi). */
-.g-idmain h1 .g-nb {
+.g-header h1 .g-nb {
   font-family: var(--font-data);
   font-weight: 400;
   font-size: 88%;
@@ -70,11 +61,11 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   display: inline-block;
   transform: translateY(-0.095em);
 }
-.g-idmain h1 .g-nb:first-child { margin-right: 0.24em; }
+.g-header h1 .g-nb:first-child { margin-right: 0.24em; }
 /* +0.025em vs the opening side: bold N's right sidebearing is tighter than
    light E's left sidebearing (measured 38px vs 36px at 300dpi). */
-.g-idmain h1 .g-nb:last-child { margin-left: 0.265em; }
-.g-idmain h1 .g-nc {
+.g-header h1 .g-nb:last-child { margin-left: 0.265em; }
+.g-header h1 .g-nc {
   font-family: var(--font-data);
   font-weight: 400;
   font-size: 88%;
@@ -86,19 +77,22 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   display: inline-block;
   transform: translateY(-0.125em);
 }
-.g-idmain h1 .g-nf { font-weight: 300; color: var(--ink); }
-.g-idmain h1 .g-nl { font-weight: 700; color: var(--ink-strong); }
+.g-header h1 .g-nf { font-weight: 300; color: var(--ink); }
+.g-header h1 .g-nl { font-weight: 700; color: var(--ink-strong); }
 .g-title {
   margin-top: 1.6mm;
   font-family: var(--font-data);
   font-size: 8.5pt;
   letter-spacing: 2pt;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent-deep);
+  /* Trailing letter-spacing after the last glyph would shift the centered
+     line half a track left; pad the same amount on the left to re-center. */
+  padding-left: 2pt;
 }
 
 /* ---- intro sits on the same grid: contacts in the data column ---- */
-.g-introrow { margin-top: 6mm; }
+.g-introrow { margin-top: 3.8mm; }
 /* Sized so the longest line (linkedin.com/in/lerman-gene, 27 mono chars)
    fits the 40mm data column — a URL must never break mid-token. */
 .g-contacts {
@@ -117,15 +111,15 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 }
 
 /* ---- section marker: a full-width hairline row, label in the data column ---- */
-.g-section { margin-top: 7mm; }
+.g-section { margin-top: 4.4mm; }
 .g-secmark {
   font-family: var(--font-data);
   font-size: 8pt;
   letter-spacing: 2.5pt;
   text-transform: uppercase;
   color: var(--accent);
-  padding-bottom: 2mm;
-  margin-bottom: 4.5mm;
+  padding-bottom: 1.5mm;
+  margin-bottom: 3.2mm;
   border-bottom: 0.5pt solid var(--rule);
 }
 /* { EXPERIENCE } — the braces join the section mark as quiet structural
@@ -146,7 +140,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-secmark .g-sw { margin: 0 calc(0.42em - 2.5pt) 0 0.42em; }
 
 /* ---- entry rows ---- */
-.g-section .g-row { margin-bottom: 4.6mm; break-inside: avoid; }
+.g-section .g-row { margin-bottom: 3.4mm; break-inside: avoid; }
 .g-section .g-row:last-child { margin-bottom: 0; }
 /* A promotion row within the same employer sits tighter to its parent, so the
    lone dates block reads bound to the company above rather than floating. */
@@ -168,8 +162,27 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 }
 /* "Dec 2022 – Feb 2026 · 3 yr 3 mo" overruns the 40mm data column; instead
    of an accidental mid-token wrap, break it deliberately: the range on one
-   line, the derived tenure on its own line beneath, styled as data. */
-.g-dur { color: var(--muted, #5a6470); opacity: 0.85; }
+   line, the derived tenure on its own line directly beneath, in the same
+   data voice, a shade quieter. No leading interpunct — a line-initial dot
+   reads as an orphaned bullet. */
+.g-dur {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+  opacity: 0.85;
+  margin-top: 0.2mm;
+}
+
+/* At-a-glance summary between role and bullets: quieter than the role,
+   distinct from the bullets (italic, no marker, tight to the role). */
+.g-summary {
+  margin-top: 0.4mm;
+  font-size: 8.2pt;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.3;
+}
 
 .g-content { }
 .g-role {
@@ -179,7 +192,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-bottom: 0.4mm;
 }
 .g-content ul { margin: 1.6mm 0 0; padding-left: 3.6mm; }
-.g-content li { margin-bottom: 0.85mm; line-height: 1.32; }
+.g-content li { margin-bottom: 0.7mm; line-height: 1.3; }
 .g-content li:last-child { margin-bottom: 0; }
 .g-content li::marker { color: var(--accent); }
 

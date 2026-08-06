@@ -28,3 +28,36 @@
 .dates { letter-spacing: -0.2pt; font-style: normal !important; }
 /* The richer Rylo bullets run long; run slightly tighter to hold one page. */
 :root { --lh: 1.3; --entry-gap: 3mm; --li-gap: 0.6mm; }
+/* The Remitly/Rewire split (+1 employer block) and the per-role summary
+   lines cost ~19mm; absorbed at the research-spec floors — 9pt body, 128%
+   leading, 15mm sides, tight gap ends — instead of cutting content. */
+:root {
+  --fs: 9pt;
+  --lh: 1.28;
+  --pad: 13mm 15mm 14mm;
+  --h2-margin: 4mm 0 1mm;
+  --h2-margin-lower: 4.4mm;
+  --intro-margin: 2.8mm 0 0;
+  --entry-gap: 2.8mm;
+  --fs-summary: 8.2pt;
+  --summary-gap: 0.3mm;
+}
+
+/* Round 2: the remaining ~9mm, found in the secondary layer — header gaps,
+   skills ledger, publication block, 14mm side floor for a wider measure. */
+:root {
+  --pad: 13mm 14mm 14mm;
+  --h2-margin: 3.2mm 0 0.9mm;
+  --h2-pad: 0.6mm;
+  --h2-margin-lower: 4mm;
+  --entry-gap: 2.3mm;
+  --li-gap: 0.5mm;
+  --intro-margin: 2.4mm 0 0;
+  --fs-intro: 9.2pt;
+  --skill-gap: 1.6mm;
+  --fs-summary: 8pt;
+  --summary-gap: 0.2mm;
+}
+header .contacts { margin-top: 0.5mm; }
+.entry ul { margin-top: 1.1mm; }
+.pub-sub { margin: 1.8mm 0 0.5mm; }

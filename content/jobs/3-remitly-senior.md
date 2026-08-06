@@ -1,10 +1,11 @@
 ---
 id: remitlySenior
-company: Remitly Israel (formerly Rewire)
-blurb: ""
+company: Rewire
+blurb: cross-border banking for migrant workers
 role: Senior Software Engineer
 location: Tel Aviv
 dates: Jun 2020 – Dec 2022
+summary: Core product work through the company's shift from a web app to mobile-first.
 ---
 
 - Led the migration of the core product from an `AngularJS`/`React` web app

@@ -184,4 +184,27 @@ export const variants = [
     ],
     skills: null,
   },
+
+  // D — GRID × EDITORIAL. The owner's convergence candidate: C's structure
+  // and voice (centered braces header, display intro, emerald, brace section
+  // markers) carrying B's vertically stacked per-entry metadata column
+  // (company / blurb / location / dates / tenure-under-dates) against a
+  // right column of role, summary and bullets.
+  {
+    file: 'eugene-lerman-proto-d',
+    label: 'Prototype D · Grid × Editorial',
+    theme: 'proto-d',
+    layout: 'hybrid',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
 ];
