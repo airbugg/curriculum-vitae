@@ -1,0 +1,30 @@
+/* The flagship — the platform variant's typography and spacing (Source Sans
+   body, Source Code Pro name/headings/dates, left-aligned header, hairline
+   heading rules) wearing the original CV's emerald. */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-name: 'Source Code Pro', monospace;
+  --font-head: 'Source Code Pro', monospace;
+  --font-title: 'Source Code Pro', monospace;
+  --font-dates: 'Source Code Pro', monospace;
+  --chip-bg: #eaf6f2;
+  --chip-ink: #29564b;
+  --name-first: #93a39e;
+  --fw-name-first: 200;
+  --ink: #232a32;
+  --ink-strong: #14181d;
+  --muted: #5c6672;
+  --accent: #00A388;
+  --accent-soft: #00806b;
+  --rule: #cfe0da;
+  --label-ink: #5c6672;
+  --skill-ink: #2c343d;
+  --fs-name: 24pt;
+  --ls-name: 0.3pt;
+  --fs-h2: 10.5pt;
+}
+.dates { letter-spacing: -0.2pt; font-style: normal !important; }
+/* Centered header, as in the original CV. */
+header { text-align: center; }
+.intro { margin-left: auto; margin-right: auto; }

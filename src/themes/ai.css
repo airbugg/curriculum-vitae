@@ -1,0 +1,32 @@
+/* The AI-Native Engineer — near-black ink, electric violet, mono accents.
+   Full-width hairline rules under section headings. */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-name: 'Roboto Mono', monospace;
+  --font-head: 'Roboto Mono', monospace;
+  --font-title: 'Roboto Mono', monospace;
+  --font-dates: 'Roboto Mono', monospace;
+  --chip-bg: #f3effb;
+  --chip-ink: #43356b;
+  --name-first: #9d94b5;
+  --fw-name-first: 100;
+  --ink: #1e2126;
+  --ink-strong: #0e1013;
+  --muted: #5b616b;
+  --accent: #6d28d9;
+  --accent-soft: #4c2a8f;
+  --rule: #ddd6ea;
+  --label-ink: #5b616b;
+  --skill-ink: #2a2e35;
+  --bg-ink: #343048;
+  --fs-name: 24pt;
+  --ls-name: 0;
+  --fs-h2: 10pt;
+  --fw-h2: 500;
+  --ls-h2: 0.8pt;
+  --how-bg: #f5f2fb;
+  --how-border: 0.35pt solid #ddd2f0;
+  --how-pad: 2mm 3mm;
+}
+.dates { letter-spacing: -0.3pt; font-style: normal !important; }

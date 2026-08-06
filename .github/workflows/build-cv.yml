@@ -1,0 +1,123 @@
+# Build all CV variants on every push to a PR, upload the PDFs as a
+# workflow artifact, and upsert a PR comment with links.
+name: Build CV
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write
+
+# One run per PR (or ref, for manual runs) — newer pushes cancel older runs.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Prefer the Chrome that ships on ubuntu-latest; fall back to apt Chromium.
+      # build.mjs honors CHROME_PATH, so export it for later steps via GITHUB_ENV.
+      - name: Resolve Chromium
+        run: |
+          CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
+          if [ -z "$CHROME" ]; then
+            sudo apt-get install -y chromium-browser
+            CHROME="$(command -v chromium-browser)"
+          fi
+          echo "Using Chrome at: $CHROME"
+          "$CHROME" --version
+          echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      # The builder exits non-zero if any variant fails the one-page check,
+      # which fails this job. Output is captured for the PR comment summary.
+      - name: Build PDFs (HTML -> Chromium -> PDF)
+        id: web
+        run: node build.mjs 2>&1 | tee web-summary.txt
+
+      - name: Upload PDFs
+        id: upload-web
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdfs
+          path: dist/*.pdf
+          retention-days: 30
+          if-no-files-found: warn
+
+      # Upsert a single marker-tagged PR comment with links to the run and
+      # the uploaded artifact (artifact-url output from upload-artifact@v4).
+      - name: Post / update PR comment
+        if: ${{ always() && github.event_name == 'pull_request' }}
+        uses: actions/github-script@v7
+        env:
+          WEB_ARTIFACT_URL: ${{ steps.upload-web.outputs.artifact-url }}
+          WEB_OUTCOME: ${{ steps.web.outcome }}
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- cv-artifacts -->';
+            const read = (p) => { try { return fs.readFileSync(p, 'utf8').trim(); } catch { return ''; } };
+            const link = (name, url) => url ? `[\`${name}\`](${url})` : `\`${name}\` (upload failed)`;
+            const badge = (outcome) => outcome === 'success' ? 'passed ✓' : `**${outcome} ✗**`;
+
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const sha = context.payload.pull_request.head.sha;
+
+            const sections = [];
+            const web = read('web-summary.txt');
+            if (web) sections.push(`<details><summary>Build output</summary>\n\n\`\`\`\n${web}\n\`\`\`\n</details>`);
+
+            const body = [
+              marker,
+              `### CV build artifacts`,
+              ``,
+              `Built from ${sha} — [workflow run](${runUrl})`,
+              ``,
+              `| Artifact | Build | Download |`,
+              `| --- | --- | --- |`,
+              `| cv-pdfs (Chromium) | ${badge(process.env.WEB_OUTCOME)} | ${link('cv-pdfs', process.env.WEB_ARTIFACT_URL)} |`,
+              ``,
+              ...sections,
+              ``,
+              `_Artifact downloads require being logged in to GitHub; artifacts expire after 30 days._`,
+            ].join('\n');
+
+            // Upsert: find our previous marker-tagged comment and update it,
+            // otherwise create a new one.
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              ...context.repo,
+              issue_number,
+              per_page: 100,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number,
+                body,
+              });
+            }

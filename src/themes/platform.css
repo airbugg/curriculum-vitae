@@ -1,0 +1,28 @@
+/* The Platform Engineer — sober slate + steel blue, engineering-grade type.
+   Protected character: Source Code Pro name/headings/dates, full-width
+   hairline rules under section headings. */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+  --font-name: 'Source Code Pro', monospace;
+  --font-head: 'Source Code Pro', monospace;
+  --font-title: 'Source Code Pro', monospace;
+  --font-dates: 'Source Code Pro', monospace;
+  --chip-bg: #eef2f5;
+  --chip-ink: #33414d;
+  --name-first: #8fa0ae;
+  --fw-name-first: 200;
+  --ink: #232a32;
+  --ink-strong: #14181d;
+  --muted: #5c6672;
+  --accent: #2b6a9b;
+  --accent-soft: #35597a;
+  --rule: #c8d2db;
+  --label-ink: #5c6672;
+  --skill-ink: #2c343d;
+  --bg-ink: #333c44;
+  --fs-name: 24pt;
+  --ls-name: 0.3pt;
+  --fs-h2: 10.5pt;
+}
+.dates { letter-spacing: -0.2pt; font-style: normal !important; }
