@@ -184,8 +184,9 @@ is the *same two-column module* repeated.
 
 ### Prototype C — Editorial Expressive  (`eugene-lerman-proto-c`, theme `proto-c`)
 **Philosophy:** strong **scale contrast** — a big quiet hero, small dense body —
-and the **braces identity amplified into the layout itself**: a 44 pt
-`{ EUGENE : LERMAN }` hero and **giant emerald braces as structural section
+and the **braces identity amplified into the layout itself**: a 36 pt
+`{ EUGENE : LERMAN }` hero (44 pt in the first pass, reduced on owner
+feedback — see §6) and **giant emerald braces as structural section
 markers** (with a trailing gradient rule), instead of braces sprinkled as
 punctuation. Emerald soul kept vividly alive. New DOM (`EditorialPage`); the
 page's surplus is **spread as proportional inter-section and inter-entry air**,
@@ -342,7 +343,52 @@ All seven variants rebuilt green at one page each; final visual pass done at
 
 ---
 
-## 6. Files changed / added
+## 6. Prototype C revision: smaller display scale, centred rules
+
+Owner feedback on C: the hero and the giant section markers were **too large**,
+and the trailing rules after `{ EXPERIENCE }` / `{ EDUCATION }` sat **off the
+braces' optical centre**.
+
+**Scale.** Hero `44 pt → 36 pt` (−18 %, tracking −0.5 → −0.4 pt); section
+braces `30 pt → 25 pt`, heading caps `13 pt → 11 pt` (tracking 4 → 3.4 pt, with
+the same trailing-tracking cancellation), row gap 2.6 → 2.3 mm. The hero still
+reads as the page's display moment (4.2 : 1 against the 8.6 pt body) without
+the poster effect. The ~4.5 mm freed was redistributed — hero gaps +1.7 mm
+(title +0.2, intro +0.6, contacts +0.5, and the two markers' margin-bottom
++0.4 each), section tops 7.5 → 8.4 mm, entry gap 5 → 5.2 mm — so the page
+stays evenly filled: last ink row moved only 123 px → 131 px from the page
+bottom @150 dpi (≈ +1.3 mm of trailing margin, no new void, no crowding).
+
+**Rule centring.** Cause found by measurement: the rule is a baseline-aligned
+flex item with no text, so its **bottom edge sits on the shared baseline** —
+its centreline measured 16–16.5 px *below* the caps' optical centre @300 dpi.
+Chosen reference: the **caps' optical centre** (cap-top + baseline)/2 — which,
+after the §5 baseline alignment, coincides with the braces' centre (≤1 px
+apart in both rows), so one correction serves both. Fix:
+`transform: translateY(-3.15pt)` = half cap-height above the baseline plus
+half the rule's 0.8 pt height.
+
+Rule centreline vs caps optical centre, px @300 dpi (target ±1 px):
+
+| Row | Before | After |
+|---|---|---|
+| `{ EXPERIENCE }` | +16.5 (low) | **−0.5** |
+| `{ EDUCATION }` | +16.0 (low) | **+1.0** |
+
+(The residual ±0.5–1 px is pixel-grid quantisation of each row's fractional
+y-position; both rows share identical CSS.)
+
+All §5 hero alignments re-measured at 36 pt and still hold: brace overshoot
+15 / 16 px above cap-top / below baseline; colon centre error **0 px** against
+the caps' optical middle; name gaps 49–50 vs 50 px; colon gaps 68 vs 50 px =
+**1.36 : 1** tight-to-LERMAN. Section-row brace overshoot 30 / 30 px in both
+rows; brace-to-word gaps 42 vs 41 px (Experience) and 42 vs 40 px (Education).
+All seven variants rebuilt green at one page; visual pass at 100 % and 40 %
+confirms the hierarchy still carries at arm's length.
+
+---
+
+## 7. Files changed / added
 
 **Added**
 - `src/themes/proto-a.css` — Radical Reduction theme.

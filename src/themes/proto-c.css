@@ -27,20 +27,23 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   flex-direction: column;
 }
 
-/* ---- HERO: big, quiet, lots of air. Occupies the top with intent. ---- */
+/* ---- HERO: big, quiet, lots of air. Occupies the top with intent. ----
+   36pt (down from the first pass's 44pt on owner feedback, -18%): still a
+   display moment against the 8.6pt body (4.2:1), no longer a poster. */
 .ed-hero { margin-bottom: 3mm; }
 .ed-name {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 44pt;
+  font-size: 36pt;
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.5pt;
+  letter-spacing: -0.4pt;
   color: var(--ink-strong);
 }
 .ed-name .nb { color: var(--accent); font-weight: 400; }
-/* At 44pt the base -0.048em lift overshoots: measured overshoot was 22.5px
-   above cap-top vs 15px below baseline @300dpi. -0.046em balances it. */
+/* The base -0.048em lift overshoots at display sizes: measured overshoot was
+   22.5px above cap-top vs 15px below baseline @300dpi. -0.046em balances it
+   (re-verified after the 44pt→36pt reduction: 15 vs 15.5px). */
 .ed-name .nb { --nb-nudge: -0.046em; }
 .ed-name .nb:first-child { margin-right: 0.12em; }
 /* +0.044em vs the opening side: bold N's right sidebearing is tighter than
@@ -62,7 +65,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 .ed-name .nl { color: var(--ink-strong); font-weight: 600; }
 
 .ed-title {
-  margin-top: 3mm;
+  margin-top: 3.2mm;
   font-family: var(--font-display);
   font-size: 10pt;
   letter-spacing: 4pt;
@@ -72,7 +75,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 
 /* The intro is a display line — the big quiet moment of scale contrast. */
 .ed-intro {
-  margin: 6mm 0 0;
+  margin: 6.6mm 0 0;
   max-width: 150mm;
   font-size: 14pt;
   font-weight: 300;
@@ -80,7 +83,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   color: var(--ink);
 }
 .ed-contacts {
-  margin-top: 4.5mm;
+  margin-top: 5mm;
   font-size: 8pt;
   color: var(--muted);
   letter-spacing: 0.2pt;
@@ -92,8 +95,11 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 /* Distribution: the page's surplus is spread as proportional inter-section
    and inter-entry air (see the gaps below) — no pinned footer, no stranded
    hole between the last entry and Education. */
-.ed-section { margin-top: 7.5mm; }
-.ed-footer { margin-top: 7.5mm; }
+/* The 44pt→36pt hero and smaller section markers freed ~4.5mm; it is spent
+   here (and in the hero gaps above) so the page stays evenly filled instead
+   of growing a trailing void. */
+.ed-section { margin-top: 8.4mm; }
+.ed-footer { margin-top: 8.4mm; }
 
 .ed-secrow {
   display: flex;
@@ -102,12 +108,12 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
      don't). On a shared baseline the brace's offset is purely typographic and
      renders identically in every section row. */
   align-items: baseline;
-  gap: 2.6mm;
-  margin-bottom: 5mm;
+  gap: 2.3mm;
+  margin-bottom: 5.4mm;
 }
 .ed-brace {
   font-family: var(--font-display);
-  font-size: 30pt;
+  font-size: 25pt;
   font-weight: 300;
   /* Zero line-height: the brace participates in the row via its BASELINE but
      contributes no box height, so the giant glyph overflows decoratively
@@ -123,28 +129,35 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   margin: 0;
   /* Trailing letter-spacing after the last cap would widen the word→closing-
      brace gap; cancel it so both brace gaps are optically equal. */
-  margin-right: -4pt;
+  margin-right: -3.4pt;
   font-family: var(--font-display);
-  font-size: 13pt;
+  font-size: 11pt;
   font-weight: 500;
-  letter-spacing: 4pt;
+  letter-spacing: 3.4pt;
   text-transform: uppercase;
   color: var(--ink-strong);
   border: none;
 }
 /* A thin rule trailing the heading, editorial-style. Solid colours and a
    ≥0.75pt height: a 0.5pt semi-transparent box can round to nothing in the
-   PDF rasteriser depending on its fractional y-position. */
+   PDF rasteriser depending on its fractional y-position.
+   Vertical position: as a baseline-aligned flex item with no text, the rule's
+   BOTTOM edge sits on the shared baseline — its centerline measured 16.5px
+   below the caps' optical centre @300dpi, visibly low against the braces.
+   Lift it so its centerline rides the caps' optical centre (= the braces'
+   centre after their own baseline alignment): half cap-height above the
+   baseline, plus half the rule's own height. Measured at 300dpi. */
 .ed-secrow::after {
   content: '';
   flex: 1;
   height: 0.8pt;
   background: linear-gradient(90deg, #7ccbbb 0%, #dde8e3 100%);
+  transform: translateY(-3.15pt);
 }
 
 /* ---- BODY: small, dense, tightly grouped (Gestalt proximity) ---- */
 .ed-body { font-size: 8.6pt; }
-.ed-entry { margin-bottom: 5mm; break-inside: avoid; }
+.ed-entry { margin-bottom: 5.2mm; break-inside: avoid; }
 .ed-entry:last-child { margin-bottom: 0; }
 .ed-entry-head { display: flex; align-items: baseline; gap: 2.4mm; }
 .ed-co { font-weight: 700; font-size: 10pt; color: var(--ink-strong); }
