@@ -26,3 +26,5 @@
   --fs-h2: 10.5pt;
 }
 .dates { letter-spacing: -0.2pt; font-style: normal !important; }
+/* The richer Rylo bullets run long; run slightly tighter to hold one page. */
+:root { --lh: 1.3; --entry-gap: 3mm; --li-gap: 0.6mm; }

@@ -1,37 +1,45 @@
-# circum vitae
+# curriculum-vitae
 
-Four one-page CV variants built from a single source of facts:
-Markdown content → React components → CSS themes → headless Chromium → PDF.
+My CV, built like software: the content lives in Markdown, React components
+lay it out, headless Chromium prints it, and CI ships the PDFs. The design
+is a web-native reincarnation of the LaTeX (awesome-cv) CV I hand-crafted a
+decade ago — same `{ EUGENE : LERMAN }` braces, same emerald, fewer regrets.
 
-| PDF | Variant | For |
+## Get the PDFs
+
+**[→ Latest release](https://github.com/airbugg/curriculum-vitae/releases/latest)** — every push to `master` publishes fresh PDFs.
+
+Stable direct links:
+
+| Variant | For | Download |
 | --- | --- | --- |
-| [`eugene-lerman.pdf`](dist/eugene-lerman.pdf) | The Looker | humans, referrals, founders |
-| [`eugene-lerman-platform.pdf`](dist/eugene-lerman-platform.pdf) | The Platform Engineer | staff-IC / client-infra / DevEx roles |
-| [`eugene-lerman-ai-native.pdf`](dist/eugene-lerman-ai-native.pdf) | The AI-Native Engineer | AI-first companies |
-| [`eugene-lerman-ats.pdf`](dist/eugene-lerman-ats.pdf) | The Parser | job boards; machines first |
+| Flagship | humans, referrals | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
+| Platform | infra / DevEx roles | [eugene-lerman-platform.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-platform.pdf) |
+| AI-Native | AI-first companies | [eugene-lerman-ai-native.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ai-native.pdf) |
+| Parser | ATS / job boards | [eugene-lerman-ats.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ats.pdf) |
 
-## Build
+PDFs are build artifacts, not source — they aren't committed here.
+
+## Build it yourself
 
 ```sh
 npm install
-make            # node build.mjs → dist/*.pdf
+node build.mjs    # → dist/*.pdf
 ```
 
-Requires Node ≥ 18 and a Chromium binary (`CHROME_PATH`, `/opt/pw-browsers`,
-or common system locations — see `chromium()` in `build.mjs`). The build
-fails if any variant spills past one page. CI rebuilds the PDFs on every PR
-push and links them in a PR comment.
+Needs Node ≥ 18 and Chromium (`CHROME_PATH`, or a common install location —
+see `chromium()` in `build.mjs`). The build fails if any variant spills past
+one A4 page.
 
-## Layout
+## How it works
 
-- `content/` — every fact, once, in editable Markdown: frontmatter for the
-  header facts, list items with `{#id}` anchors for bullets, backticks for
-  tech chips
-- `src/variants.mjs` — what each variant selects, emphasizes, and says
-- `src/components/CV.jsx` — React components; rendered with
-  `react-dom/server`, bundled by esbuild, printed by Chromium
-- `src/themes/` — `base.css` skeleton (incl. the `{ EUGENE : LERMAN }`
-  braces identity) + one CSS file per variant
-- `dist/` — the PDFs
+- `content/` — every fact exactly once, in Markdown: frontmatter for header
+  facts, bullets tagged with `{#id}` anchors, backticks for tech chips
+- `src/variants.mjs` — what each variant selects and emphasizes
+- `src/components/CV.jsx` — the layout, rendered with `react-dom/server`
+- `src/themes/` — a shared skeleton plus one small CSS file per variant
+- `.github/workflows/` — PR pushes get PDFs attached as a comment;
+  `master` pushes get a release
 
-The previous LaTeX (awesome-cv) toolchain lives on in git history.
+Editing a bullet once updates every variant. The original LaTeX toolchain
+lives on in git history.
