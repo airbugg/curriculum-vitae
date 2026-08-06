@@ -95,15 +95,23 @@ export function duration(dates) {
   return [y ? `${y} yr` : null, mo ? `${mo} mo` : null].filter(Boolean).join(' ');
 }
 
-// Dates plus the derived tenure, e.g. "Dec 2022 – Feb 2026 · 3 yr 3 mo".
+// Role lines carry the bare range; the derived tenure lives ONCE per company
+// on the company line (Tufte: the duration is redundant ink at role level —
+// within a company the ranges share endpoints — but earns its place for
+// "Present" arithmetic and cross-role totals).
 function Dates({ dates, className }) {
-  const d = duration(dates);
-  return (
-    <span className={className}>
-      {dates}
-      {d && <span className="dur"> · {d}</span>}
-    </span>
-  );
+  return <span className={className}>{dates}</span>;
+}
+
+// The company-level tenure: total span for multi-role groups, the single
+// role's span otherwise.
+function groupDuration(group) {
+  const first = jobs[group[0].job];
+  const span =
+    group.length > 1
+      ? `${String(jobs[group[group.length - 1].job].dates).split('–')[0].trim()} – ${String(first.dates).split('–')[1].trim()}`
+      : first.dates;
+  return duration(span);
 }
 
 function Bullets({ section, job }) {
@@ -126,12 +134,8 @@ function Bullets({ section, job }) {
 function Group({ group }) {
   const first = jobs[group[0].job];
   const multi = group.length > 1;
-  // For a multi-role company, the company line answers "how long at this
-  // place" directly: total tenure from the oldest start to the newest end.
-  const totalSpan = multi
-    ? `${String(jobs[group[group.length - 1].job].dates).split('–')[0].trim()} – ${String(first.dates).split('–')[1].trim()}`
-    : null;
-  const total = totalSpan ? duration(totalSpan) : null;
+  // One uniform rule: every company line answers "how long at this place".
+  const total = groupDuration(group);
   return (
     <article className={multi ? 'entry group' : 'entry'}>
       <div className="entry-head">
@@ -347,6 +351,7 @@ function GridEntry({ group }) {
                   <div className="g-co">{tidyLabel(first.company)}</div>
                   {first.blurb && <div className="g-mblurb">{first.blurb}</div>}
                   <div className="g-loc">{first.location}</div>
+                  <div className="g-dur">{groupDuration(group)}</div>
                 </>
               )}
               <Dates className="g-dates" dates={job.dates} />
@@ -460,7 +465,10 @@ function EdEntry({ group }) {
       <div className="ed-entry-head">
         <span className="ed-co">{first.company}</span>
         {first.blurb && <span className="ed-blurb">{first.blurb}</span>}
-        <span className="ed-loc">{first.location}</span>
+        <span className="ed-loc">
+          {first.location}
+          <span className="dur"> · {groupDuration(group)}</span>
+        </span>
       </div>
       {group.map((s) => {
         const job = jobs[s.job];

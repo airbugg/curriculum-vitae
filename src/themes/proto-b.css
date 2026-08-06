@@ -169,7 +169,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* "Dec 2022 – Feb 2026 · 3 yr 3 mo" overruns the 40mm data column; instead
    of an accidental mid-token wrap, break it deliberately: the range on one
    line, the derived tenure on its own line beneath, styled as data. */
-.g-dates .dur { display: block; }
+.g-dur { color: var(--muted, #5a6470); opacity: 0.85; }
 
 .g-content { }
 .g-role {
