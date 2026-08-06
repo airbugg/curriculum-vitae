@@ -226,42 +226,268 @@ function HowIWork({ variant }) {
   );
 }
 
+// =========================================================================
+// PROTOTYPE LAYOUTS — three opposed design philosophies (see DESIGN.md).
+// These reuse the same content primitives (jobs/education/publications) but
+// build radically different DOM so the CSS themes can express each philosophy.
+// =========================================================================
+
+function contactList(variant) {
+  return [
+    person.location,
+    person.phone,
+    person.email,
+    person.github,
+    person.linkedin,
+    person.site,
+    variant.contactExtra,
+  ].filter(Boolean);
+}
+
+// ---- B: MODERNIST GRID -------------------------------------------------
+// A hard left meta-column (company / location / dates as a data column)
+// against a right content column. Company shows once per employer; each role
+// keeps its own dates in the meta column, aligned to its bullets.
+function GridEntry({ group }) {
+  const first = jobs[group[0].job];
+  return (
+    <>
+      {group.map((s, i) => {
+        const job = jobs[s.job];
+        return (
+          <div className="g-row" key={s.job}>
+            <div className="g-meta">
+              {i === 0 && (
+                <>
+                  <div className="g-co">{first.company}</div>
+                  <div className="g-loc">{first.location}</div>
+                </>
+              )}
+              <div className="g-dates">{job.dates}</div>
+            </div>
+            <div className="g-content">
+              <div className="g-role">{job.role}</div>
+              {first.blurb && i === 0 && <div className="g-blurb">{first.blurb}</div>}
+              <ul>
+                {s.bullets.map((id) => (
+                  <li key={id}>
+                    <Rich text={s.overrides?.[id] ?? job.bullets[id]} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+function GridPage({ variant }) {
+  const groups = groupSections(variant.sections);
+  const contacts = contactList(variant);
+  return (
+    <div className="page grid-page">
+      <header className="g-header">
+        <div className="g-idcol">
+          <div className="g-label">Curriculum Vitae</div>
+        </div>
+        <div className="g-idmain">
+          <h1>{person.name}</h1>
+          <div className="g-title">{person.title}</div>
+        </div>
+      </header>
+
+      <div className="g-row g-introrow">
+        <div className="g-meta">
+          <div className="g-contacts">
+            {contacts.map((c) => (
+              <div key={c}>{c}</div>
+            ))}
+          </div>
+        </div>
+        <div className="g-content">
+          <p className="intro">{variant.intro}</p>
+        </div>
+      </div>
+
+      <section className="g-section">
+        <div className="g-secmark">{variant.headings.experience}</div>
+        {groups.map((g) => (
+          <GridEntry key={g[0].job} group={g} />
+        ))}
+      </section>
+
+      <section className="g-section">
+        <div className="g-secmark">{variant.headings.education}</div>
+        <div className="g-row">
+          <div className="g-meta">
+            <div className="g-co">{education.school}</div>
+            <div className="g-dates">{education.dates}</div>
+          </div>
+          <div className="g-content">
+            <div className="g-role">{education.degree}</div>
+          </div>
+        </div>
+        <div className="g-row">
+          <div className="g-meta">
+            <div className="g-co">Publications</div>
+            <div className="g-dates">{publications[0].year}</div>
+          </div>
+          <div className="g-content">
+            <div className="g-pubtitle">{publications[0].title}</div>
+            <div className="g-pubmeta">
+              {publications[0].journal} · {publications[0].authors}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// ---- C: EDITORIAL / EXPRESSIVE ----------------------------------------
+// Big quiet hero, small dense text, braces amplified into giant structural
+// section markers. Keeps the emerald braces soul alive.
+function EdBrace({ children }) {
+  return (
+    <div className="ed-secrow">
+      <div className="ed-brace">{'{'}</div>
+      <h2 className="ed-h2">{String(children).toUpperCase()}</h2>
+      <div className="ed-brace ed-brace-close">{'}'}</div>
+    </div>
+  );
+}
+
+function EdEntry({ group }) {
+  const first = jobs[group[0].job];
+  return (
+    <article className="ed-entry">
+      <div className="ed-entry-head">
+        <span className="ed-co">{first.company}</span>
+        {first.blurb && <span className="ed-blurb">{first.blurb}</span>}
+        <span className="ed-loc">{first.location}</span>
+      </div>
+      {group.map((s) => {
+        const job = jobs[s.job];
+        return (
+          <div className="ed-role-block" key={s.job}>
+            <div className="ed-role-row">
+              <span className="ed-role">{job.role}</span>
+              <span className="ed-dates">{job.dates}</span>
+            </div>
+            <ul>
+              {s.bullets.map((id) => (
+                <li key={id}>
+                  <Rich text={s.overrides?.[id] ?? job.bullets[id]} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </article>
+  );
+}
+
+function EditorialPage({ variant }) {
+  const groups = groupSections(variant.sections);
+  const [first, last] = person.name.toUpperCase().split(' ');
+  const contacts = contactList(variant);
+  return (
+    <div className="page ed-page">
+      <header className="ed-hero">
+        <h1 className="ed-name">
+          <span className="nb">{'{'}</span>
+          <span className="nf">{first}</span>
+          <span className="nc">:</span>
+          <span className="nl">{last}</span>
+          <span className="nb">{'}'}</span>
+        </h1>
+        <div className="ed-title">{person.title}</div>
+        <p className="ed-intro">{variant.intro}</p>
+        <div className="ed-contacts">
+          {contacts.map((c, i) => (
+            <React.Fragment key={c}>
+              {i > 0 && <span className="ed-sep">·</span>}
+              <span>{c}</span>
+            </React.Fragment>
+          ))}
+        </div>
+      </header>
+
+      <section className="ed-section">
+        <EdBrace>{variant.headings.experience}</EdBrace>
+        <div className="ed-body">
+          {groups.map((g) => (
+            <EdEntry key={g[0].job} group={g} />
+          ))}
+        </div>
+      </section>
+
+      <section className="ed-section ed-footer">
+        <EdBrace>{variant.headings.education}</EdBrace>
+        <div className="ed-body">
+          <div className="ed-edu">
+            <span className="ed-degree">{education.degree}</span>
+            <span className="ed-school">{education.school}</span>
+            <span className="ed-dates">{education.dates}</span>
+          </div>
+          <div className="ed-pub">
+            <span className="ed-pub-title">{publications[0].title}</span>
+            <span className="ed-pub-meta">
+              {publications[0].journal} · {publications[0].year}
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export function CVPage({ variant, css }) {
   const intro = <p className="intro">{variant.intro}</p>;
   const identity = variant.nameStyle === 'plain' ? '' : ' id-braces';
-  return (
+  const shell = (body) => (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <title>{`${person.name} — CV`}</title>
         <style dangerouslySetInnerHTML={{ __html: css }} />
       </head>
-      <body className={variant.theme + identity}>
-        <div className="page">
-          <Header variant={variant} />
-          {variant.layout === 'sidebar' ? (
-            <div className="cols">
-              <aside>
-                <Skills variant={variant} />
-                <Education variant={variant} />
-              </aside>
-              <div className="main">
-                {intro}
-                <HowIWork variant={variant} />
-                <Experience variant={variant} />
-              </div>
-            </div>
-          ) : (
-            <>
-              {intro}
-              <HowIWork variant={variant} />
-              <Experience variant={variant} />
-              <Education variant={variant} />
-              <Skills variant={variant} />
-            </>
-          )}
-        </div>
-      </body>
+      <body className={variant.theme + identity}>{body}</body>
     </html>
+  );
+
+  if (variant.layout === 'grid') return shell(<GridPage variant={variant} />);
+  if (variant.layout === 'editorial') return shell(<EditorialPage variant={variant} />);
+
+  // single / sidebar / reduction all share the flow shell; reduction is a
+  // CSS-only restraint pass over the single flow.
+  return shell(
+    <div className="page">
+      <Header variant={variant} />
+      {variant.layout === 'sidebar' ? (
+        <div className="cols">
+          <aside>
+            <Skills variant={variant} />
+            <Education variant={variant} />
+          </aside>
+          <div className="main">
+            {intro}
+            <HowIWork variant={variant} />
+            <Experience variant={variant} />
+          </div>
+        </div>
+      ) : (
+        <>
+          {intro}
+          <HowIWork variant={variant} />
+          <Experience variant={variant} />
+          <Education variant={variant} />
+          <Skills variant={variant} />
+        </>
+      )}
+    </div>,
   );
 }

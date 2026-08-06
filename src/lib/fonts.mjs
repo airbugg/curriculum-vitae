@@ -41,6 +41,10 @@ const THEME_FONTS = {
   ai: ['sourceSans', 'mono'],
   looker: ['sourceSans', 'codePro', 'mono'],
   parser: [],
+  // Prototypes:
+  'proto-a': ['sourceSans'], // reduction — one family only
+  'proto-b': ['sourceSans', 'codePro'], // grid — sans content + mono data column
+  'proto-c': ['sourceSans', 'codePro'], // editorial — sans text + mono braces/display
 };
 
 export function fontFaces(theme) {

@@ -107,4 +107,77 @@ export const variants = [
     ],
     skillsRaw: true,
   },
+
+  // ------------------------------------------------------------------------
+  // THREE DIAMETRICALLY OPPOSED PROTOTYPES (design-research deliverables).
+  // Same facts, three philosophies. See DESIGN.md for the full rationale.
+  // ------------------------------------------------------------------------
+
+  // A — RADICAL REDUCTION. One family (Source Sans), two sizes, no chips, no
+  // colour, no rules, no braces. Whitespace is the only hierarchy device.
+  // Tschichold-austere / Bringhurst restraint. Fewer, stronger bullets so the
+  // page breathes and fills evenly instead of bunching at the top.
+  {
+    file: 'eugene-lerman-proto-a',
+    label: 'Prototype A · Radical Reduction',
+    theme: 'proto-a',
+    layout: 'reduction',
+    nameStyle: 'plain',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  // B — STRICT MODERNIST GRID. Hard left meta-column (company / location /
+  // dates as a data column) against a right content column, visible structural
+  // asymmetry, one functional accent. Müller-Brockmann. Plain name (no braces),
+  // no chips — colour is a signal, never decoration.
+  {
+    file: 'eugene-lerman-proto-b',
+    label: 'Prototype B · Modernist Grid',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  // C — EDITORIAL / EXPRESSIVE. Strong scale contrast — a big quiet hero,
+  // small dense text — and the braces identity amplified into the layout: giant
+  // emerald braces as structural section markers, not sprinkled punctuation.
+  // Keeps the braces soul recognizably alive. Deliberate unequal distribution.
+  {
+    file: 'eugene-lerman-proto-c',
+    label: 'Prototype C · Editorial Expressive',
+    theme: 'proto-c',
+    layout: 'editorial',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
 ];

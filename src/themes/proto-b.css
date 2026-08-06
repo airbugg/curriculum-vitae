@@ -1,0 +1,127 @@
+/* =======================================================================
+   PROTOTYPE B — STRICT MODERNIST GRID
+   Josef Müller-Brockmann. A hard left meta-column (company / location /
+   dates as a data column) against a right content column. Visible
+   structural asymmetry, one baseline rhythm, ONE functional accent
+   (emerald) used only for section labels — signal, never decoration.
+   No braces, no chips. Own DOM (.grid-page); base.css is mostly bypassed.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-data: 'Source Code Pro', monospace;
+  --ink: #1c2229;
+  --ink-strong: #0f1317;
+  --muted: #6b7480;
+  --accent: #00A388;
+  --rule: #d3dbe1;
+  --fs: 9pt;
+}
+
+body.proto-b { color: var(--ink); font-family: var(--font-body); }
+
+/* Two-column grid module, repeated everywhere. Left = data, right = content. */
+.grid-page { padding: 12mm 18mm 11mm; }
+
+.g-row {
+  display: grid;
+  grid-template-columns: 40mm 1fr;
+  column-gap: 9mm;
+  align-items: start;
+}
+
+/* ---- header ---- */
+.g-header {
+  display: grid;
+  grid-template-columns: 40mm 1fr;
+  column-gap: 9mm;
+  align-items: baseline;
+  padding-bottom: 3mm;
+  border-bottom: 1pt solid var(--ink-strong);
+}
+.g-label {
+  font-family: var(--font-data);
+  font-size: 7.5pt;
+  letter-spacing: 1.5pt;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.g-idmain h1 {
+  margin: 0;
+  font-size: 23pt;
+  font-weight: 700;
+  letter-spacing: -0.2pt;
+  color: var(--ink-strong);
+  line-height: 1;
+}
+.g-title {
+  margin-top: 1.6mm;
+  font-family: var(--font-data);
+  font-size: 8.5pt;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- intro sits on the same grid: contacts in the data column ---- */
+.g-introrow { margin-top: 5mm; }
+.g-contacts {
+  font-family: var(--font-data);
+  font-size: 7.4pt;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.g-introrow .intro {
+  margin: 0;
+  max-width: 155mm;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* ---- section marker: a full-width hairline row, label in the data column ---- */
+.g-section { margin-top: 5.5mm; }
+.g-secmark {
+  font-family: var(--font-data);
+  font-size: 8pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 2mm;
+  margin-bottom: 4mm;
+  border-bottom: 0.5pt solid var(--rule);
+}
+
+/* ---- entry rows ---- */
+.g-section .g-row { margin-bottom: 3.8mm; break-inside: avoid; }
+.g-section .g-row:last-child { margin-bottom: 0; }
+
+.g-meta { line-height: 1.3; }
+.g-co { font-weight: 700; font-size: 9pt; color: var(--ink-strong); }
+.g-loc { font-size: 8pt; color: var(--muted); margin-top: 0.4mm; }
+.g-dates {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  color: var(--muted);
+  margin-top: 1mm;
+  letter-spacing: -0.2pt;
+}
+
+.g-content { }
+.g-role {
+  font-weight: 600;
+  font-size: 9.5pt;
+  color: var(--ink-strong);
+  margin-bottom: 0.4mm;
+}
+.g-blurb { font-size: 8pt; color: var(--muted); margin-bottom: 1.4mm; }
+.g-content ul { margin: 1.6mm 0 0; padding-left: 3.6mm; }
+.g-content li { margin-bottom: 0.7mm; line-height: 1.3; }
+.g-content li:last-child { margin-bottom: 0; }
+.g-content li::marker { color: var(--accent); }
+
+/* tech spans stay plain — the grid, not colour, does the organising. */
+.proto-b code { font-family: inherit; background: none; color: inherit; padding: 0; }
+
+/* ---- education / publications reuse the same module ---- */
+.g-pubtitle { font-weight: 600; font-size: 9pt; color: var(--ink-strong); }
+.g-pubmeta { font-size: 8pt; color: var(--muted); margin-top: 0.6mm; line-height: 1.35; }

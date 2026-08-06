@@ -1,0 +1,109 @@
+/* =======================================================================
+   PROTOTYPE A — RADICAL REDUCTION
+   Tschichold-austere / Bringhurst restraint. ONE typeface family (Source
+   Sans Pro), essentially TWO sizes, no chips, no colour, no rules, no
+   braces, no small-caps. Whitespace is the only hierarchy device. Reuses
+   the single-flow DOM; everything here is subtraction.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-mono: 'Source Sans Pro', sans-serif; /* neutralise any code spans */
+  --font-name: 'Source Sans Pro', sans-serif;
+  --font-head: 'Source Sans Pro', sans-serif;
+  --font-title: 'Source Sans Pro', sans-serif;
+  --font-dates: 'Source Sans Pro', sans-serif;
+
+  /* Two inks: text, and one quiet grey for the secondary layer. No accent. */
+  --ink: #222831;
+  --ink-strong: #14181d;
+  --muted: #7a828c;
+  --accent: #222831;       /* markers become plain ink, not colour */
+  --accent-soft: #565d66;  /* roles: a shade quieter than body, not coloured */
+  --rule: transparent;
+
+  /* Two sizes only: a modest name, and the body. Everything else = body. */
+  --fs: 10pt;
+  --lh: 1.4;               /* Bringhurst: open, even rhythm */
+  --fs-name: 17pt;
+  --fw-name: 600;
+  --ls-name: 0.2pt;
+  --fs-title: 10pt;
+  --fs-h2: 10pt;
+  --fs-intro: 10pt;
+  --fs-co: 10pt;
+  --fs-role: 10pt;
+  --fs-small: 9pt;
+  --fs-pub-title: 10pt;
+
+  /* Whitespace carries the whole hierarchy: wide margins, big section air. */
+  --pad: 17mm 24mm 18mm;
+  --entry-gap: 5mm;
+  --li-gap: 1.3mm;
+  --intro-margin: 6mm 0 0;
+  --intro-width: 150mm;
+}
+
+/* Header: left-aligned, quiet. Title is not shouted — same ink family. */
+header { text-align: left; }
+header .title {
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-top: 1.4mm;
+}
+header .contacts {
+  margin-top: 3mm;
+  color: var(--muted);
+  font-size: 8.6pt;
+  letter-spacing: 0.1pt;
+}
+header .contacts .sep { color: var(--muted); margin: 0 1.4mm; }
+
+.intro {
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Sections: no rule, no uppercase shout. A quiet, spaced, semibold word with
+   large air above it — space is the divider. */
+h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+  text-transform: none;
+  letter-spacing: 0.2pt;
+  font-weight: 600;
+  font-size: 11pt;
+  color: var(--ink-strong);
+  margin: 7.5mm 0 3.2mm;
+}
+.intro + section > h2 { margin-top: 7mm; }
+.skills > h2, .edu > h2 { margin-top: 7.5mm; }
+
+/* Entries: company/role/dates all in one family; distinction by weight only. */
+.company { font-weight: 600; }
+.blurb { color: var(--muted); font-size: 9pt; }
+.entry-head > .loc { color: var(--muted); font-style: normal; }
+.entry-sub .role { color: var(--accent-soft); font-weight: 600; }
+.dates { color: var(--muted); font-style: normal !important; }
+.entry ul { margin-top: 2mm; padding-left: 4mm; }
+.entry li::marker { color: var(--muted); }
+.entry .role-block + .role-block { margin-top: 3mm; }
+
+/* Education / publications: plain, no small-caps, no italics, no colour. */
+.pub-sub {
+  font-variant: normal;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.2pt;
+  margin: 3mm 0 1.2mm;
+}
+.pub-authors { font-variant: normal; letter-spacing: 0; color: var(--muted); }
+.pub-journal, .pub-year { font-style: normal; color: var(--muted); }
+.pub-journal { color: var(--accent-soft); }
+.edu-row .school { color: var(--muted); }
+
+/* Any residual tech spans render as plain text — no boxes, no colour. */
+code { background: none !important; color: inherit !important; padding: 0 !important; }

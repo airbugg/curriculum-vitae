@@ -1,0 +1,146 @@
+/* =======================================================================
+   PROTOTYPE C — EDITORIAL / EXPRESSIVE
+   Strong scale contrast: a big quiet hero, small dense body. The braces
+   identity is AMPLIFIED into the layout — giant emerald braces as structural
+   section markers, not sprinkled punctuation. Emerald soul kept alive.
+   Deliberate unequal distribution: the page is a flex column so the footer
+   is pinned to the bottom edge — the trailing void is designed away.
+   Own DOM (.ed-page). id-braces is on, but the chip boxes are removed.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-display: 'Source Code Pro', monospace;
+  --ink: #20272e;
+  --ink-strong: #10151a;
+  --muted: #6a737e;
+  --accent: #00A388;
+  --accent-deep: #00735f;
+}
+
+body.proto-c { font-family: var(--font-body); color: var(--ink); }
+
+.ed-page {
+  padding: 15mm 20mm 14mm;
+  min-height: 296.5mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- HERO: big, quiet, lots of air. Occupies the top with intent. ---- */
+.ed-hero { margin-bottom: 3mm; }
+.ed-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 44pt;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.5pt;
+  color: var(--ink-strong);
+}
+.ed-name .nb { color: var(--accent); font-weight: 400; }
+.ed-name .nb:first-child { margin-right: 0.12em; }
+.ed-name .nb:last-child { margin-left: 0.12em; }
+.ed-name .nf { color: #aeb7bd; font-weight: 300; }
+.ed-name .nc { color: var(--accent); margin: 0 0.14em; font-weight: 400; }
+.ed-name .nl { color: var(--ink-strong); font-weight: 600; }
+
+.ed-title {
+  margin-top: 3mm;
+  font-family: var(--font-display);
+  font-size: 10pt;
+  letter-spacing: 4pt;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+/* The intro is a display line — the big quiet moment of scale contrast. */
+.ed-intro {
+  margin: 5mm 0 0;
+  max-width: 150mm;
+  font-size: 14pt;
+  font-weight: 300;
+  line-height: 1.34;
+  color: var(--ink);
+}
+.ed-contacts {
+  margin-top: 4.5mm;
+  font-size: 8pt;
+  color: var(--muted);
+  letter-spacing: 0.2pt;
+}
+.ed-contacts .ed-sep { margin: 0 1.6mm; color: var(--accent); }
+
+/* ---- SECTION MARKERS: the braces amplified into big structural glyphs ---- */
+.ed-section { margin-top: 7mm; }
+.ed-footer { margin-top: auto; padding-top: 6mm; } /* pinned to the bottom edge */
+
+.ed-secrow {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-bottom: 4mm;
+}
+.ed-brace {
+  font-family: var(--font-display);
+  font-size: 30pt;
+  font-weight: 300;
+  line-height: 0.8;
+  color: var(--accent);
+}
+.ed-h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 13pt;
+  font-weight: 500;
+  letter-spacing: 4pt;
+  text-transform: uppercase;
+  color: var(--ink-strong);
+  border: none;
+}
+.ed-secrow .ed-brace-close { margin-left: -1mm; }
+/* a thin rule trailing the heading, editorial-style */
+.ed-secrow::after {
+  content: '';
+  flex: 1;
+  height: 0.5pt;
+  background: linear-gradient(90deg, var(--accent) 0%, #d5ded9 100%);
+  opacity: 0.5;
+}
+
+/* ---- BODY: small, dense, tightly grouped (Gestalt proximity) ---- */
+.ed-body { font-size: 8.6pt; }
+.ed-entry { margin-bottom: 4mm; break-inside: avoid; }
+.ed-entry:last-child { margin-bottom: 0; }
+.ed-entry-head { display: flex; align-items: baseline; gap: 2.4mm; }
+.ed-co { font-weight: 700; font-size: 10pt; color: var(--ink-strong); }
+.ed-blurb { font-size: 8pt; color: var(--muted); }
+.ed-loc { margin-left: auto; font-style: italic; color: var(--accent-deep); font-size: 8pt; white-space: nowrap; }
+
+.ed-role-block + .ed-role-block { margin-top: 2.6mm; }
+.ed-role-row { display: flex; align-items: baseline; justify-content: space-between; margin-top: 0.6mm; }
+.ed-role { font-weight: 600; font-size: 8.8pt; color: var(--accent-deep); font-variant: small-caps; letter-spacing: 0.4pt; }
+.ed-dates { font-family: var(--font-display); font-size: 7.6pt; color: var(--muted); letter-spacing: -0.2pt; }
+
+.ed-body ul { margin: 1.4mm 0 0; padding-left: 3.6mm; }
+.ed-body li { margin-bottom: 1mm; line-height: 1.36; }
+.ed-body li:last-child { margin-bottom: 0; }
+.ed-body li::marker { color: var(--accent); }
+
+/* Tech terms keep an emphasis but LOSE the chip boxes — no peppering. */
+.proto-c.id-braces code {
+  background: none;
+  color: var(--accent-deep);
+  font-family: var(--font-display);
+  font-size: 92%;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ---- footer: education + publication on two tidy lines ---- */
+.ed-edu { display: flex; align-items: baseline; gap: 2.6mm; font-size: 8.8pt; }
+.ed-degree { font-weight: 600; color: var(--ink-strong); }
+.ed-school { color: var(--muted); }
+.ed-edu .ed-dates { margin-left: auto; }
+.ed-pub { margin-top: 2mm; display: flex; align-items: baseline; gap: 2.6mm; font-size: 8.2pt; }
+.ed-pub-title { color: var(--ink); font-weight: 500; }
+.ed-pub-meta { margin-left: auto; color: var(--muted); font-style: italic; white-space: nowrap; }
