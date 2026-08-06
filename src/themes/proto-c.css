@@ -3,8 +3,9 @@
    Strong scale contrast: a big quiet hero, small dense body. The braces
    identity is AMPLIFIED into the layout — giant emerald braces as structural
    section markers, not sprinkled punctuation. Emerald soul kept alive.
-   Deliberate unequal distribution: the page is a flex column so the footer
-   is pinned to the bottom edge — the trailing void is designed away.
+   Deliberate unequal distribution: the page's surplus is spread as
+   proportional inter-section and inter-entry air, so mass fills the page
+   evenly with no stranded hole and only a modest trailing margin.
    Own DOM (.ed-page). id-braces is on, but the chip boxes are removed.
    ======================================================================= */
 :root {
@@ -41,7 +42,16 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 .ed-name .nb:first-child { margin-right: 0.12em; }
 .ed-name .nb:last-child { margin-left: 0.12em; }
 .ed-name .nf { color: #aeb7bd; font-weight: 300; }
-.ed-name .nc { color: var(--accent); margin: 0 0.14em; font-weight: 400; }
+/* The colon is the pivot of the identity: mono colons centre on the x-height
+   and read low + small against 44pt caps. Lift it to the caps' optical centre
+   and weight it up so it reads as a deliberate mark, not a stray one. */
+.ed-name .nc {
+  color: var(--accent);
+  margin: 0 0.16em;
+  font-weight: 700;
+  position: relative;
+  top: -0.1em;
+}
 .ed-name .nl { color: var(--ink-strong); font-weight: 600; }
 
 .ed-title {
@@ -55,7 +65,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 
 /* The intro is a display line — the big quiet moment of scale contrast. */
 .ed-intro {
-  margin: 5mm 0 0;
+  margin: 6mm 0 0;
   max-width: 150mm;
   font-size: 14pt;
   font-weight: 300;
@@ -67,18 +77,22 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   font-size: 8pt;
   color: var(--muted);
   letter-spacing: 0.2pt;
+  line-height: 1.55;
 }
 .ed-contacts .ed-sep { margin: 0 1.6mm; color: var(--accent); }
 
 /* ---- SECTION MARKERS: the braces amplified into big structural glyphs ---- */
-.ed-section { margin-top: 7mm; }
-.ed-footer { margin-top: auto; padding-top: 6mm; } /* pinned to the bottom edge */
+/* Distribution: the page's surplus is spread as proportional inter-section
+   and inter-entry air (see the gaps below) — no pinned footer, no stranded
+   hole between the last entry and Education. */
+.ed-section { margin-top: 7.5mm; }
+.ed-footer { margin-top: 7.5mm; }
 
 .ed-secrow {
   display: flex;
   align-items: center;
-  gap: 3mm;
-  margin-bottom: 4mm;
+  gap: 2.6mm;
+  margin-bottom: 5mm;
 }
 .ed-brace {
   font-family: var(--font-display);
@@ -89,6 +103,9 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 }
 .ed-h2 {
   margin: 0;
+  /* Trailing letter-spacing after the last cap would widen the word→closing-
+     brace gap; cancel it so both brace gaps are optically equal. */
+  margin-right: -4pt;
   font-family: var(--font-display);
   font-size: 13pt;
   font-weight: 500;
@@ -97,32 +114,32 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   color: var(--ink-strong);
   border: none;
 }
-.ed-secrow .ed-brace-close { margin-left: -1mm; }
-/* a thin rule trailing the heading, editorial-style */
+/* A thin rule trailing the heading, editorial-style. Solid colours and a
+   ≥0.75pt height: a 0.5pt semi-transparent box can round to nothing in the
+   PDF rasteriser depending on its fractional y-position. */
 .ed-secrow::after {
   content: '';
   flex: 1;
-  height: 0.5pt;
-  background: linear-gradient(90deg, var(--accent) 0%, #d5ded9 100%);
-  opacity: 0.5;
+  height: 0.8pt;
+  background: linear-gradient(90deg, #7ccbbb 0%, #dde8e3 100%);
 }
 
 /* ---- BODY: small, dense, tightly grouped (Gestalt proximity) ---- */
 .ed-body { font-size: 8.6pt; }
-.ed-entry { margin-bottom: 4mm; break-inside: avoid; }
+.ed-entry { margin-bottom: 5mm; break-inside: avoid; }
 .ed-entry:last-child { margin-bottom: 0; }
 .ed-entry-head { display: flex; align-items: baseline; gap: 2.4mm; }
 .ed-co { font-weight: 700; font-size: 10pt; color: var(--ink-strong); }
 .ed-blurb { font-size: 8pt; color: var(--muted); }
 .ed-loc { margin-left: auto; font-style: italic; color: var(--accent-deep); font-size: 8pt; white-space: nowrap; }
 
-.ed-role-block + .ed-role-block { margin-top: 2.6mm; }
+.ed-role-block + .ed-role-block { margin-top: 3.2mm; }
 .ed-role-row { display: flex; align-items: baseline; justify-content: space-between; margin-top: 0.6mm; }
 .ed-role { font-weight: 600; font-size: 8.8pt; color: var(--accent-deep); font-variant: small-caps; letter-spacing: 0.4pt; }
 .ed-dates { font-family: var(--font-display); font-size: 7.6pt; color: var(--muted); letter-spacing: -0.2pt; }
 
 .ed-body ul { margin: 1.4mm 0 0; padding-left: 3.6mm; }
-.ed-body li { margin-bottom: 1mm; line-height: 1.36; }
+.ed-body li { margin-bottom: 1.1mm; line-height: 1.38; }
 .ed-body li:last-child { margin-bottom: 0; }
 .ed-body li::marker { color: var(--accent); }
 
@@ -144,3 +161,4 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 .ed-pub { margin-top: 2mm; display: flex; align-items: baseline; gap: 2.6mm; font-size: 8.2pt; }
 .ed-pub-title { color: var(--ink); font-weight: 500; }
 .ed-pub-meta { margin-left: auto; color: var(--muted); font-style: italic; white-space: nowrap; }
+.ed-pub-authors { margin-top: 0.8mm; font-size: 7.6pt; color: var(--muted); letter-spacing: 0.1pt; }

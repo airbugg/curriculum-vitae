@@ -126,6 +126,7 @@ export const variants = [
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
     contactExtra: 'English · Hebrew · Russian',
+    contactSplit: 4, // two balanced contact lines instead of one full-measure run
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },

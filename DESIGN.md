@@ -61,10 +61,10 @@ Ink density by page-third and trailing blank space:
 
 | Region | Flagship | Proto A | Proto B | Proto C |
 |---|---|---|---|---|
-| Top third ink % | 5.6 | 3.5 | 2.9 | 3.0 |
-| Middle third ink % | 6.8 | 5.7 | 5.5 | 6.0 |
-| Bottom third ink % | 3.1 | 2.8 | 3.7 | 2.9 |
-| **Trailing blank** | **9.9 %** | 8.6 % | **4.4 %** | 5.3 % |
+| Top third ink % | 5.6 | 3.6 | 3.6 | 3.1 |
+| Middle third ink % | 6.8 | 6.0 | 5.5 | 6.0 |
+| Bottom third ink % | 3.1 | 3.3 | 2.9 | 3.1 |
+| **Trailing blank** | **9.9 %** | 5.8 % | 5.1 % | 5.6 % |
 
 The flagship packs a dense slab from 16 mm down to ~87 % of the page height,
 then dumps **173 px (≈ 27 mm, 9.9 %)** of dead space in one band at the bottom.
@@ -175,7 +175,7 @@ is the *same two-column module* repeated.
 - **Education/Publications** → the same module: school/dates left, degree/paper
   right — reads as ordered rows, not a knot.
 - **Distribution** → the repeated module and the sparse left column give the
-  most even fill of the three; **best trailing-void score, 4.4 %.**
+  most even fill of the three; **best trailing-void score, 5.1 %.**
 - **Sacrifices:** the braces identity is dropped (plain name); the sparse left
   column is deliberately "empty" (asymmetry as design), which reads as unusual
   for a résumé; most rigid of the three.
@@ -186,8 +186,8 @@ and the **braces identity amplified into the layout itself**: a 44 pt
 `{ EUGENE : LERMAN }` hero and **giant emerald braces as structural section
 markers** (with a trailing gradient rule), instead of braces sprinkled as
 punctuation. Emerald soul kept vividly alive. New DOM (`EditorialPage`); the
-page is a flex column so the education footer is **pinned to the bottom edge** —
-the trailing void is designed away, not left to chance.
+page's surplus is **spread as proportional inter-section and inter-entry air**,
+so mass fills the page evenly — no stranded block, no hoarded void.
 
 - **Contact line** → recast as a small, quiet byline beneath a large display
   intro; the scale jump gives it room and takes it off the crowded edge.
@@ -195,9 +195,10 @@ the trailing void is designed away, not left to chance.
   brace marker create an unmistakable scale break; no ambiguity about a new
   section.
 - **Education/Publications** → a deliberate footer band with its own big brace
-  marker, two tidy lines, pinned low.
-- **Distribution** → `margin-top:auto` on the footer plus the tall hero
-  distribute mass top-and-bottom intentionally; trailing void 9.9 %→5.3 %.
+  marker: degree line, publication line, small authors line.
+- **Distribution** → the tall hero and proportionally enlarged section/entry
+  gaps spread the mass down the page; trailing void 9.9 %→5.6 %, with no hole
+  between the last entry and Education.
 - **Chips** → kept as *emphasis* (emerald mono, **no boxes**) — the peppering is
   gone but the tech stack still reads at a glance.
 - **Sacrifices:** the most opinionated/expressive — the big hero spends
@@ -210,7 +211,59 @@ identity into loud editorial scale. Reduction ↔ structure ↔ expression.
 
 ---
 
-## 4. Files changed / added
+## 4. Refinement round (owner review fixes)
+
+A second pass fixed visual artifacts found in owner review, each verified with
+200 dpi crops of the exact region:
+
+**Prototype C**
+- The bottom-pinned footer had created a dead void between Wix and
+  `{ EDUCATION }` — the very stranded-block problem the design claimed to
+  solve. The pin was removed and the surplus redistributed as proportional
+  inter-section/inter-entry air.
+- The hero colon rendered small and low (mono colons centre on the x-height).
+  It is now weighted up and lifted to the caps' optical centre.
+- The contact run wrapped with a dangling "Hebrew · Russian"; it is now two
+  intentionally balanced lines.
+- The publication's authors line had been dropped; restored (small, muted) for
+  content parity.
+- The heading brace gaps were optically unequal (trailing letter-spacing after
+  the last cap widened the closing gap); the tracking is now cancelled on the
+  word's right edge so both gaps match.
+- The trailing heading rule could vanish: a 0.5 pt semi-transparent box can
+  round to nothing in the PDF rasteriser depending on its fractional
+  y-position. Now 0.8 pt, solid colours.
+
+**Prototype B**
+- `linkedin.com/in/lerman-gene` broke mid-URL in the 40 mm data column; the
+  contacts are now sized so the longest line fits, each line `nowrap`.
+- "English · Hebrew · Russian" no longer dangles (same sizing).
+- "Remitly Israel (formerly Rewire)" and "Ben-Gurion University of the Negev"
+  now break at sensible points via `tidyLabel()` (parentheticals unbreakable,
+  no single-word orphans).
+- Company blurbs moved from under the ROLE (right column) to under the COMPANY
+  in the data column — a Gestalt-proximity fix.
+- The promotion row's lone dates block is pulled tighter to its parent row so
+  it reads bound to the employer, not floating.
+- The publication is no longer one crammed full-width line: journal + year are
+  data (meta column); title and authors stack in the content column.
+
+**Prototype A**
+- The contact line no longer runs the full measure: two balanced lines via an
+  explicit `contactSplit`, ending well short of the right edge.
+- "early-stage" can no longer split across lines (`NoBreakCompounds` wraps
+  hyphenated compounds in the prototypes' intros).
+- The publication title now owns a clean full measure; journal + year follow
+  on their own quiet line, clear of the title.
+- Bullet markers raised from muted grey to full text ink — scannable at arm's
+  length without adding a voice.
+
+Post-fix distribution (measured, 150 dpi): trailing void A 5.8 %, B 5.1 %,
+C 5.6 % (flagship: 9.9 %), with near-even ink across the thirds of each page.
+
+---
+
+## 5. Files changed / added
 
 **Added**
 - `src/themes/proto-a.css` — Radical Reduction theme.
@@ -221,9 +274,11 @@ identity into loud editorial scale. Reduction ↔ structure ↔ expression.
 - `src/variants.mjs` — three new variant entries (`layout: reduction | grid |
   editorial`), each with its own bullet selection.
 - `src/components/CV.jsx` — new `GridPage` and `EditorialPage` layout branches
-  plus small shared helpers (`contactList`, `GridEntry`, `EdBrace`, `EdEntry`);
-  the existing single/sidebar path is unchanged (reduction rides the single
-  flow, styled by CSS only).
+  plus small shared helpers (`contactList`, `tidyLabel`, `NoBreakCompounds`,
+  `GridEntry`, `EdBrace`, `EdEntry`); `Header` gains an opt-in `contactSplit`
+  for balanced multi-line contacts (no-op for the originals); the existing
+  single/sidebar path is otherwise unchanged (reduction rides the single flow,
+  styled by CSS only).
 - `src/lib/fonts.mjs` — font-set mappings for the three new themes
   (`proto-a`: Source Sans only; `proto-b`/`proto-c`: Source Sans + Source Code
   Pro).

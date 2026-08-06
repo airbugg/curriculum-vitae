@@ -23,7 +23,7 @@
 
   /* Two sizes only: a modest name, and the body. Everything else = body. */
   --fs: 10pt;
-  --lh: 1.4;               /* Bringhurst: open, even rhythm */
+  --lh: 1.38;              /* Bringhurst: open, even rhythm */
   --fs-name: 17pt;
   --fw-name: 600;
   --ls-name: 0.2pt;
@@ -36,10 +36,10 @@
   --fs-pub-title: 10pt;
 
   /* Whitespace carries the whole hierarchy: wide margins, big section air. */
-  --pad: 17mm 24mm 18mm;
-  --entry-gap: 5mm;
-  --li-gap: 1.3mm;
-  --intro-margin: 6mm 0 0;
+  --pad: 15mm 24mm 15mm;
+  --entry-gap: 4.6mm;
+  --li-gap: 1.15mm;
+  --intro-margin: 5mm 0 0;
   --intro-width: 150mm;
 }
 
@@ -52,12 +52,15 @@ header .title {
   font-weight: 400;
   margin-top: 1.4mm;
 }
+/* Two balanced contact lines (contactSplit) — the run never crowds the right
+   page edge; it ends where its content ends, well short of the margin. */
 header .contacts {
   margin-top: 3mm;
   color: var(--muted);
   font-size: 8.6pt;
   letter-spacing: 0.1pt;
 }
+header .contacts + .contacts { margin-top: 0.8mm; }
 header .contacts .sep { color: var(--muted); margin: 0 1.4mm; }
 
 .intro {
@@ -76,10 +79,10 @@ h2 {
   font-weight: 600;
   font-size: 11pt;
   color: var(--ink-strong);
-  margin: 7.5mm 0 3.2mm;
+  margin: 6.6mm 0 3mm;
 }
-.intro + section > h2 { margin-top: 7mm; }
-.skills > h2, .edu > h2 { margin-top: 7.5mm; }
+.intro + section > h2 { margin-top: 6.4mm; }
+.skills > h2, .edu > h2 { margin-top: 6.6mm; }
 
 /* Entries: company/role/dates all in one family; distinction by weight only. */
 .company { font-weight: 600; }
@@ -88,7 +91,8 @@ h2 {
 .entry-sub .role { color: var(--accent-soft); font-weight: 600; }
 .dates { color: var(--muted); font-style: normal !important; }
 .entry ul { margin-top: 2mm; padding-left: 4mm; }
-.entry li::marker { color: var(--muted); }
+/* Markers in full text ink — visible at arm's length without adding a voice. */
+.entry li::marker { color: var(--ink); }
 .entry .role-block + .role-block { margin-top: 3mm; }
 
 /* Education / publications: plain, no small-caps, no italics, no colour. */
@@ -104,6 +108,16 @@ h2 {
 .pub-journal, .pub-year { font-style: normal; color: var(--muted); }
 .pub-journal { color: var(--accent-soft); }
 .edu-row .school { color: var(--muted); }
+/* Publication: title gets the full clean measure on its own line; journal and
+   year follow on a quiet second line — nothing shares the title's measure. */
+.pub-head { display: block; }
+.pub-title { display: block; max-width: 155mm; }
+.pub-meta {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 2mm;
+  margin-top: 0.5mm;
+}
 
 /* Any residual tech spans render as plain text — no boxes, no colour. */
 code { background: none !important; color: inherit !important; padding: 0 !important; }

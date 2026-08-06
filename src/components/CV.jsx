@@ -43,29 +43,29 @@ function Heading({ variant, children }) {
 }
 
 function Header({ variant }) {
-  const contacts = [
-    person.location,
-    person.phone,
-    person.email,
-    person.github,
-    person.linkedin,
-    person.site,
-    variant.contactExtra,
-  ].filter(Boolean);
+  const contacts = contactList(variant);
+  // contactSplit: intentionally break the contact run into two balanced lines
+  // (index = first item of line two) instead of letting it crowd the margin.
+  const lines =
+    variant.contactSplit != null
+      ? [contacts.slice(0, variant.contactSplit), contacts.slice(variant.contactSplit)]
+      : [contacts];
   return (
     <header>
       <h1>
         <Name variant={variant} />
       </h1>
       <div className="title">{person.title}</div>
-      <div className="contacts">
-        {contacts.map((c, i) => (
-          <React.Fragment key={c}>
-            {i > 0 && <span className="sep">·</span>}
-            <span>{c}</span>
-          </React.Fragment>
-        ))}
-      </div>
+      {lines.map((line, li) => (
+        <div className="contacts" key={li}>
+          {line.map((c, i) => (
+            <React.Fragment key={c}>
+              {i > 0 && <span className="sep">·</span>}
+              <span>{c}</span>
+            </React.Fragment>
+          ))}
+        </div>
+      ))}
     </header>
   );
 }
@@ -244,6 +244,30 @@ function contactList(variant) {
   ].filter(Boolean);
 }
 
+// Rag control for narrow-column labels: parenthetical groups become
+// unbreakable (break lands cleanly BEFORE the parenthesis), and otherwise the
+// last space goes non-breaking so no single-word orphan wraps alone.
+function tidyLabel(text) {
+  const s = String(text);
+  const paren = s.replace(/\(([^)]*)\)/g, (m) => m.replace(/ /g, '\u00A0'));
+  if (paren !== s) return paren;
+  return s.replace(/ (?=\S+$)/, '\u00A0');
+}
+
+// Hyphenated compounds ("early-stage") must never break at the hyphen.
+function NoBreakCompounds({ text }) {
+  const parts = String(text).split(/(\S+-\S+)/);
+  return parts.map((p, i) =>
+    i % 2 ? (
+      <span key={i} style={{ whiteSpace: 'nowrap' }}>
+        {p}
+      </span>
+    ) : (
+      p
+    ),
+  );
+}
+
 // ---- B: MODERNIST GRID -------------------------------------------------
 // A hard left meta-column (company / location / dates as a data column)
 // against a right content column. Company shows once per employer; each role
@@ -255,11 +279,15 @@ function GridEntry({ group }) {
       {group.map((s, i) => {
         const job = jobs[s.job];
         return (
-          <div className="g-row" key={s.job}>
+          // Continuation rows (a promotion within the same employer) are
+          // pulled tighter to their parent row so the lone dates block reads
+          // bound to the company above, not adrift in whitespace.
+          <div className={i === 0 ? 'g-row' : 'g-row g-cont'} key={s.job}>
             <div className="g-meta">
               {i === 0 && (
                 <>
-                  <div className="g-co">{first.company}</div>
+                  <div className="g-co">{tidyLabel(first.company)}</div>
+                  {first.blurb && <div className="g-mblurb">{first.blurb}</div>}
                   <div className="g-loc">{first.location}</div>
                 </>
               )}
@@ -267,7 +295,6 @@ function GridEntry({ group }) {
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
-              {first.blurb && i === 0 && <div className="g-blurb">{first.blurb}</div>}
               <ul>
                 {s.bullets.map((id) => (
                   <li key={id}>
@@ -307,7 +334,9 @@ function GridPage({ variant }) {
           </div>
         </div>
         <div className="g-content">
-          <p className="intro">{variant.intro}</p>
+          <p className="intro">
+            <NoBreakCompounds text={variant.intro} />
+          </p>
         </div>
       </div>
 
@@ -322,23 +351,23 @@ function GridPage({ variant }) {
         <div className="g-secmark">{variant.headings.education}</div>
         <div className="g-row">
           <div className="g-meta">
-            <div className="g-co">{education.school}</div>
+            <div className="g-co">{tidyLabel(education.school)}</div>
             <div className="g-dates">{education.dates}</div>
           </div>
           <div className="g-content">
             <div className="g-role">{education.degree}</div>
           </div>
         </div>
+        {/* Journal is data → meta column; title + authors are content. */}
         <div className="g-row">
           <div className="g-meta">
             <div className="g-co">Publications</div>
+            <div className="g-mblurb">{publications[0].journal}</div>
             <div className="g-dates">{publications[0].year}</div>
           </div>
           <div className="g-content">
             <div className="g-pubtitle">{publications[0].title}</div>
-            <div className="g-pubmeta">
-              {publications[0].journal} · {publications[0].authors}
-            </div>
+            <div className="g-pubmeta">{publications[0].authors}</div>
           </div>
         </div>
       </section>
@@ -405,13 +434,20 @@ function EditorialPage({ variant }) {
           <span className="nb">{'}'}</span>
         </h1>
         <div className="ed-title">{person.title}</div>
-        <p className="ed-intro">{variant.intro}</p>
+        <p className="ed-intro">
+          <NoBreakCompounds text={variant.intro} />
+        </p>
+        {/* Two intentionally balanced lines — never an accidental dangle. */}
         <div className="ed-contacts">
-          {contacts.map((c, i) => (
-            <React.Fragment key={c}>
-              {i > 0 && <span className="ed-sep">·</span>}
-              <span>{c}</span>
-            </React.Fragment>
+          {[contacts.slice(0, 3), contacts.slice(3)].map((line, li) => (
+            <div key={li}>
+              {line.map((c, i) => (
+                <React.Fragment key={c}>
+                  {i > 0 && <span className="ed-sep">·</span>}
+                  <span>{c}</span>
+                </React.Fragment>
+              ))}
+            </div>
           ))}
         </div>
       </header>
@@ -439,6 +475,7 @@ function EditorialPage({ variant }) {
               {publications[0].journal} · {publications[0].year}
             </span>
           </div>
+          <div className="ed-pub-authors">{publications[0].authors}</div>
         </div>
       </section>
     </div>
@@ -446,7 +483,16 @@ function EditorialPage({ variant }) {
 }
 
 export function CVPage({ variant, css }) {
-  const intro = <p className="intro">{variant.intro}</p>;
+  // Prototypes get compound-safe intros; originals keep their exact output.
+  const intro = (
+    <p className="intro">
+      {variant.theme.startsWith('proto') ? (
+        <NoBreakCompounds text={variant.intro} />
+      ) : (
+        variant.intro
+      )}
+    </p>
+  );
   const identity = variant.nameStyle === 'plain' ? '' : ' id-braces';
   const shell = (body) => (
     <html lang="en">
