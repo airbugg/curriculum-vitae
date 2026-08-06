@@ -565,3 +565,30 @@ bottom pad. Redistributed into the rhythm: header pad 2.4→3 mm, intro gap
 3.8→4.4 mm, section gaps 4.4→5.2 mm, secmark gap 3.2→3.6 mm, entry rows
 3.4→4.1 mm. Content now ends 3.2 mm past the pad; name/title/contacts
 measure centered to ≤1 px.
+
+## §10 · Variants cut from the canonical grid
+
+Two targeted variants now derive from the canonical design instead of the
+retired flow themes; the grid theme gained the small machinery to support
+them.
+
+- **Full Stack** (`eugene-lerman-full-stack`) — same theme and layout as the
+  flagship; the differences are a `title` override ("Senior Full Stack
+  Engineer" — the first variant-level title override, `variant.title ??
+  person.title`), an end-to-end intro, and a bullet cut that trades
+  release-engineering ink for product depth (onboarding, Apollo GraphQL,
+  XState flows, the Wix auth extraction).
+- **AI-Native** (`eugene-lerman-ai-native`) — rebuilt on the grid; the old
+  violet flow design lives in git history and `ai.css` is unused. The
+  how-I-work section went grid-native: the prose is content, and the harness
+  roster moved OUT of the prose into the data column as a stacked mono list
+  (`.g-harness`) — the same voice as the dates everywhere else on the page,
+  labeled `harnesses in rotation`.
+
+**Density tiers.** Both cuts carry ~11 mm more than the canonical
+page-filling rhythm holds, so the grid's vertical rhythm became CSS
+variables (`--gp-*`, defaults = the canonical values) with two body-class
+packages: `g-dense` (AI: how-I-work section) and `g-mid` (full stack),
+tuned by measurement to land each page's trailing float in the canonical's
+range — flagship 3.2 mm, full stack 3.4 mm, AI 1.9 mm past the bottom pad.
+Title lines re-measured centered to ≤1 px under both overrides.

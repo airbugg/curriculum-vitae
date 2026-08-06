@@ -58,7 +58,7 @@ function Header({ variant }) {
       <h1>
         <Name variant={variant} />
       </h1>
-      <div className="title">{person.title}</div>
+      <div className="title">{variant.title ?? person.title}</div>
       {lines.map((line, li) => (
         <div className="contacts" key={li}>
           {line.map((c, i) => (
@@ -411,7 +411,7 @@ function GridPage({ variant }) {
           <span className="g-nl">{last}</span>
           <span className="g-nb">{'}'}</span>
         </h1>
-        <div className="g-title">{person.title}</div>
+        <div className="g-title">{variant.title ?? person.title}</div>
         <div className="g-contactline">
           {contacts.map((c, i) => (
             <React.Fragment key={c}>
@@ -427,6 +427,32 @@ function GridPage({ variant }) {
       <p className="intro g-intro">
         <NoBreakCompounds text={variant.intro} />
       </p>
+
+      {/* How-I-work, grid-native: the prose is content, and the harness
+          roster is exactly data-column material — a stacked mono list where
+          company/dates data lives everywhere else on the page. */}
+      {variant.howIWork && (
+        <section className="g-section">
+          <GridSecMark>{variant.howIWork.heading}</GridSecMark>
+          <div className="g-row">
+            <div className="g-meta">
+              {variant.howIWork.metaLabel && (
+                <div className="g-mblurb">{variant.howIWork.metaLabel}</div>
+              )}
+              <div className="g-harness">
+                {(variant.howIWork.metaItems ?? []).map((h) => (
+                  <div key={h}>{h}</div>
+                ))}
+              </div>
+            </div>
+            <div className="g-content">
+              <p className="g-how">
+                <Rich text={variant.howIWork.text} />
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="g-section">
         <GridSecMark>{variant.headings.experience}</GridSecMark>
@@ -618,7 +644,9 @@ export function CVPage({ variant, css }) {
         <title>{`${person.name} — CV`}</title>
         <style dangerouslySetInnerHTML={{ __html: css }} />
       </head>
-      <body className={variant.theme + identity}>{body}</body>
+      <body className={variant.theme + identity + (variant.bodyClass ? ` ${variant.bodyClass}` : '')}>
+        {body}
+      </body>
     </html>
   );
 

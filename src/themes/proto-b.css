@@ -37,7 +37,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* ---- header: name + title, centered above the grid ---- */
 .g-header {
   text-align: center;
-  padding-bottom: 3mm;
+  padding-bottom: var(--gp-header-pad, 3mm);
   border-bottom: 1pt solid var(--ink-strong);
 }
 .g-header h1 {
@@ -110,7 +110,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 
 /* ---- intro: a single full-measure lead under the header rule ---- */
 .intro.g-intro {
-  margin: 4.4mm 0 0;
+  margin: var(--gp-intro-mt, 4.4mm) 0 0;
   max-width: 160mm;
   font-size: 9.5pt;
   line-height: 1.4;
@@ -118,7 +118,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 }
 
 /* ---- section marker: a full-width hairline row, label in the data column ---- */
-.g-section { margin-top: 5.2mm; }
+.g-section { margin-top: var(--gp-section-mt, 5.2mm); }
 .g-secmark {
   font-family: var(--font-data);
   font-size: 8pt;
@@ -126,7 +126,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   text-transform: uppercase;
   color: var(--accent);
   padding-bottom: 1.5mm;
-  margin-bottom: 3.6mm;
+  margin-bottom: var(--gp-secmark-mb, 3.6mm);
   border-bottom: 0.5pt solid var(--rule);
 }
 /* { EXPERIENCE } — the braces join the section mark as quiet structural
@@ -146,8 +146,20 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 }
 .g-secmark .g-sw { margin: 0 calc(0.42em - 2.5pt) 0 0.42em; }
 
+/* ---- how-I-work row (AI variant): prose as content, harness roster as
+   data. The roster reuses the dates-column voice — stacked mono lines. ---- */
+.g-harness {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.8mm;
+}
+.g-harness div { white-space: nowrap; }
+.g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
+
 /* ---- entry rows ---- */
-.g-section .g-row { margin-bottom: 4.1mm; break-inside: avoid; }
+.g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
 .g-section .g-row:last-child { margin-bottom: 0; }
 /* A promotion row within the same employer sits tighter to its parent, so the
    lone dates block reads bound to the company above rather than floating. */
@@ -199,7 +211,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-bottom: 0.4mm;
 }
 .g-content ul { margin: 1.6mm 0 0; padding-left: 3.6mm; }
-.g-content li { margin-bottom: 0.7mm; line-height: 1.3; }
+.g-content li { margin-bottom: var(--gp-li-mb, 0.7mm); line-height: var(--gp-lh, 1.3); }
 .g-content li:last-child { margin-bottom: 0; }
 .g-content li::marker { color: var(--accent); }
 
@@ -219,3 +231,33 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    content, stacked on their own lines — never one crammed full-width run. */
 .g-pubtitle { font-weight: 600; font-size: 9pt; color: var(--ink-strong); }
 .g-pubmeta { font-size: 7.8pt; color: var(--muted); margin-top: 0.7mm; line-height: 1.35; }
+
+/* Density package for the fuller variants (full-stack's longer bullet cut,
+   the AI variant's how-I-work section): the canonical page-filling rhythm
+   overflows A4 with ~11mm more content, so these run tighter across the
+   whole vertical hierarchy instead of cutting bullets. */
+.g-dense {
+  --gp-header-pad: 2.4mm;
+  --gp-intro-mt: 3.4mm;
+  --gp-section-mt: 4mm;
+  --gp-secmark-mb: 2.9mm;
+  --gp-row-mb: 3.1mm;
+  --gp-li-mb: 0.5mm;
+  --gp-lh: 1.27;
+}
+.g-dense .g-content ul { margin-top: 1.3mm; }
+.g-dense .g-header h1 { font-size: 22pt; }
+
+/* Middle density: the full-stack cut carries ~11mm more than the canonical
+   rhythm holds but ~12mm less than g-dense assumes; halfway lands it with
+   the same small trailing float as the others (measured at 300dpi). */
+.g-mid {
+  --gp-header-pad: 2.8mm;
+  --gp-intro-mt: 4.1mm;
+  --gp-section-mt: 4.9mm;
+  --gp-secmark-mb: 3.3mm;
+  --gp-row-mb: 3.8mm;
+  --gp-li-mb: 0.6mm;
+  --gp-lh: 1.29;
+}
+.g-mid .g-content ul { margin-top: 1.45mm; }

@@ -32,6 +32,30 @@ export const variants = [
     skills: null,
   },
 
+  // THE FULL STACK ENGINEER — the canonical grid, retargeted: end-to-end
+  // product story (client + services + infrastructure). Same theme and
+  // layout as the flagship; only the title, intro and bullet cut differ.
+  {
+    file: 'eugene-lerman-full-stack',
+    label: 'The Full Stack Engineer',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-mid',
+    title: 'Senior Full Stack Engineer',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end: the clients, the services behind them and the infrastructure underneath, at Wix, Remitly and now an early-stage startup.',
+    contactExtra: 'English · Hebrew · Russian',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'onboarding'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'apollo'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
   {
     file: 'eugene-lerman-platform',
     label: 'The Platform Engineer',
@@ -54,30 +78,36 @@ export const variants = [
     ],
   },
 
+  // THE AI-NATIVE ENGINEER — rebuilt on the canonical grid (the old
+  // violet flow design lives in git history). The how-I-work section goes
+  // grid-native: the prose is content, and the harness roster moves out of
+  // the prose into the data column — a stacked mono list, the same voice as
+  // the dates everywhere else on the page.
   {
     file: 'eugene-lerman-ai-native',
     label: 'The AI-Native Engineer',
-    theme: 'ai',
-    layout: 'single',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
     intro:
       'Since early 2026 most of my code has shipped through coding agents: spec-first, implementation and review running in parallel. Underneath that, twelve years of TypeScript, React Native and client infrastructure.',
+    contactExtra: 'English · Hebrew · Russian',
     howIWork: {
       heading: 'How I work',
       text:
-        'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth. Harnesses in rotation: Claude Code, Codex, Cursor, OpenClaw, Hermes, Argent.',
+        'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth.',
+      metaLabel: 'harnesses in rotation',
+      metaItems: ['Claude Code', 'Codex', 'Cursor', 'OpenClaw', 'Hermes', 'Argent'],
     },
-    headings: { experience: 'Experience', skills: 'Skills', education: 'Education' },
+    headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'agentSkills', 'release'] },
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
       { job: 'wix', bullets: ['forms'] },
     ],
-    skills: [
-      ['Core', 'core'],
-      ['Native', 'native'],
-      ['Languages', 'spoken'],
-    ],
+    skills: null,
   },
 
   {
