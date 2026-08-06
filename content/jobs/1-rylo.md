@@ -7,12 +7,12 @@ location: Tel Aviv
 dates: Feb 2026 – Present
 ---
 
-- One of five engineers on a ground-up rewrite of the company's client apps:
-  native iOS (`Swift`), Android (`Kotlin`) and `React Native`. Shipped in
-  three months, working spec-first with coding agents handling much of the
+- Was part of a four engineer task force working on a ground-up rewrite of the company's client apps:
+  A `React Native` backbone, with native iOS (`Swift`) and Android (`Kotlin`) components (using Expo's `CNG` and `expo/ui`) where performance was critical. Shipped in
+  three months, working in a prototype-first/spec-later approach, with coding agents handling much of the
   implementation and review in parallel. {#rewrite}
 
-- Built the client platform for the rewrite from scratch: the apps monorepo,
+- Built the client platform for the rewrite from scratch: the apps monorepo (`bun workspaces`),
   a design system with automated `Figma` sync, and all client
   CI/CD. {#platform}
 
@@ -21,11 +21,11 @@ dates: Feb 2026 – Present
   app-distribution service that replaced `Firebase App
   Distribution`. {#release}
 
-- Owned onboarding in the rebuilt app, its most complex flow; modeled it as
+- Owned the onboarding flow in the rebuilt app, one of its most complex flows; modeled it as
   an explicit `XState` state machine to keep every branch
-  testable. {#onboarding}
+  testable, as well as a small, throw-away testing harness that ran the original onboarding flow on a simulator, chaos-monkey-style, and compared the results with the new architecture to make sure the baseline is solid. {#onboarding}
 
 - Restructured the team's shared coding-agent setup after measuring ~70k
   tokens of always-loaded context per session. Replaced it with small,
-  focused skills loaded on demand, with code as the source of
+  focused skills that load on demand, are progressively disclosed, with code as the source of
   truth. {#agentSkills}
