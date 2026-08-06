@@ -139,8 +139,11 @@ export const variants = [
 
   // B — STRICT MODERNIST GRID. Hard left meta-column (company / location /
   // dates as a data column) against a right content column, visible structural
-  // asymmetry, one functional accent. Müller-Brockmann. Plain name (no braces),
-  // no chips — colour is a signal, never decoration.
+  // asymmetry, one functional accent. Müller-Brockmann. The braces identity
+  // rendered as quiet structure — mono braces in the muted data ink around
+  // name and section labels — no chips; colour is a signal, never decoration.
+  // (nameStyle 'plain' only opts out of base.css's id-braces styling; the
+  // grid layout carries its own brace markup.)
   {
     file: 'eugene-lerman-proto-b',
     label: 'Prototype B · Modernist Grid',

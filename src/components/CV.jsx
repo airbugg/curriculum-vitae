@@ -30,14 +30,17 @@ function Name({ variant }) {
 function Heading({ variant, children }) {
   if (variant.nameStyle === 'plain') return <h2>{children}</h2>;
   const t = String(children).toUpperCase();
+  // Braces carry NO literal spaces: the word gaps are CSS margins (base.css
+  // h2 .hb), because the brace spans are inline-block (transformable for the
+  // sub-pixel vertical nudge) and inline-block would drop edge whitespace.
   return (
     <h2>
-      <span className="hb">{'{ '}</span>
+      <span className="hb">{'{'}</span>
       <span className="hw">
         <span className="hc">{t[0]}</span>
         {t.slice(1)}
       </span>
-      <span className="hb">{' }'}</span>
+      <span className="hb">{'}'}</span>
     </h2>
   );
 }
@@ -70,6 +73,39 @@ function Header({ variant }) {
   );
 }
 
+// "Dec 2022 – Feb 2026" → "3 yr 3 mo", computed at build time so tenure is
+// readable at a glance without mental date arithmetic. Inclusive month count
+// (the LinkedIn convention); "Present" resolves to the build date.
+const MONTHS = { Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12 };
+function parseMonth(s) {
+  const m = String(s).trim().match(/^([A-Z][a-z]{2})\w*\s+(\d{4})$/);
+  if (!m) return null;
+  return { y: Number(m[2]), m: MONTHS[m[1]] };
+}
+export function duration(dates) {
+  const [from, to] = String(dates).split('–').map((s) => s.trim());
+  const start = parseMonth(from);
+  const now = new Date();
+  const end = /present/i.test(to || '') ? { y: now.getFullYear(), m: now.getMonth() + 1 } : parseMonth(to);
+  if (!start || !end) return null;
+  const months = (end.y - start.y) * 12 + (end.m - start.m) + 1;
+  if (months <= 0) return null;
+  const y = Math.floor(months / 12);
+  const mo = months % 12;
+  return [y ? `${y} yr` : null, mo ? `${mo} mo` : null].filter(Boolean).join(' ');
+}
+
+// Dates plus the derived tenure, e.g. "Dec 2022 – Feb 2026 · 3 yr 3 mo".
+function Dates({ dates, className }) {
+  const d = duration(dates);
+  return (
+    <span className={className}>
+      {dates}
+      {d && <span className="dur"> · {d}</span>}
+    </span>
+  );
+}
+
 function Bullets({ section, job }) {
   return (
     <ul>
@@ -90,6 +126,12 @@ function Bullets({ section, job }) {
 function Group({ group }) {
   const first = jobs[group[0].job];
   const multi = group.length > 1;
+  // For a multi-role company, the company line answers "how long at this
+  // place" directly: total tenure from the oldest start to the newest end.
+  const totalSpan = multi
+    ? `${String(jobs[group[group.length - 1].job].dates).split('–')[0].trim()} – ${String(first.dates).split('–')[1].trim()}`
+    : null;
+  const total = totalSpan ? duration(totalSpan) : null;
   return (
     <article className={multi ? 'entry group' : 'entry'}>
       <div className="entry-head">
@@ -97,7 +139,10 @@ function Group({ group }) {
           <span className="company">{first.company}</span>
           {first.blurb && <span className="blurb">{first.blurb}</span>}
         </div>
-        <div className="loc">{first.location}</div>
+        <div className="loc">
+          {first.location}
+          {total && <span className="dur"> · {total}</span>}
+        </div>
       </div>
       {group.map((s) => {
         const job = jobs[s.job];
@@ -105,7 +150,7 @@ function Group({ group }) {
           <div className="role-block" key={s.job}>
             <div className="entry-sub role-row">
               <span className="role">{job.role}</span>
-              <span className="dates">{job.dates}</span>
+              <Dates className="dates" dates={job.dates} />
             </div>
             <Bullets section={s} job={job} />
           </div>
@@ -272,6 +317,19 @@ function NoBreakCompounds({ text }) {
 // A hard left meta-column (company / location / dates as a data column)
 // against a right content column. Company shows once per employer; each role
 // keeps its own dates in the meta column, aligned to its bullets.
+//
+// The braces identity joins the grid as quiet structure, not decoration:
+// mono braces in the muted data-column ink around the name and the section
+// labels, with the single functional accent staying exactly where it was.
+function GridSecMark({ children }) {
+  return (
+    <div className="g-secmark">
+      <span className="g-sb">{'{'}</span>
+      <span className="g-sw">{String(children).toUpperCase()}</span>
+      <span className="g-sb">{'}'}</span>
+    </div>
+  );
+}
 function GridEntry({ group }) {
   const first = jobs[group[0].job];
   return (
@@ -291,7 +349,7 @@ function GridEntry({ group }) {
                   <div className="g-loc">{first.location}</div>
                 </>
               )}
-              <div className="g-dates">{job.dates}</div>
+              <Dates className="g-dates" dates={job.dates} />
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
@@ -313,6 +371,7 @@ function GridEntry({ group }) {
 function GridPage({ variant }) {
   const groups = groupSections(variant.sections);
   const contacts = contactList(variant);
+  const [first, last] = person.name.toUpperCase().split(' ');
   return (
     <div className="page grid-page">
       <header className="g-header">
@@ -320,7 +379,13 @@ function GridPage({ variant }) {
           <div className="g-label">Curriculum Vitae</div>
         </div>
         <div className="g-idmain">
-          <h1>{person.name}</h1>
+          <h1>
+            <span className="g-nb">{'{'}</span>
+            <span className="g-nf">{first}</span>
+            <span className="g-nc">:</span>
+            <span className="g-nl">{last}</span>
+            <span className="g-nb">{'}'}</span>
+          </h1>
           <div className="g-title">{person.title}</div>
         </div>
       </header>
@@ -341,14 +406,14 @@ function GridPage({ variant }) {
       </div>
 
       <section className="g-section">
-        <div className="g-secmark">{variant.headings.experience}</div>
+        <GridSecMark>{variant.headings.experience}</GridSecMark>
         {groups.map((g) => (
           <GridEntry key={g[0].job} group={g} />
         ))}
       </section>
 
       <section className="g-section">
-        <div className="g-secmark">{variant.headings.education}</div>
+        <GridSecMark>{variant.headings.education}</GridSecMark>
         <div className="g-row">
           <div className="g-meta">
             <div className="g-co">{tidyLabel(education.school)}</div>
@@ -403,7 +468,7 @@ function EdEntry({ group }) {
           <div className="ed-role-block" key={s.job}>
             <div className="ed-role-row">
               <span className="ed-role">{job.role}</span>
-              <span className="ed-dates">{job.dates}</span>
+              <Dates className="ed-dates" dates={job.dates} />
             </div>
             <ul>
               {s.bullets.map((id) => (

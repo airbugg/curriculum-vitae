@@ -22,6 +22,10 @@
   --bg-ink: #343048;
   --fs-name: 24pt;
   --ls-name: 0;
+  /* Roboto Mono's bold N carries a roomier right sidebearing than Source
+     Code Pro's: the base 0.57em closing-brace gap measured 6px wider than
+     the opening gap at 300dpi. 0.51em equalises the two. */
+  --nb-close-gap: 0.51em;
   --fs-h2: 10pt;
   --fw-h2: 500;
   --ls-h2: 0.8pt;

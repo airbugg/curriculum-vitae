@@ -39,18 +39,25 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   color: var(--ink-strong);
 }
 .ed-name .nb { color: var(--accent); font-weight: 400; }
+/* At 44pt the base -0.048em lift overshoots: measured overshoot was 22.5px
+   above cap-top vs 15px below baseline @300dpi. -0.046em balances it. */
+.ed-name .nb { --nb-nudge: -0.046em; }
 .ed-name .nb:first-child { margin-right: 0.12em; }
-.ed-name .nb:last-child { margin-left: 0.12em; }
+/* +0.044em vs the opening side: bold N's right sidebearing is tighter than
+   the light E's left sidebearing (measured 61px vs 53px at 300dpi). */
+.ed-name .nb:last-child { margin-left: 0.164em; }
 .ed-name .nf { color: #aeb7bd; font-weight: 300; }
 /* The colon is the pivot of the identity: mono colons centre on the x-height
    and read low + small against 44pt caps. Lift it to the caps' optical centre
-   and weight it up so it reads as a deliberate mark, not a stray one. */
+   (transform, not top — see base.css h1 .nb) and weight it up so it reads as
+   a deliberate mark, not a stray one. The gaps are deliberately asymmetric:
+   the colon binds tight to LERMAN (the value in the key:value pair), with
+   the EUGENE-side gap ~1.4x the LERMAN-side gap. */
 .ed-name .nc {
   color: var(--accent);
-  margin: 0 0.16em;
+  margin: 0 0.03em 0 0.2em;
   font-weight: 700;
-  position: relative;
-  top: -0.1em;
+  --nc-nudge: -0.057em;
 }
 .ed-name .nl { color: var(--ink-strong); font-weight: 600; }
 
@@ -90,7 +97,11 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 
 .ed-secrow {
   display: flex;
-  align-items: center;
+  /* Baseline, not center: box-centering the brace against the h2 box put the
+     glyph ±2px off per instance (box paint positions quantize; text baselines
+     don't). On a shared baseline the brace's offset is purely typographic and
+     renders identically in every section row. */
+  align-items: baseline;
   gap: 2.6mm;
   margin-bottom: 5mm;
 }
@@ -98,8 +109,15 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
   font-family: var(--font-display);
   font-size: 30pt;
   font-weight: 300;
-  line-height: 0.8;
+  /* Zero line-height: the brace participates in the row via its BASELINE but
+     contributes no box height, so the giant glyph overflows decoratively
+     instead of inflating the row (which pushed the page to two pages). */
+  line-height: 0;
   color: var(--accent);
+  /* On the shared baseline the 30pt brace sits mostly above the 13pt caps;
+     push it down so its overshoot above the cap-height line equals its reach
+     below the baseline (verified by pixel measurement at 300dpi). */
+  transform: translateY(0.136em);
 }
 .ed-h2 {
   margin: 0;

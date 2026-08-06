@@ -4,7 +4,9 @@
    dates as a data column) against a right content column. Visible
    structural asymmetry, one baseline rhythm, ONE functional accent
    (emerald) used only for section labels — signal, never decoration.
-   No braces, no chips. Own DOM (.grid-page); base.css is mostly bypassed.
+   The braces identity joins the grid as quiet structure: mono braces in
+   the muted data-column ink around the name and section labels, never in
+   the accent. No chips. Own DOM (.grid-page); base.css is mostly bypassed.
    ======================================================================= */
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
@@ -53,6 +55,39 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   color: var(--ink-strong);
   line-height: 1;
 }
+/* { EUGENE : LERMAN } as structural data: the braces and colon are mono
+   glyphs in the muted data-column ink — the same voice as the dates column —
+   while the words stay sans. The accent is NOT used here; it remains
+   reserved for the functional signals it already marks. Mono braces centre
+   on the x-height, so they get a small lift to centre on the caps
+   (verified by pixel measurement at 300dpi). */
+.g-idmain h1 .g-nb {
+  font-family: var(--font-data);
+  font-weight: 400;
+  font-size: 88%;
+  color: var(--muted);
+  letter-spacing: 0;
+  display: inline-block;
+  transform: translateY(-0.095em);
+}
+.g-idmain h1 .g-nb:first-child { margin-right: 0.24em; }
+/* +0.025em vs the opening side: bold N's right sidebearing is tighter than
+   light E's left sidebearing (measured 38px vs 36px at 300dpi). */
+.g-idmain h1 .g-nb:last-child { margin-left: 0.265em; }
+.g-idmain h1 .g-nc {
+  font-family: var(--font-data);
+  font-weight: 400;
+  font-size: 88%;
+  color: var(--muted);
+  letter-spacing: 0;
+  margin: 0 0.15em 0 0.19em;
+  /* Lifted further than the braces: the colon's dot pair must centre on the
+     caps' optical middle, not the x-height (measured at 300dpi). */
+  display: inline-block;
+  transform: translateY(-0.125em);
+}
+.g-idmain h1 .g-nf { font-weight: 300; color: var(--ink); }
+.g-idmain h1 .g-nl { font-weight: 700; color: var(--ink-strong); }
 .g-title {
   margin-top: 1.6mm;
   font-family: var(--font-data);
@@ -93,6 +128,22 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-bottom: 4.5mm;
   border-bottom: 0.5pt solid var(--rule);
 }
+/* { EXPERIENCE } — the braces join the section mark as quiet structural
+   glyphs in the muted data ink; the word keeps the accent (the one
+   functional colour, exactly where it already was). The word's tracking
+   (2.5pt) trails its last letter, which would widen the word→closing-brace
+   gap; the word's right margin subtracts it so both brace gaps are equal
+   (verified by pixel measurement at 300dpi). */
+.g-secmark .g-sb {
+  color: var(--muted);
+  letter-spacing: 0;
+  font-weight: 400;
+  /* inline-block + transform, not position:relative — relative offsets snap
+     to whole CSS px in print output and this lift is half a CSS px. */
+  display: inline-block;
+  transform: translateY(-0.047em);
+}
+.g-secmark .g-sw { margin: 0 calc(0.42em - 2.5pt) 0 0.42em; }
 
 /* ---- entry rows ---- */
 .g-section .g-row { margin-bottom: 4.6mm; break-inside: avoid; }
@@ -108,12 +159,17 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-mblurb { font-size: 7.4pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.35; }
 .g-loc { font-size: 8pt; color: var(--muted); margin-top: 0.6mm; }
 .g-dates {
+  display: block;
   font-family: var(--font-data);
   font-size: 7.6pt;
   color: var(--muted);
   margin-top: 1mm;
   letter-spacing: -0.2pt;
 }
+/* "Dec 2022 – Feb 2026 · 3 yr 3 mo" overruns the 40mm data column; instead
+   of an accidental mid-token wrap, break it deliberately: the range on one
+   line, the derived tenure on its own line beneath, styled as data. */
+.g-dates .dur { display: block; }
 
 .g-content { }
 .g-role {

@@ -176,9 +176,11 @@ is the *same two-column module* repeated.
   right — reads as ordered rows, not a knot.
 - **Distribution** → the repeated module and the sparse left column give the
   most even fill of the three; **best trailing-void score, 5.1 %.**
-- **Sacrifices:** the braces identity is dropped (plain name); the sparse left
-  column is deliberately "empty" (asymmetry as design), which reads as unusual
-  for a résumé; most rigid of the three.
+- **Sacrifices:** the sparse left column is deliberately "empty" (asymmetry as
+  design), which reads as unusual for a résumé; most rigid of the three.
+  (A later owner request brought the braces identity into the grid — see §5:
+  mono braces in the muted data-column ink, never the accent, so they join the
+  system as structure rather than decoration.)
 
 ### Prototype C — Editorial Expressive  (`eugene-lerman-proto-c`, theme `proto-c`)
 **Philosophy:** strong **scale contrast** — a big quiet hero, small dense body —
@@ -263,7 +265,84 @@ C 5.6 % (flagship: 9.9 %), with near-even ink across the thirds of each page.
 
 ---
 
-## 5. Files changed / added
+## 5. Braces for the grid, and the pixel-perfect alignment pass
+
+Two follow-up requests from the owner: give Prototype B the braces identity in
+a way consistent with its philosophy, and make the braces "and everything
+around them" pixel-perfect everywhere they appear. (In parallel, a build-time
+tenure feature landed — `.dur` spans render "· 3 yr 3 mo" after date ranges —
+and had to be absorbed without new wraps.)
+
+### 5a. The braces join B's grid
+
+In B, colour is a signal and the data column is the organising voice — so the
+braces speak *data*, not *brand*: `{ EUGENE : LERMAN }` with mono braces and
+colon in the muted data-column ink (words stay sans: light EUGENE, bold
+LERMAN), and section labels become `{ EXPERIENCE }` with muted mono braces
+around the accent word. The accent is used exactly where it was before —
+nowhere new. The grid geometry is untouched: the marks live in the rows they
+always occupied.
+
+The tenure text did overflow B's 40 mm data column ("Dec 2022 – Feb 2026 ·
+3 yr 3 mo" wrapped mid-token as "…3 yr / 3 mo"). Rather than shrink it, the
+break is now deliberate: the range on one line, "· 3 yr 3 mo" on its own line
+beneath, styled as data (`.g-dates .dur { display: block }`). Every entry uses
+the same two-line data format, so the column stays rhythmic.
+
+### 5b. Measured brace alignment (before → after, px @300 dpi)
+
+Method: `pdftoppm -png -r 300` crops, a pixel-cluster analyser that reports
+each glyph's bounding box, then CSS nudges, re-render, re-measure — repeated
+until every context is inside tolerance (±2 px @300 dpi). Two systemic causes
+surfaced and were fixed at the root:
+
+1. **`position: relative` offsets quantise to whole CSS pixels in Chromium's
+   print output** (1 css px = 3.125 px @300 dpi) — the same heading could land
+   snapped up or down per instance (B's two section marks measured **opposite**
+   ±1.5 px errors from identical CSS). All brace nudges are now
+   `inline-block + transform: translateY(...)`, which paints continuously.
+   Because inline-block drops edge whitespace, the headings' literal
+   `"{ "` / `" }"` spaces became explicit margins (equal on both sides; the
+   heading's letter-spacing trails the opening brace and the last letter
+   equally, so gap symmetry is preserved by construction).
+2. **Box-centering ≠ optical centering.** C's giant section braces were
+   flex-centred as boxes and sat 15 px low (and ±2 px inconsistent between
+   rows). The rows now align on the shared **baseline** and the brace is
+   offset typographically (`translateY(0.136em)`, `line-height: 0` so the
+   glyph overflows without inflating the row) — both rows now measure
+   identically.
+
+Final numbers (overshoot = brace beyond cap-top / beyond baseline; gaps =
+open-brace→first letter vs last letter→close-brace):
+
+| Context | Overshoot before | Overshoot after | Gaps before | Gaps after |
+|---|---|---|---|---|
+| Flagship h1 name | 11.5 / 9 | 10.5 / 10 | 74 vs 67 | 74 vs 74 |
+| Flagship h2 ×2 | 6 / 3 · 5 / 3.5 | 4 / 5 · 4 / 5 | 41 vs 39 | 38 vs 36 · 38 vs 37 |
+| B name | 3.5 / 7 | 5 / 5 | 38 vs 36 | 37 vs 36 |
+| B section marks ×2 | 2 / 5 · 5 / 2 | 4 / 3 · 3 / 4 | 21 vs 19 | 21 vs 19 · 21 vs 20 |
+| C hero | 22.5 / 15 | 18.5 / 19 | 61 vs 53 | 61 vs 62 |
+| C section rows ×2 | 21 / 51 (!) | **36 / 36 · 36 / 36** | 48 vs 46 | 48 vs 46 · 48 vs 47 |
+| Platform h1 / h2 | (inherited) | 10 / 11 · 4 / 5 | — | 75 vs 74 · 39 vs 37 |
+| AI h1 / h2 | 12 / 13 | 12 / 13 | 73 vs **79** | 73 vs 73 · 34 vs 35 |
+
+Colons (the pivot of `{ EUGENE : LERMAN }`) are lifted to the caps' **optical
+middle** (mono colons natively straddle the x-height): flagship centre error
+7.25 px → **0.25 px**; B 4.25 px → **0 px**; C hero 7.75 px high → **0.25 px**.
+C's hero colon gaps are deliberately asymmetric — **tight to LERMAN** (the
+value in the key : value pair) at a measured **1.35 : 1** (84 px EUGENE-side vs
+62 px LERMAN-side); before, the asymmetry pointed the wrong way (77 vs 85).
+Horizontal gap fixes account for sidebearings, not just margins: bold N's
+right sidebearing is tighter than light E's left one, so the closing margin is
+`+0.07em` (Source Code Pro) — and per-face tunable (`--nb-close-gap`, Roboto
+Mono needs `0.51em`) because sidebearings are a property of the typeface.
+
+All seven variants rebuilt green at one page each; final visual pass done at
+100 % and 40 % scale.
+
+---
+
+## 6. Files changed / added
 
 **Added**
 - `src/themes/proto-a.css` — Radical Reduction theme.
