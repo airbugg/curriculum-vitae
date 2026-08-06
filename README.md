@@ -34,5 +34,4 @@ push and links them in a PR comment.
   braces identity) + one CSS file per variant
 - `dist/` — the PDFs
 
-The previous LaTeX (awesome-cv) toolchain lives on in git history and the
-`resume/` directory.
+The previous LaTeX (awesome-cv) toolchain lives on in git history.
