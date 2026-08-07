@@ -69,8 +69,10 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 }
 
 /* ---- SECTION MARKERS: C's amplified braces + trailing rule ---- */
-.ed-section { margin-top: 7.8mm; }
-.ed-footer { margin-top: 7.8mm; }
+/* Tightened from 7.8mm when the migration/localization bullets grew;
+   overflow absorbed from the section air, not the text. */
+.ed-section { margin-top: 6mm; }
+.ed-footer { margin-top: 6mm; }
 
 .ed-secrow {
   display: flex;

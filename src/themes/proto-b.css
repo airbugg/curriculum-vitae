@@ -261,3 +261,10 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   --gp-lh: 1.29;
 }
 .g-mid .g-content ul { margin-top: 1.45mm; }
+
+/* g-dense, second pass: the AI variant's pub row missed the page by ~3mm
+   after the migration bullets grew; found in the how-section leading and
+   the row gaps rather than the type size. */
+.g-dense .g-harness { line-height: 1.42; }
+.g-dense .g-how { line-height: 1.3; }
+.g-dense { --gp-section-mt: 3.6mm; --gp-row-mb: 2.9mm; }

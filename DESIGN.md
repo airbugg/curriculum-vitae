@@ -592,3 +592,30 @@ packages: `g-dense` (AI: how-I-work section) and `g-mid` (full stack),
 tuned by measurement to land each page's trailing float in the canonical's
 range — flagship 3.2 mm, full stack 3.4 mm, AI 1.9 mm past the bottom pad.
 Title lines re-measured centered to ≤1 px under both overrides.
+
+## §11 · The migration stories, told properly (owner context round)
+
+The owner supplied the real stories behind three bullets; the rewrites are
+longer because the mechanisms are the point:
+
+- **`reactNative` (Rewire)** — not a regular migration: a React Native shell
+  hosted the legacy app in a webview with a two-way `postMessage` bridge
+  (navigation, modals, shared Redux state), features moved piecemeal,
+  invisible to users. New **`secondAuth`** bullet: the step-up gate (Face
+  ID / fingerprint / code) with backend enforcement — used by the
+  full-stack variant in place of `xstate`.
+- **`l10n` (Remitly)** — named (Lokey), bundled→dynamic framing, and the
+  editing-a-string-is-the-whole-workflow automation (Lokalise, translation
+  jobs, translator notification).
+- **`semanticKeys`** — English-as-key → `header.title.text`, the
+  context-gathering LLM service + review UI, one-click PR with a
+  non-destructive migration, "done in a week."
+
+The three bullets grew ~5 lines net, overflowing every variant. Absorbed
+by story, not compression: each variant drops the bullets its angle needs
+least (canonical: `release`+`ci`, which the platform variant keeps;
+full-stack and AI: `platform`; platform/ATS: `xstate`, still covered in
+skills keywords; classic: `onboarding`; proto-A/D: their thinnest cuts),
+plus one density step where a tier existed (canonical → `g-mid`) and
+small measured air trims on the flow themes and prototypes. All nine
+variants back to one page.

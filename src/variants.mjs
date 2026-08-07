@@ -19,14 +19,15 @@ export const variants = [
     theme: 'proto-b',
     layout: 'grid',
     nameStyle: 'plain',
+    bodyClass: 'g-mid',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
     contactExtra: 'English · Hebrew · Russian',
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'rylo', bullets: ['rewrite', 'platform'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,
@@ -41,16 +42,16 @@ export const variants = [
     theme: 'proto-b',
     layout: 'grid',
     nameStyle: 'plain',
-    bodyClass: 'g-mid',
+    bodyClass: 'g-dense',
     title: 'Senior Full Stack Engineer',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end: the clients, the services behind them and the infrastructure underneath, at Wix, Remitly and now an early-stage startup.',
     contactExtra: 'English · Hebrew · Russian',
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'onboarding'] },
+      { job: 'rylo', bullets: ['rewrite', 'onboarding'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'apollo'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'secondAuth'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,
@@ -67,7 +68,7 @@ export const variants = [
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: [
@@ -102,9 +103,9 @@ export const variants = [
     },
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'rylo', bullets: ['rewrite', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
       { job: 'wix', bullets: ['forms'] },
     ],
     skills: null,
@@ -120,7 +121,7 @@ export const variants = [
     contactExtra: 'English · Hebrew · Russian',
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'onboarding', 'platform', 'release', 'agentSkills'] },
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys', 'apollo'] },
       { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
@@ -154,7 +155,7 @@ export const variants = [
             'Designed and implemented a localization automation platform (i18next): dynamic translation delivery, version-scoped production hotfixes, and CI-driven string extraction and translator handoff.',
         },
       },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: [
@@ -188,9 +189,9 @@ export const variants = [
     contactSplit: 4, // two balanced contact lines instead of one full-measure run
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'rylo', bullets: ['rewrite', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'ci'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,
@@ -238,7 +239,7 @@ export const variants = [
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,

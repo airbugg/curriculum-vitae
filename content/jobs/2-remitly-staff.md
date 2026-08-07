@@ -12,15 +12,19 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps
   cross-team initiatives across roughly five teams and three products
   (~10M monthly users). {#lead}
 
-- Designed the localization platform: translations fetched dynamically, with
-  hotfixes scoped to specific app versions in production (previously a
-  translation fix required a full release), and a CI pipeline that extracts
-  changed strings straight from the source code and files translator tasks automatically. {#l10n}
+- Designed Lokey, the localization service that took the apps from bundled
+  translations to dynamic ones, with hotfixes scoped to specific app versions
+  in production (previously a translation fix required a full release).
+  Changing a translation became editing a string in the source code: the PR
+  automation updates `Lokalise`, opens a translation job and notifies the
+  translators. {#l10n}
 
-- Migrated tens of thousands of UI strings to semantic keys with an LLM
-  service I built: model-suggested names, human approval in a small review
-  UI, changes applied as auto-generated PRs. The code changes themselves took
-  hours. {#semanticKeys}
+- Migrated tens of thousands of UI strings from English-as-key to semantic
+  keys like `header.title.text` with an LLM service and review UI I built:
+  point it at a codebase, it gathers context around each string and suggests
+  names; a product person approves, and one click opens a PR with the code
+  changes and a non-destructive key migration. A tedious, error-prone process
+  done in a week. {#semanticKeys}
 
 - Built the shared `Apollo GraphQL` client infrastructure: generated types
   and client links for auth, caching and batching. {#apollo}
