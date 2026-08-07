@@ -1,5 +1,14 @@
 import React from 'react';
 import { education, jobs, person, publications, skills } from '../lib/content.mjs';
+import { logos } from '../lib/logos.mjs';
+
+// Inline SVG mark before a company name (grid layouts). Renders nothing when
+// no mark is on file, so partially-sourced logo sets degrade quietly.
+function Logo({ id }) {
+  const svg = logos[id];
+  if (!svg) return null;
+  return <span className="g-logo" dangerouslySetInnerHTML={{ __html: svg }} />;
+}
 
 // `tech` spans in content become <code> chips — the original CV's \mylib.
 export function Rich({ text }) {
@@ -62,9 +71,9 @@ function Header({ variant }) {
       {lines.map((line, li) => (
         <div className="contacts" key={li}>
           {line.map((c, i) => (
-            <React.Fragment key={c}>
+            <React.Fragment key={c.text}>
               {i > 0 && <span className="sep">·</span>}
-              <span>{c}</span>
+              <Contact item={c} />
             </React.Fragment>
           ))}
         </div>
@@ -293,16 +302,23 @@ function HowIWork({ variant }) {
 // build radically different DOM so the CSS themes can express each philosophy.
 // =========================================================================
 
+// Contacts carry live hrefs into the PDF (Chromium preserves link
+// annotations in print output): tel: for the phone, mailto: for the email,
+// https:// for the profile URLs. Location and the extra run stay plain text.
 function contactList(variant) {
   return [
-    person.location,
-    person.phone,
-    person.email,
-    person.github,
-    person.linkedin,
-    person.site,
-    variant.contactExtra,
-  ].filter(Boolean);
+    { text: person.location },
+    { text: person.phone, href: person.phone && 'tel:' + String(person.phone).replace(/[^+\d]/g, '') },
+    { text: person.email, href: person.email && `mailto:${person.email}` },
+    { text: person.github, href: person.github && `https://${person.github}` },
+    { text: person.linkedin, href: person.linkedin && `https://${person.linkedin}` },
+    { text: person.site, href: person.site && `https://${person.site}` },
+    { text: variant.contactExtra },
+  ].filter((c) => c.text);
+}
+
+function Contact({ item }) {
+  return item.href ? <a href={item.href}>{item.text}</a> : <span>{item.text}</span>;
 }
 
 // Rag control for narrow-column labels: parenthetical groups become
@@ -346,6 +362,11 @@ function GridSecMark({ children }) {
     </div>
   );
 }
+// Grid meta column runs the compact date form — "Dec 2022" → "Dec 22" — so
+// the range and the derived tenure ("3 yr 3 mo" → "3y 3m") share one line
+// inside the 40mm column instead of stacking.
+const shortRange = (d) => String(d).replace(/\b20(\d\d)\b/g, '$1');
+const compactDur = (d) => d && d.replace(/(\d+) yr/, '$1y').replace(/(\d+) mo/, '$1m');
 function GridEntry({ group }) {
   const first = jobs[group[0].job];
   return (
@@ -360,16 +381,20 @@ function GridEntry({ group }) {
             <div className="g-meta">
               {i === 0 && (
                 <>
-                  <div className="g-co">{tidyLabel(first.company)}</div>
+                  <div className="g-co">
+                    <Logo id={first.company} />
+                    {tidyLabel(first.company)}
+                  </div>
                   {first.blurb && <div className="g-mblurb">{tidyLabel(first.blurb)}</div>}
                   <div className="g-loc">{first.location}</div>
                 </>
               )}
-              {/* The range, then the derived tenure on its own line directly
-                  BENEATH the dates it summarises (no leading interpunct — a
-                  line-initial dot reads as an orphaned bullet). */}
-              <Dates className="g-dates" dates={job.dates} />
-              {i === 0 && <div className="g-dur">{groupDuration(group)}</div>}
+              <span className="g-dates">
+                {shortRange(job.dates)}
+                {i === 0 && groupDuration(group) && (
+                  <span className="g-dur"> · {compactDur(groupDuration(group))}</span>
+                )}
+              </span>
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
@@ -414,9 +439,9 @@ function GridPage({ variant }) {
         <div className="g-title">{variant.title ?? person.title}</div>
         <div className="g-contactline">
           {contacts.map((c, i) => (
-            <React.Fragment key={c}>
+            <React.Fragment key={c.text}>
               {i > 0 && <span className="sep">·</span>}
-              <span>{c}</span>
+              <Contact item={c} />
             </React.Fragment>
           ))}
         </div>
@@ -464,6 +489,32 @@ function GridPage({ variant }) {
       <section className="g-section">
         <GridSecMark>{variant.headings.education}</GridSecMark>
         <GridEduRows />
+        {/* Language proficiency, spelled out instead of a bare name run
+            dangling at the end of the contact line. */}
+        {variant.languages && person.languages && (
+          <div className="g-row g-foot">
+            <div className="g-meta">
+              <div className="g-co">Languages</div>
+            </div>
+            <div className="g-content">
+              <div className="g-footline">{person.languages}</div>
+            </div>
+          </div>
+        )}
+        {/* One dry line for the off-hours tinkering; personality at minimal
+            space cost. */}
+        {variant.offHours && (
+          <div className="g-row g-foot">
+            <div className="g-meta">
+              <div className="g-co">Off hours</div>
+            </div>
+            <div className="g-content">
+              <div className="g-footline">
+                <Rich text={variant.offHours} />
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
@@ -476,7 +527,10 @@ function GridEduRows() {
     <>
       <div className="g-row">
         <div className="g-meta">
-          <div className="g-co">{tidyLabel(education.school)}</div>
+          <div className="g-co">
+            <Logo id="bgu" />
+            {tidyLabel(education.school)}
+          </div>
           <div className="g-dates">{education.dates}</div>
         </div>
         <div className="g-content">

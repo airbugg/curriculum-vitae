@@ -19,16 +19,17 @@ export const variants = [
     theme: 'proto-b',
     layout: 'grid',
     nameStyle: 'plain',
-    bodyClass: 'g-mid',
+    bodyClass: 'g-dense',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
-    contactExtra: 'English · Hebrew · Russian',
+    languages: true,
+    offHours: 'A `k3s` home lab, home automation, and other over-engineering.',
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform'] },
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
       { job: 'remitlySenior', bullets: ['reactNative'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
+      { job: 'wix', bullets: ['forms'] },
     ],
     skills: null,
   },
@@ -46,11 +47,11 @@ export const variants = [
     title: 'Senior Full Stack Engineer',
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end: the clients, the services behind them and the infrastructure underneath, at Wix, Remitly and now an early-stage startup.',
-    contactExtra: 'English · Hebrew · Russian',
+    languages: true,
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'onboarding'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'apollo'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
       { job: 'remitlySenior', bullets: ['reactNative', 'secondAuth'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
@@ -93,7 +94,7 @@ export const variants = [
     bodyClass: 'g-dense',
     intro:
       'Since early 2026 most of my code has shipped through coding agents: spec-first, implementation and review running in parallel. Underneath that, twelve years of TypeScript, React Native and client infrastructure.',
-    contactExtra: 'English · Hebrew · Russian',
+    languages: true,
     howIWork: {
       heading: 'How I work',
       text:
@@ -111,6 +112,40 @@ export const variants = [
     skills: null,
   },
 
+  // THE UNIFIED — one page carrying all three angles at once: the canonical
+  // grid and voice, the full-stack breadth (second-auth, end-to-end intro
+  // clause), and the AI story (how-I-work + harness roster). Densest cut in
+  // the family; an experiment the owner asked for — see if it holds.
+  {
+    file: 'eugene-lerman-unified',
+    label: 'The Unified · Client × Full Stack × AI',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end; since early 2026 most of my code has shipped through coding agents.',
+    languages: true,
+    offHours: 'A `k3s` home lab, home automation, and other over-engineering.',
+    howIWork: {
+      heading: 'How I work',
+      text:
+        'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth.',
+      metaLabel: 'harnesses in rotation',
+      metaItems: ['Claude Code', 'Codex', 'Cursor', 'OpenClaw', 'Hermes', 'Argent'],
+    },
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
+      // Wix rides on its summary line alone — the employer stays, the
+      // bullets pay for the how-I-work section.
+      { job: 'wix', bullets: [] },
+    ],
+    skills: null,
+  },
+
   {
     file: 'eugene-lerman-classic',
     label: 'The Classic',
@@ -122,7 +157,7 @@ export const variants = [
     headings: { experience: 'Experience', education: 'Education' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys', 'apollo'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
       { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'ci'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
@@ -141,7 +176,7 @@ export const variants = [
     sections: [
       {
         job: 'rylo',
-        bullets: ['rewrite', 'platform', 'release'],
+        bullets: ['rewrite', 'platform'],
         overrides: {
           rewrite:
             'One of five engineers on a ground-up rewrite of the company client apps (native iOS/Swift, Android/Kotlin, React Native), shipped in three months using spec-driven, multi-agent AI development workflows.',

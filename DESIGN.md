@@ -619,3 +619,44 @@ skills keywords; classic: `onboarding`; proto-A/D: their thinnest cuts),
 plus one density step where a tier existed (canonical → `g-mid`) and
 small measured air trims on the flow themes and prototypes. All nine
 variants back to one page.
+
+
+## §12 · Links, languages, logos, and the unified experiment (owner round)
+
+Nine asks in one round; the notable mechanics:
+
+- **Live contact links** — `tel:` / `mailto:` / `https://` anchors carried
+  into the PDF (Chromium preserves link annotations in print); dressed as
+  plain text via `a { color: inherit; text-decoration: none }`. Verified in
+  the binary: all four URI annotations present.
+- **Languages, spelled out** — off the contact line, into a `Languages`
+  footer row: "English and Hebrew (native) · Russian (reads and speaks
+  well)" (from `person.md`). New `Off hours` row on canonical + unified:
+  "A k3s home lab, home automation, and other over-engineering."
+- **Compact inline tenure** — grid meta dates are now "Dec 22 – Feb 26 ·
+  3y 3m": two-digit years + y/m units fit the 40mm column on one line, so
+  the below-the-dates stack is gone.
+- **Company marks** — inline SVGs before company names, sized 2.9mm,
+  `fill=currentColor` so they take the surrounding ink. Sourced 3 of 6:
+  Rylo (official mark, their repo), Remitly (potrace of the official
+  raster from their npm SDK — a faithful trace, not official vector art),
+  Wix (wordmark — deliberately unmapped: it would duplicate the name).
+  Rewire (Wikimedia `File:Rewire_Logo.svg`) and BGU (Wikimedia or
+  `in.bgu.ac.il/marketing/graphics/`) exist but those hosts are blocked
+  from this sandbox — drop the files into `assets/logos/` as `rewire.svg`
+  / `bgu.svg` and they light up on the next build. Nucleic Acids Research
+  has no mark (typographic identity); none used.
+- **Content merges (owner-directed)** — the Apollo GraphQL bullet folded
+  into `lead` (with the dev-tooling clause); the LLM-heavy framing went
+  into the Rylo and Remitly summary lines; `platform` gained the internal
+  docs site; `agentSkills` lost the lean-skills credo (it duplicated the
+  how-I-work prose nearly verbatim on pages showing both).
+- **The Unified** (`eugene-lerman-unified`) — canonical grid + how-I-work
+  + languages + off-hours; Wix rides on its summary line alone (an entry
+  can now carry zero bullets). It holds one page at `g-dense` with an
+  11mm bottom pad — the experiment stands, but it is the densest page in
+  the family.
+- **Fit accounting** — the restored `release` bullet (owner priority) was
+  paid for on the canonical by `ci` and `auth`; dense pages moved to an
+  11mm bottom pad; `g-dense` tightened one step further. All ten variants
+  one page.

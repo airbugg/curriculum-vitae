@@ -158,6 +158,13 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-harness div { white-space: nowrap; }
 .g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
 
+/* Footer rows (Languages / Off hours): single-line rows, content voice a
+   step quieter, and a tighter row gap than the entry rows — they're ledger
+   lines, not entries. */
+.g-footline { font-size: 8.4pt; color: var(--ink); }
+.g-section .g-row.g-foot { margin-bottom: 1.1mm; }
+.g-foot .g-co { font-size: 8.4pt; }
+
 /* ---- entry rows ---- */
 .g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
 .g-section .g-row:last-child { margin-bottom: 0; }
@@ -179,19 +186,10 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-top: 1mm;
   letter-spacing: -0.2pt;
 }
-/* "Dec 2022 – Feb 2026 · 3 yr 3 mo" overruns the 40mm data column; instead
-   of an accidental mid-token wrap, break it deliberately: the range on one
-   line, the derived tenure on its own line directly beneath, in the same
-   data voice, a shade quieter. No leading interpunct — a line-initial dot
-   reads as an orphaned bullet. */
-.g-dur {
-  font-family: var(--font-data);
-  font-size: 7.6pt;
-  letter-spacing: -0.2pt;
-  color: var(--muted);
-  opacity: 0.85;
-  margin-top: 0.2mm;
-}
+/* Tenure rides inline after the compact range ("Dec 22 – Feb 26 · 3y 3m"):
+   the shortened years buy back the width the 40mm column lacked at full
+   length, and the tenure stays a shade quieter than the range. */
+.g-dur { opacity: 0.85; }
 
 /* At-a-glance summary between role and bullets: quieter than the role,
    distinct from the bullets (italic, no marker, tight to the role). */
@@ -238,13 +236,14 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    whole vertical hierarchy instead of cutting bullets. */
 .g-dense {
   --gp-header-pad: 2.4mm;
-  --gp-intro-mt: 3.4mm;
-  --gp-section-mt: 4mm;
-  --gp-secmark-mb: 2.9mm;
-  --gp-row-mb: 3.1mm;
-  --gp-li-mb: 0.5mm;
+  --gp-intro-mt: 3mm;
+  --gp-section-mt: 3.8mm;
+  --gp-secmark-mb: 2.6mm;
+  --gp-row-mb: 2.5mm;
+  --gp-li-mb: 0.4mm;
   --gp-lh: 1.27;
 }
+.g-dense .grid-page { padding-bottom: 11mm; }
 .g-dense .g-content ul { margin-top: 1.3mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 
@@ -265,6 +264,12 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* g-dense, second pass: the AI variant's pub row missed the page by ~3mm
    after the migration bullets grew; found in the how-section leading and
    the row gaps rather than the type size. */
-.g-dense .g-harness { line-height: 1.42; }
+.g-dense .g-harness { line-height: 1.35; }
 .g-dense .g-how { line-height: 1.3; }
 .g-dense { --gp-section-mt: 3.6mm; --gp-row-mb: 2.9mm; }
+
+/* Company marks: inline SVG before the name, mark-height tied to the cap
+   height of the 9pt bold company line, taking the surrounding ink
+   (fill=currentColor in the cleaned assets). */
+.g-logo { display: inline-block; }
+.g-logo svg { height: 2.9mm; width: auto; vertical-align: -0.4mm; margin-right: 1.1mm; }

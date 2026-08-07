@@ -59,7 +59,7 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 
 /* The display intro — C's one big quiet line of scale contrast. */
 .ed-intro {
-  margin: 6.2mm auto 0;
+  margin: 5.6mm auto 0;
   max-width: 150mm;
   font-size: 12.5pt;
   font-weight: 300;
@@ -71,8 +71,8 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 /* ---- SECTION MARKERS: C's amplified braces + trailing rule ---- */
 /* Tightened from 7.8mm when the migration/localization bullets grew;
    overflow absorbed from the section air, not the text. */
-.ed-section { margin-top: 6mm; }
-.ed-footer { margin-top: 6mm; }
+.ed-section { margin-top: 4.6mm; }
+.ed-footer { margin-top: 4.6mm; }
 
 .ed-secrow {
   display: flex;
@@ -121,7 +121,7 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
   grid-template-columns: 38mm 1fr;
   column-gap: 8mm;
   align-items: start;
-  margin-bottom: 4.8mm;
+  margin-bottom: 4.2mm;
   break-inside: avoid;
 }
 .g-row:last-child { margin-bottom: 0; }
@@ -185,3 +185,9 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 /* ---- education / publications on the same grid module ---- */
 .g-pubtitle { font-weight: 600; font-size: 8.8pt; color: var(--ink-strong); }
 .g-pubmeta { font-size: 7.8pt; color: var(--muted); margin-top: 0.6mm; line-height: 1.35; }
+
+/* Company marks: inline SVG before the name, mark-height tied to the cap
+   height of the 9pt bold company line, taking the surrounding ink
+   (fill=currentColor in the cleaned assets). */
+.g-logo { display: inline-block; }
+.g-logo svg { height: 2.9mm; width: auto; vertical-align: -0.4mm; margin-right: 1.1mm; }

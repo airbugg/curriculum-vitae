@@ -81,8 +81,8 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
    of growing a trailing void. */
 /* Tightened from 8.4mm when the migration/localization bullets grew
    (~2.4mm overflow absorbed from the section air, not the text). */
-.ed-section { margin-top: 6.6mm; }
-.ed-footer { margin-top: 6.6mm; }
+.ed-section { margin-top: 5.8mm; }
+.ed-footer { margin-top: 5.8mm; }
 
 .ed-secrow {
   display: flex;
@@ -140,7 +140,7 @@ body.proto-c { font-family: var(--font-body); color: var(--ink); }
 
 /* ---- BODY: small, dense, tightly grouped (Gestalt proximity) ---- */
 .ed-body { font-size: 8.6pt; }
-.ed-entry { margin-bottom: 4.7mm; break-inside: avoid; }
+.ed-entry { margin-bottom: 4mm; break-inside: avoid; }
 .ed-entry:last-child { margin-bottom: 0; }
 .ed-entry-head { display: flex; align-items: baseline; gap: 2.4mm; }
 .ed-co { font-weight: 700; font-size: 10pt; color: var(--ink-strong); }

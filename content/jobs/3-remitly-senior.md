@@ -8,12 +8,12 @@ dates: Jun 2020 – Dec 2022
 summary: Core product work through the company's shift from a web app to mobile-first.
 ---
 
-- Led the migration of the core product from a mess of an `AngularJS`/`React` web
-  app to `React Native`, without freezing feature work: a native shell hosted the
-  legacy app in a webview, with a two-way `postMessage` bridge so each side could
-  drive the other (navigation, modals, the shared `Redux` state). Features moved
-  over piecemeal; users never switched or installed anything. Built that layer
-  with two other engineers. {#reactNative}
+- Led the migration of the core product from a mess of an `AngularJS`/`React`
+  web app to `React Native`, without freezing feature work: a native shell
+  hosted the legacy app in a webview, with a two-way `postMessage` bridge so
+  each side could drive the other (navigation, modals, the shared `Redux`
+  state). Features moved piecemeal, invisible to users. Built that layer with
+  two other engineers. {#reactNative}
 
 - Designed an `XState` orchestration engine for financial flows (send money,
   deposit, re-authentication) with over-the-air business-logic updates:
