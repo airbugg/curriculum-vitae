@@ -7,10 +7,11 @@ import { logos } from '../lib/logos.mjs';
 // mark, and a wordmark next to the printed name would duplicate it).
 // Missing files degrade to the plain text name.
 function LogoAsset({ asset, className }) {
+  const cls = `${className} g-lg-${asset.slug}`;
   if (asset.type === 'svg')
-    return <span className={className} dangerouslySetInnerHTML={{ __html: asset.data }} />;
+    return <span className={cls} dangerouslySetInnerHTML={{ __html: asset.data }} />;
   return (
-    <span className={className}>
+    <span className={cls}>
       <img src={asset.data} alt="" />
     </span>
   );
@@ -519,7 +520,7 @@ function GridPage({ variant }) {
           personal facts, not education, so they don't share its marker. */}
       {((variant.languages && person.languages) || variant.offHours) && (
         <section className="g-section g-etc">
-          <GridSecMark>{variant.headings.etc ?? 'Etc'}</GridSecMark>
+          <GridSecMark>{variant.headings.etc ?? 'Misc'}</GridSecMark>
           {/* One grid row: the labels stack in the meta cell against the
               matching content lines (same size + leading keeps them
               aligned 1:1). */}

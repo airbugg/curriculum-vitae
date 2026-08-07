@@ -16,10 +16,10 @@ import { join } from 'node:path';
 const dir = join(process.cwd(), 'assets', 'logos');
 const load = (slug) => {
   const svg = join(dir, `${slug}.svg`);
-  if (existsSync(svg)) return { type: 'svg', data: readFileSync(svg, 'utf8').trim() };
+  if (existsSync(svg)) return { type: 'svg', slug, data: readFileSync(svg, 'utf8').trim() };
   const png = join(dir, `${slug}.png`);
   if (existsSync(png))
-    return { type: 'png', data: `data:image/png;base64,${readFileSync(png).toString('base64')}` };
+    return { type: 'png', slug, data: `data:image/png;base64,${readFileSync(png).toString('base64')}` };
   return null;
 };
 
