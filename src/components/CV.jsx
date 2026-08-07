@@ -513,33 +513,34 @@ function GridPage({ variant }) {
       <section className="g-section">
         <GridSecMark>{variant.headings.education}</GridSecMark>
         <GridEduRows />
-        {/* Language proficiency, spelled out instead of a bare name run
-            dangling at the end of the contact line. */}
-        {variant.languages && person.languages && (
-          <div className="g-row g-foot">
-            <div className="g-meta">
-              <div className="g-co">Languages</div>
-            </div>
-            <div className="g-content">
-              <div className="g-footline">{person.languages}</div>
-            </div>
-          </div>
-        )}
-        {/* One dry line for the off-hours tinkering; personality at minimal
-            space cost. */}
-        {variant.offHours && (
-          <div className="g-row g-foot">
-            <div className="g-meta">
-              <div className="g-co">Off hours</div>
-            </div>
-            <div className="g-content">
-              <div className="g-footline">
-                <Rich text={variant.offHours} />
-              </div>
-            </div>
-          </div>
-        )}
       </section>
+
+      {/* Languages + off-hours get their own quiet section — they read as
+          personal facts, not education, so they don't share its marker. */}
+      {((variant.languages && person.languages) || variant.offHours) && (
+        <section className="g-section g-etc">
+          <GridSecMark>{variant.headings.etc ?? 'Etc'}</GridSecMark>
+          {/* One grid row: the labels stack in the meta cell against the
+              matching content lines (same size + leading keeps them
+              aligned 1:1). */}
+          <div className="g-row g-foot">
+            <div className="g-meta">
+              {variant.languages && person.languages && <div className="g-co">Languages</div>}
+              {variant.offHours && <div className="g-co">Off hours</div>}
+            </div>
+            <div className="g-content">
+              {variant.languages && person.languages && (
+                <div className="g-footline">{person.languages}</div>
+              )}
+              {variant.offHours && (
+                <div className="g-footline">
+                  <Rich text={variant.offHours} />
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

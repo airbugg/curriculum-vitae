@@ -673,3 +673,15 @@ text for search/parsers. The loader now accepts `assets/logos/<slug>.png`
 which reached the conversation as images only, not files — just need to be
 committed: `rewire.svg|png`, `bgu.svg|png`, and optionally an official
 `remitly.svg` to replace the trace.
+
+### §12 addendum 2 — the { ETC } section
+
+Languages and Off-hours read as personal facts, not education, so they
+moved out from under { EDUCATION } into their own quiet { ETC } section:
+a full marked section (hairline and all) but tuned as a footer whisper —
+tighter marker air, one grid row with the labels stacked 1:1 against the
+content lines. Paid for by 17mm sides (from 18 — the wider measure
+re-wraps the long bullets shorter), a 12/9.5mm vertical pad on dense
+pages, and one more dense-tier notch. Found and fixed in the process: a
+later `.g-dense` block was silently overriding the tier's variables —
+several earlier "tightenings" had never actually applied.
