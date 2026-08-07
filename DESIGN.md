@@ -660,3 +660,16 @@ Nine asks in one round; the notable mechanics:
   paid for on the canonical by `ci` and `auth`; dense pages moved to an
   11mm bottom pad; `g-dense` tightened one step further. All ten variants
   one page.
+
+### §12 addendum — logo round two (owner-supplied assets)
+
+The owner supplied the real logos. What landed: the official Rylo mark
+(pasted as SVG text — replaces the favicon-derived swirl), and a
+**wordmark mode**: Wix and Rewire have no separate mark, so their wordmark
+renders IN PLACE of the printed company name (sized to the company line),
+with the employer name kept in the PDF text layer as near-invisible 4pt
+text for search/parsers. The loader now accepts `assets/logos/<slug>.png`
+(embedded as a data URI) as well as SVG, so the remaining attachments —
+which reached the conversation as images only, not files — just need to be
+committed: `rewire.svg|png`, `bgu.svg|png`, and optionally an official
+`remitly.svg` to replace the trace.

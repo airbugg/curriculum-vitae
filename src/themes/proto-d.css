@@ -186,8 +186,14 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 .g-pubtitle { font-weight: 600; font-size: 8.8pt; color: var(--ink-strong); }
 .g-pubmeta { font-size: 7.8pt; color: var(--muted); margin-top: 0.6mm; line-height: 1.35; }
 
-/* Company marks: inline SVG before the name, mark-height tied to the cap
-   height of the 9pt bold company line, taking the surrounding ink
-   (fill=currentColor in the cleaned assets). */
+/* Company logos. Marks sit before the name at slightly over cap height;
+   wordmarks REPLACE the printed name, sized to the company line. Both take
+   the surrounding ink when the asset is a currentColor SVG; PNG assets
+   keep their own colors. */
 .g-logo { display: inline-block; }
-.g-logo svg { height: 2.9mm; width: auto; vertical-align: -0.4mm; margin-right: 1.1mm; }
+.g-logo svg, .g-logo img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
+.g-wordmark { display: inline-block; }
+/* Selectable-but-invisible employer name behind a wordmark: stays in the
+   PDF text layer for search/parsers without occupying layout space. */
+.g-alt { position: absolute; color: rgba(0, 0, 0, 0.01); font-size: 4pt; }
+.g-wordmark svg, .g-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }

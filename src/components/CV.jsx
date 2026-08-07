@@ -2,12 +2,37 @@ import React from 'react';
 import { education, jobs, person, publications, skills } from '../lib/content.mjs';
 import { logos } from '../lib/logos.mjs';
 
-// Inline SVG mark before a company name (grid layouts). Renders nothing when
-// no mark is on file, so partially-sourced logo sets degrade quietly.
-function Logo({ id }) {
-  const svg = logos[id];
-  if (!svg) return null;
-  return <span className="g-logo" dangerouslySetInnerHTML={{ __html: svg }} />;
+// Company logos in the grid layouts. A `mark` renders before the name; a
+// `wordmark` renders IN PLACE of the name (Wix/Rewire have no separate
+// mark, and a wordmark next to the printed name would duplicate it).
+// Missing files degrade to the plain text name.
+function LogoAsset({ asset, className }) {
+  if (asset.type === 'svg')
+    return <span className={className} dangerouslySetInnerHTML={{ __html: asset.data }} />;
+  return (
+    <span className={className}>
+      <img src={asset.data} alt="" />
+    </span>
+  );
+}
+
+function CompanyName({ id, text }) {
+  const l = logos[id];
+  if (l?.wordmark)
+    return (
+      <>
+        <LogoAsset asset={l.wordmark} className="g-wordmark" />
+        {/* The name stays in the PDF text layer (transparent, zero-width)
+            so search and parsers still find the employer. */}
+        <span className="g-alt">{text ?? id}</span>
+      </>
+    );
+  return (
+    <>
+      {l?.mark && <LogoAsset asset={l.mark} className="g-logo" />}
+      {tidyLabel(text ?? id)}
+    </>
+  );
 }
 
 // `tech` spans in content become <code> chips — the original CV's \mylib.
@@ -382,8 +407,7 @@ function GridEntry({ group }) {
               {i === 0 && (
                 <>
                   <div className="g-co">
-                    <Logo id={first.company} />
-                    {tidyLabel(first.company)}
+                    <CompanyName id={first.company} />
                   </div>
                   {first.blurb && <div className="g-mblurb">{tidyLabel(first.blurb)}</div>}
                   <div className="g-loc">{first.location}</div>
@@ -528,8 +552,7 @@ function GridEduRows() {
       <div className="g-row">
         <div className="g-meta">
           <div className="g-co">
-            <Logo id="bgu" />
-            {tidyLabel(education.school)}
+            <CompanyName id="bgu" text={education.school} />
           </div>
           <div className="g-dates">{education.dates}</div>
         </div>
