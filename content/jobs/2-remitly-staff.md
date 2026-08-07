@@ -1,22 +1,21 @@
 ---
 id: remitlyStaff
 company: Remitly
-blurb: global remittances; acquired Rewire in 2022
-role: Staff Software Engineer · Client Infrastructure
+blurb: global remittances (acquired Rewire in 2022)
+role: Staff Software Engineer
 location: Tel Aviv
 dates: Dec 2022 – Feb 2026
-summary: Client infrastructure for three products: localization, CI, and the shared GraphQL layer.
+summary: Client infrastructure lead for Circle, Rewire and Remitly apps
 ---
 
 - Lead engineer of the Client Infrastructure team: technical planning and
-  cross-team initiatives across roughly ten teams and three products
+  cross-team initiatives across roughly five teams and three products
   (~10M monthly users). {#lead}
 
 - Designed the localization platform: translations fetched dynamically, with
   hotfixes scoped to specific app versions in production (previously a
   translation fix required a full release), and a CI pipeline that extracts
-  changed strings from each PR and files translator tasks automatically.
-  Translations stopped blocking merges. {#l10n}
+  changed strings straight from the source code and files translator tasks automatically. {#l10n}
 
 - Migrated tens of thousands of UI strings to semantic keys with an LLM
   service I built: model-suggested names, human approval in a small review

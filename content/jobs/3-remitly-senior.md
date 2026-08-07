@@ -8,9 +8,8 @@ dates: Jun 2020 – Dec 2022
 summary: Core product work through the company's shift from a web app to mobile-first.
 ---
 
-- Led the migration of the core product from an `AngularJS`/`React` web app
-  to `React Native`, the company's first mobile-first
-  architecture. {#reactNative}
+- Led the migration of the core product from a mess of an `AngularJS`/`React` web app
+  to `React Native`. {#reactNative}
 
 - Designed an `XState` orchestration engine for financial flows (send money,
   deposit, re-authentication) with over-the-air business-logic updates:
