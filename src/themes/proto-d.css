@@ -196,6 +196,9 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
 /* Rewire's box includes the dots above the letters; taller so its x-height
    matches WIX's visual weight on the company line. */
 .g-wordmark.g-lg-rewire svg { height: 4.2mm; vertical-align: -0.25mm; }
+/* Rylo lockup: the box spans the swirl's full height plus the y descender,
+   so the caps land near the other company names' cap height. */
+.g-wordmark.g-lg-rylo svg { height: 4.6mm; vertical-align: -1.15mm; }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
 .g-alt { position: absolute; color: #fff; font-size: 4pt; }

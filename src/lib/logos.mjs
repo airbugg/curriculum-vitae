@@ -26,7 +26,7 @@ const load = (slug) => {
 // Keyed by the company string as it appears in content frontmatter, plus a
 // special slot for the education footer.
 export const logos = {
-  Rylo: { mark: load('rylo') },
+  Rylo: { wordmark: load('rylo') }, // full lockup (swirl + name) from rylo.com
   Remitly: { mark: load('remitly') },
   Rewire: { wordmark: load('rewire') },
   'Wix.com': { wordmark: load('wix') },
