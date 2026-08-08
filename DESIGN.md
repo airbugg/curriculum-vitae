@@ -685,3 +685,16 @@ re-wraps the long bullets shorter), a 12/9.5mm vertical pad on dense
 pages, and one more dense-tier notch. Found and fixed in the process: a
 later `.g-dense` block was silently overriding the tier's variables —
 several earlier "tightenings" had never actually applied.
+
+### §12 addendum 3 — official artwork everywhere, sized by metrics
+
+The owner pasted all three remaining SVG sources as text (the URLs were
+egress-blocked): the full Rylo lockup, the official Rewire wordmark
+(#321879 — replacing the geometric reconstruction), and BGU's circular
+emblem. Consistency pass: wordmark sizes are derived from each file's
+internal geometry so all three letter heights land at the 9pt bold company
+names' cap height (~2.3mm) with baselines on the text baseline — Rylo
+3.7mm (caps are 96/152 of its box), rewire 3.5mm (x-height 27/41), WIX
+2.4mm (glyph-cropped box). Marks share 3.2mm with a 1.2mm gap; the BGU
+disc gets +6% circular-optical compensation (3.4mm). Verified on a
+stacked 300dpi strip of all five company slots.

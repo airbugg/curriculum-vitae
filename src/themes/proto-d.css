@@ -191,14 +191,17 @@ body.proto-d { font-family: var(--font-body); color: var(--ink); }
    the surrounding ink when the asset is a currentColor SVG; PNG assets
    keep their own colors. */
 .g-logo { display: inline-block; }
+/* Circular marks read smaller than square ones at equal height; the BGU
+   disc gets the usual optical compensation. */
+.g-logo.g-lg-bgu svg { height: 3.4mm; vertical-align: -0.55mm; }
 .g-logo svg, .g-logo img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
 .g-wordmark { display: inline-block; }
-/* Rewire's box includes the dots above the letters; taller so its x-height
-   matches WIX's visual weight on the company line. */
-.g-wordmark.g-lg-rewire svg { height: 4.2mm; vertical-align: -0.25mm; }
-/* Rylo lockup: the box spans the swirl's full height plus the y descender,
-   so the caps land near the other company names' cap height. */
-.g-wordmark.g-lg-rylo svg { height: 4.6mm; vertical-align: -1.15mm; }
+/* Wordmark sizing is derived from each file's internal metrics so all
+   three read at the same letter height as the 9pt bold company names
+   (cap/x-height ~2.3mm), with baselines on the text baseline. */
+.g-wordmark.g-lg-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
+.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.7mm; }
+.g-wordmark.g-lg-wix svg { height: 2.4mm; vertical-align: 0; }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
 .g-alt { position: absolute; color: #fff; font-size: 4pt; }
