@@ -287,7 +287,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    three read at the same letter height as the 9pt bold company names
    (cap/x-height ~2.3mm), with baselines on the text baseline. */
 .g-wordmark.g-lg-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
-.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.7mm; }
+.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
 .g-wordmark.g-lg-wix svg { height: 2.4mm; vertical-align: 0; }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
