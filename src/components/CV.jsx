@@ -140,7 +140,7 @@ function Dates({ dates, className, withDur }) {
   return (
     <span className={className}>
       {dates}
-      {d && <span className="dur"> · {d}</span>}
+      {d && <span className="dur"> ({d})</span>}
     </span>
   );
 }
@@ -187,7 +187,7 @@ function Group({ group }) {
         </div>
         <div className="loc">
           {first.location}
-          {total && <span className="dur"> · {total}</span>}
+          {total && <span className="dur"> ({total})</span>}
         </div>
       </div>
       {group.map((s) => {
@@ -417,7 +417,7 @@ function GridEntry({ group }) {
               <span className="g-dates">
                 {shortRange(job.dates)}
                 {i === 0 && groupDuration(group) && (
-                  <span className="g-dur"> · {compactDur(groupDuration(group))}</span>
+                  <span className="g-dur"> ({compactDur(groupDuration(group))})</span>
                 )}
               </span>
             </div>
@@ -511,37 +511,47 @@ function GridPage({ variant }) {
         ))}
       </section>
 
-      <section className="g-section">
-        <GridSecMark>{variant.headings.education}</GridSecMark>
-        <GridEduRows />
+      {/* { BACKGROUND } — education, publication, languages and off-hours
+          folded into ONE dense ledger: each fact is a label/content pair on
+          its own grid row, so a wrapped content line (the paper title) can't
+          shear the label alignment. Replaces the separate Education + Misc
+          sections — one marker instead of two, one line per fact. */}
+      <section className="g-section g-bg">
+        <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+        <BgRow label="Education">
+          {education.degree} · <CompanyName id="bgu" text={education.school} /> ·{' '}
+          {education.dates}
+        </BgRow>
+        <BgRow label="Publication">
+          {/* The separator binds to the journal (nbsp) so a wrap carries it
+              to the next line instead of dangling it after the title. */}
+          Co-author of “{publications[0].title}” {'· '}
+          {publications[0].journal} ({publications[0].year})
+        </BgRow>
+        {variant.languages && person.languages && (
+          <BgRow label="Languages">{person.languages}</BgRow>
+        )}
+        {variant.offHours && (
+          <BgRow label="Off hours">
+            <Rich text={variant.offHours} />
+          </BgRow>
+        )}
       </section>
+    </div>
+  );
+}
 
-      {/* Languages + off-hours get their own quiet section — they read as
-          personal facts, not education, so they don't share its marker. */}
-      {((variant.languages && person.languages) || variant.offHours) && (
-        <section className="g-section g-etc">
-          <GridSecMark>{variant.headings.etc ?? 'Misc'}</GridSecMark>
-          {/* One grid row: the labels stack in the meta cell against the
-              matching content lines (same size + leading keeps them
-              aligned 1:1). */}
-          <div className="g-row g-foot">
-            <div className="g-meta">
-              {variant.languages && person.languages && <div className="g-co">Languages</div>}
-              {variant.offHours && <div className="g-co">Off hours</div>}
-            </div>
-            <div className="g-content">
-              {variant.languages && person.languages && (
-                <div className="g-footline">{person.languages}</div>
-              )}
-              {variant.offHours && (
-                <div className="g-footline">
-                  <Rich text={variant.offHours} />
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
+// One BACKGROUND ledger row: mono-quiet label in the data column, a single
+// dense fact line in the content column.
+function BgRow({ label, children }) {
+  return (
+    <div className="g-row g-foot">
+      <div className="g-meta">
+        <div className="g-co">{label}</div>
+      </div>
+      <div className="g-content">
+        <div className="g-footline">{children}</div>
+      </div>
     </div>
   );
 }

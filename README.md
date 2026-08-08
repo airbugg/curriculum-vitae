@@ -13,13 +13,14 @@ Stable direct links:
 
 | Variant | For | Download |
 | --- | --- | --- |
-| Flagship (modernist grid) | humans, referrals | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
-| Full Stack | end-to-end product roles | [eugene-lerman-full-stack.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-full-stack.pdf) |
+| Flagship (modernist grid) | humans, referrals — the generalist CV | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
 | Platform | infra / DevEx roles | [eugene-lerman-platform.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-platform.pdf) |
-| AI-Native | AI-first companies | [eugene-lerman-ai-native.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ai-native.pdf) |
 | Parser | ATS / job boards | [eugene-lerman-ats.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-ats.pdf) |
-| Unified | one page, all three angles | [eugene-lerman-unified.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-unified.pdf) |
 | Classic | the previous flagship look | [eugene-lerman-classic.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-classic.pdf) |
+
+The Full Stack, AI-Native and Unified cuts folded back into the Flagship —
+one generalist CV instead of three targeted ones. Their exact configurations
+live in git history if a targeted variant is ever needed again.
 
 PDFs are build artifacts, not source — they aren't committed here.
 

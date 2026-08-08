@@ -160,16 +160,20 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-harness div { white-space: nowrap; }
 .g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
 
-/* The ETC ledger: labels and content lines share size and leading so the
-   stacked pairs align 1:1 inside a single grid row. */
+/* The BACKGROUND ledger: education, publication, languages, off-hours as
+   label/content pairs. Labels and content share size and leading; each pair
+   is its own tight grid row so a wrapped fact line (the paper title) keeps
+   its label aligned. */
 .g-footline { font-size: 8.4pt; color: var(--ink); line-height: 1.38; }
 .g-foot .g-co { font-size: 8.4pt; line-height: 1.38; }
 .g-foot .g-meta { line-height: 1.38; }
-/* The ETC section is a footer whisper, not a peer of Experience: it sits
-   tighter to Education than the section rhythm and its marker loses a bit
-   of air. */
-.g-section.g-etc { margin-top: calc(var(--gp-section-mt, 5.2mm) - 1.2mm); }
-.g-etc .g-secmark { padding-bottom: 0.9mm; margin-bottom: 1.4mm; }
+/* The ledger is a footer whisper, not a peer of Experience: its marker
+   loses a bit of air and its rows run nearly solid. */
+.g-bg .g-secmark { padding-bottom: 0.9mm; margin-bottom: 1.5mm; }
+.g-section.g-bg .g-row { margin-bottom: 0.6mm; }
+/* The BGU mark rides inside an 8.4pt fact line — smaller than on the 9pt
+   company lines, same optical role. */
+.g-footline .g-logo svg { height: 2.9mm; vertical-align: -0.5mm; margin-right: 0.9mm; }
 
 /* ---- entry rows ---- */
 .g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
@@ -245,11 +249,11 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   --gp-intro-mt: 2.8mm;
   --gp-section-mt: 3.6mm;
   --gp-secmark-mb: 2.4mm;
-  --gp-row-mb: 2.3mm;
+  --gp-row-mb: 2.15mm;
   --gp-li-mb: 0.3mm;
   --gp-lh: 1.26;
 }
-.g-dense .grid-page { padding-top: 12mm; padding-bottom: 9.5mm; }
+.g-dense .grid-page { padding-top: 12mm; padding-bottom: 8.5mm; }
 .g-dense .g-content ul { margin-top: 1.3mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 

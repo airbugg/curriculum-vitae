@@ -13,6 +13,13 @@ export const variants = [
   // the title, and the boxless emerald-mono tech chips in the bullets.
   // (nameStyle 'plain' only opts out of base.css's id-braces styling; the
   // grid layout carries its own brace markup.)
+  // The generalist thesis, per the owner: not a client engineer, not a
+  // full-stack engineer — an engineer who takes up whatever role the product
+  // needs. The old full-stack / ai-native / unified siblings folded back in
+  // here (they live in git history): the AI story is woven into the intro
+  // and the job summaries rather than sectioned, the full-stack evidence
+  // (second-auth, Wix editor auth, Lokey, the release services) carries the
+  // breadth claim, and Rewire gets its bullets back.
   {
     file: 'eugene-lerman',
     label: 'The Flagship · Modernist Grid',
@@ -21,38 +28,14 @@ export const variants = [
     nameStyle: 'plain',
     bodyClass: 'g-dense',
     intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building clients and the infrastructure underneath them, at Wix, Remitly and now an early-stage startup.',
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
     languages: true,
     offHours: 'A `k3s` home lab, home automation, and other over-engineering.',
-    headings: { experience: 'Experience', education: 'Education' },
+    headings: { experience: 'Experience', background: 'Background' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative'] },
-      { job: 'wix', bullets: ['forms'] },
-    ],
-    skills: null,
-  },
-
-  // THE FULL STACK ENGINEER — the canonical grid, retargeted: end-to-end
-  // product story (client + services + infrastructure). Same theme and
-  // layout as the flagship; only the title, intro and bullet cut differ.
-  {
-    file: 'eugene-lerman-full-stack',
-    label: 'The Full Stack Engineer',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    title: 'Senior Full Stack Engineer',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end: the clients, the services behind them and the infrastructure underneath, at Wix, Remitly and now an early-stage startup.',
-    languages: true,
-    headings: { experience: 'Experience', education: 'Education' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'onboarding'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'secondAuth'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,
@@ -80,71 +63,9 @@ export const variants = [
     ],
   },
 
-  // THE AI-NATIVE ENGINEER — rebuilt on the canonical grid (the old
-  // violet flow design lives in git history). The how-I-work section goes
-  // grid-native: the prose is content, and the harness roster moves out of
-  // the prose into the data column — a stacked mono list, the same voice as
-  // the dates everywhere else on the page.
-  {
-    file: 'eugene-lerman-ai-native',
-    label: 'The AI-Native Engineer',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    intro:
-      'Since early 2026 most of my code has shipped through coding agents: spec-first, implementation and review running in parallel. Underneath that, twelve years of TypeScript, React Native and client infrastructure.',
-    languages: true,
-    howIWork: {
-      heading: 'How I work',
-      text:
-        'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth.',
-      metaLabel: 'harnesses in rotation',
-      metaItems: ['Claude Code', 'Codex', 'Cursor', 'OpenClaw', 'Hermes', 'Argent'],
-    },
-    headings: { experience: 'Experience', education: 'Education' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative'] },
-      { job: 'wix', bullets: ['forms'] },
-    ],
-    skills: null,
-  },
-
-  // THE UNIFIED — one page carrying all three angles at once: the canonical
-  // grid and voice, the full-stack breadth (second-auth, end-to-end intro
-  // clause), and the AI story (how-I-work + harness roster). Densest cut in
-  // the family; an experiment the owner asked for — see if it holds.
-  {
-    file: 'eugene-lerman-unified',
-    label: 'The Unified · Client × Full Stack × AI',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years of building products end to end; since early 2026 most of my code has shipped through coding agents.',
-    languages: true,
-    offHours: 'A `k3s` home lab, home automation, and other over-engineering.',
-    howIWork: {
-      heading: 'How I work',
-      text:
-        'Spec- and prototype-driven, multi-agent: Ralph-style loops, custom skills for repetitive work (simulator testing included), agents for implementation, review and validation. I went through the everything-is-a-skill phase, hit context bloat, and came back to a lean setup: a few focused skills, progressively disclosed, code as the source of truth.',
-      metaLabel: 'harnesses in rotation',
-      metaItems: ['Claude Code', 'Codex', 'Cursor', 'OpenClaw', 'Hermes', 'Argent'],
-    },
-    headings: { experience: 'Experience', education: 'Education' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative'] },
-      // Wix rides on its summary line alone — the employer stays, the
-      // bullets pay for the how-I-work section.
-      { job: 'wix', bullets: [] },
-    ],
-    skills: null,
-  },
+  // THE FULL STACK / AI-NATIVE / UNIFIED grid siblings — folded into the
+  // canonical above (the generalist consolidation). Their exact cuts live in
+  // git history if a targeted variant is ever needed again.
 
   {
     file: 'eugene-lerman-classic',

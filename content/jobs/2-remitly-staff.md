@@ -10,9 +10,9 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps; the las
 
 - Lead engineer of the Client Infrastructure team: technical planning and
   cross-team initiatives across roughly five teams and three products
-  (~10M monthly users), plus the shared plumbing itself: the `Apollo GraphQL`
-  client layer (generated types, links for auth, caching and batching) and
-  the developer tooling around it. {#lead}
+  (~10M monthly users), plus creating and maintaining the app infrastructure
+  itself, such as the `Apollo GraphQL` layer with generated types and an
+  offline-first storage engine on `MMKV`. {#lead}
 
 - Designed Lokey, the localization service that took the apps from bundled
   translations to dynamic ones, with hotfixes scoped to app versions in
@@ -22,8 +22,7 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps; the las
 
 - Migrated tens of thousands of UI strings from English-as-key to semantic
   keys like `header.title.text` with an LLM service and review UI I built: it
-  gathers the context around each string, suggests names, a product person
-  approves, and one click opens a PR with the code changes and a
-  non-destructive key migration. A tedious, error-prone process done in a
-  week. {#semanticKeys}
+  gathers context around each string, suggests names, a product person
+  approves, and one click opens a PR with the changes and a non-destructive
+  key migration. A tedious, error-prone process done in a week. {#semanticKeys}
 

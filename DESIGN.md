@@ -698,3 +698,49 @@ names' cap height (~2.3mm) with baselines on the text baseline — Rylo
 2.4mm (glyph-cropped box). Marks share 3.2mm with a 1.2mm gap; the BGU
 disc gets +6% circular-optical compensation (3.4mm). Verified on a
 stacked 300dpi strip of all five company slots.
+
+## §13 · The generalist consolidation (owner round)
+
+The owner settled the CV's thesis: not a client engineer, not a full-stack
+engineer — an engineer who takes up whatever role the product needs. Six
+directives landed together, and the variant family paid for them.
+
+**One CV instead of four.** The Full Stack, AI-Native and Unified grid
+siblings folded back into the canonical (their cuts live in git history).
+The AI story is woven, not sectioned: an intro clause ("Since early 2026
+most of that code has shipped through coding agents"), the Rylo and Remitly
+summaries, and the semantic-keys bullet carry it without spending the
+~14mm a how-I-work section costs. The intro was rebuilt around the thesis:
+"building whatever needed building: apps, services, release systems, the
+infrastructure underneath."
+
+**The page absorbed three bullets.** Rewire got `xstate` and `secondAuth`
+back (the owner: "did we shorten it because of lack of space? we should
+reconsider") and Wix got the Editor-auth bullet back ("something i am proud
+of and want to keep"). Rewire's `ci` bullet stays out of the canonical —
+its story is half-covered by Rylo's platform bullet — but lives on in the
+Platform/Parser/Classic cuts.
+
+**{ BACKGROUND } — the merged ledger.** Education + Misc collapsed into one
+section: four label/content pairs (Education / Publication / Languages /
+Off hours), each pair its own grid row at 8.4pt so a wrapped line (the
+paper title) can't shear the label alignment. One marker instead of two,
+one line per fact; the BGU mark rides inline at 2.9mm. The publication's
+separator binds to the journal name with an nbsp so a wrap carries "·"
+to the next line instead of dangling it after the title. Saved ~14mm
+against the old Education section + Misc footer.
+
+**Durations in parentheses.** "Feb 26 – Present (7m)" replaced the
+interpunct form, in the grid meta column and the single/editorial layouts
+alike (owner directive).
+
+**The lead bullet grew an example clause.** Per the owner's framing:
+"creating and maintaining the app infrastructure itself, such as the
+Apollo GraphQL layer with generated types and an offline-first storage
+engine on MMKV" — the MMKV engine is a new fact from this round.
+
+**Fit ledger.** Three added bullets ≈ +12mm; paid by the merged ledger
+(~14mm at the old spacing), three orphan-line kills (release
+"Distribution.", xstate "app release.", semanticKeys "week."), row-mb
+2.3 → 2.15mm, and bottom padding 9.5 → 8.5mm. The g-mid density tier is
+now unused but stays documented; `.g-etc` CSS was replaced by `.g-bg`.

@@ -18,9 +18,9 @@ summary: Building out the client platform, release engineering and complex produ
   (`bun workspaces`), a design system with automated `Figma` sync, the
   internal docs site, and all client CI/CD. {#platform}
 
-- Rebuilt the mobile release process: a pipeline with a web UI for cutting
-  release branches and shipping builds, and an in-house app-distribution
-  service that replaced `Firebase App Distribution`. {#release}
+- Rebuilt the release process: a pipeline with a web UI for cutting release
+  branches and shipping builds, and an in-house replacement for
+  `Firebase App Distribution`. {#release}
 
 - Owned the onboarding flow in the rebuilt app, one of its most complex;
   modeled it as an explicit `XState` machine to keep every branch testable,
