@@ -884,3 +884,28 @@ span; 0.35mm end insets keep adjacent bars separate.
 
 Both hold one A4 page (build-enforced alongside all existing variants),
 carry live link annotations, and pull from the same content atoms.
+
+### §15 addendum 3 · The prettier explosion, paid horizontally
+
+The aligned-wrap compromise read as messy to the owner ("i want the
+objects to be formatted correctly"). The section now renders the honest
+prettier form — every object fully exploded, one property per line,
+two-space indents, trailing commas — and pays the ~10-line vertical cost
+with the owner's own suggestion: two side-by-side columns.
+
+    education: {                          languages: {
+      school: "◉ Ben-Gurion University",    english: "native",
+      degree: "BSc, CS & Bioinformatics",   hebrew: "native",
+      years: "2013–2017",                   russian: "reads and speaks well",
+      publications: [{                    }
+        title: "TissueNet2",
+        journal: "Nucleic Acids Research",offHours: [
+        year: 2016,  // co-author           "k3s home lab",
+      }],                                   "home automation",
+    }                                       "other over-engineering",
+                                          ]
+
+Columns balance at 10/11 lines. The block dropped to 6.8pt/1.28 (a
+colophon, not body matter) and the page absorbed the remaining ~9mm via
+a shave package: body leading 1.26 → 1.24, section/marker/intro/header
+micro-gaps, and padding 10.8/7.2mm. Bottom ink now ends at 286.8mm.

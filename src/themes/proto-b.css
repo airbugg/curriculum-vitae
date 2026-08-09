@@ -160,38 +160,38 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-harness div { white-space: nowrap; }
 .g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
 
-/* The BACKGROUND object — the section set as code, full measure (no data
-   column here). Everything is the data mono at the dates' size;
-   differentiation is three registers per line: top-level keys in the deep
-   emerald (the chips' voice — terms of art), punctuation + nested keys in
-   the muted scaffolding gray, and the facts themselves in ink, so the
-   anchors a scanning eye lands on are the facts. white-space: pre-wrap
-   makes the literal space padding real — mono throughout, so the value
-   columns and the publications continuation align exactly. No rules, no
-   boxes; the section marker's hairline stays the only line. */
-.g-code {
+/* The BACKGROUND object — the section set as code, prettier-exploded:
+   one property per line, two-space indents (literal spaces under
+   white-space: pre-wrap, mono throughout, so indentation is exact),
+   trailing commas. The ~10-line vertical cost is paid horizontally: two
+   side-by-side columns, education+publications left, languages+offHours
+   right. Registers: emerald top-level keys, muted scaffolding, ink
+   facts. Small type (a colophon, not body matter), no rules or boxes. */
+.g-code2 {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  column-gap: 16mm;
   font-family: var(--font-data);
-  font-size: 7.6pt;
-  /* -0.3 (vs the dates' -0.2): buys the publications line + trailing
-     comment their fit inside the measure (115 mono chars ≈ 172.9mm). */
-  letter-spacing: -0.3pt;
-  line-height: 1.5;
+  font-size: 6.8pt;
+  letter-spacing: -0.2pt;
+  line-height: 1.28;
   color: var(--ink);
   white-space: pre-wrap;
 }
-.g-code .ck1 { color: var(--accent-deep); }
-.g-code .cp { color: var(--muted); }
-.g-code .ck2 { color: var(--muted); }
-.g-code .cs { color: var(--ink); }
+.g-code2 .ck1 { color: var(--accent-deep); }
+.g-code2 .cp { color: var(--muted); }
+.g-code2 .ck2 { color: var(--muted); }
+.g-code2 .cs { color: var(--ink); }
 /* Trailing comments: a shade lighter than the scaffolding — an aside,
    not a member. */
-.g-code .cc { color: var(--muted); opacity: 0.85; }
-.g-centry { margin-bottom: 1mm; }
-.g-centry:last-child { margin-bottom: 0; }
-.g-bg .g-secmark { padding-bottom: 0.9mm; margin-bottom: 1.7mm; }
+.g-code2 .cc { color: var(--muted); opacity: 0.85; }
+/* Air between the right column's two stacked literals — half a line, not
+   a full blank line (the page pays for every millimetre here). */
+.g-c2gap { margin-top: 1mm; }
+.g-bg .g-secmark { padding-bottom: 0.8mm; margin-bottom: 1.4mm; }
 /* The BGU mark rides inside a quoted string — smaller than on the 9pt
    company lines, same optical role. */
-.g-code .g-logo svg { height: 2.6mm; vertical-align: -0.4mm; margin-right: 0.7mm; }
+.g-code2 .g-logo svg { height: 2.4mm; vertical-align: -0.35mm; margin-right: 0.7mm; }
 
 /* ---- entry rows ---- */
 .g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
@@ -275,16 +275,16 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    overflows A4 with ~11mm more content, so these run tighter across the
    whole vertical hierarchy instead of cutting bullets. */
 .g-dense {
-  --gp-header-pad: 2.2mm;
-  --gp-intro-mt: 2.8mm;
-  --gp-section-mt: 3.6mm;
-  --gp-secmark-mb: 2.4mm;
-  --gp-row-mb: 2.15mm;
-  --gp-li-mb: 0.3mm;
-  --gp-lh: 1.26;
+  --gp-header-pad: 1.9mm;
+  --gp-intro-mt: 2.4mm;
+  --gp-section-mt: 3.3mm;
+  --gp-secmark-mb: 2.1mm;
+  --gp-row-mb: 2mm;
+  --gp-li-mb: 0.25mm;
+  --gp-lh: 1.24;
 }
-.g-dense .grid-page { padding-top: 11.6mm; padding-bottom: 9.5mm; }
-.g-dense .g-content ul { margin-top: 1.3mm; }
+.g-dense .grid-page { padding-top: 10.8mm; padding-bottom: 7.2mm; }
+.g-dense .g-content ul { margin-top: 1.15mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 
 /* Middle density: the full-stack cut carries ~11mm more than the canonical
@@ -304,6 +304,10 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* g-dense refinements: how-section leading (the gap variables live in the
    main .g-dense block above — keep them there, later blocks win the
    cascade). */
+.g-dense .g-title { margin-top: 1.3mm; }
+.g-dense .g-contactline { margin-top: 1.2mm; }
+.g-dense .intro.g-intro { line-height: 1.36; }
+.g-dense .g-role { margin-bottom: 0.25mm; }
 .g-dense .g-harness { line-height: 1.3; }
 .g-dense .g-how { line-height: 1.3; }
 

@@ -511,94 +511,119 @@ function GridPage({ variant }) {
         ))}
       </section>
 
-      {/* { BACKGROUND } — the section set as CODE. The braces identity
-          comes full circle: the page opens on { EUGENE : LERMAN } and
-          closes on an object literal. Keys sit in the data column, values
-          are objects/arrays in the content column, syntax-colored from the
-          page's existing palette only. Three registers per line (emerald
-          top-level keys, muted scaffolding, ink facts) — the intra-line
-          contrast that keeps single-line facts from fusing into a slab.
-          FORMATTER-CLEAN: every row is exactly one line (a wrapped object
-          is what no formatter would emit at this width), so the education
-          object flattens into school + degree keys and the years ride as
-          trailing // comments — the code idiom for dates, which also
-          carries the co-author credit. Arrays hug their brackets, objects
-          keep inner padding: prettier's own conventions. */}
+      {/* { BACKGROUND } — the section set as CODE, properly formatted:
+          every object fully exploded prettier-style (one property per
+          line, two-space indents, trailing commas), because a mid-list
+          wrap is what no formatter emits. The vertical cost is paid
+          horizontally, per owner suggestion: two side-by-side columns —
+          education (with its nested publications array) on the left,
+          languages + offHours stacked on the right — balanced at ~10
+          lines each. The co-author credit rides the year line as a
+          trailing comment. Syntax colors from the page palette only:
+          emerald top-level keys, muted scaffolding, ink facts. */}
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
-        {/* Full-measure code block (the two-column grid is ditched here by
-            owner decree): top-level keys at the margin, padded with literal
-            spaces to a common value column (all mono + white-space:pre-wrap
-            = exact alignment). The education object nests the publications
-            array; its one wrap lands on the property boundary before
-            `publications:`, continuation aligned under `school:` — the
-            clang-format Align convention, not an accidental wrap. */}
-        <div className="g-code">
-          <div className="g-centry">
+        <div className="g-code2">
+          <div>
             <div>
               <span className="ck1">education</span>
-              <Cp t={': { '} />
+              <Cp t={': {'} />
+            </div>
+            <div>
+              {'  '}
               <Ck n="school" />
               <Cp t={'"'} />
               <span className="cs">
                 <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
               </span>
-              <Cp t={'", '} />
+              <Cp t={'",'} />
+            </div>
+            <div>
+              {'  '}
               <Ck n="degree" />
               <Cs>{education.degreeShort ?? education.degree}</Cs>
-              <Cp t={', '} />
+              <Cp t={','} />
+            </div>
+            <div>
+              {'  '}
               <Ck n="years" />
               <Cs>{String(education.dates).replace(/\s*–\s*/, '–')}</Cs>
               <Cp t={','} />
             </div>
             <div>
-              <Cp t={'             '} />
+              {'  '}
               <Ck n="publications" />
-              <Cp t={'[{ '} />
+              <Cp t={'[{'} />
+            </div>
+            <div>
+              {'    '}
               <Ck n="title" />
               <Cs>{publications[0].title.split(':')[0]}</Cs>
-              <Cp t={', '} />
+              <Cp t={','} />
+            </div>
+            <div>
+              {'    '}
               <Ck n="journal" />
               <Cs>{publications[0].journal}</Cs>
-              <Cp t={', '} />
+              <Cp t={','} />
+            </div>
+            <div>
+              {'    '}
               <Ck n="year" />
               <span className="cs">{publications[0].year}</span>
-              <Cp t={' }] }'} />
+              <Cp t={','} />
               <Cc t="co-author" />
             </div>
+            <div>
+              {'  '}
+              <Cp t={'}],'} />
+            </div>
+            <div>
+              <Cp t={'}'} />
+            </div>
           </div>
-          {variant.languages && person.langLevels && (
-            <div className="g-centry">
-              <span className="ck1">languages</span>
-              <Cp t={': { '} />
-              {person.langLevels.split(',').map((pair, i, arr) => {
-                const [k, v] = pair.split('=').map((s) => s.trim());
-                return (
-                  <React.Fragment key={k}>
-                    <Ck n={k} />
-                    <Cs>{v}</Cs>
-                    {i < arr.length - 1 && <Cp t=", " />}
-                  </React.Fragment>
-                );
-              })}
-              <Cp t={' }'} />
-            </div>
-          )}
-          {variant.offHours && (
-            <div className="g-centry">
-              <span className="ck1">offHours</span>
-              {/* One pad space after the colon: aligns this value column
-                  with the 9-char keys above (offHours is 8). */}
-              <Cp t={':  ['} />
-              {variant.offHours.map((s, i) => (
-                <React.Fragment key={s}>
-                  <Cs>{s}</Cs>
-                  {i < variant.offHours.length - 1 && <Cp t=", " />}
-                </React.Fragment>
-              ))}
-              <Cp t={']'} />
-            </div>
-          )}
+          <div>
+            {variant.languages && person.langLevels && (
+              <>
+                <div>
+                  <span className="ck1">languages</span>
+                  <Cp t={': {'} />
+                </div>
+                {person.langLevels.split(',').map((pair) => {
+                  const [k, v] = pair.split('=').map((s) => s.trim());
+                  return (
+                    <div key={k}>
+                      {'  '}
+                      <Ck n={k} />
+                      <Cs>{v}</Cs>
+                      <Cp t={','} />
+                    </div>
+                  );
+                })}
+                <div>
+                  <Cp t={'}'} />
+                </div>
+              </>
+            )}
+            {variant.offHours && (
+              <>
+                <div className="g-c2gap">
+                  <span className="ck1">offHours</span>
+                  <Cp t={': ['} />
+                </div>
+                {variant.offHours.map((s) => (
+                  <div key={s}>
+                    {'  '}
+                    <Cs>{s}</Cs>
+                    <Cp t={','} />
+                  </div>
+                ))}
+                <div>
+                  <Cp t={']'} />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </section>
     </div>
