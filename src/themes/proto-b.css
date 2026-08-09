@@ -350,6 +350,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    ink. Terminal grid discipline: no letter-spacing tricks, one size for
    command and output, no typographic separators in the output. */
 .bgx-term {
+  white-space: pre-wrap; /* JSON indents are literal spaces */
   display: grid;
   grid-template-columns: max-content max-content;
   justify-content: space-between;
@@ -374,6 +375,11 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   transform: translateY(-0.02em);
 }
 .bgx-verb { color: var(--accent-deep); font-weight: 600; }
+/* jq's colored JSON output: keys deep emerald, strings ink, structural
+   punctuation muted. Colors belong to whole tokens, terminal-style. */
+.bgx-jk { color: var(--accent-deep); }
+.bgx-js { color: var(--ink); }
+.bgx-jp { color: var(--muted); }
 .bgx-out { color: var(--ink); }
 .bgx-out a { color: inherit; text-decoration: none; }
 

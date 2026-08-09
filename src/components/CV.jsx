@@ -1227,7 +1227,7 @@ const bgPubTitle = () => publications[0].title.split(':')[0];
 // deep-emerald (a valid command lights up green), arguments and output
 // in the default foreground ink. No typographic separators in output;
 // terminals print plain text.
-function BgTerm({ verb, args, children, href }) {
+function BgTerm({ verb, args, children, href, cmdTail }) {
   const argText = args ? ' ' + args : '';
   return (
     <>
@@ -1235,9 +1235,27 @@ function BgTerm({ verb, args, children, href }) {
         <span className="bgx-prompt">{'›'}</span>{' '}
         <span className="bgx-verb">{verb}</span>
         {href ? <a href={href}>{argText}</a> : argText}
+        {cmdTail}
       </div>
       {children}
     </>
+  );
+}
+
+// One line of jq-colored JSON output: jq really does color what it
+// prints, so the fiction pays for the registers — keys take the deep
+// emerald (jq's blue), strings the ink (jq's green), structure the
+// muted gray (jq's plain punctuation). Quotes belong to their token,
+// the way a terminal colors whole tokens, not typography.
+function BgJson({ k, v, last }) {
+  return (
+    <div className="bgx-out">
+      {'  '}
+      <span className="bgx-jk">"{k}"</span>
+      <span className="bgx-jp">: </span>
+      <span className="bgx-js">"{v}"</span>
+      {!last && <span className="bgx-jp">,</span>}
+    </div>
   );
 }
 
@@ -1249,11 +1267,12 @@ function BgStyleA({ variant }) {
       <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-term">
         <div>
-          <BgTerm verb="cat" args="education">
-            <div className="bgx-out">{education.degreeShort ?? education.degree}</div>
-            <div className="bgx-out">
-              {education.schoolShort ?? education.school}, {bgEduYears()}
-            </div>
+          <BgTerm verb="jq" args=". education.json">
+            <div className="bgx-out bgx-jp">{'{'}</div>
+            <BgJson k="degree" v={education.degreeShort ?? education.degree} />
+            <BgJson k="school" v={education.schoolShort ?? education.school} />
+            <BgJson k="years" v={bgEduYears()} last />
+            <div className="bgx-out bgx-jp">{'}'}</div>
           </BgTerm>
           <BgTerm verb="open" args={doi} href={publications[0].url}>
             <div className="bgx-out">
@@ -1263,14 +1282,20 @@ function BgStyleA({ variant }) {
           </BgTerm>
         </div>
         <div>
-          <BgTerm verb="locale">
-            {bgLangPairs().map(([k, v]) => (
-              <div className="bgx-out" key={k}>
-                {k}
-                {'='}
-                {v.replace(/ /g, '\u00A0')}
-              </div>
+          <BgTerm
+            verb="locale"
+            cmdTail={
+              <>
+                {' '}
+                <span className="bgx-jp">|</span> <span className="bgx-verb">jq</span>
+              </>
+            }
+          >
+            <div className="bgx-out bgx-jp">{'{'}</div>
+            {bgLangPairs().map(([k, v], i, arr) => (
+              <BgJson k={k} v={v} last={i === arr.length - 1} key={k} />
             ))}
+            <div className="bgx-out bgx-jp">{'}'}</div>
           </BgTerm>
           <BgTerm verb="ls" args="off-hours/">
             <div className="bgx-out">

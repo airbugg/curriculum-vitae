@@ -943,3 +943,14 @@ and ALL output in the default-foreground ink; outputs print as plain
 text (no interpunct separators — "Ben-Gurion University, 2013–2017");
 terminal grid discipline: letter-spacing 0, one size for command and
 output (7.2pt/1.4).
+
+### §17 addendum 2 · locale and education print JSON (owner round)
+
+The Session's education and locale outputs became real JSON, and the
+commands changed so the color is diegetic: `jq . education.json` and
+`locale | jq` — jq genuinely colors what it prints, so the key/string/
+punctuation registers (deep emerald / ink / muted) are now terminal
+truth rather than typography. Colors belong to whole tokens (quotes
+travel with their key or string, as jq renders them). Both columns
+balance at eight lines; the pipe's second verb highlights like zsh
+would.
