@@ -858,3 +858,29 @@ accidental one). Tracking -0.3pt buys the 115-char publications line +
 education.md gained degreeShort. The section dropped from ~24mm to
 ~18mm; the slack went back into the page's rhythm (padding-bottom
 9.5mm again, row/li gaps restored to their pre-squeeze values).
+
+## §16 · Two bold reimaginings (independent designer round)
+
+The owner commissioned an independent designer pass: "radically re-think...
+two bold, beautiful, original reimaginings", canonical untouched. Both
+live as appended variants; concepts and verification cycles are in the
+PR thread.
+
+**Reimagine 1 · The Broadsheet** (`reimagine-1.css`, layout `poster`) —
+brutalist Swiss poster: full-bleed black slab, EUGENE solid / LERMAN
+outline distributed edge to edge per glyph, one hot orange (#FF3B00)
+strictly for wayfinding (section numerals, slash markers, durations),
+Roboto families. The braces identity deliberately discarded; the wall of
+type IS the identity. The display name is per-glyph, so an intact
+"Eugene Lerman" is kept in the PDF text layer in slab-colored ink.
+
+**Reimagine 2 · The Ledger** (`reimagine-2.css`, layout `ledger`) —
+career cartography: a to-scale vertical time axis (2013 to now,
+~1.4mm/month, computed from the job dates at build time) with employment
+as filled emerald spans, the BSc hollow, year ticks, and a Tufte-style
+caption ("fig. 1 / drawn to scale"). Time is read twice: as data in the
+margin, as prose in the content. Transition months belong to the newer
+span; 0.35mm end insets keep adjacent bars separate.
+
+Both hold one A4 page (build-enforced alongside all existing variants),
+carry live link annotations, and pull from the same content atoms.

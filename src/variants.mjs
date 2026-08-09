@@ -201,4 +201,56 @@ export const variants = [
     ],
     skills: null,
   },
+
+  // ------------------------------------------------------------------------
+  // TWO REIMAGININGS (independent 2026 redesign commission). Same facts,
+  // two new philosophies, deliberately unrelated to the house style above.
+  // ------------------------------------------------------------------------
+
+  // R1 — THE BROADSHEET. Brutalist Swiss poster: a full-bleed ink slab with
+  // the name letterspaced edge to edge (EUGENE solid, LERMAN outline), one
+  // hot signal-orange accent, numbered sections under thick rules, slash
+  // markers. The braces identity is deliberately discarded; the wall of
+  // type is the identity.
+  {
+    file: 'eugene-lerman-reimagine-1',
+    label: 'Reimagine 1 · The Broadsheet (brutalist poster)',
+    theme: 'reimagine-1',
+    layout: 'poster',
+    nameStyle: 'plain',
+    intro:
+      'Twelve years of building whatever the product needed: apps, services, release systems, the infrastructure underneath. Wix, Remitly, and now an early-stage startup. Since early 2026 most of that code has shipped through coding agents.',
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  // R2 — THE LEDGER. Editorial career cartography: a vertical time axis in
+  // the left margin with the twelve years drawn to scale (employment as
+  // filled emerald spans, the degree as a hollow one), the reverse-
+  // chronological content descending into the past beside it. Tufte
+  // marginalia; the emerald identity survives as data ink.
+  {
+    file: 'eugene-lerman-reimagine-2',
+    label: 'Reimagine 2 · The Ledger (career cartography)',
+    theme: 'reimagine-2',
+    layout: 'ledger',
+    nameStyle: 'plain',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building; since early 2026 most of that code has shipped through coding agents.',
+    axisCaption: 'fig. 1\n2013–2026,\ndrawn to scale',
+    headings: { experience: 'Experience', education: 'Education' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
 ];

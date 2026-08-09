@@ -784,6 +784,316 @@ function HybridPage({ variant }) {
   );
 }
 
+// =========================================================================
+// REIMAGINED LAYOUTS — two independent design statements (2026 redesign
+// commission). New DOM + new themes; existing components untouched.
+// =========================================================================
+
+// ---- R1: THE BROADSHEET — brutalist Swiss poster -------------------------
+// A full-bleed ink block with the name letterspaced edge to edge, one hot
+// accent, numbered sections, slash markers. Type as image; the braces
+// identity is deliberately discarded here — the statement is the wall of
+// type itself.
+function SpreadWord({ word, className }) {
+  return (
+    <span className={`r1-line ${className ?? ''}`}>
+      {[...String(word)].map((ch, i) => (
+        <span key={i}>{ch}</span>
+      ))}
+    </span>
+  );
+}
+
+function R1Head({ n, children }) {
+  return (
+    <div className="r1-h">
+      <span className="r1-hn">{n}</span>
+      <span className="r1-hw">{String(children).toUpperCase()}</span>
+    </div>
+  );
+}
+
+function PosterPage({ variant }) {
+  const groups = groupSections(variant.sections);
+  // Location already anchors the hero topline; the contact row carries the
+  // reachable coordinates only, spread across the full measure.
+  const contacts = contactList(variant).filter((c) => c.text !== person.location);
+  const [first, last] = person.name.toUpperCase().split(' ');
+  return (
+    <div className="page r1-page">
+      <header className="r1-hero">
+        <div className="r1-topline">
+          <span>Curriculum Vitae</span>
+          <span>{person.location}</span>
+        </div>
+        <h1 className="r1-name">
+          <SpreadWord word={first} className="r1-first" />
+          <SpreadWord word={last} className="r1-last" />
+          {/* The letterspaced glyphs extract letter-by-letter; keep the
+              intact name in the text layer for search and parsers. */}
+          <span className="r1-alt">{person.name}</span>
+        </h1>
+        <div className="r1-titlerow">
+          <span className="r1-title">{variant.title ?? person.title}</span>
+        </div>
+        <div className="r1-contacts">
+          {contacts.map((c) => (
+            <Contact item={c} key={c.text} />
+          ))}
+        </div>
+      </header>
+
+      <div className="r1-body">
+        <p className="r1-intro">
+          <NoBreakCompounds text={variant.intro} />
+        </p>
+
+        <section className="r1-xp">
+          <R1Head n="01">{variant.headings.experience}</R1Head>
+          {groups.map((g) => {
+            const firstJob = jobs[g[0].job];
+            const total = groupDuration(g);
+            return (
+              <article className="r1-entry" key={g[0].job}>
+                <div className="r1-erow">
+                  <span className="r1-co">{firstJob.company}</span>
+                  {firstJob.blurb && <span className="r1-blurb">{firstJob.blurb}</span>}
+                  <span className="r1-dates">
+                    {firstJob.location}
+                    {total && <span className="r1-dur"> · {total}</span>}
+                  </span>
+                </div>
+                {g.map((s) => {
+                  const job = jobs[s.job];
+                  return (
+                    <div className="r1-roleblock" key={s.job}>
+                      <div className="r1-rolerow">
+                        <span className="r1-role">{job.role}</span>
+                        <span className="r1-dates">{job.dates}</span>
+                      </div>
+                      {job.summary && (
+                        <div className="r1-summary">
+                          <NoBreakCompounds text={job.summary} />
+                        </div>
+                      )}
+                      <ul>
+                        {s.bullets.map((id) => (
+                          <li key={id}>
+                            <Rich text={s.overrides?.[id] ?? job.bullets[id]} />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  );
+                })}
+              </article>
+            );
+          })}
+        </section>
+
+        <section className="r1-bg">
+          <R1Head n="02">{variant.headings.background ?? 'Background'}</R1Head>
+          <div className="r1-cols">
+            <div className="r1-col">
+              <div className="r1-collabel">Education</div>
+              <div className="r1-colmain">{education.degree}</div>
+              <div className="r1-colmeta">{education.school}</div>
+              <div className="r1-colmeta">{education.dates}</div>
+            </div>
+            <div className="r1-col">
+              <div className="r1-collabel">Publication</div>
+              <div className="r1-colmain">{publications[0].title}</div>
+              <div className="r1-colmeta">
+                {publications[0].journal}, {publications[0].year}
+              </div>
+            </div>
+            <div className="r1-col">
+              <div className="r1-collabel">Languages</div>
+              <div className="r1-colmain">{person.languages}</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+// ---- R2: THE LEDGER — editorial career cartography -----------------------
+// The twelve years drawn to scale: a vertical time axis in the margin,
+// employment as filled emerald spans, the degree as a hollow one, the
+// content column descending into the past alongside it. Tufte marginalia
+// discipline; the data IS the ornament.
+const monthIndex = (m) => m.y * 12 + m.m;
+
+function ledgerAxisModel(groups) {
+  const now = new Date();
+  const top = monthIndex({ y: now.getFullYear(), m: now.getMonth() + 1 }) + 1;
+  const bottom = monthIndex({ y: 2013, m: 1 });
+  const H = 233; // mm — matches .lg-axis height in the theme
+  const s = H / (top - bottom);
+  const pos = (m) => (top - monthIndex(m)) * s;
+  const bars = groups.map((g) => {
+    const firstJob = jobs[g[0].job];
+    const lastJob = jobs[g[g.length - 1].job];
+    const from = parseMonth(String(lastJob.dates).split('–')[0]);
+    const toRaw = String(firstJob.dates).split('–')[1] ?? '';
+    const ongoing = /present/i.test(toRaw);
+    const to = ongoing ? { y: now.getFullYear(), m: now.getMonth() + 1 } : parseMonth(toRaw);
+    // Boundary convention: the transition month belongs to the NEWER span
+    // (LinkedIn counts it in both; drawn both ways the bars overlap), so a
+    // finished span's top sits one month band below its end month. Ongoing
+    // spans keep their end month — nothing sits above them.
+    const barTop = ongoing ? pos(to) : pos(to) + s;
+    return { label: firstJob.company, top: barTop, height: pos(from) + s - barTop };
+  });
+  // The degree bar spans tick to tick — exactly what "2013 – 2017" prints.
+  const [ey1, ey2] = String(education.dates)
+    .split('–')
+    .map((t) => Number(t.trim()));
+  const edu = { top: pos({ y: ey2, m: 1 }), height: pos({ y: ey1, m: 1 }) - pos({ y: ey2, m: 1 }) };
+  const ticks = [];
+  for (let y = 2013; y <= now.getFullYear(); y++)
+    ticks.push({ label: `’${String(y).slice(2)}`, top: pos({ y, m: 1 }) });
+  return { H, bars, edu, ticks };
+}
+
+function LedgerAxis({ groups, caption }) {
+  const { H, bars, edu, ticks } = ledgerAxisModel(groups);
+  const mm = (v) => `${v.toFixed(2)}mm`;
+  return (
+    <div className="lg-rail">
+      <div className="lg-axis" style={{ height: mm(H) }}>
+        <div className="lg-axisline" />
+        {ticks.map((t) => (
+          <div className="lg-tick" key={t.label} style={{ top: mm(t.top) }}>
+            <span>{t.label}</span>
+          </div>
+        ))}
+        {/* A hair of inset at each end so back-to-back tenures (Remitly ends
+            the month Rylo begins) read as separate spans, not one bar. */}
+        {bars.map((b) => (
+          <div
+            className="lg-bar"
+            key={b.label}
+            style={{ top: mm(b.top + 0.35), height: mm(b.height - 0.7) }}
+          >
+            <span className="lg-barlabel">{b.label}</span>
+          </div>
+        ))}
+        <div
+          className="lg-bar lg-ebar"
+          style={{ top: mm(edu.top + 0.35), height: mm(edu.height - 0.7) }}
+        >
+          <span className="lg-barlabel">{education.degreeShort?.split(',')[0] ?? 'BSc'}</span>
+        </div>
+        <div className="lg-nowdot" />
+      </div>
+      {caption && (
+        <div className="lg-caption">
+          {String(caption)
+            .split('\n')
+            .map((line) => (
+              <div key={line}>{line}</div>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LedgerPage({ variant }) {
+  const groups = groupSections(variant.sections);
+  const contacts = contactList(variant);
+  const [firstName, lastName] = person.name.split(' ');
+  return (
+    <div className="page lg-page">
+      <header className="lg-head">
+        <div className="lg-ident">
+          <h1>
+            <span className="lg-nf">{firstName}</span> <span className="lg-nl">{lastName}</span>
+          </h1>
+          <div className="lg-title">{variant.title ?? person.title}</div>
+        </div>
+        <div className="lg-contacts">
+          {contacts.map((c) => (
+            <div key={c.text}>
+              <Contact item={c} />
+            </div>
+          ))}
+        </div>
+      </header>
+
+      <div className="lg-main">
+        <LedgerAxis groups={groups} caption={variant.axisCaption} />
+        <div className="lg-content">
+          <p className="lg-intro">
+            <NoBreakCompounds text={variant.intro} />
+          </p>
+
+          <section className="lg-xp">
+            <h2 className="lg-h2">{variant.headings.experience}</h2>
+            {groups.map((g) => {
+              const firstJob = jobs[g[0].job];
+              const total = groupDuration(g);
+              return (
+                <article className="lg-entry" key={g[0].job}>
+                  <div className="lg-erow">
+                    <span className="lg-co">{firstJob.company}</span>
+                    {firstJob.blurb && <span className="lg-blurb">{firstJob.blurb}</span>}
+                    <span className="lg-dates">
+                      {shortRange(firstJob.dates)}
+                      {total && <span className="lg-dur"> · {compactDur(total)}</span>}
+                    </span>
+                  </div>
+                  {g.map((s) => {
+                    const job = jobs[s.job];
+                    return (
+                      <div className="lg-roleblock" key={s.job}>
+                        <div className="lg-rolerow">
+                          <span className="lg-role">{job.role}</span>
+                          <span className="lg-loc">{job.location}</span>
+                        </div>
+                        {job.summary && (
+                          <div className="lg-summary">
+                            <NoBreakCompounds text={job.summary} />
+                          </div>
+                        )}
+                        <ul>
+                          {s.bullets.map((id) => (
+                            <li key={id}>
+                              <Rich text={s.overrides?.[id] ?? job.bullets[id]} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </article>
+              );
+            })}
+          </section>
+
+          <section className="lg-edu">
+            <h2 className="lg-h2">{variant.headings.education}</h2>
+            <div className="lg-erow">
+              <span className="lg-co">{education.school}</span>
+              <span className="lg-blurb">{education.degree}</span>
+              <span className="lg-dates">{education.dates}</span>
+            </div>
+            <div className="lg-pub">
+              <span className="lg-pubtitle">{publications[0].title}</span>
+              <span className="lg-pubmeta">
+                {publications[0].journal} · {publications[0].year}
+              </span>
+            </div>
+            <div className="lg-pubauthors">{publications[0].authors}</div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CVPage({ variant, css }) {
   // Prototypes get compound-safe intros; originals keep their exact output.
   const intro = (
@@ -812,6 +1122,8 @@ export function CVPage({ variant, css }) {
   if (variant.layout === 'grid') return shell(<GridPage variant={variant} />);
   if (variant.layout === 'editorial') return shell(<EditorialPage variant={variant} />);
   if (variant.layout === 'hybrid') return shell(<HybridPage variant={variant} />);
+  if (variant.layout === 'poster') return shell(<PosterPage variant={variant} />);
+  if (variant.layout === 'ledger') return shell(<LedgerPage variant={variant} />);
 
   // single / sidebar / reduction all share the flow shell; reduction is a
   // CSS-only restraint pass over the single flow.
