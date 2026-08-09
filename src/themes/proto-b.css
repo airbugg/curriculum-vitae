@@ -170,7 +170,11 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-code2 {
   display: grid;
   grid-template-columns: max-content max-content;
-  column-gap: 16mm;
+  /* Spread the two columns across the full measure instead of hugging
+     the left margin — the right column's closers land near the right
+     edge, so the section occupies the page's width like every other. */
+  justify-content: space-between;
+  padding-right: 6mm;
   font-family: var(--font-data);
   font-size: 6.8pt;
   letter-spacing: -0.2pt;

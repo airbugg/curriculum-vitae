@@ -532,11 +532,8 @@ function GridPage({ variant }) {
             <div>
               {'  '}
               <Ck n="school" />
-              <Cp t={'"'} />
-              <span className="cs">
-                <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
-              </span>
-              <Cp t={'",'} />
+              <Cs>{education.schoolShort ?? education.school}</Cs>
+              <Cp t={','} />
             </div>
             <div>
               {'  '}
@@ -558,7 +555,15 @@ function GridPage({ variant }) {
             <div>
               {'    '}
               <Ck n="title" />
-              <Cs>{publications[0].title.split(':')[0]}</Cs>
+              {/* The title is a live link to the article (DOI) — Chromium
+                  carries the anchor into the PDF as a link annotation. */}
+              {publications[0].url ? (
+                <a href={publications[0].url}>
+                  <Cs>{publications[0].title.split(':')[0]}</Cs>
+                </a>
+              ) : (
+                <Cs>{publications[0].title.split(':')[0]}</Cs>
+              )}
               <Cp t={','} />
             </div>
             <div>
@@ -572,7 +577,6 @@ function GridPage({ variant }) {
               <Ck n="year" />
               <span className="cs">{publications[0].year}</span>
               <Cp t={','} />
-              <Cc t="co-author" />
             </div>
             <div>
               {'  '}
