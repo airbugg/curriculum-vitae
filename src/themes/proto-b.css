@@ -184,9 +184,9 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-cval .cp { color: var(--muted); }
 .g-cval .ck2 { color: var(--muted); }
 .g-cval .cs { color: var(--ink); }
-/* Hanging indent: the education object's continuation line aligns under
-   its first key ("{ " is two mono chars ≈ 3.2mm at 7.6pt). */
-.g-cind { padding-left: 3.2mm; }
+/* Trailing comments: one mono space of air before the slashes, a shade
+   lighter than the scaffolding — an aside, not a member. */
+.g-cval .cc { color: var(--muted); opacity: 0.85; margin-left: 1.6mm; }
 .g-bg .g-secmark { padding-bottom: 0.9mm; margin-bottom: 1.7mm; }
 .g-section.g-bg .g-row { margin-bottom: 1.1mm; }
 /* The BGU mark rides inside a quoted string — smaller than on the 9pt

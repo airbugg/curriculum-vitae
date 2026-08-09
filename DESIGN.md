@@ -811,3 +811,27 @@ Structured sources: person.md gained `langLevels` (english=native, …) and
 the canonical's offHours became an array; the prose `languages` line stays
 for the other layouts. The publication drops to its short title
 ("TissueNet2") in this form — full title still in publications.md.
+
+### §15 addendum · The formatter pass
+
+The first code rendering wrapped the education object mid-property-list
+with a hanging indent — a shape no formatter emits ("the formatting is
+shit - it needs to be beautiful. think of running the formatting through
+a formatter and linter"). The section is now formatter-clean under
+prettier's own conventions:
+
+    school:       "◉ Ben-Gurion University"  // 2013–2017
+    degree:       "BSc, Computer Science & Bioinformatics"
+    publication:  { title: "TissueNet2", journal: "Nucleic Acids Research" }  // 2016, co-author
+    languages:    { english: "native", hebrew: "native", russian: "reads and speaks well" }
+    offHours:     ["k3s home lab", "home automation", "other over-engineering"]
+
+Rules applied: every row is exactly ONE line (the overlong education
+object flattened into school + degree keys, mirroring the jobs' company →
+role order); years and the co-author credit ride as trailing // comments
+(muted at 85% — an aside, not a member), which also brought the co-author
+credit back; arrays hug their brackets, objects keep inner padding —
+both prettier conventions. Line-fit math: at 7.6pt mono with -0.2pt
+tracking the content column holds ~82 chars; the longest line
+(publication, 79) clears it with slack. The .g-cind hanging-indent rule
+is gone.

@@ -517,29 +517,25 @@ function GridPage({ variant }) {
           are objects/arrays in the content column, syntax-colored from the
           page's existing palette only. Three registers per line (emerald
           top-level keys, muted scaffolding, ink facts) — the intra-line
-          contrast that keeps single-line facts from fusing into a slab
-          (the anchor-word-plus-muted-tail pattern every acclaimed LaTeX CV
-          class uses for its fact rows). */}
+          contrast that keeps single-line facts from fusing into a slab.
+          FORMATTER-CLEAN: every row is exactly one line (a wrapped object
+          is what no formatter would emit at this width), so the education
+          object flattens into school + degree keys and the years ride as
+          trailing // comments — the code idiom for dates, which also
+          carries the co-author credit. Arrays hug their brackets, objects
+          keep inner padding: prettier's own conventions. */}
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
-        <CodeRow k="education">
-          <div>
-            <Cp t={'{ '} />
-            <Ck n="degree" />
-            <Cs>{education.degree}</Cs>
-            <Cp t="," />
-          </div>
-          <div className="g-cind">
-            <Ck n="school" />
-            <Cp t={'"'} />
-            <span className="cs">
-              <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
-            </span>
-            <Cp t={'", '} />
-            <Ck n="years" />
-            <span className="cs">{education.dates}</span>
-            <Cp t={' }'} />
-          </div>
+        <CodeRow k="school">
+          <Cp t={'"'} />
+          <span className="cs">
+            <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
+          </span>
+          <Cp t={'"'} />
+          <Cc t={String(education.dates).replace(/\s*–\s*/, '–')} />
+        </CodeRow>
+        <CodeRow k="degree">
+          <Cs>{education.degree}</Cs>
         </CodeRow>
         <CodeRow k="publication">
           <Cp t={'{ '} />
@@ -548,10 +544,8 @@ function GridPage({ variant }) {
           <Cp t=", " />
           <Ck n="journal" />
           <Cs>{publications[0].journal}</Cs>
-          <Cp t=", " />
-          <Ck n="year" />
-          <span className="cs">{publications[0].year}</span>
           <Cp t={' }'} />
+          <Cc t={`${publications[0].year}, co-author`} />
         </CodeRow>
         {variant.languages && person.langLevels && (
           <CodeRow k="languages">
@@ -571,14 +565,14 @@ function GridPage({ variant }) {
         )}
         {variant.offHours && (
           <CodeRow k="offHours">
-            <Cp t={'[ '} />
+            <Cp t={'['} />
             {variant.offHours.map((s, i) => (
               <React.Fragment key={s}>
                 <Cs>{s}</Cs>
                 {i < variant.offHours.length - 1 && <Cp t=", " />}
               </React.Fragment>
             ))}
-            <Cp t={' ]'} />
+            <Cp t={']'} />
           </CodeRow>
         )}
       </section>
@@ -588,8 +582,10 @@ function GridPage({ variant }) {
 
 // The BACKGROUND object's building blocks: Cp = punctuation (muted
 // scaffolding), Ck = a nested key with its colon, Cs = a quoted string
-// whose quotes stay muted so the fact inside stays the anchor.
+// whose quotes stay muted so the fact inside stays the anchor, Cc = a
+// trailing // comment (the code idiom for dates and asides).
 const Cp = ({ t }) => <span className="cp">{t}</span>;
+const Cc = ({ t }) => <span className="cc">{'// ' + t}</span>;
 const Ck = ({ n }) => (
   <>
     <span className="ck2">{n}</span>
