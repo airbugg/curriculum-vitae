@@ -931,3 +931,15 @@ object keys earn their place?
 
 All three keep the live DOI link and full text-layer extraction;
 canonical output verified unchanged (pixel diff empty).
+
+### §17 addendum · The Session, printed properly (owner pick)
+
+The owner picked bg-a and asked for terminal fidelity "in terms of
+prompt, font, etc". Changes: the generic $ became a starship-style
+prompt (› at 115%/bold, the closest glyph Source Code Pro carries to ❯);
+colors now follow zsh-syntax-highlighting truth — prompt emerald, the
+command VERB deep-emerald (valid commands light up green), arguments
+and ALL output in the default-foreground ink; outputs print as plain
+text (no interpunct separators — "Ben-Gurion University, 2013–2017");
+terminal grid discipline: letter-spacing 0, one size for command and
+output (7.2pt/1.4).

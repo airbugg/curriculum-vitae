@@ -343,28 +343,39 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    Palette and faces stay the page's own: emerald/deep-emerald accents,
    Source Sans body, Source Code Pro data. */
 
-/* A — THE SESSION. A two-column terminal transcript: emerald prompt,
-   deep-emerald command (the old keys, now typed), ink output with the
-   scaffolding gone. Same two-column spread as the code block it
-   replaces, so the section still occupies the full measure. */
+/* A — THE SESSION. A two-column terminal transcript, printed the way a
+   terminal actually prints: a starship-style › prompt in emerald, the
+   command VERB in deep emerald (zsh-syntax-highlighting lights valid
+   commands green), arguments and all output in the default-foreground
+   ink. Terminal grid discipline: no letter-spacing tricks, one size for
+   command and output, no typographic separators in the output. */
 .bgx-term {
   display: grid;
   grid-template-columns: max-content max-content;
   justify-content: space-between;
   padding-right: 6mm;
   font-family: var(--font-data);
-  font-size: 7pt;
-  letter-spacing: -0.2pt;
-  line-height: 1.42;
+  font-size: 7.2pt;
+  letter-spacing: 0;
+  line-height: 1.4;
   color: var(--ink);
 }
-.bgx-cmd { color: var(--accent-deep); }
+.bgx-cmd { color: var(--ink); }
 .bgx-cmd a { color: inherit; text-decoration: none; }
-.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1.4mm; }
-.bgx-prompt { color: var(--accent); font-weight: 600; }
+.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1.5mm; }
+/* › stands in for starship's ❯ (absent from Source Code Pro); bold +
+   a small optical raise so it reads as the heavy prompt glyph. */
+.bgx-prompt {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 115%;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.02em);
+}
+.bgx-verb { color: var(--accent-deep); font-weight: 600; }
 .bgx-out { color: var(--ink); }
 .bgx-out a { color: inherit; text-decoration: none; }
-.bgx-a .bgx-dim { color: var(--muted); }
 
 /* B — THE COLOPHON. Keyless ledger: two dated facts with hairline dot
    leaders out to right-aligned mono years (the dates voice), then the

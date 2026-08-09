@@ -1219,17 +1219,22 @@ const bgPubTitle = () => publications[0].title.split(':')[0];
 
 // ---- A: THE SESSION — a terminal transcript ------------------------------
 // The code soul kept, the braces dropped: the object keys become the
-// commands you would actually type ($ cat education, $ locale, $ ls
-// off-hours/), and the facts arrive as clean unquoted output. All the
-// scaffolding that read as mess — braces, quotes, commas — is gone;
-// what is left is a session, which is how this owner actually meets
-// his data. Emerald prompt, deep-emerald commands, ink output.
-function BgTerm({ cmd, children, href }) {
+// commands you would actually type (cat education, locale, ls
+// off-hours/), and the facts arrive as clean unquoted output, exactly
+// as a terminal would print them. Faithfulness rules: a starship-style
+// prompt (the › glyph, the closest Source Code Pro carries to ❯), and
+// zsh-syntax-highlighting colors: prompt emerald, the command VERB
+// deep-emerald (a valid command lights up green), arguments and output
+// in the default foreground ink. No typographic separators in output;
+// terminals print plain text.
+function BgTerm({ verb, args, children, href }) {
+  const argText = args ? ' ' + args : '';
   return (
     <>
       <div className="bgx-cmd">
-        <span className="bgx-prompt">$</span>{' '}
-        {href ? <a href={href}>{cmd}</a> : cmd}
+        <span className="bgx-prompt">{'›'}</span>{' '}
+        <span className="bgx-verb">{verb}</span>
+        {href ? <a href={href}>{argText}</a> : argText}
       </div>
       {children}
     </>
@@ -1244,33 +1249,30 @@ function BgStyleA({ variant }) {
       <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-term">
         <div>
-          <BgTerm cmd="cat education">
+          <BgTerm verb="cat" args="education">
             <div className="bgx-out">{education.degreeShort ?? education.degree}</div>
             <div className="bgx-out">
-              {education.schoolShort ?? education.school}
-              <span className="bgx-dim"> · </span>
-              {bgEduYears()}
+              {education.schoolShort ?? education.school}, {bgEduYears()}
             </div>
           </BgTerm>
-          <BgTerm cmd={`open ${doi}`} href={publications[0].url}>
+          <BgTerm verb="open" args={doi} href={publications[0].url}>
             <div className="bgx-out">
-              <a href={publications[0].url}>{bgPubTitle()}</a>
-              <span className="bgx-dim"> · </span>
-              {publications[0].journal}, {publications[0].year}
+              <a href={publications[0].url}>{bgPubTitle()}</a>, {publications[0].journal}{' '}
+              {publications[0].year}
             </div>
           </BgTerm>
         </div>
         <div>
-          <BgTerm cmd="locale">
+          <BgTerm verb="locale">
             {bgLangPairs().map(([k, v]) => (
               <div className="bgx-out" key={k}>
                 {k}
-                <span className="bgx-dim">=</span>
+                {'='}
                 {v.replace(/ /g, '\u00A0')}
               </div>
             ))}
           </BgTerm>
-          <BgTerm cmd="ls off-hours/">
+          <BgTerm verb="ls" args="off-hours/">
             <div className="bgx-out">
               {(variant.offHours ?? []).map((s, i) => (
                 <React.Fragment key={s}>
