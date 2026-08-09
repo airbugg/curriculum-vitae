@@ -30,7 +30,8 @@ export const variants = [
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
     languages: true,
-    offHours: 'A `k3s` home lab, home automation, and other over-engineering.',
+    // Array form: the BACKGROUND section renders these as a code literal.
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
     headings: { experience: 'Experience', background: 'Background' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },

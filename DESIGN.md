@@ -778,3 +778,36 @@ the other layouts.
 **Fit.** The added air (~3.5mm) was paid by row-mb 2 → 2mm(from 2.15),
 li-mb 0.25mm, ul margin-top 1.15mm, top padding 11.6mm and bottom
 padding 7.8mm — type sizes untouched.
+
+## §15 · { BACKGROUND } as code (owner idea + research round)
+
+The ledger still read as "meh — everything bleeds together" and the owner
+supplied the fix himself: set the section like code, the way his old LaTeX
+CV's skills section read. It closes a loop the design already had open —
+the page opens on { EUGENE : LERMAN } (a key:value pair in braces) and now
+closes on an object literal:
+
+    education:    { degree: "BSc, Computer Science & Bioinformatics",
+                      school: "◉ Ben-Gurion University", years: 2013 – 2017 }
+    publication:  { title: "TissueNet2", journal: "Nucleic Acids Research", year: 2016 }
+    languages:    { english: "native", hebrew: "native", russian: "reads and speaks well" }
+    offHours:     [ "k3s home lab", "home automation", "other over-engineering" ]
+
+A parallel research pass over the acclaimed LaTeX CV classes (awesome-cv,
+moderncv, friggeri, Deedy, AltaCV — sources in git history / PR thread)
+found the same underlying mechanism everywhere: one dark anchor per line
+against a muted tail, differentiation by intra-line contrast rather than
+rules. Syntax coloring delivers exactly that for free, from the page's
+existing palette only: top-level keys in the deep emerald (the chips'
+voice), punctuation and nested keys in the muted gray, facts in ink. The
+rows also stop being metrically identical — object vs array, one line vs
+two, different raggedness — which kills the metronome effect.
+
+Mechanics: everything in the data mono at the dates' 7.6pt, lh 1.5; keys
+in the 40mm data column so the grid holds; the education object wraps with
+a hanging indent (3.2mm = two mono chars, aligning "school:" under
+"degree:"); the BGU disc rides INSIDE the quoted school string at 2.6mm.
+Structured sources: person.md gained `langLevels` (english=native, …) and
+the canonical's offHours became an array; the prose `languages` line stays
+for the other layouts. The publication drops to its short title
+("TissueNet2") in this form — full title still in publications.md.

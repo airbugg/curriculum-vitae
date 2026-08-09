@@ -511,45 +511,113 @@ function GridPage({ variant }) {
         ))}
       </section>
 
-      {/* { BACKGROUND } — education, publication, languages and off-hours
-          folded into ONE dense ledger: each fact is a label/content pair on
-          its own grid row, so a wrapped content line (the paper title) can't
-          shear the label alignment. Replaces the separate Education + Misc
-          sections — one marker instead of two, one line per fact. */}
+      {/* { BACKGROUND } — the section set as CODE. The braces identity
+          comes full circle: the page opens on { EUGENE : LERMAN } and
+          closes on an object literal. Keys sit in the data column, values
+          are objects/arrays in the content column, syntax-colored from the
+          page's existing palette only. Three registers per line (emerald
+          top-level keys, muted scaffolding, ink facts) — the intra-line
+          contrast that keeps single-line facts from fusing into a slab
+          (the anchor-word-plus-muted-tail pattern every acclaimed LaTeX CV
+          class uses for its fact rows). */}
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
-        <BgRow label="Education">
-          {education.degree}, <CompanyName id="bgu" text={education.schoolShort ?? education.school} />{' '}
-          <span className="g-fdata">({education.dates})</span>
-        </BgRow>
-        <BgRow label="Publication">
-          Co-author of “{publications[0].title}”, {publications[0].journal}{' '}
-          <span className="g-fdata">({publications[0].year})</span>
-        </BgRow>
-        {variant.languages && person.languages && (
-          <BgRow label="Languages">{person.languages}</BgRow>
+        <CodeRow k="education">
+          <div>
+            <Cp t={'{ '} />
+            <Ck n="degree" />
+            <Cs>{education.degree}</Cs>
+            <Cp t="," />
+          </div>
+          <div className="g-cind">
+            <Ck n="school" />
+            <Cp t={'"'} />
+            <span className="cs">
+              <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
+            </span>
+            <Cp t={'", '} />
+            <Ck n="years" />
+            <span className="cs">{education.dates}</span>
+            <Cp t={' }'} />
+          </div>
+        </CodeRow>
+        <CodeRow k="publication">
+          <Cp t={'{ '} />
+          <Ck n="title" />
+          <Cs>{publications[0].title.split(':')[0]}</Cs>
+          <Cp t=", " />
+          <Ck n="journal" />
+          <Cs>{publications[0].journal}</Cs>
+          <Cp t=", " />
+          <Ck n="year" />
+          <span className="cs">{publications[0].year}</span>
+          <Cp t={' }'} />
+        </CodeRow>
+        {variant.languages && person.langLevels && (
+          <CodeRow k="languages">
+            <Cp t={'{ '} />
+            {person.langLevels.split(',').map((pair, i, arr) => {
+              const [k, v] = pair.split('=').map((s) => s.trim());
+              return (
+                <React.Fragment key={k}>
+                  <Ck n={k} />
+                  <Cs>{v}</Cs>
+                  {i < arr.length - 1 && <Cp t=", " />}
+                </React.Fragment>
+              );
+            })}
+            <Cp t={' }'} />
+          </CodeRow>
         )}
         {variant.offHours && (
-          <BgRow label="Off hours">
-            <Rich text={variant.offHours} />
-          </BgRow>
+          <CodeRow k="offHours">
+            <Cp t={'[ '} />
+            {variant.offHours.map((s, i) => (
+              <React.Fragment key={s}>
+                <Cs>{s}</Cs>
+                {i < variant.offHours.length - 1 && <Cp t=", " />}
+              </React.Fragment>
+            ))}
+            <Cp t={' ]'} />
+          </CodeRow>
         )}
       </section>
     </div>
   );
 }
 
-// One BACKGROUND ledger row: a micro-caps label in the data column (the
-// same label voice as the entry locations), a single fact line in the
-// content column.
-function BgRow({ label, children }) {
+// The BACKGROUND object's building blocks: Cp = punctuation (muted
+// scaffolding), Ck = a nested key with its colon, Cs = a quoted string
+// whose quotes stay muted so the fact inside stays the anchor.
+const Cp = ({ t }) => <span className="cp">{t}</span>;
+const Ck = ({ n }) => (
+  <>
+    <span className="ck2">{n}</span>
+    <span className="cp">: </span>
+  </>
+);
+const Cs = ({ children }) => (
+  <>
+    <span className="cp">"</span>
+    <span className="cs">{children}</span>
+    <span className="cp">"</span>
+  </>
+);
+
+// One row of the object: the key anchors the data column, the value line
+// (or lines — education wraps with a hanging indent) fills the content
+// column at the same mono size so the two columns share a baseline.
+function CodeRow({ k, children }) {
   return (
-    <div className="g-row g-foot">
+    <div className="g-row g-crow">
       <div className="g-meta">
-        <div className="g-blab">{label}</div>
+        <div className="g-ckey">
+          {k}
+          <span className="cp">:</span>
+        </div>
       </div>
       <div className="g-content">
-        <div className="g-footline">{children}</div>
+        <div className="g-cval">{children}</div>
       </div>
     </div>
   );

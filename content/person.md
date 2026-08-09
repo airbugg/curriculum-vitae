@@ -7,4 +7,5 @@ email: lerman.gene@gmail.com
 github: github.com/airbugg
 linkedin: linkedin.com/in/lerman-gene
 languages: English and Hebrew (native), Russian (reads and speaks well)
+langLevels: english=native, hebrew=native, russian=reads and speaks well
 ---
