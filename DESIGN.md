@@ -835,3 +835,26 @@ both prettier conventions. Line-fit math: at 7.6pt mono with -0.2pt
 tracking the content column holds ~82 chars; the longest line
 (publication, 79) clears it with slack. The .g-cind hanging-indent rule
 is gone.
+
+### §15 addendum 2 · The nested object (owner round)
+
+Owner directives: all objects inline, abbreviations (CS), years inside
+the object, publications as an array of objects nested INSIDE education,
+two-column structure optional. Result — the section is now a full-measure
+code block, no data column:
+
+    education: { school: "◉ Ben-Gurion University", degree: "BSc, CS & Bioinformatics", years: "2013–2017",
+                 publications: [{ title: "TissueNet2", journal: "Nucleic Acids Research", year: 2016 }] }  // co-author
+    languages: { english: "native", hebrew: "native", russian: "reads and speaks well" }
+    offHours:  ["k3s home lab", "home automation", "other over-engineering"]
+
+Mechanics: white-space:pre-wrap + all-mono makes literal-space padding
+exact — the three value columns align (offHours takes one extra pad
+space), and education's single wrap lands on the property boundary before
+`publications:`, continuation aligned under `school:` (clang-format's
+AlignAfterOpenBracket convention, a deliberate break rather than an
+accidental one). Tracking -0.3pt buys the 115-char publications line +
+// co-author comment their fit (≈173mm in the 176mm measure).
+education.md gained degreeShort. The section dropped from ~24mm to
+~18mm; the slack went back into the page's rhythm (padding-bottom
+9.5mm again, row/li gaps restored to their pre-squeeze values).

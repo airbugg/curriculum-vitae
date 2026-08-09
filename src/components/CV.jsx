@@ -526,55 +526,80 @@ function GridPage({ variant }) {
           keep inner padding: prettier's own conventions. */}
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
-        <CodeRow k="school">
-          <Cp t={'"'} />
-          <span className="cs">
-            <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
-          </span>
-          <Cp t={'"'} />
-          <Cc t={String(education.dates).replace(/\s*–\s*/, '–')} />
-        </CodeRow>
-        <CodeRow k="degree">
-          <Cs>{education.degree}</Cs>
-        </CodeRow>
-        <CodeRow k="publication">
-          <Cp t={'{ '} />
-          <Ck n="title" />
-          <Cs>{publications[0].title.split(':')[0]}</Cs>
-          <Cp t=", " />
-          <Ck n="journal" />
-          <Cs>{publications[0].journal}</Cs>
-          <Cp t={' }'} />
-          <Cc t={`${publications[0].year}, co-author`} />
-        </CodeRow>
-        {variant.languages && person.langLevels && (
-          <CodeRow k="languages">
-            <Cp t={'{ '} />
-            {person.langLevels.split(',').map((pair, i, arr) => {
-              const [k, v] = pair.split('=').map((s) => s.trim());
-              return (
-                <React.Fragment key={k}>
-                  <Ck n={k} />
-                  <Cs>{v}</Cs>
-                  {i < arr.length - 1 && <Cp t=", " />}
+        {/* Full-measure code block (the two-column grid is ditched here by
+            owner decree): top-level keys at the margin, padded with literal
+            spaces to a common value column (all mono + white-space:pre-wrap
+            = exact alignment). The education object nests the publications
+            array; its one wrap lands on the property boundary before
+            `publications:`, continuation aligned under `school:` — the
+            clang-format Align convention, not an accidental wrap. */}
+        <div className="g-code">
+          <div className="g-centry">
+            <div>
+              <span className="ck1">education</span>
+              <Cp t={': { '} />
+              <Ck n="school" />
+              <Cp t={'"'} />
+              <span className="cs">
+                <CompanyName id="bgu" text={education.schoolShort ?? education.school} />
+              </span>
+              <Cp t={'", '} />
+              <Ck n="degree" />
+              <Cs>{education.degreeShort ?? education.degree}</Cs>
+              <Cp t={', '} />
+              <Ck n="years" />
+              <Cs>{String(education.dates).replace(/\s*–\s*/, '–')}</Cs>
+              <Cp t={','} />
+            </div>
+            <div>
+              <Cp t={'             '} />
+              <Ck n="publications" />
+              <Cp t={'[{ '} />
+              <Ck n="title" />
+              <Cs>{publications[0].title.split(':')[0]}</Cs>
+              <Cp t={', '} />
+              <Ck n="journal" />
+              <Cs>{publications[0].journal}</Cs>
+              <Cp t={', '} />
+              <Ck n="year" />
+              <span className="cs">{publications[0].year}</span>
+              <Cp t={' }] }'} />
+              <Cc t="co-author" />
+            </div>
+          </div>
+          {variant.languages && person.langLevels && (
+            <div className="g-centry">
+              <span className="ck1">languages</span>
+              <Cp t={': { '} />
+              {person.langLevels.split(',').map((pair, i, arr) => {
+                const [k, v] = pair.split('=').map((s) => s.trim());
+                return (
+                  <React.Fragment key={k}>
+                    <Ck n={k} />
+                    <Cs>{v}</Cs>
+                    {i < arr.length - 1 && <Cp t=", " />}
+                  </React.Fragment>
+                );
+              })}
+              <Cp t={' }'} />
+            </div>
+          )}
+          {variant.offHours && (
+            <div className="g-centry">
+              <span className="ck1">offHours</span>
+              {/* One pad space after the colon: aligns this value column
+                  with the 9-char keys above (offHours is 8). */}
+              <Cp t={':  ['} />
+              {variant.offHours.map((s, i) => (
+                <React.Fragment key={s}>
+                  <Cs>{s}</Cs>
+                  {i < variant.offHours.length - 1 && <Cp t=", " />}
                 </React.Fragment>
-              );
-            })}
-            <Cp t={' }'} />
-          </CodeRow>
-        )}
-        {variant.offHours && (
-          <CodeRow k="offHours">
-            <Cp t={'['} />
-            {variant.offHours.map((s, i) => (
-              <React.Fragment key={s}>
-                <Cs>{s}</Cs>
-                {i < variant.offHours.length - 1 && <Cp t=", " />}
-              </React.Fragment>
-            ))}
-            <Cp t={']'} />
-          </CodeRow>
-        )}
+              ))}
+              <Cp t={']'} />
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
@@ -583,9 +608,10 @@ function GridPage({ variant }) {
 // The BACKGROUND object's building blocks: Cp = punctuation (muted
 // scaffolding), Ck = a nested key with its colon, Cs = a quoted string
 // whose quotes stay muted so the fact inside stays the anchor, Cc = a
-// trailing // comment (the code idiom for dates and asides).
+// trailing // comment (the code idiom for asides; two literal spaces of
+// air survive the block's white-space: pre-wrap).
 const Cp = ({ t }) => <span className="cp">{t}</span>;
-const Cc = ({ t }) => <span className="cc">{'// ' + t}</span>;
+const Cc = ({ t }) => <span className="cc">{'  // ' + t}</span>;
 const Ck = ({ n }) => (
   <>
     <span className="ck2">{n}</span>
@@ -599,25 +625,6 @@ const Cs = ({ children }) => (
     <span className="cp">"</span>
   </>
 );
-
-// One row of the object: the key anchors the data column, the value line
-// (or lines — education wraps with a hanging indent) fills the content
-// column at the same mono size so the two columns share a baseline.
-function CodeRow({ k, children }) {
-  return (
-    <div className="g-row g-crow">
-      <div className="g-meta">
-        <div className="g-ckey">
-          {k}
-          <span className="cp">:</span>
-        </div>
-      </div>
-      <div className="g-content">
-        <div className="g-cval">{children}</div>
-      </div>
-    </div>
-  );
-}
 
 // Education + publication on the same data/content grid module — shared by
 // the pure grid (B) and the grid × editorial hybrid (D).
