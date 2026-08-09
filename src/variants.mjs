@@ -253,4 +253,80 @@ export const variants = [
     ],
     skills: null,
   },
+
+  // ------------------------------------------------------------------------
+  // { BACKGROUND } EXPERIMENTS — three reinterpretations of the canonical
+  // variant's final section (design study, 2026-08). Each entry is the
+  // flagship verbatim plus a bgStyle discriminator; only the BACKGROUND
+  // section differs. Three answers to "do we need the object keys?":
+  //   a — keys become the commands of a terminal session (code soul kept);
+  //   b — keys dropped entirely, a keyless typographic ledger;
+  //   c — keys kept but re-set as the grid's own meta-column labels.
+  // ------------------------------------------------------------------------
+
+  {
+    file: 'eugene-lerman-bg-a',
+    label: 'BG Study A · The Session (terminal transcript)',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
+    bgStyle: 'a',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  {
+    file: 'eugene-lerman-bg-b',
+    label: 'BG Study B · The Colophon (keyless ledger)',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
+    bgStyle: 'b',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  {
+    file: 'eugene-lerman-bg-c',
+    label: 'BG Study C · The Manifest (keys join the grid)',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
+    bgStyle: 'c',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
 ];

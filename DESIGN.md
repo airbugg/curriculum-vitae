@@ -909,3 +909,25 @@ Columns balance at 10/11 lines. The block dropped to 6.8pt/1.28 (a
 colophon, not body matter) and the page absorbed the remaining ~9mm via
 a shave package: body leading 1.26 → 1.24, section/marker/intro/header
 micro-gaps, and padding 10.8/7.2mm. Bottom ink now ends at 286.8mm.
+
+## §17 · Three BACKGROUND studies (alongside the canonical)
+
+Owner brief: reimagine the BACKGROUND section three ways, wild but
+verified, as variants ALONGSIDE the canonical (`bg-a/b/c` — identical
+page, only the section differs), probing his open question: do the
+object keys earn their place?
+
+- **A · The Session** — a two-column terminal transcript: keys become
+  commands ($ cat education, $ open <doi>, $ locale, $ ls off-hours/),
+  facts arrive as clean unquoted output. All the code soul, none of the
+  brace/quote/comma scaffolding.
+- **B · The Colophon** — the keyless answer: dated facts as ledger lines
+  with hairline dot leaders to right-aligned mono years; undated facts
+  in a quieter register, left to explain themselves.
+- **C · The Manifest** — keys survive as the page's own micro-caps
+  meta-column labels with years beneath in the dates voice; facts as
+  single content lines. BACKGROUND finally speaks the same 40mm-grid
+  dialect as EXPERIENCE.
+
+All three keep the live DOI link and full text-layer extraction;
+canonical output verified unchanged (pixel diff empty).

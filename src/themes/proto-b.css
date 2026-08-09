@@ -335,3 +335,93 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    PDF text layer for search/parsers without occupying layout space. */
 .g-alt { position: absolute; color: #fff; font-size: 4pt; }
 .g-wordmark svg, .g-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }
+
+/* ---- BACKGROUND experiments (bg-a/b/c) ----
+   Three reinterpretations of the canonical code block, selected by the
+   variant's bgStyle. All classes carry the bgx- prefix; nothing here
+   touches the canonical .g-code2 path or the shared .g-dense variables.
+   Palette and faces stay the page's own: emerald/deep-emerald accents,
+   Source Sans body, Source Code Pro data. */
+
+/* A — THE SESSION. A two-column terminal transcript: emerald prompt,
+   deep-emerald command (the old keys, now typed), ink output with the
+   scaffolding gone. Same two-column spread as the code block it
+   replaces, so the section still occupies the full measure. */
+.bgx-term {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  padding-right: 6mm;
+  font-family: var(--font-data);
+  font-size: 7pt;
+  letter-spacing: -0.2pt;
+  line-height: 1.42;
+  color: var(--ink);
+}
+.bgx-cmd { color: var(--accent-deep); }
+.bgx-cmd a { color: inherit; text-decoration: none; }
+.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1.4mm; }
+.bgx-prompt { color: var(--accent); font-weight: 600; }
+.bgx-out { color: var(--ink); }
+.bgx-out a { color: inherit; text-decoration: none; }
+.bgx-a .bgx-dim { color: var(--muted); }
+
+/* B — THE COLOPHON. Keyless ledger: two dated facts with hairline dot
+   leaders out to right-aligned mono years (the dates voice), then the
+   two undated facts in a quieter register, left to explain themselves. */
+.bgx-ledger { max-width: 174mm; }
+.bgx-lrow { display: flex; align-items: baseline; margin-bottom: 1.7mm; }
+.bgx-fact { font-size: 8.6pt; color: var(--ink); white-space: nowrap; }
+.bgx-fact .bgx-strong, .bgx-cval .bgx-strong { font-weight: 600; color: var(--ink-strong); }
+.bgx-fact a, .bgx-cval a { color: inherit; text-decoration: none; }
+.bgx-dim { color: var(--muted); }
+.bgx-lead {
+  flex: 1;
+  margin: 0 2.2mm;
+  border-bottom: 0.5pt dotted var(--rule);
+  transform: translateY(-0.55mm);
+}
+.bgx-yr {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.bgx-quiet { font-size: 8.2pt; color: var(--ink); margin-top: 1.1mm; }
+/* The undated pair sits a half-step off the dated ledger above it. */
+.bgx-lrow + .bgx-quiet { margin-top: 2.1mm; }
+.bgx-sep { margin: 0 1.6mm; color: var(--accent); }
+.bgx-lang { color: var(--ink); }
+.bgx-level { color: var(--muted); }
+/* Off-hours items whisper the data voice without becoming code again. */
+.bgx-off { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; color: var(--ink); }
+
+/* C — THE MANIFEST. The keys survive as the page's own meta-column
+   labels (the g-loc micro-caps voice) with the year beneath in the
+   mono dates voice — BACKGROUND finally set on the exact grid module
+   EXPERIENCE uses. Facts run as single content lines. */
+.bgx-crow {
+  display: grid;
+  grid-template-columns: 40mm 1fr;
+  column-gap: 9mm;
+  align-items: baseline;
+  margin-bottom: 1.9mm;
+}
+.bgx-crow:last-child { margin-bottom: 0; }
+.bgx-cmeta { display: flex; align-items: baseline; }
+.bgx-key {
+  font-size: 6.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.7pt;
+  color: var(--muted);
+}
+.bgx-cyr {
+  margin-left: auto;
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+}
+.bgx-cval { font-size: 8.6pt; color: var(--ink); line-height: 1.3; }
+.bgx-c .bgx-off { color: var(--accent-deep); }

@@ -511,16 +511,35 @@ function GridPage({ variant }) {
         ))}
       </section>
 
-      {/* { BACKGROUND } — the section set as CODE, properly formatted:
-          every object fully exploded prettier-style (one property per
-          line, two-space indents, trailing commas), because a mid-list
-          wrap is what no formatter emits. The vertical cost is paid
-          horizontally, per owner suggestion: two side-by-side columns —
-          education (with its nested publications array) on the left,
-          languages + offHours stacked on the right — balanced at ~10
-          lines each. The co-author credit rides the year line as a
-          trailing comment. Syntax colors from the page palette only:
-          emerald top-level keys, muted scaffolding, ink facts. */}
+      {/* { BACKGROUND } — canonical: the prettier-formatted code block
+          (BgCode, extracted verbatim below). The bgStyle discriminator
+          selects one of three experimental reinterpretations; undefined
+          keeps the canonical output byte-identical. */}
+      {variant.bgStyle === 'a' ? (
+        <BgStyleA variant={variant} />
+      ) : variant.bgStyle === 'b' ? (
+        <BgStyleB variant={variant} />
+      ) : variant.bgStyle === 'c' ? (
+        <BgStyleC variant={variant} />
+      ) : (
+        <BgCode variant={variant} />
+      )}
+    </div>
+  );
+}
+
+// { BACKGROUND } — the section set as CODE, properly formatted:
+// every object fully exploded prettier-style (one property per
+// line, two-space indents, trailing commas), because a mid-list
+// wrap is what no formatter emits. The vertical cost is paid
+// horizontally, per owner suggestion: two side-by-side columns —
+// education (with its nested publications array) on the left,
+// languages + offHours stacked on the right — balanced at ~10
+// lines each. The co-author credit rides the year line as a
+// trailing comment. Syntax colors from the page palette only:
+// emerald top-level keys, muted scaffolding, ink facts.
+function BgCode({ variant }) {
+  return (
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
         <div className="g-code2">
@@ -630,7 +649,6 @@ function GridPage({ variant }) {
           </div>
         </div>
       </section>
-    </div>
   );
 }
 
@@ -1181,5 +1199,202 @@ export function CVPage({ variant, css }) {
         </>
       )}
     </div>,
+  );
+}
+
+// =========================================================================
+// { BACKGROUND } EXPERIMENTS — three reinterpretations of the canonical
+// code block (bgStyle 'a' | 'b' | 'c' on the grid layout). Same facts,
+// same atoms, three answers to "do we need the object keys?".
+// =========================================================================
+
+// Shared: langLevels ("english=native, hebrew=native, …") → [[name, level]].
+function bgLangPairs() {
+  return String(person.langLevels)
+    .split(',')
+    .map((pair) => pair.split('=').map((s) => s.trim()));
+}
+const bgEduYears = () => String(education.dates).replace(/\s*–\s*/, '–');
+const bgPubTitle = () => publications[0].title.split(':')[0];
+
+// ---- A: THE SESSION — a terminal transcript ------------------------------
+// The code soul kept, the braces dropped: the object keys become the
+// commands you would actually type ($ cat education, $ locale, $ ls
+// off-hours/), and the facts arrive as clean unquoted output. All the
+// scaffolding that read as mess — braces, quotes, commas — is gone;
+// what is left is a session, which is how this owner actually meets
+// his data. Emerald prompt, deep-emerald commands, ink output.
+function BgTerm({ cmd, children, href }) {
+  return (
+    <>
+      <div className="bgx-cmd">
+        <span className="bgx-prompt">$</span>{' '}
+        {href ? <a href={href}>{cmd}</a> : cmd}
+      </div>
+      {children}
+    </>
+  );
+}
+
+function BgStyleA({ variant }) {
+  const doi = String(publications[0].url).replace(/^https?:\/\//, '');
+  const slug = (s) => String(s).replace(/ /g, '-');
+  return (
+    <section className="g-section g-bg bgx-a">
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <div className="bgx-term">
+        <div>
+          <BgTerm cmd="cat education">
+            <div className="bgx-out">{education.degreeShort ?? education.degree}</div>
+            <div className="bgx-out">
+              {education.schoolShort ?? education.school}
+              <span className="bgx-dim"> · </span>
+              {bgEduYears()}
+            </div>
+          </BgTerm>
+          <BgTerm cmd={`open ${doi}`} href={publications[0].url}>
+            <div className="bgx-out">
+              <a href={publications[0].url}>{bgPubTitle()}</a>
+              <span className="bgx-dim"> · </span>
+              {publications[0].journal}, {publications[0].year}
+            </div>
+          </BgTerm>
+        </div>
+        <div>
+          <BgTerm cmd="locale">
+            {bgLangPairs().map(([k, v]) => (
+              <div className="bgx-out" key={k}>
+                {k}
+                <span className="bgx-dim">=</span>
+                {v.replace(/ /g, '\u00A0')}
+              </div>
+            ))}
+          </BgTerm>
+          <BgTerm cmd="ls off-hours/">
+            <div className="bgx-out">
+              {(variant.offHours ?? []).map((s, i) => (
+                <React.Fragment key={s}>
+                  {/* ls's two-space column gap; NBSPs so HTML keeps both. */}
+                  {i > 0 && '\u00A0\u00A0'}
+                  {slug(s)}
+                </React.Fragment>
+              ))}
+            </div>
+          </BgTerm>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---- B: THE COLOPHON — a keyless ledger ----------------------------------
+// The owner's open question answered with a hard yes: no keys at all.
+// The two dated facts run as ledger lines — fact, hairline dot leader,
+// mono year on the right margin (the dates voice the grid already
+// speaks). The two undated facts follow in a quieter register and are
+// left to explain themselves; "other over-engineering" was always
+// going to. Pure typography, no code, nothing to parse.
+function BgLedgerRow({ children, year }) {
+  return (
+    <div className="bgx-lrow">
+      <span className="bgx-fact">{children}</span>
+      <span className="bgx-lead" />
+      <span className="bgx-yr">{year}</span>
+    </div>
+  );
+}
+
+function BgStyleB({ variant }) {
+  return (
+    <section className="g-section g-bg bgx-b">
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <div className="bgx-ledger">
+        <BgLedgerRow year={education.dates}>
+          <span className="bgx-strong">{education.degree}</span>
+          <span className="bgx-dim"> · </span>
+          {education.schoolShort ?? education.school}
+        </BgLedgerRow>
+        <BgLedgerRow year={publications[0].year}>
+          <a href={publications[0].url} className="bgx-strong">
+            {bgPubTitle()}
+          </a>
+          <span className="bgx-dim"> · </span>
+          {publications[0].journal}
+        </BgLedgerRow>
+        <div className="bgx-quiet">
+          {bgLangPairs().map(([k, v], i) => (
+            <React.Fragment key={k}>
+              {i > 0 && <span className="bgx-sep">·</span>}
+              <span className="bgx-lang">{k[0].toUpperCase() + k.slice(1)}</span>{' '}
+              <span className="bgx-level">{v.replace(/ /g, '\u00A0')}</span>
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="bgx-quiet">
+          {(variant.offHours ?? []).map((s, i) => (
+            <React.Fragment key={s}>
+              {i > 0 && <span className="bgx-sep">·</span>}
+              <span className="bgx-off">{s.replace(/ /g, '\u00A0')}</span>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---- C: THE MANIFEST — the keys join the grid ----------------------------
+// The keys stay, but stop pretending to be syntax: they are set as the
+// meta-column labels the rest of the page already uses (micro-caps in
+// the data ink), with the year beneath them in the mono dates voice —
+// so BACKGROUND finally speaks the exact dialect of EXPERIENCE. Facts
+// run as content lines; off-hours items keep one whisper of the code
+// soul as boxless deep-emerald mono chips.
+function BgManifestRow({ label, year, children }) {
+  return (
+    <div className="bgx-crow">
+      <div className="bgx-cmeta">
+        <div className="bgx-key">{label}</div>
+        {year && <div className="bgx-cyr">{year}</div>}
+      </div>
+      <div className="bgx-cval">{children}</div>
+    </div>
+  );
+}
+
+function BgStyleC({ variant }) {
+  return (
+    <section className="g-section g-bg bgx-c">
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <BgManifestRow label="Education" year={bgEduYears()}>
+        <span className="bgx-strong">{education.degree}</span>
+        <span className="bgx-dim"> · </span>
+        {education.school}
+      </BgManifestRow>
+      <BgManifestRow label="Publication" year={publications[0].year}>
+        <a href={publications[0].url} className="bgx-strong">
+          {bgPubTitle()}
+        </a>
+        <span className="bgx-dim"> · </span>
+        {publications[0].journal}
+      </BgManifestRow>
+      <BgManifestRow label="Languages">
+        {bgLangPairs().map(([k, v], i) => (
+          <React.Fragment key={k}>
+            {i > 0 && <span className="bgx-sep">·</span>}
+            <span className="bgx-lang">{k[0].toUpperCase() + k.slice(1)}</span>{' '}
+            <span className="bgx-level">{v.replace(/ /g, '\u00A0')}</span>
+          </React.Fragment>
+        ))}
+      </BgManifestRow>
+      <BgManifestRow label="Off hours">
+        {(variant.offHours ?? []).map((s, i) => (
+          <React.Fragment key={s}>
+            {i > 0 && <span className="bgx-sep">·</span>}
+            <span className="bgx-off">{s.replace(/ /g, '\u00A0')}</span>
+          </React.Fragment>
+        ))}
+      </BgManifestRow>
+    </section>
   );
 }
