@@ -161,16 +161,31 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
 
 /* The BACKGROUND ledger: education, publication, languages, off-hours as
-   label/content pairs. Labels and content share size and leading; each pair
-   is its own tight grid row so a wrapped fact line (the paper title) keeps
-   its label aligned. */
-.g-footline { font-size: 8.4pt; color: var(--ink); line-height: 1.38; }
-.g-foot .g-co { font-size: 8.4pt; line-height: 1.38; }
-.g-foot .g-meta { line-height: 1.38; }
-/* The ledger is a footer whisper, not a peer of Experience: its marker
-   loses a bit of air and its rows run nearly solid. */
-.g-bg .g-secmark { padding-bottom: 0.9mm; margin-bottom: 1.5mm; }
-.g-section.g-bg .g-row { margin-bottom: 0.6mm; }
+   label/content pairs, each pair its own grid row so a wrapped fact line
+   (the paper title) keeps its label aligned. Labels wear the same
+   micro-caps voice as the locations above — quiet metadata, not bold
+   pseudo-companies — and years ride in the mono data voice, parenthesized
+   like the durations. Separators are commas, not interpuncts. */
+.g-footline { font-size: 8.4pt; color: var(--ink); line-height: 1.35; }
+.g-blab {
+  font-size: 6.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.7pt;
+  color: var(--muted);
+  /* Sit the smaller caps on the 8.4pt content line's baseline. */
+  line-height: 11.3pt;
+}
+.g-fdata {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  color: var(--muted);
+  letter-spacing: -0.2pt;
+}
+/* The ledger is a footer whisper, but not a cramped one: the marker keeps
+   a little air and the rows get real gaps (the old 0.6mm read as a table
+   crammed against the section above). */
+.g-bg .g-secmark { padding-bottom: 0.9mm; margin-bottom: 2mm; }
+.g-section.g-bg .g-row { margin-bottom: 1.2mm; }
 /* The BGU mark rides inside an 8.4pt fact line — smaller than on the 9pt
    company lines, same optical role. */
 .g-footline .g-logo svg { height: 2.9mm; vertical-align: -0.5mm; margin-right: 0.9mm; }
@@ -182,12 +197,24 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
    lone dates block reads bound to the company above rather than floating. */
 .g-section .g-row.g-cont { margin-top: -1.6mm; }
 
+/* The meta column reads as TWO clusters (Gestalt proximity): an identity
+   cluster (bold name + italic blurb — the prose voice, same as the
+   summaries) and a data cluster (micro-caps location + mono dates), with
+   air between them. Before this, blurb/location/dates ran as one muted
+   stack and the location read as blurb continuation. */
 .g-meta { line-height: 1.3; }
 .g-co { font-weight: 700; font-size: 9pt; color: var(--ink-strong); }
-/* Company blurb lives WITH the company in the data column (Gestalt
-   proximity): small, muted, directly beneath the name it describes. */
-.g-mblurb { font-size: 7.4pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.35; }
-.g-loc { font-size: 8pt; color: var(--muted); margin-top: 0.6mm; }
+.g-mblurb { font-size: 7.4pt; font-style: italic; color: var(--muted); margin-top: 0.5mm; line-height: 1.35; }
+/* Geography in the label voice: letterspaced micro caps (caps at small
+   sizes need the extra 5–12% tracking — Butterick). Shared with the
+   BACKGROUND ledger labels so the page has ONE label style. */
+.g-loc {
+  font-size: 6.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.7pt;
+  color: var(--muted);
+  margin-top: 1.2mm;
+}
 .g-dates {
   display: block;
   font-family: var(--font-data);
@@ -249,12 +276,12 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   --gp-intro-mt: 2.8mm;
   --gp-section-mt: 3.6mm;
   --gp-secmark-mb: 2.4mm;
-  --gp-row-mb: 2.15mm;
-  --gp-li-mb: 0.3mm;
+  --gp-row-mb: 2mm;
+  --gp-li-mb: 0.25mm;
   --gp-lh: 1.26;
 }
-.g-dense .grid-page { padding-top: 12mm; padding-bottom: 8.5mm; }
-.g-dense .g-content ul { margin-top: 1.3mm; }
+.g-dense .grid-page { padding-top: 11.6mm; padding-bottom: 7.8mm; }
+.g-dense .g-content ul { margin-top: 1.15mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 
 /* Middle density: the full-stack cut carries ~11mm more than the canonical

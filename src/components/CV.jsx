@@ -519,14 +519,12 @@ function GridPage({ variant }) {
       <section className="g-section g-bg">
         <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
         <BgRow label="Education">
-          {education.degree} · <CompanyName id="bgu" text={education.school} /> ·{' '}
-          {education.dates}
+          {education.degree}, <CompanyName id="bgu" text={education.schoolShort ?? education.school} />{' '}
+          <span className="g-fdata">({education.dates})</span>
         </BgRow>
         <BgRow label="Publication">
-          {/* The separator binds to the journal (nbsp) so a wrap carries it
-              to the next line instead of dangling it after the title. */}
-          Co-author of “{publications[0].title}” {'· '}
-          {publications[0].journal} ({publications[0].year})
+          Co-author of “{publications[0].title}”, {publications[0].journal}{' '}
+          <span className="g-fdata">({publications[0].year})</span>
         </BgRow>
         {variant.languages && person.languages && (
           <BgRow label="Languages">{person.languages}</BgRow>
@@ -541,13 +539,14 @@ function GridPage({ variant }) {
   );
 }
 
-// One BACKGROUND ledger row: mono-quiet label in the data column, a single
-// dense fact line in the content column.
+// One BACKGROUND ledger row: a micro-caps label in the data column (the
+// same label voice as the entry locations), a single fact line in the
+// content column.
 function BgRow({ label, children }) {
   return (
     <div className="g-row g-foot">
       <div className="g-meta">
-        <div className="g-co">{label}</div>
+        <div className="g-blab">{label}</div>
       </div>
       <div className="g-content">
         <div className="g-footline">{children}</div>

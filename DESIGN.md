@@ -744,3 +744,37 @@ engine on MMKV" — the MMKV engine is a new fact from this round.
 "Distribution.", xstate "app release.", semanticKeys "week."), row-mb
 2.3 → 2.15mm, and bottom padding 9.5 → 8.5mm. The g-mid density tier is
 now unused but stays documented; `.g-etc` CSS was replaced by `.g-bg`.
+
+## §14 · Meta-column voices and the ledger un-crowded (owner round)
+
+Three complaints: the BACKGROUND section read crowded and off-system, the
+location looked like blurb continuation (dates almost as bad), and the
+page leaned on "·" too hard.
+
+**Two clusters in the meta column.** The fix follows Gestalt proximity and
+channel differentiation, not more separators: the column now reads as an
+identity cluster (bold company + blurb set ITALIC — the same prose voice
+as the summaries) and a data cluster (location + dates) with 1.2mm of air
+between them. The location moved to a letterspaced micro-caps voice
+(6.8pt, 0.7pt tracking — caps at small sizes need the extra 5–12%,
+per Butterick), so geography stops masquerading as prose.
+
+**One label style for the whole page.** The ledger's bold pseudo-company
+labels were the "doesn't match the flow" culprit — almost-but-not-quite
+the company treatment. They now wear exactly the location's micro-caps
+style, so the page has ONE metadata-label voice. Ledger rows went from
+0.6mm gaps (table-crammed) to 1.2mm, the marker gained air, content
+leading eased to 1.35, and the label line-height (11.3pt) sits the smaller
+caps on the 8.4pt content baseline.
+
+**Interpunct diet.** The ledger's four middots became commas; years moved
+into parenthesized mono spans (`.g-fdata`), rhyming with the durations'
+new parentheses. Languages in person.md switched to a comma. The only
+remaining middots are the header contact separators, where they do real
+work. The ledger's education line uses `schoolShort` ("Ben-Gurion
+University") to hold one line; the full name stays in education.md for
+the other layouts.
+
+**Fit.** The added air (~3.5mm) was paid by row-mb 2 → 2mm(from 2.15),
+li-mb 0.25mm, ul margin-top 1.15mm, top padding 11.6mm and bottom
+padding 7.8mm — type sizes untouched.
