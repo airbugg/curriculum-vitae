@@ -993,3 +993,18 @@ the direction of a real terminal's calm:
 - Clinical cut: 7 bullets (rylo rewrite+platform, remitly
   lead+semanticKeys, rewire reactNative, wix forms+auth) instead of the
   canonical 11 — terminals print terse output. Blurb merge reverted.
+
+### §18 addendum 2 · Structured by the research
+
+Second density verdict led to a structural pass driven by the two
+research rounds on file:
+- Job headers now follow the anchor-plus-right-axis pattern (the
+  CV-typography research's top two mechanisms, and ls -l discipline in
+  terminal terms): bold role flush left, mono dates + location flush
+  right on one shared axis down the session.
+- Summary lines removed — 8 lines of muted prose mass between anchors
+  that the 7.4-second scan never reads; bullets carry the evidence.
+- The Shell's README is capability-first (2026 scan research): twelve
+  years + range + the agents clause, three lines; the curious-reader
+  line remains the flagship's opener.
+- Air: 7.6pt/1.55, 4.6mm block gaps.

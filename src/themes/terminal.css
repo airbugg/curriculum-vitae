@@ -97,14 +97,14 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 
 /* ---- the session ---- */
 .t-session {
-  padding: 4.6mm 5.5mm 5mm;
+  padding: 5mm 5.5mm 5mm;
   flex: 1;
-  font-size: 7.4pt;
-  line-height: 1.5;
+  font-size: 7.6pt;
+  line-height: 1.55;
   letter-spacing: 0;
   white-space: pre-wrap;
 }
-.t-block { margin-bottom: 3.8mm; }
+.t-block { margin-bottom: 4.6mm; }
 .t-block:last-child { margin-bottom: 0; }
 
 .t-cmd { color: var(--ink); }
@@ -126,8 +126,16 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 /* glow-rendered markdown: the header line bold, the summary muted, the
    bullets with emerald • markers, backtick spans in the chip emerald —
    colors a terminal markdown renderer genuinely produces. */
+/* The job header row: the bold role anchors left, the mono meta sits
+   flush right — one shared axis down the whole session. */
+.t-jobhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: none;
+}
 .t-role { font-weight: 700; color: var(--ink-strong); }
-.t-jobmeta { color: var(--muted); }
+.t-jobmeta { color: var(--muted); font-size: 93%; }
 .t-summary { color: var(--muted); }
 .t-bullets { margin: 0.6mm 0 0; padding-left: 3.4mm; list-style: none; max-width: 156mm; }
 .t-bullets li { margin-bottom: 1mm; }

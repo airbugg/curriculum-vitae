@@ -1175,23 +1175,23 @@ function TermJob({ section }) {
   const dur = compactDur(duration(job.dates));
   return (
     <TCmd verb="glow" args={`experience/${tJobSlug(section)}`}>
-      <div className="t-out">
+      {/* The role is the line's one anchor (bold, left); dates and
+          location sit flush right on a shared axis down the page — the
+          ls -l column discipline, and the second alignment axis the
+          CV-typography research ranks just under anchor-plus-muted-tail.
+          No summary lines here: prose mass between anchors is what read
+          as dense, and the bullets carry the evidence. */}
+      <div className="t-out t-jobhead">
         <span className="t-role">
           {job.role} @ {job.company.split('.')[0]}
         </span>
         <span className="t-jobmeta">
-          {'  '}
           {shortRange(job.dates)}
           {dur ? ` (${dur})` : ''}
           {'  '}
           {job.location.toLowerCase()}
         </span>
       </div>
-      {job.summary && (
-        <div className="t-out t-summary">
-          <NoBreakCompounds text={job.summary} />
-        </div>
-      )}
       <ul className="t-bullets">
         {section.bullets.map((id) => (
           <li key={id}>

@@ -133,8 +133,10 @@ export const variants = [
     theme: 'terminal',
     layout: 'terminal',
     nameStyle: 'plain',
+    // Capability-first README (the 7-second-scan finding): level and
+    // range up top; the curious-reader line stays on the flagship.
     intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+      'Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
     languages: true,
     offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
     headings: { experience: 'Experience', background: 'Background' },
