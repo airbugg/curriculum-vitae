@@ -72,6 +72,48 @@ export const variants = [
     skills: null,
   },
 
+  // Third of the comparison set: the bg-c Manifest background (micro-caps
+  // labels in the grid dialect) with a STACK row replacing off-hours and
+  // the meta chips, plus command-style section markers.
+  {
+    file: 'eugene-lerman-manifest',
+    label: 'The Flagship · Manifest background + command markers',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    // The Manifest background is 4 rows shorter than the Session block,
+    // so this cut runs the looser g-mid tier (with tightened page pads)
+    // — the page fills instead of ending in a void.
+    bodyClass: 'g-mid g-tpad',
+    bgStyle: 'c',
+    cmdMarkers: true,
+    // 8 chips: the one-line budget of the content column (measured at
+    // 150dpi; the interpunct separators make no break opportunities, so
+    // the row must genuinely fit).
+    backgroundStack: [
+      'TypeScript',
+      'React Native',
+      'Swift',
+      'Kotlin',
+      'XState',
+      'Apollo GraphQL',
+      'MMKV',
+      'i18next',
+    ],
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'cat experience.md', background: 'cat background.yml' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
   {
     file: 'eugene-lerman-platform',
     label: 'The Platform Engineer',

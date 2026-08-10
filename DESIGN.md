@@ -1083,3 +1083,20 @@ Fit: chips tightened to 6.8pt/1.38 (the Wix row went meta-bound at the
 first size), the Session block to 6.9pt/1.28, page pads 10.5/6.6. A
 dropped `white-space: pre-wrap` on .bgx-term (lost in a block rewrite)
 cost the JSON its indentation for one build — caught on the visual pass.
+
+### §19 addendum · The Manifest flagship (third of the set)
+
+Owner-directed third comparison variant (`eugene-lerman-manifest`):
+- bg-c Manifest background with a STACK row replacing off-hours — 8
+  emerald-mono chips, trimmed twice against the measure (the interpunct
+  separators create no break opportunities, so the row must genuinely
+  fit; final row ends flush at the content edge). The meta-column chips
+  are off here — the stack lives in one row instead.
+- Command markers: { cat experience.md } and { cat background.yml } —
+  the identity braces kept, the heading inside becomes a lowercase mono
+  command, verb in the zsh green, path in the marker accent.
+- Fit: the Manifest background is 4 rows shorter than the Session
+  block, so this cut runs g-mid + a g-tpad modifier tier (rhythm and
+  pads between the two density tiers) — landed after several
+  fragmentation knife-edges (the STACK row jumps whole under
+  break-inside: avoid).

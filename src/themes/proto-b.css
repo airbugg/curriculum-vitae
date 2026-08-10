@@ -475,3 +475,29 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-shyear { color: var(--muted); font-size: 93%; }
 .g-shrow { display: flex; justify-content: space-between; align-items: baseline; }
 .g-shbg a { color: inherit; text-decoration: none; }
+
+/* Command markers ({ cat experience.md }): lowercase mono command inside
+   the identity braces — no caps, no tracking (commands are not display
+   type), verb in the zsh valid-command green, path in the marker's
+   accent. */
+.g-seccmd .g-scw {
+  font-family: var(--font-data);
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 8.2pt;
+  color: var(--accent);
+  margin: 0 0.42em;
+}
+.g-seccmd .g-scv { color: var(--accent-deep); font-weight: 600; }
+
+/* g-mid with tightened page pads and a notch off the rhythm: the
+   Manifest cut sits between tiers — pure g-mid overflows ~10mm. */
+.g-tpad {
+  --gp-row-mb: 2.7mm;
+  --gp-li-mb: 0.45mm;
+  --gp-section-mt: 4.2mm;
+  --gp-intro-mt: 3.4mm;
+  --gp-lh: 1.27;
+}
+.g-tpad .grid-page { padding-top: 11.2mm; padding-bottom: 6mm; }
+.g-tpad .bgx-crow { margin-bottom: 1mm; }

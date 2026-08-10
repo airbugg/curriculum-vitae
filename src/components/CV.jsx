@@ -379,7 +379,22 @@ function NoBreakCompounds({ text }) {
 // The braces identity joins the grid as quiet structure, not decoration:
 // mono braces in the muted data-column ink around the name and the section
 // labels, with the single functional accent staying exactly where it was.
-function GridSecMark({ children }) {
+function GridSecMark({ children, cmd }) {
+  if (cmd) {
+    // Command markers (owner experiment): the braces stay the page's
+    // identity glyphs; inside them the heading becomes a shell command,
+    // lowercase mono, verb in the zsh valid-command green.
+    const [verb, ...rest] = String(children).split(' ');
+    return (
+      <div className="g-secmark g-seccmd">
+        <span className="g-sb">{'{'}</span>
+        <span className="g-scw">
+          <span className="g-scv">{verb}</span> {rest.join(' ')}
+        </span>
+        <span className="g-sb">{'}'}</span>
+      </div>
+    );
+  }
   return (
     <div className="g-secmark">
       <span className="g-sb">{'{'}</span>
@@ -519,7 +534,7 @@ function GridPage({ variant }) {
       )}
 
       <section className="g-section">
-        <GridSecMark>{variant.headings.experience}</GridSecMark>
+        <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.experience}</GridSecMark>
         {groups.map((g) => (
           <GridEntry key={g[0].job} group={g} showStack={variant.stackChips} />
         ))}
@@ -557,7 +572,7 @@ function GridPage({ variant }) {
 function BgCode({ variant }) {
   return (
       <section className="g-section g-bg">
-        <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+        <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
         <div className="g-code2">
           <div>
             <div>
@@ -1436,7 +1451,7 @@ function BgStyleYml({ variant }) {
   const slugify = (x) => String(x).replace(/ /g, '-');
   return (
     <section className="g-section g-bg">
-      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="g-shbg">
         <div className="g-shcmd">
           <span className="g-shprompt">{'\u203a'}</span>{' '}
@@ -1480,7 +1495,7 @@ function BgStyleA({ variant }) {
   const slug = (s) => String(s).replace(/ /g, '-');
   return (
     <section className="g-section g-bg bgx-a">
-      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-term">
         <div>
           <BgTerm verb="jq" args=". education.json">
@@ -1550,7 +1565,7 @@ function BgLedgerRow({ children, year }) {
 function BgStyleB({ variant }) {
   return (
     <section className="g-section g-bg bgx-b">
-      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-ledger">
         <BgLedgerRow year={education.dates}>
           <span className="bgx-strong">{education.degree}</span>
@@ -1608,7 +1623,7 @@ function BgManifestRow({ label, year, children }) {
 function BgStyleC({ variant }) {
   return (
     <section className="g-section g-bg bgx-c">
-      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
       <BgManifestRow label="Education" year={bgEduYears()}>
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
@@ -1630,14 +1645,25 @@ function BgStyleC({ variant }) {
           </React.Fragment>
         ))}
       </BgManifestRow>
-      <BgManifestRow label="Off hours">
-        {(variant.offHours ?? []).map((s, i) => (
-          <React.Fragment key={s}>
-            {i > 0 && <span className="bgx-sep">·</span>}
-            <span className="bgx-off">{s.replace(/ /g, '\u00A0')}</span>
-          </React.Fragment>
-        ))}
-      </BgManifestRow>
+      {variant.backgroundStack ? (
+        <BgManifestRow label="Stack">
+          {variant.backgroundStack.map((t, i) => (
+            <React.Fragment key={t}>
+              {i > 0 && <span className="bgx-sep">·</span>}
+              <span className="bgx-off">{String(t).replace(/ /g, '\u00A0')}</span>
+            </React.Fragment>
+          ))}
+        </BgManifestRow>
+      ) : (
+        <BgManifestRow label="Off hours">
+          {(variant.offHours ?? []).map((s, i) => (
+            <React.Fragment key={s}>
+              {i > 0 && <span className="bgx-sep">·</span>}
+              <span className="bgx-off">{s.replace(/ /g, '\u00A0')}</span>
+            </React.Fragment>
+          ))}
+        </BgManifestRow>
+      )}
     </section>
   );
 }
