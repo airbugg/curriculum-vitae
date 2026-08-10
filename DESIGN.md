@@ -1048,3 +1048,18 @@ gone. Fit at 7pt/1.34 line-box rhythm; the page became FIXED-height
 (min-height let hairline rounding push the window border onto page 2),
 with the resting cursor as the clipping canary. Blurbs remain the one
 non-parity item: the Shell has no meta column to hold them.
+
+### §18 addendum 5 · Logo alignment, measured (owner called it)
+
+The owner caught un-verified logo placement ("iterate until pixel
+perfect"). Proper loop this time: located each mark by brand color in
+the 300dpi raster, measured cap band vs logo band numerically, derived
+sizes from real font metrics (Source Code Pro Bold capHeight 660/1000em
+= 1.630mm at 7pt) and each file's internal geometry:
+- rylo lockup 2.55mm, align -0.55mm (letters 21.1/33 of box, baseline
+  21.7% above bottom) — letters land exactly on the cap band
+- rewire 2.48mm, align -0.1mm (x-height 27/41 reads at cap size)
+- WIX 1.7mm, align 0 (glyph-cropped box, baseline at bottom)
+- remitly mark 2.3mm, align -0.45mm (1.39x cap icon, overhangs balanced)
+Final measured deltas within a pixel of design intent at 300dpi;
+verified again on magnified crops of all four headers.
