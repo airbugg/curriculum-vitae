@@ -9,7 +9,7 @@ summary: Frontend work across four products, in the middle of the company-wide A
 ---
 
 - Frontend work across Contacts, Forms, Editor and Bookings during the
-  company-wide migration from `AngularJS` to `React`/`MobX`. {#modernization}
+  company-wide migration from `AngularJS` to `React`. {#modernization}
 
 - Tech lead on Wix Forms, the first first-party app built on the Editor
   platform SDK; its architecture became the reference for the first-party
