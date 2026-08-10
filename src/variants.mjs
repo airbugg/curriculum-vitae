@@ -138,10 +138,12 @@ export const variants = [
     languages: true,
     offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
     headings: { experience: 'Experience', background: 'Background' },
+    // Clinical cut: a terminal prints terse output, so this variant keeps
+    // only the strongest bullets per job and lets the session breathe.
     sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'rylo', bullets: ['rewrite', 'platform'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative'] },
       { job: 'wix', bullets: ['forms', 'auth'] },
     ],
     skills: null,

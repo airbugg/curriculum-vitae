@@ -1189,11 +1189,7 @@ function TermJob({ section }) {
       </div>
       {job.summary && (
         <div className="t-out t-summary">
-          {/* The meta-column blurb has no column here; it leads the
-              summary line so company context survives the transcript. */}
-          <NoBreakCompounds
-            text={(job.blurb ? `${job.blurb}. ` : '') + job.summary}
-          />
+          <NoBreakCompounds text={job.summary} />
         </div>
       )}
       <ul className="t-bullets">

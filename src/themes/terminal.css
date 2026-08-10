@@ -27,14 +27,14 @@
 body.terminal { font-family: var(--font-data); color: var(--ink); }
 
 .t-page {
-  padding: 9mm 11mm 9mm;
+  padding: 10mm 13mm 10mm;
   min-height: 296.5mm;
   display: flex;
   flex-direction: column;
 }
 
 /* ---- identity header: the braces identity, lowercase, all mono ---- */
-.t-header { text-align: center; margin-bottom: 3.6mm; }
+.t-header { text-align: center; margin-bottom: 4.5mm; }
 .t-header h1 {
   margin: 0;
   font-size: 16.5pt;
@@ -97,14 +97,14 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 
 /* ---- the session ---- */
 .t-session {
-  padding: 3.6mm 4mm 4mm;
+  padding: 4.6mm 5.5mm 5mm;
   flex: 1;
-  font-size: 7.3pt;
-  line-height: 1.43;
+  font-size: 7.4pt;
+  line-height: 1.5;
   letter-spacing: 0;
   white-space: pre-wrap;
 }
-.t-block { margin-bottom: 2.3mm; }
+.t-block { margin-bottom: 3.8mm; }
 .t-block:last-child { margin-bottom: 0; }
 
 .t-cmd { color: var(--ink); }
@@ -129,25 +129,29 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 .t-role { font-weight: 700; color: var(--ink-strong); }
 .t-jobmeta { color: var(--muted); }
 .t-summary { color: var(--muted); }
-.t-bullets { margin: 0.3mm 0 0; padding-left: 3.4mm; list-style: none; }
-.t-bullets li { margin-bottom: 0.4mm; }
+.t-bullets { margin: 0.6mm 0 0; padding-left: 3.4mm; list-style: none; max-width: 156mm; }
+.t-bullets li { margin-bottom: 1mm; }
 .t-bullets li:last-child { margin-bottom: 0; }
 .t-bullets li::before {
   content: '• ';
-  color: var(--accent);
+  color: var(--muted);
   margin-left: -3.4mm;
 }
+/* Clinical monochrome output: chips keep no color of their own — in a
+   terminal, cat prints text, not decoration. The ONLY color on the page
+   belongs to the shell itself (prompt, verbs) and the identity header. */
 .terminal code {
   font-family: var(--font-data);
   font-size: 100%;
-  color: var(--accent-deep);
+  color: inherit;
   background: none;
   padding: 0;
 }
 
-/* jq-colored JSON (shared token classes with the proto-b session). */
+/* JSON output, monochrome and clinical: keys and structure recede to
+   the muted gray, the facts stay ink. */
 .t-session .bgx-out { color: var(--ink); }
-.t-session .bgx-jk { color: var(--accent-deep); }
+.t-session .bgx-jk { color: var(--muted); }
 .t-session .bgx-js { color: var(--ink); }
 .t-session .bgx-jp { color: var(--muted); }
 
@@ -168,3 +172,7 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
   opacity: 0.5;
   vertical-align: -0.55mm;
 }
+
+/* Short measure for prose-shaped output: long lines are what made the
+   first cut read as a wall; ragged right air is the terminal's calm. */
+.t-out { max-width: 156mm; }

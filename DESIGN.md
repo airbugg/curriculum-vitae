@@ -977,3 +977,19 @@ really are markdown files. Blurbs fold into the summary lines (no meta
 column to hold them). 7.3pt/1.43 mono fits the full canonical bullet
 set on one page; the window flexes to the page bottom so the session
 ends the way a real terminal does, waiting.
+
+### §18 addendum · The clinical pass
+
+Owner verdict on v1: "busy, crowded. Terminal should feel clean and
+clinical." Diagnosis: full-width 113-char lines of full bullet prose
+with 2.3mm gaps read as a gray brick, and color was sprinkled through
+the output (emerald chips, emerald bullets, jq keys). The fixes, all in
+the direction of a real terminal's calm:
+- Output measure capped at 156mm (~100 chars) — ragged-right air.
+- Block gaps 2.3 → 3.8mm, bullet gaps 0.4 → 1mm, lh 1.5.
+- Monochrome output doctrine: color belongs to the SHELL (prompt,
+  verbs) and the identity header only. Chips inherit ink, bullet dots
+  muted, JSON keys muted.
+- Clinical cut: 7 bullets (rylo rewrite+platform, remitly
+  lead+semanticKeys, rewire reactNative, wix forms+auth) instead of the
+  canonical 11 — terminals print terse output. Blurb merge reverted.
