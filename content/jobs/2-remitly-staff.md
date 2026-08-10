@@ -5,7 +5,7 @@ blurb: global remittances (acquired Rewire in 2022)
 role: Staff Software Engineer
 location: Tel Aviv
 dates: Dec 2022 – Feb 2026
-summary: Client infrastructure lead for Circle, Rewire and Remitly apps; the last two years leaning hard on LLMs
+summary: Client infrastructure lead for Circle, Rewire and Remitly apps
 ---
 
 - Lead engineer of the Client Infrastructure team: technical planning and

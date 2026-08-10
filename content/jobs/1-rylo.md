@@ -1,11 +1,11 @@
 ---
 id: rylo
 company: Rylo
-blurb:  Communication platform for the Deaf and hard-of-hearing
+blurb:  communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
-summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite; most of it shipped through coding agents.
+summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite; heavily utilizing agentic workflows.
 ---
 
 - One of a four engineer task force on a ground-up rewrite of the company's

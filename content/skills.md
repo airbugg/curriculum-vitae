@@ -23,12 +23,12 @@ Ordering carries emphasis: first item = strongest.
 
 ## stackFrontend
 
-TypeScript, React, React Native, Expo, XState, MobX
+TypeScript, React, React Native, Angular, Swift/Kotlin 
 
 ## stackBackend
 
-Node.js, Bun, Python, GraphQL
+Node.js, Python, Ruby
 
 ## stackInfra
 
-Kubernetes, Terraform, AWS, Docker, GitHub Actions
+GitHub Actions, Gitlab CI, Jenkins, k8s, Terraform/Pulumi, AWS/Cloudflare/GCP 
