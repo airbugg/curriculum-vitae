@@ -5,6 +5,7 @@ blurb: cross-border banking for migrant workers
 role: Senior Software Engineer
 location: Tel Aviv
 dates: Jun 2020 – Dec 2022
+stack: React Native, XState, Redux, AngularJS, GitHub Actions
 summary: Core product work through the company's shift from a web app to mobile-first.
 ---
 

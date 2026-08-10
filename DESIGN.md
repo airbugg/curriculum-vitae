@@ -1063,3 +1063,23 @@ sizes from real font metrics (Source Code Pro Bold capHeight 660/1000em
 - remitly mark 2.3mm, align -0.45mm (1.39x cap icon, overhangs balanced)
 Final measured deltas within a pixel of design intent at 300dpi;
 verified again on magnified crops of all four headers.
+
+## §19 · Stack chips, and the canonical A/B (owner round)
+
+Two owner directives on the canonical:
+1. **Stack chips.** The meta column's dead air under each date block now
+   carries the workplace's stack — one term per line in the chips'
+   emerald mono (a new `stack:` frontmatter field per job, bullet-
+   verified tech only). Gated by `stackChips` so proto-d's shared grid
+   module stays untouched (it overflowed the moment the chips leaked in).
+2. **Background A/B.** Two flagship variants to compare:
+   - `eugene-lerman` — the bg-a Session transcript (jq/locale two-up)
+   - `eugene-lerman-card` — the Shell's `cat background.yml` card
+     (aligned rows, years on the shared right axis), ported to the grid
+     page as `bgStyle: 'yml'`; the › prompt and verb are the only shell
+     furniture crossing over.
+   The bg-a/b/c comparison studies retired (git history keeps them).
+Fit: chips tightened to 6.8pt/1.38 (the Wix row went meta-bound at the
+first size), the Session block to 6.9pt/1.28, page pads 10.5/6.6. A
+dropped `white-space: pre-wrap` on .bgx-term (lost in a block rewrite)
+cost the JSON its indentation for one build — caught on the visual pass.

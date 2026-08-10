@@ -5,6 +5,7 @@ blurb: global remittances (acquired Rewire in 2022)
 role: Staff Software Engineer
 location: Tel Aviv
 dates: Dec 2022 – Feb 2026
+stack: TypeScript, Apollo GraphQL, MMKV, i18next, Lokalise
 summary: Client infrastructure lead for Circle, Rewire and Remitly apps; the last two years leaning hard on LLMs
 ---
 

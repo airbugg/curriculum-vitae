@@ -5,6 +5,7 @@ blurb:  Communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
+stack: React Native, Expo, Swift, Kotlin, Bun, XState
 summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite; most of it shipped through coding agents.
 ---
 

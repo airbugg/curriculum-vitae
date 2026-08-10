@@ -192,7 +192,7 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 /* Air between the right column's two stacked literals — half a line, not
    a full blank line (the page pays for every millimetre here). */
 .g-c2gap { margin-top: 1mm; }
-.g-bg .g-secmark { padding-bottom: 0.8mm; margin-bottom: 1.4mm; }
+.g-bg .g-secmark { padding-bottom: 0.7mm; margin-bottom: 1.1mm; }
 /* The BGU mark rides inside a quoted string — smaller than on the 9pt
    company lines, same optical role. */
 .g-code2 .g-logo svg { height: 2.4mm; vertical-align: -0.35mm; margin-right: 0.7mm; }
@@ -230,6 +230,12 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-top: 1mm;
   letter-spacing: -0.2pt;
 }
+/* The stack ledger: per-workplace tech beneath the dates, one term per
+   line in the chips' emerald mono — the data column's answer to "what
+   did he work with here", filling what used to be dead air. */
+.g-stack { margin-top: 1.2mm; line-height: 1.38; }
+.g-stack code { font-size: 6.8pt; }
+
 /* Tenure rides inline after the compact range ("Dec 22 – Feb 26 · 3y 3m"):
    the shortened years buy back the width the 40mm column lacked at full
    length, and the tenure stays a shade quieter than the range. */
@@ -281,13 +287,13 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .g-dense {
   --gp-header-pad: 1.9mm;
   --gp-intro-mt: 2.4mm;
-  --gp-section-mt: 3.3mm;
+  --gp-section-mt: 3.1mm;
   --gp-secmark-mb: 2.1mm;
   --gp-row-mb: 2mm;
   --gp-li-mb: 0.25mm;
   --gp-lh: 1.24;
 }
-.g-dense .grid-page { padding-top: 10.8mm; padding-bottom: 7.2mm; }
+.g-dense .grid-page { padding-top: 10.5mm; padding-bottom: 6.6mm; }
 .g-dense .g-content ul { margin-top: 1.15mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 
@@ -356,14 +362,14 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   justify-content: space-between;
   padding-right: 6mm;
   font-family: var(--font-data);
-  font-size: 7.2pt;
+  font-size: 6.9pt;
   letter-spacing: 0;
-  line-height: 1.4;
+  line-height: 1.28;
   color: var(--ink);
 }
 .bgx-cmd { color: var(--ink); }
 .bgx-cmd a { color: inherit; text-decoration: none; }
-.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1.5mm; }
+.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1mm; }
 /* › stands in for starship's ❯ (absent from Source Code Pro); bold +
    a small optical raise so it reads as the heavy prompt glyph. */
 .bgx-prompt {
@@ -442,3 +448,30 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 }
 .bgx-cval { font-size: 8.6pt; color: var(--ink); line-height: 1.3; }
 .bgx-c .bgx-off { color: var(--accent-deep); }
+
+/* ---- bgStyle 'yml': the Shell's background card on the grid page ----
+   Mono card at the dates' size: › prompt + verb are the only shell
+   furniture crossing into the canonical; keys muted, facts ink, dated
+   rows carry their years flush right on the page's shared axis. */
+.g-shbg {
+  font-family: var(--font-data);
+  font-size: 7.2pt;
+  letter-spacing: 0;
+  line-height: 1.5;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.g-shcmd { color: var(--ink); margin-bottom: 0.6mm; }
+.g-shprompt {
+  color: var(--accent-deep);
+  font-weight: 700;
+  font-size: 115%;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.02em);
+}
+.g-shverb { color: var(--accent-deep); font-weight: 600; }
+.g-shkey { color: var(--muted); }
+.g-shyear { color: var(--muted); font-size: 93%; }
+.g-shrow { display: flex; justify-content: space-between; align-items: baseline; }
+.g-shbg a { color: inherit; text-decoration: none; }

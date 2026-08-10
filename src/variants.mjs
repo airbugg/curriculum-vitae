@@ -27,6 +27,36 @@ export const variants = [
     layout: 'grid',
     nameStyle: 'plain',
     bodyClass: 'g-dense',
+    // A/B pair (owner request): this file carries the bg-a Session
+    // transcript; the -card sibling below carries the Shell's
+    // cat background.yml card. The bg-a/b/c studies retired to history.
+    bgStyle: 'a',
+    stackChips: true,
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    // Array form: the BACKGROUND section renders these as a code literal.
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
+  {
+    file: 'eugene-lerman-card',
+    label: 'The Flagship · YAML-card background',
+    theme: 'proto-b',
+    layout: 'grid',
+    nameStyle: 'plain',
+    bodyClass: 'g-dense',
+    // The other half of the A/B: identical page, Shell-card background.
+    bgStyle: 'yml',
+    stackChips: true,
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
     languages: true,
@@ -290,69 +320,6 @@ export const variants = [
   //   c — keys kept but re-set as the grid's own meta-column labels.
   // ------------------------------------------------------------------------
 
-  {
-    file: 'eugene-lerman-bg-a',
-    label: 'BG Study A · The Session (terminal transcript)',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    bgStyle: 'a',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
-    languages: true,
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
 
-  {
-    file: 'eugene-lerman-bg-b',
-    label: 'BG Study B · The Colophon (keyless ledger)',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    bgStyle: 'b',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
-    languages: true,
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
 
-  {
-    file: 'eugene-lerman-bg-c',
-    label: 'BG Study C · The Manifest (keys join the grid)',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    bgStyle: 'c',
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
-    languages: true,
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
 ];

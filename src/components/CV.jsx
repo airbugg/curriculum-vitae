@@ -393,7 +393,7 @@ function GridSecMark({ children }) {
 // inside the 40mm column instead of stacking.
 const shortRange = (d) => String(d).replace(/\b20(\d\d)\b/g, '$1');
 const compactDur = (d) => d && d.replace(/(\d+) yr/, '$1y').replace(/(\d+) mo/, '$1m');
-function GridEntry({ group }) {
+function GridEntry({ group, showStack }) {
   const first = jobs[group[0].job];
   return (
     <>
@@ -420,6 +420,20 @@ function GridEntry({ group }) {
                   <span className="g-dur"> ({compactDur(groupDuration(group))})</span>
                 )}
               </span>
+              {/* The workplace stack fills the meta column's dead air
+                  beneath the dates (owner request): one chip per line,
+                  the same emerald-mono voice the bullets' chips speak. */}
+              {i === 0 && showStack && job.stack && (
+                <div className="g-stack">
+                  {String(job.stack)
+                    .split(',')
+                    .map((t) => (
+                      <div key={t}>
+                        <code>{t.trim()}</code>
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
@@ -507,7 +521,7 @@ function GridPage({ variant }) {
       <section className="g-section">
         <GridSecMark>{variant.headings.experience}</GridSecMark>
         {groups.map((g) => (
-          <GridEntry key={g[0].job} group={g} />
+          <GridEntry key={g[0].job} group={g} showStack={variant.stackChips} />
         ))}
       </section>
 
@@ -515,7 +529,9 @@ function GridPage({ variant }) {
           (BgCode, extracted verbatim below). The bgStyle discriminator
           selects one of three experimental reinterpretations; undefined
           keeps the canonical output byte-identical. */}
-      {variant.bgStyle === 'a' ? (
+      {variant.bgStyle === 'yml' ? (
+        <BgStyleYml variant={variant} />
+      ) : variant.bgStyle === 'a' ? (
         <BgStyleA variant={variant} />
       ) : variant.bgStyle === 'b' ? (
         <BgStyleB variant={variant} />
@@ -1408,6 +1424,54 @@ function BgJson({ k, v, last }) {
       <span className="bgx-js">"{v}"</span>
       {!last && <span className="bgx-jp">,</span>}
     </div>
+  );
+}
+
+// ---- YML: the Shell's background card on the canonical grid ----------
+// One command, four aligned key/value rows, dated rows carrying their
+// years on the page's shared right axis. The prompt+verb are the only
+// shell furniture that crosses into the canonical.
+function BgStyleYml({ variant }) {
+  const yKey = (k) => (k + ':').padEnd(13, '\u00a0');
+  const slugify = (x) => String(x).replace(/ /g, '-');
+  return (
+    <section className="g-section g-bg">
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <div className="g-shbg">
+        <div className="g-shcmd">
+          <span className="g-shprompt">{'\u203a'}</span>{' '}
+          <span className="g-shverb">cat</span> background.yml
+        </div>
+        <div className="g-shrow">
+          <span>
+            <span className="g-shkey">{yKey('education')}</span>
+            {education.degreeShort ?? education.degree}
+            {'  '}
+            {education.schoolShort ?? education.school}
+          </span>
+          <span className="g-shyear">{bgEduYears()}</span>
+        </div>
+        <div className="g-shrow">
+          <span>
+            <span className="g-shkey">{yKey('publication')}</span>
+            <a href={publications[0].url}>{bgPubTitle()}</a>
+            {'  '}
+            {publications[0].journal}
+          </span>
+          <span className="g-shyear">{publications[0].year}</span>
+        </div>
+        <div>
+          <span className="g-shkey">{yKey('languages')}</span>
+          {bgLangPairs()
+            .map(([k, v]) => (v === 'native' ? `${k} native` : `${k} (${v})`))
+            .join(', ')}
+        </div>
+        <div>
+          <span className="g-shkey">{yKey('offHours')}</span>
+          {(variant.offHours ?? []).map(slugify).join('  ')}
+        </div>
+      </div>
+    </section>
   );
 }
 
