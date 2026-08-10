@@ -12,21 +12,6 @@ const FONT_SETS = {
     ['Source Sans Pro', 'SourceSansPro-Semibold.otf', 600, 'normal'],
     ['Source Sans Pro', 'SourceSansPro-Bold.otf', 700, 'normal'],
   ],
-  roboto: [
-    ['Roboto', 'Roboto-Light.ttf', 300, 'normal'],
-    ['Roboto', 'Roboto-Regular.ttf', 400, 'normal'],
-    ['Roboto', 'Roboto-Italic.ttf', 400, 'italic'],
-    ['Roboto', 'Roboto-Medium.ttf', 500, 'normal'],
-    ['Roboto', 'Roboto-Bold.ttf', 700, 'normal'],
-  ],
-  mono: [
-    ['Roboto Mono', 'RobotoMono-Thin.ttf', 100, 'normal'],
-    ['Roboto Mono', 'RobotoMono-Light.ttf', 300, 'normal'],
-    ['Roboto Mono', 'RobotoMono-Regular.ttf', 400, 'normal'],
-    ['Roboto Mono', 'RobotoMono-Italic.ttf', 400, 'italic'],
-    ['Roboto Mono', 'RobotoMono-Medium.ttf', 500, 'normal'],
-    ['Roboto Mono', 'RobotoMono-Bold.ttf', 700, 'normal'],
-  ],
   codePro: [
     ['Source Code Pro', 'SourceCodePro-ExtraLight.ttf', 200, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Light.ttf', 300, 'normal'],
@@ -37,19 +22,8 @@ const FONT_SETS = {
 };
 
 const THEME_FONTS = {
-  terminal: ['codePro'],
-  platform: ['sourceSans', 'codePro', 'mono'],
-  ai: ['sourceSans', 'mono'],
-  looker: ['sourceSans', 'codePro', 'mono'],
-  parser: [],
-  // Prototypes:
-  'proto-a': ['sourceSans'], // reduction — one family only
   'proto-b': ['sourceSans', 'codePro'], // grid — sans content + mono data column
-  'proto-c': ['sourceSans', 'codePro'], // editorial — sans text + mono braces/display
-  'proto-d': ['sourceSans', 'codePro'], // grid × editorial hybrid
-  // Reimaginings (2026 redesign commission):
-  'reimagine-1': ['roboto', 'mono'], // brutalist poster — Roboto wall + mono data
-  'reimagine-2': ['sourceSans', 'codePro'], // ledger — sans text + mono axis/data
+  terminal: ['codePro'], // shell — one mono family, like a terminal
 };
 
 export function fontFaces(theme) {

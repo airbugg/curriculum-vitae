@@ -1,7 +1,7 @@
 // Company logos, inlined at build time from assets/logos/<slug>.{svg,png}.
 // Two modes:
-//   mark     — a small glyph rendered BEFORE the company name (Rylo swirl,
-//              Remitly handshake, BGU flame).
+//   mark     — a small glyph rendered BEFORE the company name (the Remitly
+//              handshake).
 //   wordmark — the logo IS the name (Wix, Rewire have no separate mark);
 //              it renders IN PLACE of the printed company name, sized to
 //              the company line's cap height.
@@ -30,5 +30,4 @@ export const logos = {
   Remitly: { mark: load('remitly') },
   Rewire: { wordmark: load('rewire') },
   'Wix.com': { wordmark: load('wix') },
-  bgu: { mark: load('bgu') },
 };

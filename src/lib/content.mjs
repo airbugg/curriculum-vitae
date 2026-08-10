@@ -54,9 +54,22 @@ function loadSkills() {
   return skills;
 }
 
+// intro.md: one `## key` paragraph per variant. The text reflows to a
+// single line — the layout owns the wrapping, not the source file.
+function loadIntros() {
+  const src = readFileSync(join(CONTENT, 'intro.md'), 'utf8');
+  const intros = {};
+  for (const block of src.split(/^## /m).slice(1)) {
+    const nl = block.indexOf('\n');
+    intros[block.slice(0, nl).trim()] = block.slice(nl).replace(/\s+/g, ' ').trim();
+  }
+  return intros;
+}
+
 const front = (file) => parseFrontmatter(readFileSync(join(CONTENT, file), 'utf8'))[0];
 
 export const person = front('person.md');
+export const intros = loadIntros();
 export const education = front('education.md');
 export const jobs = loadJobs();
 export const skills = loadSkills();

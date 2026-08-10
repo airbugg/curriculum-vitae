@@ -1,7 +1,7 @@
 {
   "name": "curriculum-vitae",
   "version": "1.0.0",
-  "description": "Five one-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
+  "description": "One-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

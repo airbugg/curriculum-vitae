@@ -1115,3 +1115,21 @@ content/skills.md (stackFrontend/stackBackend/stackInfra). The k3s
 off-hours line now appears nowhere on the canonical; flagged to the
 owner. Dead code swept: BgStyleYml, .g-seccmd, .g-shbg, .g-tpad,
 .g-stack.
+
+## §21 · The great prune: two variants, one intro source (owner decree)
+
+Post-merge consolidation round. Everything except the Flagship and the
+Shell deleted from the build: the Platform/Parser/Classic cuts, the
+three research prototypes (A, C, D), both reimaginings, and every
+theme, layout component, font set and logo asset only they used. The
+grid and terminal layouts remain; CV.jsx dropped from ~1600 lines to
+~450, base.css from 331 to 38. All of it stays reachable in git
+history; this file remains the narrative record.
+
+The intro moved out of variants.mjs into content/intro.md (one `##`
+block per variant, reflowed to a single line at load), closing the last
+gap in the "every fact exactly once, in content/" rule. Per owner, the
+closing AI sentence ("Since early 2026 most of that code has shipped
+through coding agents.") came off both intros — the intro now reads as
+a straight generalist-developer statement; the agent story lives in the
+job content where it is evidence rather than positioning.

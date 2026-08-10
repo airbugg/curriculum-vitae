@@ -4,14 +4,14 @@
    entire page leans into the transcript aesthetic. A lowercase mono
    identity header (the { eugene : lerman } braces, spoken in the
    terminal's own case), then ONE terminal window — hairline border,
-   titlebar with muted traffic lights — containing the session:
+   quiet titlebar — containing the session:
      › cat README.md            the intro
-     › ls -t experience/        the job files, newest first (ls -t!)
-     › glow experience/<f>.md   each job, rendered markdown
-     › jq . education.json      the background block, jq-colored
+     › glow experience/*.md     the job files, rendered markdown, with
+                                bat-style file rules between records
+     › cat background.yml       aligned key/value background facts
    Color rules are terminal truth, not typography: prompt emerald, valid
    command verbs deep emerald (zsh-syntax-highlighting), args and output
-   default ink, glow/jq coloring where those tools genuinely color.
+   default ink, glow coloring where that tool genuinely colors.
    Palette and faces are the family's own: emerald pair, Source Code Pro.
    ======================================================================= */
 :root {
@@ -150,21 +150,6 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
   color: inherit;
   background: none;
   padding: 0;
-}
-
-/* JSON output, monochrome and clinical: keys and structure recede to
-   the muted gray, the facts stay ink. */
-.t-session .bgx-out { color: var(--ink); }
-.t-session .bgx-jk { color: var(--muted); }
-.t-session .bgx-js { color: var(--ink); }
-.t-session .bgx-jp { color: var(--muted); }
-
-/* The background pair runs two-up to hold the height. */
-.t-bgrid {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  justify-content: space-between;
-  padding-right: 5mm;
 }
 
 /* The resting cursor on the final bare prompt. */
