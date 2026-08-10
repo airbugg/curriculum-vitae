@@ -5,6 +5,7 @@ blurb: ""
 role: Software Engineer
 location: Be’er Sheva / Tel Aviv
 dates: Feb 2017 – Nov 2019
+summary: Frontend work across four products, in the middle of the company-wide AngularJS to React migration.
 ---
 
 - Frontend work across Contacts, Forms, Editor and Bookings during the

@@ -1,0 +1,208 @@
+/* =======================================================================
+   PROTOTYPE D — GRID × EDITORIAL (the convergence candidate)
+   C's structure and voice: centered { EUGENE : LERMAN } header, display
+   intro, emerald as the single accent family, brace section markers with
+   the trailing rule, editorial typography. Carrying B's per-entry metadata
+   treatment: a left data column stacking company / blurb / location /
+   dates / tenure, against a right column of role, summary and bullets.
+   Header + section-marker metrics are the measured ones from base.css and
+   proto-c; the grid module's geometry comes from proto-b. Re-verified by
+   pixel measurement at 300dpi for this theme's sizes.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-display: 'Source Code Pro', monospace;
+  --ink: #20272e;
+  --ink-strong: #10151a;
+  --muted: #6a737e;
+  --accent: #00A388;
+  --accent-deep: #00735f;
+
+  /* Centered flagship-style header, emerald voice (same as proto-c). */
+  --font-name: var(--font-display);
+  --fs-name: 24pt;
+  --ls-name: 0.3pt;
+  --name-brace: var(--accent);
+  --name-first: #93a39e;
+  --fw-name-first: 200;
+  --font-title: var(--font-display);
+  --fs-title: 10pt;
+  --ls-title: 2.4pt;
+  /* 7.5pt, with tighter seps below: at 7.8pt / 1.6mm seps the six-item
+     contact run measures 175.7mm against this page's 174mm measure — the
+     centered nowrap line overflowed both margins (measured at 300dpi). */
+  --fs-contacts: 7.5pt;
+}
+
+body.proto-d { font-family: var(--font-body); color: var(--ink); }
+
+.hy-page {
+  padding: 14mm 18mm 13mm;
+  min-height: 296.5mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- HEADER: centered, flagship structure, emerald voice ---- */
+.hy-page > header { text-align: center; }
+.hy-page > header .title {
+  color: var(--accent-deep);
+  margin-top: 1.2mm;
+  padding-left: var(--ls-title); /* re-center under trailing letter-spacing */
+}
+.hy-page > header .contacts { margin-top: 1.7mm; }
+.hy-page > header .contacts .sep { margin: 0 1.2mm; }
+.proto-d h1 .nc { color: var(--accent); }
+/* Header y-phase here rounds the brace overshoot 9-above/11-below @300dpi
+   (C measures 10/10 from the same base metrics); a hair more lift evens it. */
+.proto-d h1 .nb { --nb-nudge: -0.051em; }
+
+/* The display intro — C's one big quiet line of scale contrast. */
+.ed-intro {
+  margin: 5.6mm auto 0;
+  max-width: 150mm;
+  font-size: 12.5pt;
+  font-weight: 300;
+  line-height: 1.34;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* ---- SECTION MARKERS: C's amplified braces + trailing rule ---- */
+/* Tightened from 7.8mm when the migration/localization bullets grew;
+   overflow absorbed from the section air, not the text. */
+.ed-section { margin-top: 4.6mm; }
+.ed-footer { margin-top: 4.6mm; }
+
+.ed-secrow {
+  display: flex;
+  align-items: baseline; /* shared baseline — see proto-c */
+  gap: 2.3mm;
+  margin-bottom: 5mm;
+}
+.ed-brace {
+  font-family: var(--font-display);
+  font-size: 25pt;
+  font-weight: 300;
+  line-height: 0; /* baseline participation without box height */
+  color: var(--accent);
+  /* 0.127em, not C's 0.136em: this theme's y-phase rounded the overshoot to
+     29 above vs 31 below @300dpi; the 1px lift re-balances it (30/30). */
+  transform: translateY(0.127em);
+}
+.ed-h2 {
+  margin: 0;
+  /* Cancel the trailing track before the brace gap. -2.9pt, not C's -3.4pt:
+     at this theme's y/x phase the rasteriser rounded the word→brace gap 3px
+     narrower than the brace→word gap (42 vs 39 @300dpi); +0.5pt re-equalises
+     the measured gaps (42 vs 41). */
+  margin-right: -2.9pt;
+  font-family: var(--font-display);
+  font-size: 11pt;
+  font-weight: 500;
+  letter-spacing: 3.4pt;
+  text-transform: uppercase;
+  color: var(--ink-strong);
+  border: none;
+}
+.ed-secrow::after {
+  content: '';
+  flex: 1;
+  height: 0.8pt;
+  background: linear-gradient(90deg, #7ccbbb 0%, #dde8e3 100%);
+  transform: translateY(-3.15pt); /* rule centerline on the caps' optical centre */
+}
+
+/* ---- BODY: B's data/content grid module in C's voice ---- */
+.hy-body { font-size: 8.8pt; }
+
+.g-row {
+  display: grid;
+  grid-template-columns: 38mm 1fr;
+  column-gap: 8mm;
+  align-items: start;
+  margin-bottom: 4.2mm;
+  break-inside: avoid;
+}
+.g-row:last-child { margin-bottom: 0; }
+.g-row.g-cont { margin-top: -1.4mm; }
+
+/* Left column: work-relevant metadata, vertically stacked. */
+.g-meta { line-height: 1.3; }
+.g-co { font-weight: 700; font-size: 9.4pt; color: var(--ink-strong); }
+.g-mblurb { font-size: 7.4pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.35; }
+.g-loc { font-size: 7.8pt; font-style: italic; color: var(--accent-deep); margin-top: 0.5mm; }
+.g-dates {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 7.6pt;
+  color: var(--muted);
+  margin-top: 0.9mm;
+  letter-spacing: -0.2pt;
+}
+/* Tenure on its own line beneath the range it summarises — data voice,
+   a shade quieter, no leading interpunct. */
+.g-dur {
+  font-family: var(--font-display);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+  opacity: 0.85;
+  margin-top: 0.2mm;
+}
+
+/* Right column: role, summary, bullets. */
+.g-role {
+  font-weight: 600;
+  font-size: 9pt;
+  color: var(--accent-deep);
+  font-variant: small-caps;
+  letter-spacing: 0.4pt;
+  margin-bottom: 0.3mm;
+}
+.g-summary {
+  margin-top: 0.3mm;
+  font-size: 8.2pt;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.g-content ul { margin: 1.3mm 0 0; padding-left: 3.4mm; }
+.g-content li { margin-bottom: 0.85mm; line-height: 1.34; }
+.g-content li:last-child { margin-bottom: 0; }
+.g-content li::marker { color: var(--accent); }
+
+/* Tech terms: C's treatment — emerald mono emphasis, no chip boxes. */
+.proto-d.id-braces code {
+  background: none;
+  color: var(--accent-deep);
+  font-family: var(--font-display);
+  font-size: 92%;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ---- education / publications on the same grid module ---- */
+.g-pubtitle { font-weight: 600; font-size: 8.8pt; color: var(--ink-strong); }
+.g-pubmeta { font-size: 7.8pt; color: var(--muted); margin-top: 0.6mm; line-height: 1.35; }
+
+/* Company logos. Marks sit before the name at slightly over cap height;
+   wordmarks REPLACE the printed name, sized to the company line. Both take
+   the surrounding ink when the asset is a currentColor SVG; PNG assets
+   keep their own colors. */
+.g-logo { display: inline-block; }
+/* Circular marks read smaller than square ones at equal height; the BGU
+   disc gets the usual optical compensation. */
+.g-logo.g-lg-bgu svg { height: 3.4mm; vertical-align: -0.55mm; }
+.g-logo svg, .g-logo img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
+.g-wordmark { display: inline-block; }
+/* Wordmark sizing is derived from each file's internal metrics so all
+   three read at the same letter height as the 9pt bold company names
+   (cap/x-height ~2.3mm), with baselines on the text baseline. */
+.g-wordmark.g-lg-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
+.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
+.g-wordmark.g-lg-wix svg { height: 2.4mm; vertical-align: 0; }
+/* Selectable-but-invisible employer name behind a wordmark: stays in the
+   PDF text layer for search/parsers without occupying layout space. */
+.g-alt { position: absolute; color: #fff; font-size: 4pt; }
+.g-wordmark svg, .g-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }

@@ -37,10 +37,19 @@ const FONT_SETS = {
 };
 
 const THEME_FONTS = {
+  terminal: ['codePro'],
   platform: ['sourceSans', 'codePro', 'mono'],
   ai: ['sourceSans', 'mono'],
   looker: ['sourceSans', 'codePro', 'mono'],
   parser: [],
+  // Prototypes:
+  'proto-a': ['sourceSans'], // reduction — one family only
+  'proto-b': ['sourceSans', 'codePro'], // grid — sans content + mono data column
+  'proto-c': ['sourceSans', 'codePro'], // editorial — sans text + mono braces/display
+  'proto-d': ['sourceSans', 'codePro'], // grid × editorial hybrid
+  // Reimaginings (2026 redesign commission):
+  'reimagine-1': ['roboto', 'mono'], // brutalist poster — Roboto wall + mono data
+  'reimagine-2': ['sourceSans', 'codePro'], // ledger — sans text + mono axis/data
 };
 
 export function fontFaces(theme) {

@@ -1,0 +1,188 @@
+/* =======================================================================
+   PROTOTYPE C — EDITORIAL / EXPRESSIVE
+   Strong scale contrast: a big quiet hero, small dense body. The braces
+   identity is AMPLIFIED into the layout — giant emerald braces as structural
+   section markers, not sprinkled punctuation. Emerald soul kept alive.
+   Deliberate unequal distribution: the page's surplus is spread as
+   proportional inter-section and inter-entry air, so mass fills the page
+   evenly with no stranded hole and only a modest trailing margin.
+   Own DOM (.ed-page). id-braces is on, but the chip boxes are removed.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-display: 'Source Code Pro', monospace;
+  --ink: #20272e;
+  --ink-strong: #10151a;
+  --muted: #6a737e;
+  --accent: #00A388;
+  --accent-deep: #00735f;
+
+  /* Centered flagship-style header ("more like the original latex version"):
+     { EUGENE : LERMAN } at 24pt in the display mono, wearing C's emerald.
+     The brace/colon metrics (0.5em / 0.57em word gaps, -0.048em / -0.07em
+     lifts) live in base.css and were pixel-measured at this exact size and
+     face for the flagship — reused, then re-verified for this theme. */
+  --font-name: var(--font-display);
+  --fs-name: 24pt;
+  --ls-name: 0.3pt;
+  --name-brace: var(--accent);
+  --name-first: #93a39e;
+  --fw-name-first: 200;
+  --font-title: var(--font-display);
+  --fs-title: 10pt;
+  --ls-title: 2.4pt;
+  /* 7.5pt, with tighter seps below: at 7.8pt / 1.6mm seps the six-item
+     contact run measures 175.7mm against a 170mm measure — the centered
+     nowrap line overflowed the right margin by 6mm (measured at 300dpi). */
+  --fs-contacts: 7.5pt;
+}
+
+body.proto-c { font-family: var(--font-body); color: var(--ink); }
+
+.ed-page {
+  padding: 15mm 20mm 14mm;
+  min-height: 296.5mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- HEADER: centered, flagship structure, emerald voice ---- */
+.ed-page > header { text-align: center; }
+.ed-page > header .title {
+  color: var(--accent-deep);
+  margin-top: 1.2mm;
+  /* Trailing letter-spacing after the last glyph would shift the centered
+     line half a track left; pad the same amount on the left to re-center. */
+  padding-left: var(--ls-title);
+}
+.ed-page > header .contacts { margin-top: 1.4mm; }
+.ed-page > header .contacts .sep { margin: 0 1.2mm; }
+/* The colon keeps C's emerald — the identity's pivot glyph. */
+.proto-c h1 .nc { color: var(--accent); }
+
+/* The intro stays the display moment — the one big quiet line of scale
+   contrast — now a centered block under the centered header. */
+.ed-intro {
+  margin: 6mm auto 0;
+  max-width: 150mm;
+  font-size: 13pt;
+  font-weight: 300;
+  line-height: 1.34;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* ---- SECTION MARKERS: the braces amplified into big structural glyphs ---- */
+/* Distribution: the page's surplus is spread as proportional inter-section
+   and inter-entry air (see the gaps below) — no pinned footer, no stranded
+   hole between the last entry and Education. */
+/* The 44pt→36pt hero and smaller section markers freed ~4.5mm; it is spent
+   here (and in the hero gaps above) so the page stays evenly filled instead
+   of growing a trailing void. */
+/* Tightened from 8.4mm when the migration/localization bullets grew
+   (~2.4mm overflow absorbed from the section air, not the text). */
+.ed-section { margin-top: 5.8mm; }
+.ed-footer { margin-top: 5.8mm; }
+
+.ed-secrow {
+  display: flex;
+  /* Baseline, not center: box-centering the brace against the h2 box put the
+     glyph ±2px off per instance (box paint positions quantize; text baselines
+     don't). On a shared baseline the brace's offset is purely typographic and
+     renders identically in every section row. */
+  align-items: baseline;
+  gap: 2.3mm;
+  margin-bottom: 5.4mm;
+}
+.ed-brace {
+  font-family: var(--font-display);
+  font-size: 25pt;
+  font-weight: 300;
+  /* Zero line-height: the brace participates in the row via its BASELINE but
+     contributes no box height, so the giant glyph overflows decoratively
+     instead of inflating the row (which pushed the page to two pages). */
+  line-height: 0;
+  color: var(--accent);
+  /* On the shared baseline the 30pt brace sits mostly above the 13pt caps;
+     push it down so its overshoot above the cap-height line equals its reach
+     below the baseline (verified by pixel measurement at 300dpi). */
+  transform: translateY(0.136em);
+}
+.ed-h2 {
+  margin: 0;
+  /* Trailing letter-spacing after the last cap would widen the word→closing-
+     brace gap; cancel it so both brace gaps are optically equal. */
+  margin-right: -3.4pt;
+  font-family: var(--font-display);
+  font-size: 11pt;
+  font-weight: 500;
+  letter-spacing: 3.4pt;
+  text-transform: uppercase;
+  color: var(--ink-strong);
+  border: none;
+}
+/* A thin rule trailing the heading, editorial-style. Solid colours and a
+   ≥0.75pt height: a 0.5pt semi-transparent box can round to nothing in the
+   PDF rasteriser depending on its fractional y-position.
+   Vertical position: as a baseline-aligned flex item with no text, the rule's
+   BOTTOM edge sits on the shared baseline — its centerline measured 16.5px
+   below the caps' optical centre @300dpi, visibly low against the braces.
+   Lift it so its centerline rides the caps' optical centre (= the braces'
+   centre after their own baseline alignment): half cap-height above the
+   baseline, plus half the rule's own height. Measured at 300dpi. */
+.ed-secrow::after {
+  content: '';
+  flex: 1;
+  height: 0.8pt;
+  background: linear-gradient(90deg, #7ccbbb 0%, #dde8e3 100%);
+  transform: translateY(-3.15pt);
+}
+
+/* ---- BODY: small, dense, tightly grouped (Gestalt proximity) ---- */
+.ed-body { font-size: 8.6pt; }
+.ed-entry { margin-bottom: 4mm; break-inside: avoid; }
+.ed-entry:last-child { margin-bottom: 0; }
+.ed-entry-head { display: flex; align-items: baseline; gap: 2.4mm; }
+.ed-co { font-weight: 700; font-size: 10pt; color: var(--ink-strong); }
+.ed-blurb { font-size: 8pt; color: var(--muted); }
+.ed-loc { margin-left: auto; font-style: italic; color: var(--accent-deep); font-size: 8pt; white-space: nowrap; }
+
+.ed-role-block + .ed-role-block { margin-top: 3.2mm; }
+.ed-role-row { display: flex; align-items: baseline; justify-content: space-between; margin-top: 0.6mm; }
+.ed-role { font-weight: 600; font-size: 8.8pt; color: var(--accent-deep); font-variant: small-caps; letter-spacing: 0.4pt; }
+.ed-dates { font-family: var(--font-display); font-size: 7.6pt; color: var(--muted); letter-spacing: -0.2pt; }
+
+/* At-a-glance summary between the role line and its bullets: subordinate to
+   the role, distinct from the bullets — italic, muted, no marker. */
+.ed-summary {
+  margin-top: 0.5mm;
+  font-size: 8.2pt;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.ed-body ul { margin: 1.4mm 0 0; padding-left: 3.6mm; }
+.ed-body li { margin-bottom: 1.1mm; line-height: 1.38; }
+.ed-body li:last-child { margin-bottom: 0; }
+.ed-body li::marker { color: var(--accent); }
+
+/* Tech terms keep an emphasis but LOSE the chip boxes — no peppering. */
+.proto-c.id-braces code {
+  background: none;
+  color: var(--accent-deep);
+  font-family: var(--font-display);
+  font-size: 92%;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ---- footer: education + publication on two tidy lines ---- */
+.ed-edu { display: flex; align-items: baseline; gap: 2.6mm; font-size: 8.8pt; }
+.ed-degree { font-weight: 600; color: var(--ink-strong); }
+.ed-school { color: var(--muted); }
+.ed-edu .ed-dates { margin-left: auto; }
+.ed-pub { margin-top: 2mm; display: flex; align-items: baseline; gap: 2.6mm; font-size: 8.2pt; }
+.ed-pub-title { color: var(--ink); font-weight: 500; }
+.ed-pub-meta { margin-left: auto; color: var(--muted); font-style: italic; white-space: nowrap; }
+.ed-pub-authors { margin-top: 0.8mm; font-size: 7.6pt; color: var(--muted); letter-spacing: 0.1pt; }

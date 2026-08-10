@@ -5,6 +5,8 @@
    tight end of every gap range. Gap hierarchy stays monotonic:
    bullet (1.5pt) < role→bullets (3pt) < entry (8pt) < section (12pt). */
 @page { size: A4; margin: 0; }
+/* Contact links are live in the PDF but dress as plain text. */
+a { color: inherit; text-decoration: none; }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
@@ -76,23 +78,46 @@ h1 .nb {
   font-weight: var(--fw-name-brace, 700);
   color: var(--name-brace, var(--ink-strong, var(--ink)));
   /* Mono braces center on the x-height; against the all-caps name they sit
-     visibly low — lift them to center on the caps (same fix as h2 .hb). */
-  position: relative;
-  top: var(--nb-nudge, -0.06em);
+     visibly low — lift them to center on the caps (same fix as h2 .hb).
+     inline-block + transform, NOT position:relative — relative offsets snap
+     to whole CSS pixels in Chromium's print output (±1.5px lottery @300dpi
+     per instance); transforms stay continuous. Value verified by pixel
+     measurement: brace overshoot above cap-top == below baseline. */
+  display: inline-block;
+  transform: translateY(var(--nb-nudge, -0.048em));
 }
 h1 .nb:first-child { margin-right: 0.5em; }
-h1 .nb:last-child { margin-left: 0.5em; }
-h1 .nc { font-weight: 400; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); margin: 0 0.2em 0 0.26em; }
+/* +0.07em vs the opening side: the bold N of LERMAN's right sidebearing is
+   tighter than the light E's left sidebearing — measured at 300dpi, equal
+   margins left the closing gap 7px narrower. Sidebearings are a property of
+   the face, so themes with a different name font tune --nb-close-gap. */
+h1 .nb:last-child { margin-left: var(--nb-close-gap, 0.57em); }
+h1 .nc {
+  font-weight: 400;
+  color: var(--ink-strong, var(--ink));
+  letter-spacing: var(--ls-name, 0);
+  margin: 0 0.2em 0 0.26em;
+  /* The mono colon's two dots straddle the x-height and read low against
+     caps; lift them to the caps' optical middle (measured, see .nb). */
+  display: inline-block;
+  transform: translateY(var(--nc-nudge, -0.07em));
+}
 h1 .nf { font-weight: var(--fw-name-first, 300); color: var(--name-first, #999); letter-spacing: var(--ls-name, 0); }
 h1 .nl { font-weight: 700; color: var(--ink-strong, var(--ink)); letter-spacing: var(--ls-name, 0); }
 /* Braces optically sit a hair low next to uppercase heading text (mono braces
-   center on the x-height); nudge them up to align with the caps. */
+   center on the x-height); nudge them up to align with the caps. inline-block
+   + transform to escape CSS-pixel snapping (see h1 .nb). The word gaps are
+   margins (the old literal spaces would be dropped by inline-block); h2's
+   letter-spacing trails BOTH the opening brace and the word's last letter
+   equally, so equal margins keep the two gaps equal — measured at 300dpi. */
 h2 .hb {
   font-weight: 400;
   color: var(--h2-brace, var(--ink-strong, var(--ink)));
-  position: relative;
-  top: var(--hb-nudge, -0.055em);
+  display: inline-block;
+  transform: translateY(var(--hb-nudge, -0.046em));
 }
+h2 .hb:first-child { margin-right: var(--hb-gap, 0.6em); }
+h2 .hb:last-child { margin-left: var(--hb-gap, 0.6em); }
 h2 .hc { color: var(--accent); }
 h2 .hw { position: relative; }
 
@@ -162,6 +187,17 @@ h2 {
 .entry-head > .loc { color: var(--muted, #5a6470); font-size: var(--fs-small, 8pt); white-space: nowrap; }
 .id-braces .entry-head > .loc { color: var(--accent); font-style: italic; }
 .entry .role-block + .role-block { margin-top: 2.4mm; }
+
+/* One-line at-a-glance summary between the role line and its bullets:
+   subordinate to the role (quieter ink, italic) but clearly not a bullet
+   (no marker, full measure, tighter to the role than to the list). */
+.summary {
+  margin-top: var(--summary-gap, 0.5mm);
+  font-size: var(--fs-summary, 8.6pt);
+  font-style: var(--summary-style, italic);
+  color: var(--summary-ink, var(--muted, #5a6470));
+  line-height: 1.28;
+}
 
 /* role-line→first-bullet 3pt; hanging indent ~3.2mm, wrapped lines align
    to the text; bullet-to-bullet +1.5pt beyond leading. */
@@ -290,3 +326,6 @@ h2 {
 .cols aside .edu-row .degree,
 .cols aside .edu-row .school,
 .cols aside .edu-row .dates { display: block; margin: 0 0 0.6mm; }
+/* Derived tenure appended to date ranges ("· 3 yr 3 mo") — quieter than the
+   range itself so it informs without adding noise. */
+.dur { color: var(--muted, #5a6470); opacity: 0.85; }

@@ -1,0 +1,211 @@
+/* =======================================================================
+   REIMAGINE 1 — THE BROADSHEET (brutalist Swiss poster)
+   A full-bleed ink slab with the name letterspaced edge to edge, one hot
+   accent (signal orange), numbered sections under thick rules, slash
+   markers. Type as image; Roboto + Roboto Mono; the emerald braces
+   identity is deliberately absent — this design argues the wall of type
+   IS the identity.
+   Inspiration register: International Typographic Style posters
+   (Müller-Brockmann's Tonhalle series), 2026 "tactile brutalism" and
+   type-led walls on awwwards, Technical Mono / code-brutalism meta.
+   ======================================================================= */
+:root {
+  --font-body: 'Roboto', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  --ink: #111111;
+  --ink-strong: #000000;
+  --paper: #ffffff;
+  --slab: #0d0d0d;
+  --accent: #ff3b00;
+  --muted: #6b6b6b;
+  --rule: #111111;
+  --fs: 8.6pt;
+}
+
+body.reimagine-1 { font-family: var(--font-body); color: var(--ink); }
+
+.r1-page { padding: 0; background: var(--paper); }
+
+/* ---- hero: the ink slab ---- */
+.r1-hero {
+  background: var(--slab);
+  color: #fff;
+  padding: 7mm 14mm 6mm;
+}
+.r1-topline {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 6.8pt;
+  letter-spacing: 1.6pt;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  border-bottom: 0.4pt solid rgba(255, 255, 255, 0.28);
+  padding-bottom: 2mm;
+}
+
+/* The name: each word letterspaced to the full measure via per-glyph flex
+   distribution — the Swiss-poster "type fills the field" move. */
+.r1-name { margin: 3.8mm 0 0; line-height: 1; }
+.r1-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 56pt;
+  font-weight: 700;
+  line-height: 0.92;
+}
+.r1-first { color: #fff; }
+/* LERMAN as outline type: fill drops out, the stroke carries it. */
+.r1-last {
+  color: transparent;
+  -webkit-text-stroke: 0.32mm #fff;
+}
+/* Intact name for the text layer only — zero footprint, slab-on-slab
+   invisible (same trick as the grid layout's .g-alt; a transparent fill
+   would be dropped from the PDF text layer, a painted one survives). */
+.r1-alt { position: absolute; color: var(--slab); font-size: 4pt; letter-spacing: 0; -webkit-text-stroke: 0; }
+
+/* Title and contacts as two full-measure mono rows: the title tracked out
+   under the name, then the four coordinates justified edge to edge — the
+   same field-filling logic as the letterspaced name above. */
+.r1-titlerow {
+  margin-top: 2.8mm;
+  border-top: 0.4pt solid rgba(255, 255, 255, 0.28);
+  padding-top: 1.6mm;
+}
+.r1-title {
+  font-family: var(--font-mono);
+  font-size: 8.4pt;
+  font-weight: 500;
+  letter-spacing: 2.4pt;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.r1-contacts {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5mm;
+  font-family: var(--font-mono);
+  font-size: 6.8pt;
+  color: rgba(255, 255, 255, 0.78);
+  white-space: nowrap;
+}
+
+/* ---- body ---- */
+.r1-body { padding: 4.5mm 14mm 7mm; }
+
+.r1-intro {
+  margin: 0 0 3.6mm;
+  max-width: 168mm;
+  font-size: 9.4pt;
+  font-weight: 300;
+  line-height: 1.38;
+  color: var(--ink-strong);
+}
+
+/* Numbered section heads under a thick rule — poster wayfinding. */
+.r1-h {
+  display: flex;
+  align-items: baseline;
+  gap: 3.4mm;
+  border-top: 1.6pt solid var(--rule);
+  padding-top: 1.3mm;
+  margin: 0 0 2.4mm;
+}
+.r1-hn {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: var(--accent);
+}
+.r1-hw {
+  font-size: 12.5pt;
+  font-weight: 700;
+  letter-spacing: 2.6pt;
+  color: var(--ink-strong);
+}
+
+/* ---- entries ---- */
+.r1-entry { margin-bottom: 2.8mm; break-inside: avoid; }
+.r1-entry:last-child { margin-bottom: 0; }
+.r1-erow {
+  display: flex;
+  align-items: baseline;
+  gap: 2.6mm;
+  line-height: 1.15;
+}
+.r1-co {
+  font-size: 10.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6pt;
+  color: var(--ink-strong);
+}
+.r1-blurb { font-size: 7.6pt; color: var(--muted); }
+.r1-erow .r1-dates { margin-left: auto; }
+.r1-dates {
+  font-family: var(--font-mono);
+  font-size: 7pt;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.r1-dur { color: var(--accent); }
+.r1-rolerow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.6mm;
+  line-height: 1.15;
+}
+.r1-role { font-size: 9pt; font-weight: 500; color: var(--ink-strong); }
+.r1-roleblock + .r1-roleblock { margin-top: 2mm; }
+.r1-summary {
+  margin-top: 0.4mm;
+  font-size: 8.2pt;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.r1-entry ul { margin: 1.2mm 0 0; padding-left: 4.2mm; list-style: none; }
+.r1-entry li {
+  position: relative;
+  margin-bottom: 0.5mm;
+  font-size: 8.5pt;
+  line-height: 1.28;
+}
+.r1-entry li:last-child { margin-bottom: 0; }
+.r1-entry li::before {
+  content: '/';
+  position: absolute;
+  left: -4.2mm;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+/* Tech terms: bare mono, ink — no chips, no colour. The accent stays
+   wayfinding-only. */
+.reimagine-1 code {
+  font-family: var(--font-mono);
+  font-size: 88%;
+  color: var(--ink-strong);
+  background: none;
+  padding: 0;
+}
+
+/* ---- background footer: three columns ---- */
+.r1-bg { margin-top: 3.2mm; }
+.r1-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 7mm;
+}
+.r1-collabel {
+  font-family: var(--font-mono);
+  font-size: 6.6pt;
+  letter-spacing: 1.4pt;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2mm;
+}
+.r1-colmain { font-size: 8.4pt; font-weight: 500; line-height: 1.3; color: var(--ink-strong); }
+.r1-colmeta { font-size: 7.6pt; color: var(--muted); margin-top: 0.5mm; line-height: 1.3; }

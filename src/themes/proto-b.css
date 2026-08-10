@@ -1,0 +1,459 @@
+/* =======================================================================
+   PROTOTYPE B — STRICT MODERNIST GRID
+   Josef Müller-Brockmann. A hard left meta-column (company / location /
+   dates as a data column) against a right content column. Visible
+   structural asymmetry, one baseline rhythm, ONE functional accent
+   (emerald) used only for section labels — signal, never decoration.
+   The braces identity joins the grid as quiet structure: mono braces in
+   the muted data-column ink around the name and section labels, never in
+   the accent. Promoted to the canonical variant: it took C's centered
+   contact line and C's boxless emerald-mono tech chips on the way up.
+   Own DOM (.grid-page); base.css is mostly bypassed.
+   ======================================================================= */
+:root {
+  --font-body: 'Source Sans Pro', sans-serif;
+  --font-data: 'Source Code Pro', monospace;
+  --ink: #1c2229;
+  --ink-strong: #0f1317;
+  --muted: #6b7480;
+  --accent: #00A388;
+  --accent-deep: #00735f; /* C's deep emerald — carried into the title line */
+  --rule: #d3dbe1;
+  --fs: 9pt;
+}
+
+body.proto-b { color: var(--ink); font-family: var(--font-body); }
+
+/* Two-column grid module, repeated everywhere. Left = data, right = content.
+   Sides came in 18mm → 17mm when the ETC section arrived: the wider measure
+   re-wraps the long bullets a line or two shorter, paying for the marker. */
+.grid-page { padding: 14mm 17mm 14mm; }
+
+.g-row {
+  display: grid;
+  grid-template-columns: 40mm 1fr;
+  column-gap: 9mm;
+  align-items: start;
+}
+
+/* ---- header: name + title, centered above the grid ---- */
+.g-header {
+  text-align: center;
+  padding-bottom: var(--gp-header-pad, 3mm);
+  border-bottom: 1pt solid var(--ink-strong);
+}
+.g-header h1 {
+  margin: 0;
+  font-size: 23pt;
+  font-weight: 700;
+  letter-spacing: -0.2pt;
+  color: var(--ink-strong);
+  line-height: 1;
+}
+/* { EUGENE : LERMAN } as structural data: the braces and colon are mono
+   glyphs in the muted data-column ink — the same voice as the dates column —
+   while the words stay sans. The accent is NOT used here; it remains
+   reserved for the functional signals it already marks. Mono braces centre
+   on the x-height, so they get a small lift to centre on the caps
+   (verified by pixel measurement at 300dpi). */
+.g-header h1 .g-nb {
+  font-family: var(--font-data);
+  font-weight: 400;
+  font-size: 88%;
+  color: var(--muted);
+  letter-spacing: 0;
+  display: inline-block;
+  transform: translateY(-0.095em);
+}
+.g-header h1 .g-nb:first-child { margin-right: 0.24em; }
+/* +0.025em vs the opening side: bold N's right sidebearing is tighter than
+   light E's left sidebearing (measured 38px vs 36px at 300dpi). */
+.g-header h1 .g-nb:last-child { margin-left: 0.265em; }
+.g-header h1 .g-nc {
+  font-family: var(--font-data);
+  font-weight: 400;
+  font-size: 88%;
+  color: var(--muted);
+  letter-spacing: 0;
+  margin: 0 0.15em 0 0.19em;
+  /* Lifted further than the braces: the colon's dot pair must centre on the
+     caps' optical middle, not the x-height (measured at 300dpi). */
+  display: inline-block;
+  transform: translateY(-0.125em);
+}
+.g-header h1 .g-nf { font-weight: 300; color: var(--ink); }
+.g-header h1 .g-nl { font-weight: 700; color: var(--ink-strong); }
+.g-title {
+  margin-top: 1.6mm;
+  font-family: var(--font-data);
+  font-size: 8.5pt;
+  letter-spacing: 2pt;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  /* Trailing letter-spacing after the last glyph would shift the centered
+     line half a track left; pad the same amount on the left to re-center. */
+  padding-left: 2pt;
+}
+/* Contacts organized C's way: one centered sans line under the title, all
+   six items separated by interpuncts. Sans (not the data mono) so the run
+   fits the measure on a single line; the seps take the accent — the same
+   functional-signal role it plays on the section labels. */
+.g-contactline {
+  margin-top: 1.5mm;
+  /* 7.5pt / 1.2mm seps: at C's 7.8pt / 1.6mm the six-item run measures
+     175.7mm — wider than the 174mm measure, so the centered nowrap line
+     overflowed the right margin (measured at 300dpi). This sizes the run
+     to ~166mm, ~4mm clear of each margin. */
+  font-size: 7.5pt;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.g-contactline .sep { margin: 0 1.2mm; color: var(--accent); }
+
+/* ---- intro: a single full-measure lead under the header rule ---- */
+.intro.g-intro {
+  margin: var(--gp-intro-mt, 4.4mm) 0 0;
+  max-width: 160mm;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+/* ---- section marker: a full-width hairline row, label in the data column ---- */
+.g-section { margin-top: var(--gp-section-mt, 5.2mm); }
+.g-secmark {
+  font-family: var(--font-data);
+  font-size: 8pt;
+  letter-spacing: 2.5pt;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 1.5mm;
+  margin-bottom: var(--gp-secmark-mb, 3.6mm);
+  border-bottom: 0.5pt solid var(--rule);
+}
+/* { EXPERIENCE } — the braces join the section mark as quiet structural
+   glyphs in the muted data ink; the word keeps the accent (the one
+   functional colour, exactly where it already was). The word's tracking
+   (2.5pt) trails its last letter, which would widen the word→closing-brace
+   gap; the word's right margin subtracts it so both brace gaps are equal
+   (verified by pixel measurement at 300dpi). */
+.g-secmark .g-sb {
+  color: var(--muted);
+  letter-spacing: 0;
+  font-weight: 400;
+  /* inline-block + transform, not position:relative — relative offsets snap
+     to whole CSS px in print output and this lift is half a CSS px. */
+  display: inline-block;
+  transform: translateY(-0.047em);
+}
+.g-secmark .g-sw { margin: 0 calc(0.42em - 2.5pt) 0 0.42em; }
+
+/* ---- how-I-work row (AI variant): prose as content, harness roster as
+   data. The roster reuses the dates-column voice — stacked mono lines. ---- */
+.g-harness {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.8mm;
+}
+.g-harness div { white-space: nowrap; }
+.g-how { margin: 0; font-size: 9pt; line-height: 1.38; color: var(--ink); }
+
+/* The BACKGROUND object — the section set as code, prettier-exploded:
+   one property per line, two-space indents (literal spaces under
+   white-space: pre-wrap, mono throughout, so indentation is exact),
+   trailing commas. The ~10-line vertical cost is paid horizontally: two
+   side-by-side columns, education+publications left, languages+offHours
+   right. Registers: emerald top-level keys, muted scaffolding, ink
+   facts. Small type (a colophon, not body matter), no rules or boxes. */
+.g-code2 {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  /* Spread the two columns across the full measure instead of hugging
+     the left margin — the right column's closers land near the right
+     edge, so the section occupies the page's width like every other. */
+  justify-content: space-between;
+  padding-right: 6mm;
+  font-family: var(--font-data);
+  font-size: 6.8pt;
+  letter-spacing: -0.2pt;
+  line-height: 1.28;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+.g-code2 .ck1 { color: var(--accent-deep); }
+.g-code2 .cp { color: var(--muted); }
+.g-code2 .ck2 { color: var(--muted); }
+.g-code2 .cs { color: var(--ink); }
+/* Trailing comments: a shade lighter than the scaffolding — an aside,
+   not a member. */
+.g-code2 .cc { color: var(--muted); opacity: 0.85; }
+/* Air between the right column's two stacked literals — half a line, not
+   a full blank line (the page pays for every millimetre here). */
+.g-c2gap { margin-top: 1mm; }
+.g-bg .g-secmark { padding-bottom: 0.7mm; margin-bottom: 1.1mm; }
+/* The BGU mark rides inside a quoted string — smaller than on the 9pt
+   company lines, same optical role. */
+.g-code2 .g-logo svg { height: 2.4mm; vertical-align: -0.35mm; margin-right: 0.7mm; }
+
+/* ---- entry rows ---- */
+.g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
+.g-section .g-row:last-child { margin-bottom: 0; }
+/* A promotion row within the same employer sits tighter to its parent, so the
+   lone dates block reads bound to the company above rather than floating. */
+.g-section .g-row.g-cont { margin-top: -1.6mm; }
+
+/* The meta column reads as TWO clusters (Gestalt proximity): an identity
+   cluster (bold name + italic blurb — the prose voice, same as the
+   summaries) and a data cluster (micro-caps location + mono dates), with
+   air between them. Before this, blurb/location/dates ran as one muted
+   stack and the location read as blurb continuation. */
+.g-meta { line-height: 1.3; }
+.g-co { font-weight: 700; font-size: 9pt; color: var(--ink-strong); }
+.g-mblurb { font-size: 7.4pt; font-style: italic; color: var(--muted); margin-top: 0.5mm; line-height: 1.35; }
+/* Geography in the label voice: letterspaced micro caps (caps at small
+   sizes need the extra 5–12% tracking — Butterick). Shared with the
+   BACKGROUND ledger labels so the page has ONE label style. */
+.g-loc {
+  font-size: 6.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.7pt;
+  color: var(--muted);
+  margin-top: 1.2mm;
+}
+.g-dates {
+  display: block;
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  color: var(--muted);
+  margin-top: 1mm;
+  letter-spacing: -0.2pt;
+}
+/* Tenure rides inline after the compact range ("Dec 22 – Feb 26 · 3y 3m"):
+   the shortened years buy back the width the 40mm column lacked at full
+   length, and the tenure stays a shade quieter than the range. */
+.g-dur { opacity: 0.85; }
+
+/* At-a-glance summary between role and bullets: quieter than the role,
+   distinct from the bullets (italic, no marker, tight to the role). */
+.g-summary {
+  margin-top: 0.4mm;
+  font-size: 8.2pt;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.g-content { }
+.g-role {
+  font-weight: 600;
+  font-size: 9.5pt;
+  color: var(--ink-strong);
+  margin-bottom: 0.4mm;
+}
+.g-content ul { margin: 1.6mm 0 0; padding-left: 3.6mm; }
+.g-content li { margin-bottom: var(--gp-li-mb, 0.7mm); line-height: var(--gp-lh, 1.3); }
+.g-content li:last-child { margin-bottom: 0; }
+.g-content li::marker { color: var(--accent); }
+
+/* Tech terms in bullets get C's chip treatment — the data mono in the deep
+   emerald, no boxes. Subtle enough not to fight the grid, distinct enough
+   to read as terms of art rather than prose. */
+.proto-b code {
+  font-family: var(--font-data);
+  font-size: 92%;
+  color: var(--accent-deep);
+  background: none;
+  padding: 0;
+}
+
+/* ---- education / publications reuse the same module ----
+   Journal + year are data (meta column); title and the authors line are
+   content, stacked on their own lines — never one crammed full-width run. */
+.g-pubtitle { font-weight: 600; font-size: 9pt; color: var(--ink-strong); }
+.g-pubmeta { font-size: 7.8pt; color: var(--muted); margin-top: 0.7mm; line-height: 1.35; }
+
+/* Density package for the fuller variants (full-stack's longer bullet cut,
+   the AI variant's how-I-work section): the canonical page-filling rhythm
+   overflows A4 with ~11mm more content, so these run tighter across the
+   whole vertical hierarchy instead of cutting bullets. */
+.g-dense {
+  --gp-header-pad: 1.9mm;
+  --gp-intro-mt: 2.4mm;
+  --gp-section-mt: 3.1mm;
+  --gp-secmark-mb: 2.1mm;
+  --gp-row-mb: 2mm;
+  --gp-li-mb: 0.25mm;
+  --gp-lh: 1.24;
+}
+.g-dense .grid-page { padding-top: 10.5mm; padding-bottom: 6.6mm; }
+.g-dense .g-content ul { margin-top: 1.15mm; }
+.g-dense .g-header h1 { font-size: 22pt; }
+
+/* Middle density: the full-stack cut carries ~11mm more than the canonical
+   rhythm holds but ~12mm less than g-dense assumes; halfway lands it with
+   the same small trailing float as the others (measured at 300dpi). */
+.g-mid {
+  --gp-header-pad: 2.8mm;
+  --gp-intro-mt: 4.1mm;
+  --gp-section-mt: 4.9mm;
+  --gp-secmark-mb: 3.3mm;
+  --gp-row-mb: 3.8mm;
+  --gp-li-mb: 0.6mm;
+  --gp-lh: 1.29;
+}
+.g-mid .g-content ul { margin-top: 1.45mm; }
+
+/* g-dense refinements: how-section leading (the gap variables live in the
+   main .g-dense block above — keep them there, later blocks win the
+   cascade). */
+.g-dense .g-title { margin-top: 1.3mm; }
+.g-dense .g-contactline { margin-top: 1.2mm; }
+.g-dense .intro.g-intro { line-height: 1.36; }
+.g-dense .g-role { margin-bottom: 0.25mm; }
+.g-dense .g-harness { line-height: 1.3; }
+.g-dense .g-how { line-height: 1.3; }
+
+/* Company logos. Marks sit before the name at slightly over cap height;
+   wordmarks REPLACE the printed name, sized to the company line. Both take
+   the surrounding ink when the asset is a currentColor SVG; PNG assets
+   keep their own colors. */
+.g-logo { display: inline-block; }
+/* Circular marks read smaller than square ones at equal height; the BGU
+   disc gets the usual optical compensation. */
+.g-logo.g-lg-bgu svg { height: 3.4mm; vertical-align: -0.55mm; }
+.g-logo svg, .g-logo img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
+.g-wordmark { display: inline-block; }
+/* Wordmark sizing is derived from each file's internal metrics so all
+   three read at the same letter height as the 9pt bold company names
+   (cap/x-height ~2.3mm), with baselines on the text baseline. */
+.g-wordmark.g-lg-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
+.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
+.g-wordmark.g-lg-wix svg { height: 2.4mm; vertical-align: 0; }
+/* Selectable-but-invisible employer name behind a wordmark: stays in the
+   PDF text layer for search/parsers without occupying layout space. */
+.g-alt { position: absolute; color: #fff; font-size: 4pt; }
+.g-wordmark svg, .g-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }
+
+/* ---- BACKGROUND experiments (bg-a/b/c) ----
+   Three reinterpretations of the canonical code block, selected by the
+   variant's bgStyle. All classes carry the bgx- prefix; nothing here
+   touches the canonical .g-code2 path or the shared .g-dense variables.
+   Palette and faces stay the page's own: emerald/deep-emerald accents,
+   Source Sans body, Source Code Pro data. */
+
+/* A — THE SESSION. A two-column terminal transcript, printed the way a
+   terminal actually prints: a starship-style › prompt in emerald, the
+   command VERB in deep emerald (zsh-syntax-highlighting lights valid
+   commands green), arguments and all output in the default-foreground
+   ink. Terminal grid discipline: no letter-spacing tricks, one size for
+   command and output, no typographic separators in the output. */
+.bgx-term {
+  white-space: pre-wrap; /* JSON indents are literal spaces */
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  padding-right: 6mm;
+  font-family: var(--font-data);
+  font-size: 6.9pt;
+  letter-spacing: 0;
+  line-height: 1.28;
+  color: var(--ink);
+}
+.bgx-cmd { color: var(--ink); }
+.bgx-cmd a { color: inherit; text-decoration: none; }
+.bgx-cmd + .bgx-cmd, .bgx-out + .bgx-cmd { margin-top: 1mm; }
+/* › stands in for starship's ❯ (absent from Source Code Pro); bold +
+   a small optical raise so it reads as the heavy prompt glyph. */
+.bgx-prompt {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 115%;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.02em);
+}
+.bgx-verb { color: var(--accent-deep); font-weight: 600; }
+/* jq's colored JSON output: keys deep emerald, strings ink, structural
+   punctuation muted. Colors belong to whole tokens, terminal-style. */
+.bgx-jk { color: var(--accent-deep); }
+.bgx-js { color: var(--ink); }
+.bgx-jp { color: var(--muted); }
+.bgx-out { color: var(--ink); }
+.bgx-out a { color: inherit; text-decoration: none; }
+
+/* B — THE COLOPHON. Keyless ledger: two dated facts with hairline dot
+   leaders out to right-aligned mono years (the dates voice), then the
+   two undated facts in a quieter register, left to explain themselves. */
+.bgx-ledger { max-width: 174mm; }
+.bgx-lrow { display: flex; align-items: baseline; margin-bottom: 1.7mm; }
+.bgx-fact { font-size: 8.6pt; color: var(--ink); white-space: nowrap; }
+.bgx-fact .bgx-strong, .bgx-cval .bgx-strong { font-weight: 600; color: var(--ink-strong); }
+.bgx-fact a, .bgx-cval a { color: inherit; text-decoration: none; }
+.bgx-dim { color: var(--muted); }
+.bgx-lead {
+  flex: 1;
+  margin: 0 2.2mm;
+  border-bottom: 0.5pt dotted var(--rule);
+  transform: translateY(-0.55mm);
+}
+.bgx-yr {
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.bgx-quiet { font-size: 8.2pt; color: var(--ink); margin-top: 1.1mm; }
+/* The undated pair sits a half-step off the dated ledger above it. */
+.bgx-lrow + .bgx-quiet { margin-top: 2.1mm; }
+.bgx-sep { margin: 0 1.6mm; color: var(--accent); }
+.bgx-lang { color: var(--ink); }
+.bgx-level { color: var(--muted); }
+/* Off-hours items whisper the data voice without becoming code again. */
+.bgx-off { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; color: var(--ink); }
+
+/* C — THE MANIFEST. The keys survive as the page's own meta-column
+   labels (the g-loc micro-caps voice) with the year beneath in the
+   mono dates voice — BACKGROUND finally set on the exact grid module
+   EXPERIENCE uses. Facts run as single content lines. */
+.bgx-crow {
+  display: grid;
+  grid-template-columns: 40mm 1fr;
+  column-gap: 9mm;
+  align-items: baseline;
+  margin-bottom: 1.9mm;
+}
+.bgx-crow:last-child { margin-bottom: 0; }
+.bgx-cmeta { display: flex; align-items: baseline; }
+.bgx-key {
+  font-size: 6.8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.7pt;
+  color: var(--muted);
+}
+.bgx-cyr {
+  margin-left: auto;
+  font-family: var(--font-data);
+  font-size: 7.6pt;
+  letter-spacing: -0.2pt;
+  color: var(--muted);
+}
+.bgx-cval { font-size: 8.6pt; color: var(--ink); line-height: 1.3; }
+.bgx-c .bgx-off { color: var(--accent-deep); }
+
+
+
+
+/* The STACK row's subdivision: three ledger lines inside one row, each
+   led by a fixed-width mono sub-label so the chip groups share a left
+   edge; the chips keep the boxless deep-emerald mono voice. */
+.bgx-srow { line-height: 1.5; }
+.bgx-sub {
+  display: inline-block;
+  width: 16mm;
+  font-family: var(--font-data);
+  font-size: 7.2pt;
+  color: var(--muted);
+}
