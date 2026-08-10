@@ -1033,3 +1033,18 @@ Monospace Web) produced a ranked refit list; applied in order of impact:
 - Vertical rhythm grid-snapped: line box = 11.4pt, block gaps exactly
   one line box (The Monospace Web's whole-line-unit rule — grid
   discipline, not extra leading, is what "clinical" is made of).
+
+### §18 addendum 4 · Content parity restored (owner decree)
+
+The clinical cuts (4 bullets, summaries) were the designer trading the
+owner's content for calm — wrong trade, reverted. The Shell now carries
+the canonical's full bullet set and summaries; the terminal look does
+the calming, not omissions. Company artwork returned to the job headers
+at terminal scale (proto-b's metric sizes x0.8; kitty/iTerm render
+images, so the fiction holds). background.yml tightened: 13ch key
+column, and the years leave the prose for the page's shared right axis
+(same discipline as the job headers) — the "loose" two-space float is
+gone. Fit at 7pt/1.34 line-box rhythm; the page became FIXED-height
+(min-height let hairline rounding push the window border onto page 2),
+with the resting cursor as the clipping canary. Blurbs remain the one
+non-parity item: the Shell has no meta column to hold them.

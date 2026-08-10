@@ -1181,7 +1181,10 @@ function TermJob({ section }) {
       <div className="t-frule">experience/{tJobSlug(section)}</div>
       <div className="t-out t-jobhead">
         <span className="t-role">
-          {job.role} @ {job.company.split('.')[0]}
+          {/* Wordmarks replace the printed name (hidden text layer keeps
+              it searchable); marks sit before it — terminal-scale sizes
+              live in terminal.css. Kitty/iTerm render images; so do we. */}
+          {job.role} @ <CompanyName id={job.company} text={job.company.split('.')[0]} />
         </span>
         <span className="t-jobmeta">
           {shortRange(job.dates)}
@@ -1190,6 +1193,11 @@ function TermJob({ section }) {
           {job.location.toLowerCase()}
         </span>
       </div>
+      {job.summary && (
+        <div className="t-out t-summary">
+          <NoBreakCompounds text={job.summary} />
+        </div>
+      )}
       <ul className="t-bullets">
         {section.bullets.map((id) => (
           <li key={id}>
@@ -1207,7 +1215,7 @@ function TerminalPage({ variant }) {
   // background.yml: fastfetch-style aligned key/value rows — the same
   // facts the jq blocks printed, at half the glyph count (braces and
   // quotes were syntax cosplay carrying zero information).
-  const yKey = (k) => (k + ':').padEnd(14, '\u00a0');
+  const yKey = (k) => (k + ':').padEnd(13, '\u00a0');
   return (
     <div className="page t-page">
       <header className="t-header">
@@ -1242,21 +1250,26 @@ function TerminalPage({ variant }) {
           </TCmd>
           <TCmd verb="cat" args="background.yml">
             <div className="t-out t-yaml">
-              <div>
-                <span className="t-ykey">{yKey('education')}</span>
-                {education.degreeShort ?? education.degree}
-                {'  '}
-                {education.schoolShort ?? education.school}
-                {'  '}
-                {bgEduYears()}
+              {/* Years leave the prose and land on the page's shared
+                  right axis, exactly like the job headers — the loose
+                  two-space fields tighten into left fact + right datum. */}
+              <div className="t-yrow">
+                <span>
+                  <span className="t-ykey">{yKey('education')}</span>
+                  {education.degreeShort ?? education.degree}
+                  {'  '}
+                  {education.schoolShort ?? education.school}
+                </span>
+                <span className="t-jobmeta">{bgEduYears()}</span>
               </div>
-              <div>
-                <span className="t-ykey">{yKey('publication')}</span>
-                <a href={publications[0].url}>{bgPubTitle()}</a>
-                {'  '}
-                {publications[0].journal}
-                {'  '}
-                {publications[0].year}
+              <div className="t-yrow">
+                <span>
+                  <span className="t-ykey">{yKey('publication')}</span>
+                  <a href={publications[0].url}>{bgPubTitle()}</a>
+                  {'  '}
+                  {publications[0].journal}
+                </span>
+                <span className="t-jobmeta">{publications[0].year}</span>
               </div>
               <div>
                 <span className="t-ykey">{yKey('languages')}</span>
