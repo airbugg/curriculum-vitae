@@ -20,3 +20,15 @@ Ordering carries emphasis: first item = strongest.
 ## spoken
 
 [ English, Hebrew, Russian (conversational) ]
+
+## stackFrontend
+
+TypeScript, React, React Native, Expo, XState, MobX
+
+## stackBackend
+
+Node.js, Bun, Python, GraphQL
+
+## stackInfra
+
+Kubernetes, Terraform, AWS, Docker, GitHub Actions

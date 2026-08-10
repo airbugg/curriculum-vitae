@@ -379,22 +379,7 @@ function NoBreakCompounds({ text }) {
 // The braces identity joins the grid as quiet structure, not decoration:
 // mono braces in the muted data-column ink around the name and the section
 // labels, with the single functional accent staying exactly where it was.
-function GridSecMark({ children, cmd }) {
-  if (cmd) {
-    // Command markers (owner experiment): the braces stay the page's
-    // identity glyphs; inside them the heading becomes a shell command,
-    // lowercase mono, verb in the zsh valid-command green.
-    const [verb, ...rest] = String(children).split(' ');
-    return (
-      <div className="g-secmark g-seccmd">
-        <span className="g-sb">{'{'}</span>
-        <span className="g-scw">
-          <span className="g-scv">{verb}</span> {rest.join(' ')}
-        </span>
-        <span className="g-sb">{'}'}</span>
-      </div>
-    );
-  }
+function GridSecMark({ children }) {
   return (
     <div className="g-secmark">
       <span className="g-sb">{'{'}</span>
@@ -408,7 +393,7 @@ function GridSecMark({ children, cmd }) {
 // inside the 40mm column instead of stacking.
 const shortRange = (d) => String(d).replace(/\b20(\d\d)\b/g, '$1');
 const compactDur = (d) => d && d.replace(/(\d+) yr/, '$1y').replace(/(\d+) mo/, '$1m');
-function GridEntry({ group, showStack }) {
+function GridEntry({ group }) {
   const first = jobs[group[0].job];
   return (
     <>
@@ -435,20 +420,6 @@ function GridEntry({ group, showStack }) {
                   <span className="g-dur"> ({compactDur(groupDuration(group))})</span>
                 )}
               </span>
-              {/* The workplace stack fills the meta column's dead air
-                  beneath the dates (owner request): one chip per line,
-                  the same emerald-mono voice the bullets' chips speak. */}
-              {i === 0 && showStack && job.stack && (
-                <div className="g-stack">
-                  {String(job.stack)
-                    .split(',')
-                    .map((t) => (
-                      <div key={t}>
-                        <code>{t.trim()}</code>
-                      </div>
-                    ))}
-                </div>
-              )}
             </div>
             <div className="g-content">
               <div className="g-role">{job.role}</div>
@@ -534,9 +505,9 @@ function GridPage({ variant }) {
       )}
 
       <section className="g-section">
-        <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.experience}</GridSecMark>
+        <GridSecMark>{variant.headings.experience}</GridSecMark>
         {groups.map((g) => (
-          <GridEntry key={g[0].job} group={g} showStack={variant.stackChips} />
+          <GridEntry key={g[0].job} group={g} />
         ))}
       </section>
 
@@ -544,9 +515,7 @@ function GridPage({ variant }) {
           (BgCode, extracted verbatim below). The bgStyle discriminator
           selects one of three experimental reinterpretations; undefined
           keeps the canonical output byte-identical. */}
-      {variant.bgStyle === 'yml' ? (
-        <BgStyleYml variant={variant} />
-      ) : variant.bgStyle === 'a' ? (
+      {variant.bgStyle === 'a' ? (
         <BgStyleA variant={variant} />
       ) : variant.bgStyle === 'b' ? (
         <BgStyleB variant={variant} />
@@ -572,7 +541,7 @@ function GridPage({ variant }) {
 function BgCode({ variant }) {
   return (
       <section className="g-section g-bg">
-        <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
+        <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
         <div className="g-code2">
           <div>
             <div>
@@ -1442,60 +1411,12 @@ function BgJson({ k, v, last }) {
   );
 }
 
-// ---- YML: the Shell's background card on the canonical grid ----------
-// One command, four aligned key/value rows, dated rows carrying their
-// years on the page's shared right axis. The prompt+verb are the only
-// shell furniture that crosses into the canonical.
-function BgStyleYml({ variant }) {
-  const yKey = (k) => (k + ':').padEnd(13, '\u00a0');
-  const slugify = (x) => String(x).replace(/ /g, '-');
-  return (
-    <section className="g-section g-bg">
-      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
-      <div className="g-shbg">
-        <div className="g-shcmd">
-          <span className="g-shprompt">{'\u203a'}</span>{' '}
-          <span className="g-shverb">cat</span> background.yml
-        </div>
-        <div className="g-shrow">
-          <span>
-            <span className="g-shkey">{yKey('education')}</span>
-            {education.degreeShort ?? education.degree}
-            {'  '}
-            {education.schoolShort ?? education.school}
-          </span>
-          <span className="g-shyear">{bgEduYears()}</span>
-        </div>
-        <div className="g-shrow">
-          <span>
-            <span className="g-shkey">{yKey('publication')}</span>
-            <a href={publications[0].url}>{bgPubTitle()}</a>
-            {'  '}
-            {publications[0].journal}
-          </span>
-          <span className="g-shyear">{publications[0].year}</span>
-        </div>
-        <div>
-          <span className="g-shkey">{yKey('languages')}</span>
-          {bgLangPairs()
-            .map(([k, v]) => (v === 'native' ? `${k} native` : `${k} (${v})`))
-            .join(', ')}
-        </div>
-        <div>
-          <span className="g-shkey">{yKey('offHours')}</span>
-          {(variant.offHours ?? []).map(slugify).join('  ')}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function BgStyleA({ variant }) {
   const doi = String(publications[0].url).replace(/^https?:\/\//, '');
   const slug = (s) => String(s).replace(/ /g, '-');
   return (
     <section className="g-section g-bg bgx-a">
-      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-term">
         <div>
           <BgTerm verb="jq" args=". education.json">
@@ -1565,7 +1486,7 @@ function BgLedgerRow({ children, year }) {
 function BgStyleB({ variant }) {
   return (
     <section className="g-section g-bg bgx-b">
-      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
       <div className="bgx-ledger">
         <BgLedgerRow year={education.dates}>
           <span className="bgx-strong">{education.degree}</span>
@@ -1623,7 +1544,7 @@ function BgManifestRow({ label, year, children }) {
 function BgStyleC({ variant }) {
   return (
     <section className="g-section g-bg bgx-c">
-      <GridSecMark cmd={variant.cmdMarkers}>{variant.headings.background ?? 'Background'}</GridSecMark>
+      <GridSecMark>{variant.headings.background ?? 'Background'}</GridSecMark>
       <BgManifestRow label="Education" year={bgEduYears()}>
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
@@ -1645,13 +1566,24 @@ function BgStyleC({ variant }) {
           </React.Fragment>
         ))}
       </BgManifestRow>
-      {variant.backgroundStack ? (
+      {variant.stackRows ? (
         <BgManifestRow label="Stack">
-          {variant.backgroundStack.map((t, i) => (
-            <React.Fragment key={t}>
-              {i > 0 && <span className="bgx-sep">·</span>}
-              <span className="bgx-off">{String(t).replace(/ /g, '\u00A0')}</span>
-            </React.Fragment>
+          {/* The stack subdivides in place: three ledger lines inside the
+              one STACK row, each led by a fixed-width muted sub-label so
+              the chip groups align on a shared left edge. */}
+          {variant.stackRows.map(([sub, key]) => (
+            <div className="bgx-srow" key={sub}>
+              <span className="bgx-sub">{sub}</span>
+              {String(skills[key] ?? '')
+                .replace(/[\[\]]/g, '')
+                .split(',')
+                .map((t, i) => (
+                  <React.Fragment key={t}>
+                    {i > 0 && <span className="bgx-sep">·</span>}
+                    <span className="bgx-off">{t.trim().replace(/ /g, '\u00A0')}</span>
+                  </React.Fragment>
+                ))}
+            </div>
           ))}
         </BgManifestRow>
       ) : (

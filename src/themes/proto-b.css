@@ -230,12 +230,6 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
   margin-top: 1mm;
   letter-spacing: -0.2pt;
 }
-/* The stack ledger: per-workplace tech beneath the dates, one term per
-   line in the chips' emerald mono — the data column's answer to "what
-   did he work with here", filling what used to be dead air. */
-.g-stack { margin-top: 1.2mm; line-height: 1.38; }
-.g-stack code { font-size: 6.8pt; }
-
 /* Tenure rides inline after the compact range ("Dec 22 – Feb 26 · 3y 3m"):
    the shortened years buy back the width the 40mm column lacked at full
    length, and the tenure stays a shade quieter than the range. */
@@ -449,55 +443,17 @@ body.proto-b { color: var(--ink); font-family: var(--font-body); }
 .bgx-cval { font-size: 8.6pt; color: var(--ink); line-height: 1.3; }
 .bgx-c .bgx-off { color: var(--accent-deep); }
 
-/* ---- bgStyle 'yml': the Shell's background card on the grid page ----
-   Mono card at the dates' size: › prompt + verb are the only shell
-   furniture crossing into the canonical; keys muted, facts ink, dated
-   rows carry their years flush right on the page's shared axis. */
-.g-shbg {
+
+
+
+/* The STACK row's subdivision: three ledger lines inside one row, each
+   led by a fixed-width mono sub-label so the chip groups share a left
+   edge; the chips keep the boxless deep-emerald mono voice. */
+.bgx-srow { line-height: 1.5; }
+.bgx-sub {
+  display: inline-block;
+  width: 16mm;
   font-family: var(--font-data);
   font-size: 7.2pt;
-  letter-spacing: 0;
-  line-height: 1.5;
-  color: var(--ink);
-  white-space: pre-wrap;
+  color: var(--muted);
 }
-.g-shcmd { color: var(--ink); margin-bottom: 0.6mm; }
-.g-shprompt {
-  color: var(--accent-deep);
-  font-weight: 700;
-  font-size: 115%;
-  line-height: 1;
-  display: inline-block;
-  transform: translateY(-0.02em);
-}
-.g-shverb { color: var(--accent-deep); font-weight: 600; }
-.g-shkey { color: var(--muted); }
-.g-shyear { color: var(--muted); font-size: 93%; }
-.g-shrow { display: flex; justify-content: space-between; align-items: baseline; }
-.g-shbg a { color: inherit; text-decoration: none; }
-
-/* Command markers ({ cat experience.md }): lowercase mono command inside
-   the identity braces — no caps, no tracking (commands are not display
-   type), verb in the zsh valid-command green, path in the marker's
-   accent. */
-.g-seccmd .g-scw {
-  font-family: var(--font-data);
-  letter-spacing: 0;
-  text-transform: none;
-  font-size: 8.2pt;
-  color: var(--accent);
-  margin: 0 0.42em;
-}
-.g-seccmd .g-scv { color: var(--accent-deep); font-weight: 600; }
-
-/* g-mid with tightened page pads and a notch off the rhythm: the
-   Manifest cut sits between tiers — pure g-mid overflows ~10mm. */
-.g-tpad {
-  --gp-row-mb: 2.7mm;
-  --gp-li-mb: 0.45mm;
-  --gp-section-mt: 4.2mm;
-  --gp-intro-mt: 3.4mm;
-  --gp-lh: 1.27;
-}
-.g-tpad .grid-page { padding-top: 11.2mm; padding-bottom: 6mm; }
-.g-tpad .bgx-crow { margin-bottom: 1mm; }

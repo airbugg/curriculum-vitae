@@ -1100,3 +1100,18 @@ Owner-directed third comparison variant (`eugene-lerman-manifest`):
   pads between the two density tiers) — landed after several
   fragmentation knife-edges (the STACK row jumps whole under
   break-inside: avoid).
+
+## §20 · Consolidation: one flagship again (owner decree)
+
+The bake-off closed: chips removed everywhere (the g-stack feature and
+per-job stack: frontmatter deleted), the command-marker experiment
+retired in favor of the classic { EXPERIENCE } form, the -card and
+-manifest comparison variants deleted, and the canonical settled on the
+bg-c Manifest background with one change: OFF HOURS gave way to a STACK
+row that subdivides in place — three ledger lines (frontend / backend /
+infra) inside the one row, fixed-width muted sub-labels sharing a left
+edge, chips in the boxless deep-emerald mono. The three lists live in
+content/skills.md (stackFrontend/stackBackend/stackInfra). The k3s
+off-hours line now appears nowhere on the canonical; flagged to the
+owner. Dead code swept: BgStyleYml, .g-seccmd, .g-shbg, .g-tpad,
+.g-stack.

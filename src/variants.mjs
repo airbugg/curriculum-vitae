@@ -27,84 +27,22 @@ export const variants = [
     layout: 'grid',
     nameStyle: 'plain',
     bodyClass: 'g-dense',
-    // A/B pair (owner request): this file carries the bg-a Session
-    // transcript; the -card sibling below carries the Shell's
-    // cat background.yml card. The bg-a/b/c studies retired to history.
-    bgStyle: 'a',
-    stackChips: true,
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
-    languages: true,
-    // Array form: the BACKGROUND section renders these as a code literal.
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
-
-  {
-    file: 'eugene-lerman-card',
-    label: 'The Flagship · YAML-card background',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    bodyClass: 'g-dense',
-    // The other half of the A/B: identical page, Shell-card background.
-    bgStyle: 'yml',
-    stackChips: true,
-    intro:
-      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
-    languages: true,
-    // Array form: the BACKGROUND section renders these as a code literal.
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
-    skills: null,
-  },
-
-  // Third of the comparison set: the bg-c Manifest background (micro-caps
-  // labels in the grid dialect) with a STACK row replacing off-hours and
-  // the meta chips, plus command-style section markers.
-  {
-    file: 'eugene-lerman-manifest',
-    label: 'The Flagship · Manifest background + command markers',
-    theme: 'proto-b',
-    layout: 'grid',
-    nameStyle: 'plain',
-    // The Manifest background is 4 rows shorter than the Session block,
-    // so this cut runs the looser g-mid tier (with tightened page pads)
-    // — the page fills instead of ending in a void.
-    bodyClass: 'g-mid g-tpad',
+    // The Manifest background (owner pick after the three-way bake-off):
+    // micro-caps labels in the grid dialect, and the off-hours row
+    // replaced by a STACK section subdividing into frontend / backend /
+    // infra (keys in content/skills.md).
     bgStyle: 'c',
-    cmdMarkers: true,
-    // 8 chips: the one-line budget of the content column (measured at
-    // 150dpi; the interpunct separators make no break opportunities, so
-    // the row must genuinely fit).
-    backgroundStack: [
-      'TypeScript',
-      'React Native',
-      'Swift',
-      'Kotlin',
-      'XState',
-      'Apollo GraphQL',
-      'MMKV',
-      'i18next',
+    stackRows: [
+      ['frontend', 'stackFrontend'],
+      ['backend', 'stackBackend'],
+      ['infra', 'stackInfra'],
     ],
     intro:
       'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
     languages: true,
+    // Array form: the BACKGROUND section renders these as a code literal.
     offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'cat experience.md', background: 'cat background.yml' },
+    headings: { experience: 'Experience', background: 'Background' },
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
       { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
@@ -113,6 +51,8 @@ export const variants = [
     ],
     skills: null,
   },
+
+
 
   {
     file: 'eugene-lerman-platform',
