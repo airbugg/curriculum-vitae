@@ -1174,13 +1174,11 @@ function TermJob({ section }) {
   const job = jobs[section.job];
   const dur = compactDur(duration(job.dates));
   return (
-    <TCmd verb="glow" args={`experience/${tJobSlug(section)}`}>
-      {/* The role is the line's one anchor (bold, left); dates and
-          location sit flush right on a shared axis down the page — the
-          ls -l column discipline, and the second alignment axis the
-          CV-typography research ranks just under anchor-plus-muted-tail.
-          No summary lines here: prose mass between anchors is what read
-          as dense, and the bullets carry the evidence. */}
+    <div className="t-frec">
+      {/* bat-style file rule: dim hairline + the filename — one glow
+          command runs the glob; each file gets a rule, not a prompt
+          (clig: group many similar items under one header). */}
+      <div className="t-frule">experience/{tJobSlug(section)}</div>
       <div className="t-out t-jobhead">
         <span className="t-role">
           {job.role} @ {job.company.split('.')[0]}
@@ -1199,14 +1197,17 @@ function TermJob({ section }) {
           </li>
         ))}
       </ul>
-    </TCmd>
+    </div>
   );
 }
 
 function TerminalPage({ variant }) {
   const contacts = contactList(variant);
-  const doi = String(publications[0].url).replace(/^https?:\/\//, '');
   const slugify = (x) => String(x).replace(/ /g, '-');
+  // background.yml: fastfetch-style aligned key/value rows — the same
+  // facts the jq blocks printed, at half the glyph count (braces and
+  // quotes were syntax cosplay carrying zero information).
+  const yKey = (k) => (k + ':').padEnd(14, '\u00a0');
   return (
     <div className="page t-page">
       <header className="t-header">
@@ -1226,11 +1227,6 @@ function TerminalPage({ variant }) {
       </header>
       <div className="t-window">
         <div className="t-titlebar">
-          <span className="t-dots">
-            <i />
-            <i />
-            <i />
-          </span>
           <span className="t-wtitle">eugene@tlv:~/cv</span>
         </div>
         <div className="t-session">
@@ -1239,56 +1235,41 @@ function TerminalPage({ variant }) {
               <NoBreakCompounds text={variant.intro} />
             </div>
           </TCmd>
-          <TCmd verb="ls" args="-t experience/">
-            <div className="t-out">{variant.sections.map(tJobSlug).join('  ')}</div>
+          <TCmd verb="glow" args="experience/*.md">
+            {variant.sections.map((s2) => (
+              <TermJob key={s2.job} section={s2} />
+            ))}
           </TCmd>
-          {variant.sections.map((s) => (
-            <TermJob key={s.job} section={s} />
-          ))}
-          <div className="t-bgrid">
-            <div>
-              <TCmd verb="jq" args=". education.json">
-                <div className="t-out bgx-jp">{'{'}</div>
-                <BgJson k="degree" v={education.degreeShort ?? education.degree} />
-                <BgJson k="school" v={education.schoolShort ?? education.school} />
-                <BgJson k="years" v={bgEduYears()} last />
-                <div className="t-out bgx-jp">{'}'}</div>
-              </TCmd>
-              <TCmd verb="open" args={doi} href={publications[0].url}>
-                <div className="t-out">
-                  <a href={publications[0].url}>{bgPubTitle()}</a>, {publications[0].journal}{' '}
-                  {publications[0].year}
-                </div>
-              </TCmd>
+          <TCmd verb="cat" args="background.yml">
+            <div className="t-out t-yaml">
+              <div>
+                <span className="t-ykey">{yKey('education')}</span>
+                {education.degreeShort ?? education.degree}
+                {'  '}
+                {education.schoolShort ?? education.school}
+                {'  '}
+                {bgEduYears()}
+              </div>
+              <div>
+                <span className="t-ykey">{yKey('publication')}</span>
+                <a href={publications[0].url}>{bgPubTitle()}</a>
+                {'  '}
+                {publications[0].journal}
+                {'  '}
+                {publications[0].year}
+              </div>
+              <div>
+                <span className="t-ykey">{yKey('languages')}</span>
+                {bgLangPairs()
+                  .map(([k, v]) => (v === 'native' ? `${k} native` : `${k} (${v})`))
+                  .join(', ')}
+              </div>
+              <div>
+                <span className="t-ykey">{yKey('offHours')}</span>
+                {(variant.offHours ?? []).map(slugify).join('  ')}
+              </div>
             </div>
-            <div>
-              <TCmd
-                verb="locale"
-                tail={
-                  <>
-                    {' '}
-                    <span className="bgx-jp">|</span> <span className="t-verb">jq</span>
-                  </>
-                }
-              >
-                <div className="t-out bgx-jp">{'{'}</div>
-                {bgLangPairs().map(([k, v], i, arr) => (
-                  <BgJson k={k} v={v} last={i === arr.length - 1} key={k} />
-                ))}
-                <div className="t-out bgx-jp">{'}'}</div>
-              </TCmd>
-              <TCmd verb="ls" args="off-hours/">
-                <div className="t-out">
-                  {(variant.offHours ?? []).map((x, i) => (
-                    <React.Fragment key={x}>
-                      {i > 0 && '  '}
-                      {slugify(x)}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </TCmd>
-            </div>
-          </div>
+          </TCmd>
           <div className="t-cmd">
             <span className="t-prompt">{'\u203a'}</span> <span className="t-cursor" />
           </div>

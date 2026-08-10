@@ -1008,3 +1008,28 @@ research rounds on file:
   years + range + the agents clause, three lines; the curious-reader
   line remains the flagship's opener.
 - Air: 7.6pt/1.55, 4.6mm block gaps.
+
+### §18 addendum 3 · The terminal-design research pass
+
+A dedicated research round (clig.dev, Primer's CLI guidelines, bat /
+delta / eza / starship / fastfetch output design, man-pages(7), The
+Monospace Web) produced a ranked refit list; applied in order of impact:
+- Measure cut to 80ch (mono past ~80 exceeds every published limit) with
+  a 2ch output ladder under column-0 prompts — man-page indent
+  discipline; wrapped bullets hang, never returning to the marker.
+- The five glow prompts collapsed to ONE `glow experience/*.md`; each
+  record now opens with a bat-style dim file rule
+  (── experience/2026-rylo.md ──) instead of a repeated prompt
+  (clig: group many similar lines under one header). The redundant
+  `ls -t` block deleted — the glob implies it.
+- The two-up jq JSON replaced by `cat background.yml`: four
+  fastfetch-style aligned key/value rows. Braces and quotes were
+  syntax carrying zero information at the page's densest spot.
+- One emerald: the prompt joined the verbs' deep emerald; color now has
+  exactly one job (clig: "if everything is a different color, the color
+  means nothing").
+- Traffic lights deleted (skeuomorphic chrome the terminal-aesthetic
+  literature disowns); the titlebar keeps only the dim path.
+- Vertical rhythm grid-snapped: line box = 11.4pt, block gaps exactly
+  one line box (The Monospace Web's whole-line-unit rule — grid
+  discipline, not extra leading, is what "clinical" is made of).

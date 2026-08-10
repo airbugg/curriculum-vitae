@@ -78,40 +78,30 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
   padding: 1.7mm 3mm;
   border-bottom: 0.5pt solid var(--rule);
 }
-/* Traffic lights in the page's grays — chrome, not decoration. */
-.t-dots { display: inline-flex; gap: 1.1mm; }
-.t-dots i {
-  width: 1.7mm;
-  height: 1.7mm;
-  border-radius: 50%;
-  background: var(--rule);
-}
 .t-wtitle {
   flex: 1;
   text-align: center;
   font-size: 6.6pt;
   color: var(--muted);
-  /* re-center against the dots' width */
-  margin-left: -8.5mm;
 }
 
 /* ---- the session ---- */
 .t-session {
-  padding: 5mm 5.5mm 5mm;
+  padding: 4mm 5.5mm 5mm;
   flex: 1;
   font-size: 7.6pt;
-  line-height: 1.55;
+  line-height: 1.5;
   letter-spacing: 0;
   white-space: pre-wrap;
 }
-.t-block { margin-bottom: 4.6mm; }
+.t-block { margin-bottom: 11.4pt; }
 .t-block:last-child { margin-bottom: 0; }
 
 .t-cmd { color: var(--ink); }
 .t-cmd a { color: inherit; text-decoration: none; }
 /* › stands in for starship's ❯ (absent from Source Code Pro). */
 .t-prompt {
-  color: var(--accent);
+  color: var(--accent-deep);
   font-weight: 700;
   font-size: 115%;
   line-height: 1;
@@ -137,8 +127,8 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 .t-role { font-weight: 700; color: var(--ink-strong); }
 .t-jobmeta { color: var(--muted); font-size: 93%; }
 .t-summary { color: var(--muted); }
-.t-bullets { margin: 0.6mm 0 0; padding-left: 3.4mm; list-style: none; max-width: 156mm; }
-.t-bullets li { margin-bottom: 1mm; }
+.t-bullets { margin: 0 0 0; padding-left: 6.6mm; list-style: none; max-width: 131mm; }
+.t-bullets li { margin-bottom: 0; }
 .t-bullets li:last-child { margin-bottom: 0; }
 .t-bullets li::before {
   content: '• ';
@@ -183,4 +173,25 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
 
 /* Short measure for prose-shaped output: long lines are what made the
    first cut read as a wall; ragged right air is the terminal's calm. */
-.t-out { max-width: 156mm; }
+/* The ladder: prompt at column 0, output indented 2ch beneath it, and
+   the measure capped at 80ch (mono over ~80 reads as a wall per every
+   published guideline; ragged air does the calming). */
+.t-out { max-width: 128mm; padding-left: 3.2mm; }
+
+/* bat-style file rules inside the one glow command: a dim filename
+   between hairlines, one per record — structure without prompts. */
+.t-frec { margin-top: 11.4pt; }
+.t-frule {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+  color: var(--muted);
+  font-size: 93%;
+  margin-bottom: 1.9mm;
+}
+.t-frule::before { content: ''; width: 6mm; border-top: 0.5pt solid var(--rule); }
+.t-frule::after { content: ''; flex: 1; border-top: 0.5pt solid var(--rule); }
+
+/* background.yml: aligned key/value rows, keys muted, facts ink. */
+.t-yaml { max-width: none; }
+.t-ykey { color: var(--muted); }
