@@ -19,6 +19,25 @@ prototypes are added as new entries and build green:
 
 ---
 
+## Contents
+
+Sections 1–8 are the first design-research round (numbered plainly);
+§9 onward switches to the §N house style and stays chronological.
+
+1–2 · Diagnosis and principles from the literature
+3–8 · The three prototypes, refinement rounds, Prototype D
+§9–§10 · Prototype B promoted to canonical; variant cuts
+§11–§12 · Migration stories; links, languages, official artwork
+§13–§14 · The generalist consolidation; meta-column voices
+§15 · BACKGROUND as code (plus three addenda)
+§16 · Two bold reimaginings
+§17 · Three BACKGROUND studies
+§18 · The Shell, whole-page
+§19 · Stack chips and the canonical A/B
+§20 · Consolidation: one flagship again
+§21 · The great prune: two variants, one intro source
+§22 · The review refactor
+
 ## 1. Diagnosis — what actually makes the flagship "busy"
 
 Measured on the 150 dpi render of `dist/eugene-lerman.pdf` (1240×1754 px).
@@ -887,6 +906,9 @@ carry live link annotations, and pull from the same content atoms.
 
 ### §15 addendum 3 · The prettier explosion, paid horizontally
 
+(Written after §16; kept here so the §15 story reads whole. The file
+stays chronological otherwise.)
+
 The aligned-wrap compromise read as messy to the owner ("i want the
 objects to be formatted correctly"). The section now renders the honest
 prettier form — every object fully exploded, one property per line,
@@ -1133,3 +1155,31 @@ closing AI sentence ("Since early 2026 most of that code has shipped
 through coding agents.") came off both intros — the intro now reads as
 a straight generalist-developer statement; the agent story lives in the
 job content where it is evidence rather than positioning.
+
+## §22 · The review refactor (architect pass)
+
+An independent architecture and code review ran over the pruned repo;
+its shortlist was applied in one output-neutral pass, verified by a
+zero-pixel diff of both rendered PDFs at 150 dpi.
+
+Renames, for anyone reading older sections: theme `proto-b` is now
+`grid` (file, THEME_FONTS key and body class all follow the layout it
+always was), and job `remitlySenior` / `3-remitly-senior.md` is now
+`rewire` / `3-rewire.md` (the page always said Rewire; the id now
+agrees). The `layout` variant field collapsed into `theme` — the two
+were 1:1. `headings` dropped (both variants carried identical values);
+`sections` became one shared constant so the content-parity decree is
+structural; `offHours` moved into content/person.md, closing the last
+"fact outside content/" exception after the intro move.
+
+Robustness: build.mjs now validates every cross-file reference before
+rendering (bullet ids, intro keys, stack keys, date formats) and fails
+with names — previously a renamed anchor shipped a literal "undefined"
+into the PDF and the one-page gate passed. The parsers throw on
+malformed bullets, survive `#` inside skill values, and Chromium's
+stderr surfaces on a crashed print. package.json lost a leaked sandbox
+repository URL and gained `private: true`. Unused skills keys, the
+`languages:` duplicate of `langLevels:`, the `experiments/` tree, two
+unused font faces and the dead `.intro`/`code` rules in base.css all
+left. The shell's header now derives from person.md instead of
+hardcoding the name — the last fact that lived in a component.

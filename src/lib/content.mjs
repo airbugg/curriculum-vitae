@@ -4,8 +4,8 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-// Resolved from the working directory (build.mjs chdirs to the repo root)
-// so the bundled build output can live anywhere.
+// Resolved from the working directory; build.mjs chdirs to the repo root
+// before importing, which is what makes this hold.
 const CONTENT = join(process.cwd(), 'content');
 
 function parseFrontmatter(src) {
@@ -19,12 +19,15 @@ function parseFrontmatter(src) {
   return [meta, m[2]];
 }
 
-// "- text possibly\n  wrapped {#id}" → { id, text }
+// "- text possibly\n  wrapped {#id}" → { id, text }. Anything in the body
+// that is not a bullet is a mistake (a `-text` typo would otherwise vanish
+// silently), so it throws.
 function parseBullets(body) {
   const bullets = {};
   for (const block of body.split(/\n(?=- )/)) {
     const item = block.trim();
-    if (!item.startsWith('- ')) continue;
+    if (!item) continue;
+    if (!item.startsWith('- ')) throw new Error(`Not a bullet: ${item.slice(0, 60)}…`);
     const idMatch = item.match(/\{#([\w-]+)\}\s*$/);
     if (!idMatch) throw new Error(`Bullet missing {#id} anchor: ${item.slice(0, 60)}…`);
     bullets[idMatch[1]] = item
@@ -39,18 +42,26 @@ function parseBullets(body) {
 function loadJobs() {
   const dir = join(CONTENT, 'jobs');
   const jobs = {};
+  // The sort only makes iteration deterministic; the numeric filename
+  // prefixes are documentation. Render order comes from variants.mjs.
   for (const file of readdirSync(dir).sort()) {
     const [meta, body] = parseFrontmatter(readFileSync(join(dir, file), 'utf8'));
     if (!meta.id) throw new Error(`${file}: missing id in frontmatter`);
-    jobs[meta.id] = { ...meta, bullets: parseBullets(body) };
+    try {
+      jobs[meta.id] = { ...meta, bullets: parseBullets(body) };
+    } catch (e) {
+      throw new Error(`${file}: ${e.message}`);
+    }
   }
   return jobs;
 }
 
+// skills.md: one `## key` heading per group, the next non-empty line is the
+// value (which may itself contain `#`, e.g. "C#" — only a newline ends it).
 function loadSkills() {
   const src = readFileSync(join(CONTENT, 'skills.md'), 'utf8');
   const skills = {};
-  for (const m of src.matchAll(/^## (\w+)\n+([^\n#]+)/gm)) skills[m[1]] = m[2].trim();
+  for (const m of src.matchAll(/^## (\w+)\n+(.+)/gm)) skills[m[1]] = m[2].trim();
   return skills;
 }
 
@@ -60,7 +71,7 @@ function loadIntros() {
   const src = readFileSync(join(CONTENT, 'intro.md'), 'utf8');
   const intros = {};
   for (const block of src.split(/^## /m).slice(1)) {
-    const nl = block.indexOf('\n');
+    const nl = (block + '\n').indexOf('\n');
     intros[block.slice(0, nl).trim()] = block.slice(nl).replace(/\s+/g, ' ').trim();
   }
   return intros;

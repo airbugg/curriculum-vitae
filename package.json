@@ -2,17 +2,15 @@
   "name": "curriculum-vitae",
   "version": "1.0.0",
   "description": "One-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
-  "main": "index.js",
+  "private": true,
+  "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node build.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "http://local_proxy@127.0.0.1:41729/git/airbugg/curriculum-vitae"
+    "url": "https://github.com/airbugg/curriculum-vitae"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "esbuild": "^0.28.1",
     "react": "^19.2.8",

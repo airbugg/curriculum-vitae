@@ -6,14 +6,12 @@ const ROOT = process.cwd();
 const FONT_SETS = {
   sourceSans: [
     ['Source Sans Pro', 'SourceSansPro-Light.otf', 300, 'normal'],
-    ['Source Sans Pro', 'SourceSansPro-LightIt.otf', 300, 'italic'],
     ['Source Sans Pro', 'SourceSansPro-Regular.otf', 400, 'normal'],
     ['Source Sans Pro', 'SourceSansPro-It.otf', 400, 'italic'],
     ['Source Sans Pro', 'SourceSansPro-Semibold.otf', 600, 'normal'],
     ['Source Sans Pro', 'SourceSansPro-Bold.otf', 700, 'normal'],
   ],
   codePro: [
-    ['Source Code Pro', 'SourceCodePro-ExtraLight.ttf', 200, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Light.ttf', 300, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Semibold.ttf', 600, 'normal'],
@@ -22,7 +20,7 @@ const FONT_SETS = {
 };
 
 const THEME_FONTS = {
-  'proto-b': ['sourceSans', 'codePro'], // grid — sans content + mono data column
+  grid: ['sourceSans', 'codePro'], // sans content + mono data column
   terminal: ['codePro'], // shell — one mono family, like a terminal
 };
 

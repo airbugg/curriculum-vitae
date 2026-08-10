@@ -9,7 +9,8 @@ import { logos } from '../lib/logos.mjs';
 // Company logos. A `mark` renders before the name; a `wordmark` renders IN
 // PLACE of the name (Wix/Rewire have no separate mark, and a wordmark next
 // to the printed name would duplicate it). Missing files degrade to the
-// plain text name.
+// plain text name. The g-lg-<slug> class lets themes size each asset from
+// its own internal geometry.
 function LogoAsset({ asset, className }) {
   const cls = `${className} g-lg-${asset.slug}`;
   if (asset.type === 'svg')
@@ -69,7 +70,9 @@ function duration(dates) {
 }
 
 // The company-level tenure: total span for multi-role groups, the single
-// role's span otherwise.
+// role's span otherwise. (Multi-role groups are latent: they fire when
+// consecutive sections share a company — a promotion inside one employer —
+// which no current content does.)
 function groupDuration(group) {
   const first = jobs[group[0].job];
   const span =
@@ -79,8 +82,10 @@ function groupDuration(group) {
   return duration(span);
 }
 
-// Consecutive sections sharing a company merge into one group (the Remitly
-// promotion stacks two roles under one employer).
+// Consecutive sections sharing a company merge into one group, so a
+// promotion inside one employer stacks two roles under one company block.
+// Latent with current content (Remitly and Rewire are distinct companies);
+// every group is a single role today.
 function groupSections(sections) {
   const groups = [];
   for (const s of sections) {
@@ -149,7 +154,7 @@ const bgEduYears = () => String(education.dates).replace(/\s*–\s*/, '–');
 const bgPubTitle = () => publications[0].title.split(':')[0];
 
 // =========================================================================
-// THE FLAGSHIP — modernist grid (theme proto-b, layout 'grid').
+// THE FLAGSHIP — modernist grid (theme 'grid').
 // A hard left meta-column (company / location / dates as a data column)
 // against a right content column. Company shows once per employer; each role
 // keeps its own dates in the meta column, aligned to its bullets.
@@ -224,6 +229,8 @@ function GridEntry({ group }) {
 // year beneath them in the mono dates voice — so BACKGROUND speaks the exact
 // dialect of EXPERIENCE. Facts run as content lines; stack items keep one
 // whisper of the code soul as boxless deep-emerald mono chips.
+// (The bgx- prefix = the BACKGROUND block, named in the §15–§19 studies
+// that produced it — see DESIGN.md.)
 function BgManifestRow({ label, year, children }) {
   return (
     <div className="bgx-crow">
@@ -250,7 +257,7 @@ function BgChips({ text }) {
 function GridBackground({ variant }) {
   return (
     <section className="g-section g-bg">
-      <GridSecMark>{variant.headings.background}</GridSecMark>
+      <GridSecMark>Background</GridSecMark>
       <BgManifestRow label="Education" year={bgEduYears()}>
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
@@ -320,7 +327,7 @@ function GridPage({ variant }) {
       </p>
 
       <section className="g-section">
-        <GridSecMark>{variant.headings.experience}</GridSecMark>
+        <GridSecMark>Experience</GridSecMark>
         {groups.map((g) => (
           <GridEntry key={g[0].job} group={g} />
         ))}
@@ -332,7 +339,7 @@ function GridPage({ variant }) {
 }
 
 // =========================================================================
-// THE SHELL — the whole CV as one terminal session (theme/layout 'terminal').
+// THE SHELL — the whole CV as one terminal session (theme 'terminal').
 // One window, one session; commands are the structure (no section markers),
 // and the coloring is terminal truth throughout — zsh verb highlighting,
 // glow-rendered markdown for the job files, fastfetch-style aligned rows
@@ -403,6 +410,7 @@ function TermJob({ section }) {
 function TerminalPage({ variant }) {
   const contacts = contactList();
   const slugify = (x) => String(x).replace(/ /g, '-');
+  const [first, last] = person.name.toLowerCase().split(' ');
   // background.yml: fastfetch-style aligned key/value rows — plain facts,
   // no syntax cosplay (braces and quotes carry zero information here).
   const yKey = (k) => (k + ':').padEnd(13, '\u00A0');
@@ -410,8 +418,8 @@ function TerminalPage({ variant }) {
     <div className="page t-page">
       <header className="t-header">
         <h1>
-          <span className="t-hb">{'{'}</span> <span className="t-hf">eugene</span>{' '}
-          <span className="t-hc">:</span> lerman <span className="t-hb">{'}'}</span>
+          <span className="t-hb">{'{'}</span> <span className="t-hf">{first}</span>{' '}
+          <span className="t-hc">:</span> {last} <span className="t-hb">{'}'}</span>
         </h1>
         <div className="t-title">{person.title.toLowerCase()}</div>
         <div className="t-contact">
@@ -469,7 +477,10 @@ function TerminalPage({ variant }) {
               </div>
               <div>
                 <span className="t-ykey">{yKey('offHours')}</span>
-                {(variant.offHours ?? []).map(slugify).join('  ')}
+                {String(person.offHours)
+                  .split(',')
+                  .map((s) => slugify(s.trim()))
+                  .join('  ')}
               </div>
             </div>
           </TCmd>
@@ -484,7 +495,7 @@ function TerminalPage({ variant }) {
 
 export function CVPage({ variant, css }) {
   const body =
-    variant.layout === 'terminal' ? (
+    variant.theme === 'terminal' ? (
       <TerminalPage variant={variant} />
     ) : (
       <GridPage variant={variant} />

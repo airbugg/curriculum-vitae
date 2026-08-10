@@ -23,9 +23,43 @@ await esbuild.build({
   outfile: join(ROOT, '.build', 'entry.mjs'),
   logLevel: 'silent',
 });
-const { renderVariant, variants } = await import(
+const { renderVariant, variants, content } = await import(
   pathToFileURL(join(ROOT, '.build', 'entry.mjs'))
 );
+
+// Validate every cross-file reference before rendering: a bullet id, intro
+// key or skills key that went missing would otherwise render as a literal
+// "undefined" (or as silence), and the one-page check would happily pass.
+function validate() {
+  const { jobs, skills } = content;
+  const errors = [];
+  for (const v of variants) {
+    if (!v.intro) errors.push(`${v.file}: intro is empty — check content/intro.md keys`);
+    for (const s of v.sections) {
+      const job = jobs[s.job];
+      if (!job) {
+        errors.push(`${v.file}: unknown job '${s.job}'`);
+        continue;
+      }
+      if (!parseable(job.dates))
+        errors.push(`${v.file}: job '${s.job}' dates '${job.dates}' do not parse (need "Mon YYYY – Mon YYYY|Present" with an en dash)`);
+      for (const id of s.bullets)
+        if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
+    }
+    for (const [, key] of v.stackRows ?? [])
+      if (!(key in skills)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
+  }
+  if (errors.length) {
+    for (const e of errors) console.error(`✗ ${e}`);
+    process.exit(1);
+  }
+}
+const parseable = (dates) => {
+  const [from, to] = String(dates).split('–').map((s) => s.trim());
+  const month = (s) => /^[A-Z][a-z]{2}\w*\s+\d{4}$/.test(s);
+  return month(from) && (month(to) || /present/i.test(to || ''));
+};
+validate();
 
 function chromium() {
   // 1. Explicit override (used by CI): CHROME_PATH=/path/to/chrome
@@ -55,6 +89,10 @@ function chromium() {
   );
 }
 
+// Counts uncompressed /Type /Page dicts — true of Skia's PDF backend
+// (Chromium print), which never wraps page objects in object streams. If a
+// future Chromium starts compressing them, every build fails loudly with a
+// count of 0; this comment is the diagnosis.
 const pageCount = (pdf) =>
   (readFileSync(pdf, 'latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
 
@@ -65,14 +103,20 @@ for (const v of variants) {
   const htmlPath = join(HTML, `${v.file}.html`);
   const pdfPath = join(DIST, `${v.file}.pdf`);
   writeFileSync(htmlPath, renderVariant(v));
-  execFileSync(chrome, [
-    '--headless',
-    '--no-sandbox',
-    '--disable-gpu',
-    '--no-pdf-header-footer',
-    `--print-to-pdf=${pdfPath}`,
-    `file://${htmlPath}`,
-  ], { stdio: 'pipe' });
+  try {
+    execFileSync(chrome, [
+      '--headless',
+      '--no-sandbox',
+      '--disable-gpu',
+      '--no-pdf-header-footer',
+      `--print-to-pdf=${pdfPath}`,
+      `file://${htmlPath}`,
+    ], { stdio: 'pipe' });
+  } catch (err) {
+    // Surface Chromium's own words; a swallowed stderr costs a debug round.
+    if (err.stderr) console.error(String(err.stderr));
+    throw err;
+  }
   const pages = pageCount(pdfPath);
   const ok = pages === 1;
   if (!ok) failed = true;

@@ -9,6 +9,8 @@ import { fontFaces } from './lib/fonts.mjs';
 const SRC = join(process.cwd(), 'src');
 
 export { variants } from './variants.mjs';
+// Content atoms re-exported for build.mjs's pre-render validation pass.
+export * as content from './lib/content.mjs';
 
 export function renderVariant(variant) {
   const css = [

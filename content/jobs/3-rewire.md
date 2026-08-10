@@ -1,5 +1,5 @@
 ---
-id: remitlySenior
+id: rewire
 company: Rewire
 blurb: cross-border banking for migrant workers
 role: Senior Software Engineer

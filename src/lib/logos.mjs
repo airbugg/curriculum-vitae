@@ -23,8 +23,7 @@ const load = (slug) => {
   return null;
 };
 
-// Keyed by the company string as it appears in content frontmatter, plus a
-// special slot for the education footer.
+// Keyed by the company string as it appears in content frontmatter.
 export const logos = {
   Rylo: { wordmark: load('rylo') }, // full lockup (swirl + name) from rylo.com
   Remitly: { mark: load('remitly') },

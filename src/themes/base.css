@@ -1,8 +1,5 @@
 /* Shared skeleton for both themes: the A4 page box and the few resets
-   every theme wants. Themes supply fonts, colors, and personality.
-   Spacing follows the research spec: preferred values are 16mm sides,
-   9.5pt body at 132% leading; this content is dense enough that the
-   themes run at the spec FLOORS instead (14mm sides, 9pt body). */
+   every theme wants. Themes supply fonts, colors, and personality. */
 @page { size: A4; margin: 0; }
 /* Contact links are live in the PDF but dress as plain text. */
 a { color: inherit; text-decoration: none; }
@@ -12,8 +9,7 @@ html, body { margin: 0; padding: 0; }
 body {
   font-family: var(--font-body);
   font-size: var(--fs, 9.2pt);
-  font-weight: var(--fw-body, 400);
-  line-height: var(--lh, 1.33);
+  line-height: 1.33;
   color: var(--ink, #1d2229);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -22,16 +18,5 @@ body {
 .page {
   width: 210mm;
   min-height: 296.5mm;
-  padding: var(--pad, 13mm 16mm 16mm);
+  padding: 13mm 16mm 16mm;
 }
-
-/* ~90-char measure via max-width; themes tune the rest. */
-.intro {
-  margin: var(--intro-margin, 3.5mm 0 0);
-  max-width: var(--intro-width, 150mm);
-  font-size: var(--fs-intro, 9.5pt);
-  line-height: 1.36;
-  color: var(--ink);
-}
-
-code { font-family: inherit; font-size: inherit; }

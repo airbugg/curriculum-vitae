@@ -6,6 +6,6 @@ phone: (+972) 52-3535-231
 email: lerman.gene@gmail.com
 github: github.com/airbugg
 linkedin: linkedin.com/in/lerman-gene
-languages: English and Hebrew (native), Russian (reads and speaks well)
 langLevels: english=native, hebrew=native, russian=reads and speaks well
+offHours: k3s home lab, home automation, other over-engineering
 ---

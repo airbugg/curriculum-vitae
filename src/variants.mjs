@@ -1,8 +1,20 @@
 // The two variants: which bullets, what intro, which theme.
-// Each entry: { file, label, theme, layout, intro, sections, headings }
-// The design trail that led here — prototypes, reimaginings, background
-// studies — lives in git history and DESIGN.md.
+// Each entry: { file, label, theme, intro, sections, ... } — the theme picks
+// the CSS file, the font sets and the layout (see entry.jsx, lib/fonts.mjs
+// and the CVPage dispatch in components/CV.jsx). The design trail that led
+// here — prototypes, reimaginings, background studies — lives in git
+// history and DESIGN.md.
 import { intros } from './lib/content.mjs';
+
+// Content parity between the two variants is an owner decree: same bullet
+// set, same summaries — the shell's terminal look does the calming, not
+// cuts. Shared here so parity cannot silently drift.
+const SECTIONS = [
+  { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+  { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+  { job: 'rewire', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+  { job: 'wix', bullets: ['forms', 'auth'] },
+];
 
 export const variants = [
   // THE FLAGSHIP — the canonical variant, promoted from Prototype B.
@@ -17,8 +29,7 @@ export const variants = [
   {
     file: 'eugene-lerman',
     label: 'The Flagship · Modernist Grid',
-    theme: 'proto-b',
-    layout: 'grid',
+    theme: 'grid',
     bodyClass: 'g-dense',
     // The Manifest background: micro-caps labels in the grid dialect, with
     // the STACK row subdividing into frontend / backend / infra (keys in
@@ -29,13 +40,7 @@ export const variants = [
       ['infra', 'stackInfra'],
     ],
     intro: intros.flagship,
-    headings: { experience: 'Experience', background: 'Background' },
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
+    sections: SECTIONS,
   },
 
   // THE SHELL — the Session aesthetic, whole-page: the entire CV as one
@@ -44,19 +49,9 @@ export const variants = [
     file: 'eugene-lerman-shell',
     label: 'The Shell · full-page terminal session',
     theme: 'terminal',
-    layout: 'terminal',
     // Capability-first README (the 7-second-scan finding): range up
     // top; the curious-reader line stays on the flagship.
     intro: intros.shell,
-    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
-    headings: { experience: 'Experience', background: 'Background' },
-    // Content parity with the flagship (owner decree): same bullet set,
-    // same summaries; the terminal look does the calming, not cuts.
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
+    sections: SECTIONS,
   },
 ];
