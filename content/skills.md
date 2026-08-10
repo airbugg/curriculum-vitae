@@ -31,4 +31,4 @@ Node.js, Python, Ruby
 
 ## stackInfra
 
-GitHub Actions, Gitlab CI, Jenkins, k8s, Terraform/Pulumi, AWS/Cloudflare/GCP 
+GitHub Actions, Gitlab CI, Jenkins, k8s, Terraform, AWS/Cloudflare 
