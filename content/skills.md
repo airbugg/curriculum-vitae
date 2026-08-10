@@ -1,6 +1,6 @@
 # Skill groups
 
-Each `## key` heading is addressed by `stackRows` in src/variants.mjs; the
+Each `## key` heading is addressed by `stackRows` in src/variants.ts; the
 line below it is the value, split on commas into chips at render time.
 Ordering carries emphasis: first item = strongest. Keep each list short
 enough to fit the flagship's measure on one line.

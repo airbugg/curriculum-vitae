@@ -1183,3 +1183,25 @@ repository URL and gained `private: true`. Unused skills keys, the
 unused font faces and the dead `.intro`/`code` rules in base.css all
 left. The shell's header now derives from person.md instead of
 hardcoding the name — the last fact that lived in a component.
+
+## §23 · TypeScript, and the project shape (owner round)
+
+"Why is it not in TypeScript" has no good answer, so now it is: strict
+TS end to end, checked by `tsc --noEmit` in CI before every build, with
+the build itself running as plain `node build.ts` on Node's native type
+stripping (no transpile step, no new runtime dependency; esbuild always
+handled TS in the bundle path anyway). TypeScript 7 does the checking.
+
+The 450-line CV.jsx split along current React-project convention:
+feature folders (`components/grid/`, `components/terminal/`) with one
+component per file, cross-layout primitives in `components/shared/`,
+and everything that is not presentation out of components entirely —
+`lib/content.ts` (typed loaders that validate required frontmatter at
+startup), `lib/dates.ts` (tenure arithmetic), `lib/experience.ts`
+(section grouping), `lib/background.ts` (shared background facts). The
+schema the whole pipeline speaks lives in `src/types.ts`; a variant is
+now a `Variant`, a job a `Job`, and a missing frontmatter key fails the
+build with its name instead of rendering as undefined.
+
+Verified the way every pass here is verified: both PDFs byte-compared
+at 150 dpi against the pre-port render — zero differing pixels.

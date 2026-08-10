@@ -26,22 +26,28 @@ PDFs are build artifacts, not source — they aren't committed here.
 
 ```sh
 npm install
-node build.mjs    # → dist/*.pdf   (also: npm run build, or make)
+npm run build     # → dist/*.pdf   (also: node build.ts, or make)
+npm run check     # tsc --noEmit
 ```
 
-Needs Node ≥ 18 and Chromium (`CHROME_PATH`, or a common install location —
-see `chromium()` in `build.mjs`). The build fails if any variant spills past
-one A4 page.
+Needs Node ≥ 22.18 (the build runs TypeScript directly via native type
+stripping) and Chromium (`CHROME_PATH`, or a common install location — see
+`chromium()` in `build.ts`). The build validates every cross-file content
+reference, then fails if any variant spills past one A4 page.
 
 ## How it works
 
 - `content/` — every fact exactly once, in Markdown: frontmatter for header
   facts, bullets tagged with `{#id}` anchors, backticks for tech chips
-- `src/variants.mjs` — what each variant selects and emphasizes
-- `src/components/CV.jsx` — the layouts, rendered with `react-dom/server`
+- `src/types.ts` — the content and variant schema, typed
+- `src/lib/` — loaders and domain logic: `content.ts` parses the Markdown,
+  `dates.ts` does tenure arithmetic, `fonts.ts`/`logos.ts` embed assets
+- `src/variants.ts` — what each variant selects and emphasizes
+- `src/components/` — the React layouts, rendered with `react-dom/server`:
+  `grid/` (the Flagship), `terminal/` (the Shell), `shared/` primitives
 - `src/themes/` — a shared skeleton plus one CSS file per theme
 - `.github/workflows/` — PR pushes get PDFs attached as a comment;
-  `master` pushes get a release
+  `master` pushes get a release, both gated on `tsc --noEmit`
 
 Editing a bullet once updates every variant. The original LaTeX toolchain
 lives on in git history.
@@ -59,13 +65,14 @@ The content contract, for future me:
 - `content/intro.md` — one `## key` paragraph per variant; variants read
   `intros.<key>`.
 - `content/skills.md` — one `## key` line per group; the flagship's STACK
-  rows address these via `stackRows` in `src/variants.mjs`.
+  rows address these via `stackRows` in `src/variants.ts`.
 - Backticks in any bullet render as tech chips. The build fails loudly if
   a variant references a bullet, intro or skills key that does not exist,
   or a date that does not parse.
 
-Adding a variant means: an entry in `src/variants.mjs`, an `intro.md`
+Adding a variant means: an entry in `src/variants.ts`, an `intro.md`
 block, and (for a new look) a theme CSS file, a `THEME_FONTS` row in
-`src/lib/fonts.mjs`, and a layout branch in `src/components/CV.jsx`.
+`src/lib/fonts.ts`, and a layout under `src/components/` dispatched from
+`CVPage.tsx`.
 Company artwork drops into `assets/logos/<slug>.svg` and lights up via
-`src/lib/logos.mjs`.
+`src/lib/logos.ts`.

@@ -45,11 +45,14 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      - name: Type check
+        run: npm run check
+
       # The builder exits non-zero if any variant fails the one-page check,
       # which fails this job. Output is captured for the PR comment summary.
       - name: Build PDFs (HTML -> Chromium -> PDF)
         id: web
-        run: node build.mjs 2>&1 | tee web-summary.txt
+        run: node build.ts 2>&1 | tee web-summary.txt
 
       - name: Upload PDFs
         id: upload-web

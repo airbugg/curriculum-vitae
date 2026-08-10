@@ -1,2 +1,5 @@
 all:
-	node build.mjs
+	node build.ts
+
+check:
+	npx tsc --noEmit

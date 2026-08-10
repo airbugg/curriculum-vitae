@@ -1,22 +1,22 @@
-// The two variants: which bullets, what intro, which theme.
-// Each entry: { file, label, theme, intro, sections, ... } — the theme picks
-// the CSS file, the font sets and the layout (see entry.jsx, lib/fonts.mjs
-// and the CVPage dispatch in components/CV.jsx). The design trail that led
+// The two variants: which bullets, what intro, which theme. The theme picks
+// the CSS file, the font sets and the layout (see entry.tsx, lib/fonts.ts
+// and the dispatch in components/CVPage.tsx). The design trail that led
 // here — prototypes, reimaginings, background studies — lives in git
 // history and DESIGN.md.
-import { intros } from './lib/content.mjs';
+import { intros } from './lib/content';
+import type { Section, Variant } from './types';
 
 // Content parity between the two variants is an owner decree: same bullet
 // set, same summaries — the shell's terminal look does the calming, not
 // cuts. Shared here so parity cannot silently drift.
-const SECTIONS = [
+const SECTIONS: Section[] = [
   { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
   { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
   { job: 'rewire', bullets: ['reactNative', 'xstate', 'secondAuth'] },
   { job: 'wix', bullets: ['forms', 'auth'] },
 ];
 
-export const variants = [
+export const variants: Variant[] = [
   // THE FLAGSHIP — the canonical variant, promoted from Prototype B.
   // Strict modernist grid: hard left meta-column (company / blurb / location
   // / dates / tenure as a data column) against a right content column,

@@ -40,8 +40,11 @@ jobs:
       - name: Install npm dependencies
         run: npm ci
 
+      - name: Type check
+        run: npm run check
+
       - name: Build PDFs
-        run: node build.mjs 2>&1 | tee build-summary.txt
+        run: node build.ts 2>&1 | tee build-summary.txt
 
       # Date + short-SHA tags sort naturally and stay unique per push.
       - name: Compute release tag

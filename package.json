@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "One-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
   "private": true,
+  "type": "module",
   "license": "ISC",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.ts",
+    "check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,11 @@
     "esbuild": "^0.28.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "typescript": "^7.0.2"
   }
 }
