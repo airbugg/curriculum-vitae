@@ -125,6 +125,28 @@ export const variants = [
     skillsRaw: true,
   },
 
+  // THE SHELL — the Session aesthetic, whole-page: the entire CV as one
+  // terminal window. Commands are the structure; see terminal.css.
+  {
+    file: 'eugene-lerman-shell',
+    label: 'The Shell · full-page terminal session',
+    theme: 'terminal',
+    layout: 'terminal',
+    nameStyle: 'plain',
+    intro:
+      'A curious individual and a voracious reader with a somewhat philosophical approach to life. Twelve years at Wix, Remitly and now an early-stage startup, building whatever needed building: apps, services, release systems, the infrastructure underneath. Since early 2026 most of that code has shipped through coding agents.',
+    languages: true,
+    offHours: ['k3s home lab', 'home automation', 'other over-engineering'],
+    headings: { experience: 'Experience', background: 'Background' },
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
+      { job: 'remitlySenior', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+    skills: null,
+  },
+
   // ------------------------------------------------------------------------
   // THREE DIAMETRICALLY OPPOSED PROTOTYPES (design-research deliverables).
   // Same facts, three philosophies. See DESIGN.md for the full rationale.

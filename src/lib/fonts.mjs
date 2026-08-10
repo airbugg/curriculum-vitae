@@ -37,6 +37,7 @@ const FONT_SETS = {
 };
 
 const THEME_FONTS = {
+  terminal: ['codePro'],
   platform: ['sourceSans', 'codePro', 'mono'],
   ai: ['sourceSans', 'mono'],
   looker: ['sourceSans', 'codePro', 'mono'],

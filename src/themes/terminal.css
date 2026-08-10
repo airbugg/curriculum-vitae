@@ -1,0 +1,170 @@
+/* =======================================================================
+   THE SHELL — the whole CV as one terminal session.
+   Grown out of the BACKGROUND "Session" study the owner picked: the
+   entire page leans into the transcript aesthetic. A lowercase mono
+   identity header (the { eugene : lerman } braces, spoken in the
+   terminal's own case), then ONE terminal window — hairline border,
+   titlebar with muted traffic lights — containing the session:
+     › cat README.md            the intro
+     › ls -t experience/        the job files, newest first (ls -t!)
+     › glow experience/<f>.md   each job, rendered markdown
+     › jq . education.json      the background block, jq-colored
+   Color rules are terminal truth, not typography: prompt emerald, valid
+   command verbs deep emerald (zsh-syntax-highlighting), args and output
+   default ink, glow/jq coloring where those tools genuinely color.
+   Palette and faces are the family's own: emerald pair, Source Code Pro.
+   ======================================================================= */
+:root {
+  --font-data: 'Source Code Pro', monospace;
+  --ink: #1c2229;
+  --ink-strong: #0f1317;
+  --muted: #6b7480;
+  --accent: #00A388;
+  --accent-deep: #00735f;
+  --rule: #d3dbe1;
+}
+
+body.terminal { font-family: var(--font-data); color: var(--ink); }
+
+.t-page {
+  padding: 9mm 11mm 9mm;
+  min-height: 296.5mm;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- identity header: the braces identity, lowercase, all mono ---- */
+.t-header { text-align: center; margin-bottom: 3.6mm; }
+.t-header h1 {
+  margin: 0;
+  font-size: 16.5pt;
+  font-weight: 700;
+  letter-spacing: -0.3pt;
+  color: var(--ink-strong);
+  line-height: 1;
+}
+.t-hb, .t-hc { color: var(--muted); font-weight: 400; }
+.t-hf { font-weight: 300; color: var(--ink); }
+.t-title {
+  margin-top: 1.4mm;
+  font-size: 8pt;
+  letter-spacing: 1.8pt;
+  color: var(--accent-deep);
+  padding-left: 1.8pt; /* re-center under trailing tracking */
+}
+.t-contact {
+  margin-top: 1.3mm;
+  font-size: 6.9pt;
+  color: var(--muted);
+  white-space: pre-wrap; /* two-space separators, terminal style */
+  text-transform: lowercase;
+}
+.t-contact a { color: inherit; text-decoration: none; }
+
+/* ---- the window ---- */
+.t-window {
+  border: 0.6pt solid var(--rule);
+  border-radius: 2.6mm;
+  overflow: hidden;
+  /* The window owns the rest of the page; the session ends on a bare
+     prompt with a resting cursor, the way a real idle terminal does. */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.t-titlebar {
+  display: flex;
+  align-items: center;
+  padding: 1.7mm 3mm;
+  border-bottom: 0.5pt solid var(--rule);
+}
+/* Traffic lights in the page's grays — chrome, not decoration. */
+.t-dots { display: inline-flex; gap: 1.1mm; }
+.t-dots i {
+  width: 1.7mm;
+  height: 1.7mm;
+  border-radius: 50%;
+  background: var(--rule);
+}
+.t-wtitle {
+  flex: 1;
+  text-align: center;
+  font-size: 6.6pt;
+  color: var(--muted);
+  /* re-center against the dots' width */
+  margin-left: -8.5mm;
+}
+
+/* ---- the session ---- */
+.t-session {
+  padding: 3.6mm 4mm 4mm;
+  flex: 1;
+  font-size: 7.3pt;
+  line-height: 1.43;
+  letter-spacing: 0;
+  white-space: pre-wrap;
+}
+.t-block { margin-bottom: 2.3mm; }
+.t-block:last-child { margin-bottom: 0; }
+
+.t-cmd { color: var(--ink); }
+.t-cmd a { color: inherit; text-decoration: none; }
+/* › stands in for starship's ❯ (absent from Source Code Pro). */
+.t-prompt {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 115%;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.02em);
+}
+.t-verb { color: var(--accent-deep); font-weight: 600; }
+
+.t-out { color: var(--ink); }
+.t-out a { color: inherit; text-decoration: none; }
+
+/* glow-rendered markdown: the header line bold, the summary muted, the
+   bullets with emerald • markers, backtick spans in the chip emerald —
+   colors a terminal markdown renderer genuinely produces. */
+.t-role { font-weight: 700; color: var(--ink-strong); }
+.t-jobmeta { color: var(--muted); }
+.t-summary { color: var(--muted); }
+.t-bullets { margin: 0.3mm 0 0; padding-left: 3.4mm; list-style: none; }
+.t-bullets li { margin-bottom: 0.4mm; }
+.t-bullets li:last-child { margin-bottom: 0; }
+.t-bullets li::before {
+  content: '• ';
+  color: var(--accent);
+  margin-left: -3.4mm;
+}
+.terminal code {
+  font-family: var(--font-data);
+  font-size: 100%;
+  color: var(--accent-deep);
+  background: none;
+  padding: 0;
+}
+
+/* jq-colored JSON (shared token classes with the proto-b session). */
+.t-session .bgx-out { color: var(--ink); }
+.t-session .bgx-jk { color: var(--accent-deep); }
+.t-session .bgx-js { color: var(--ink); }
+.t-session .bgx-jp { color: var(--muted); }
+
+/* The background pair runs two-up to hold the height. */
+.t-bgrid {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  padding-right: 5mm;
+}
+
+/* The resting cursor on the final bare prompt. */
+.t-cursor {
+  display: inline-block;
+  width: 2mm;
+  height: 3.2mm;
+  background: var(--muted);
+  opacity: 0.5;
+  vertical-align: -0.55mm;
+}

@@ -954,3 +954,26 @@ truth rather than typography. Colors belong to whole tokens (quotes
 travel with their key or string, as jq renders them). Both columns
 balance at eight lines; the pipe's second verb highlights like zsh
 would.
+
+## §18 · The Shell — the Session aesthetic, whole-page
+
+The owner liked the Session's command outputs and asked for a variant
+that "leans into this aesthetic in all sections". The Shell
+(`eugene-lerman-shell`, theme terminal.css, layout terminal): a
+lowercase all-mono braces identity ({ eugene : lerman }), then ONE
+terminal window — hairline border, muted traffic lights, titlebar
+eugene@tlv:~/cv — containing the whole CV as a session:
+
+    › cat README.md              the intro
+    › ls -t experience/          2026-rylo.md 2022-remitly.md ... (-t = newest first)
+    › glow experience/<f>.md     each job as glow-rendered markdown
+    › jq . education.json        the background block, two-up
+    › _                          a bare prompt + resting cursor closes the page
+
+Fidelity rules carried over: › for ❯, zsh verb highlighting, glow/jq
+justify every color the output wears (bold roles, emerald bullets and
+chips, jq JSON registers). The fiction mirrors repo truth — the jobs
+really are markdown files. Blurbs fold into the summary lines (no meta
+column to hold them). 7.3pt/1.43 mono fits the full canonical bullet
+set on one page; the window flexes to the page bottom so the session
+ends the way a real terminal does, waiting.

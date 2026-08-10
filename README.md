@@ -19,6 +19,7 @@ Stable direct links:
 | Classic | the previous flagship look | [eugene-lerman-classic.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-classic.pdf) |
 | Reimagine 1 · Broadsheet | brutalist poster statement | [eugene-lerman-reimagine-1.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-reimagine-1.pdf) |
 | Reimagine 2 · Ledger | career drawn to scale | [eugene-lerman-reimagine-2.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-reimagine-2.pdf) |
+| Shell | the CV as a terminal session | [eugene-lerman-shell.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
 
 The Full Stack, AI-Native and Unified cuts folded back into the Flagship —
 one generalist CV instead of three targeted ones. Their exact configurations

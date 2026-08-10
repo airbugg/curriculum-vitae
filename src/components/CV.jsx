@@ -1141,6 +1141,167 @@ function LedgerPage({ variant }) {
   );
 }
 
+// ---- THE SHELL — the whole CV as one terminal session -------------------
+// Grown out of the BACKGROUND Session study the owner picked: every
+// section leans into the transcript. One window, one session; commands
+// are the structure (no section markers), and the coloring is terminal
+// truth throughout — zsh verb highlighting, glow-rendered markdown for
+// the job files, jq-colored JSON for the background block.
+function TCmd({ verb, args, href, tail, children }) {
+  const argText = args ? ' ' + args : null;
+  return (
+    <div className="t-block">
+      <div className="t-cmd">
+        <span className="t-prompt">{'\u203a'}</span>{' '}
+        <span className="t-verb">{verb}</span>
+        {argText && (href ? <a href={href}>{argText}</a> : argText)}
+        {tail}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// experience/<start-year>-<company>.md — the fiction mirrors the repo
+// truth (the jobs really are markdown files with front matter).
+function tJobSlug(section) {
+  const job = jobs[section.job];
+  const yr = String(job.dates).match(/\d{4}/)[0];
+  return `${yr}-${job.company.split('.')[0].toLowerCase()}.md`;
+}
+
+function TermJob({ section }) {
+  const job = jobs[section.job];
+  const dur = compactDur(duration(job.dates));
+  return (
+    <TCmd verb="glow" args={`experience/${tJobSlug(section)}`}>
+      <div className="t-out">
+        <span className="t-role">
+          {job.role} @ {job.company.split('.')[0]}
+        </span>
+        <span className="t-jobmeta">
+          {'  '}
+          {shortRange(job.dates)}
+          {dur ? ` (${dur})` : ''}
+          {'  '}
+          {job.location.toLowerCase()}
+        </span>
+      </div>
+      {job.summary && (
+        <div className="t-out t-summary">
+          {/* The meta-column blurb has no column here; it leads the
+              summary line so company context survives the transcript. */}
+          <NoBreakCompounds
+            text={(job.blurb ? `${job.blurb}. ` : '') + job.summary}
+          />
+        </div>
+      )}
+      <ul className="t-bullets">
+        {section.bullets.map((id) => (
+          <li key={id}>
+            <Rich text={section.overrides?.[id] ?? job.bullets[id]} />
+          </li>
+        ))}
+      </ul>
+    </TCmd>
+  );
+}
+
+function TerminalPage({ variant }) {
+  const contacts = contactList(variant);
+  const doi = String(publications[0].url).replace(/^https?:\/\//, '');
+  const slugify = (x) => String(x).replace(/ /g, '-');
+  return (
+    <div className="page t-page">
+      <header className="t-header">
+        <h1>
+          <span className="t-hb">{'{'}</span> <span className="t-hf">eugene</span>{' '}
+          <span className="t-hc">:</span> lerman <span className="t-hb">{'}'}</span>
+        </h1>
+        <div className="t-title">{(variant.title ?? person.title).toLowerCase()}</div>
+        <div className="t-contact">
+          {contacts.map((c, i) => (
+            <React.Fragment key={c.text}>
+              {i > 0 && '  '}
+              <Contact item={c} />
+            </React.Fragment>
+          ))}
+        </div>
+      </header>
+      <div className="t-window">
+        <div className="t-titlebar">
+          <span className="t-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="t-wtitle">eugene@tlv:~/cv</span>
+        </div>
+        <div className="t-session">
+          <TCmd verb="cat" args="README.md">
+            <div className="t-out">
+              <NoBreakCompounds text={variant.intro} />
+            </div>
+          </TCmd>
+          <TCmd verb="ls" args="-t experience/">
+            <div className="t-out">{variant.sections.map(tJobSlug).join('  ')}</div>
+          </TCmd>
+          {variant.sections.map((s) => (
+            <TermJob key={s.job} section={s} />
+          ))}
+          <div className="t-bgrid">
+            <div>
+              <TCmd verb="jq" args=". education.json">
+                <div className="t-out bgx-jp">{'{'}</div>
+                <BgJson k="degree" v={education.degreeShort ?? education.degree} />
+                <BgJson k="school" v={education.schoolShort ?? education.school} />
+                <BgJson k="years" v={bgEduYears()} last />
+                <div className="t-out bgx-jp">{'}'}</div>
+              </TCmd>
+              <TCmd verb="open" args={doi} href={publications[0].url}>
+                <div className="t-out">
+                  <a href={publications[0].url}>{bgPubTitle()}</a>, {publications[0].journal}{' '}
+                  {publications[0].year}
+                </div>
+              </TCmd>
+            </div>
+            <div>
+              <TCmd
+                verb="locale"
+                tail={
+                  <>
+                    {' '}
+                    <span className="bgx-jp">|</span> <span className="t-verb">jq</span>
+                  </>
+                }
+              >
+                <div className="t-out bgx-jp">{'{'}</div>
+                {bgLangPairs().map(([k, v], i, arr) => (
+                  <BgJson k={k} v={v} last={i === arr.length - 1} key={k} />
+                ))}
+                <div className="t-out bgx-jp">{'}'}</div>
+              </TCmd>
+              <TCmd verb="ls" args="off-hours/">
+                <div className="t-out">
+                  {(variant.offHours ?? []).map((x, i) => (
+                    <React.Fragment key={x}>
+                      {i > 0 && '  '}
+                      {slugify(x)}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </TCmd>
+            </div>
+          </div>
+          <div className="t-cmd">
+            <span className="t-prompt">{'\u203a'}</span> <span className="t-cursor" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CVPage({ variant, css }) {
   // Prototypes get compound-safe intros; originals keep their exact output.
   const intro = (
@@ -1166,6 +1327,7 @@ export function CVPage({ variant, css }) {
     </html>
   );
 
+  if (variant.layout === 'terminal') return shell(<TerminalPage variant={variant} />);
   if (variant.layout === 'grid') return shell(<GridPage variant={variant} />);
   if (variant.layout === 'editorial') return shell(<EditorialPage variant={variant} />);
   if (variant.layout === 'hybrid') return shell(<HybridPage variant={variant} />);
