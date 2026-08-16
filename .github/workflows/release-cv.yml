@@ -1,6 +1,6 @@
-# On every update to master: rebuild the CV PDFs and publish them as a
-# GitHub release, so the latest CVs are always downloadable from the
-# releases page without persisting binaries in the repo.
+# On every update to master: rebuild the CV PDFs, publish them as a
+# GitHub release (no binaries persisted in the repo), and refresh the
+# README's preview banner so it always shows the current CV.
 name: Release CV
 
 on:
@@ -37,6 +37,9 @@ jobs:
           fi
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
+      - name: Install poppler-utils
+        run: sudo apt-get install -y poppler-utils
+
       - name: Install npm dependencies
         run: npm ci
 
@@ -45,6 +48,21 @@ jobs:
 
       - name: Build PDFs
         run: node build.ts 2>&1 | tee build-summary.txt
+
+      - name: Refresh README preview banner
+        run: node scripts/preview.ts
+
+      # Commits only when the banner actually changed; [skip ci] stops this
+      # push from re-triggering the workflow it was made by.
+      - name: Commit the preview banner
+        run: |
+          if ! git diff --quiet -- docs/cv-preview.png; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add docs/cv-preview.png
+            git commit -m "Refresh README CV preview [skip ci]"
+            git push origin HEAD:master
+          fi
 
       # Date + short-SHA tags sort naturally and stay unique per push.
       - name: Compute release tag
