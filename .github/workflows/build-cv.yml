@@ -66,6 +66,21 @@ jobs:
           "$CHROME" --version
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
+      # The browser build is baked into the rendered PDFs (/Producer Skia/PDF
+      # m141), and ubuntu-latest's Chrome auto-updates underneath us. Without
+      # this check a runner-image refresh silently changes the pixel-tuned
+      # output with no commit in this repo. Fail instead, so the re-baseline
+      # is a deliberate act.
+      - name: Check Chromium version
+        run: |
+          EXPECTED="$(cat .chrome-version)"
+          ACTUAL="$("$CHROME_PATH" --version | grep -oE '[0-9]+' | head -1)"
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "::error::Chrome major version is $ACTUAL, expected $EXPECTED (.chrome-version). The browser version is embedded in the PDFs, so this can shift the pixel-tuned output. Build locally, compare both PDFs, then set .chrome-version to $ACTUAL."
+            exit 1
+          fi
+          echo "Chrome major $ACTUAL matches .chrome-version"
+
       - name: Install npm dependencies
         run: npm ci
 
