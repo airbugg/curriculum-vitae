@@ -17,7 +17,7 @@ const SECTIONS: Section[] = [
 ];
 
 export const variants: Variant[] = [
-  // THE FLAGSHIP — the canonical variant, promoted from Prototype B.
+  // THE DEFAULT — the canonical variant, promoted from Prototype B.
   // Strict modernist grid: hard left meta-column (company / blurb / location
   // / dates / tenure as a data column) against a right content column,
   // visible structural asymmetry, one functional accent (emerald).
@@ -28,7 +28,7 @@ export const variants: Variant[] = [
   // needs.
   {
     file: 'eugene-lerman',
-    label: 'The Flagship · Modernist Grid',
+    label: 'The Default · Modernist Grid',
     theme: 'grid',
     bodyClass: 'g-dense',
     // The Manifest background: micro-caps labels in the grid dialect, with
@@ -39,7 +39,7 @@ export const variants: Variant[] = [
       ['backend', 'stackBackend'],
       ['infra', 'stackInfra'],
     ],
-    intro: intros.flagship,
+    intro: intros.default,
     sections: SECTIONS,
   },
 
@@ -50,7 +50,7 @@ export const variants: Variant[] = [
     label: 'The Shell · full-page terminal session',
     theme: 'terminal',
     // Capability-first README (the 7-second-scan finding): range up
-    // top; the curious-reader line stays on the flagship.
+    // top; the curious-reader line stays on the default.
     intro: intros.shell,
     sections: SECTIONS,
   },

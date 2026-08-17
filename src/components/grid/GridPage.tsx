@@ -1,4 +1,4 @@
-// THE FLAGSHIP — modernist grid (theme 'grid').
+// THE DEFAULT VARIANT — modernist grid (theme 'grid').
 // A hard left meta-column (company / location / dates as a data column)
 // against a right content column. Company shows once per employer; each role
 // keeps its own dates in the meta column, aligned to its bullets.

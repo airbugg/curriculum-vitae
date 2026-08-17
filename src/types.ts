@@ -59,7 +59,7 @@ export interface Variant {
   label: string;
   /** Picks the CSS file, the font sets and the page layout. */
   theme: Theme;
-  /** Extra class on <body> (the flagship's g-dense density package). */
+  /** Extra class on <body> (the default variant's g-dense density package). */
   bodyClass?: string;
   /** BACKGROUND STACK sub-rows: [label, key into content/skills.md]. */
   stackRows?: [label: string, skillsKey: string][];

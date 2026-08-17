@@ -1,5 +1,5 @@
 /* =======================================================================
-   THE FLAGSHIP — STRICT MODERNIST GRID (was theme proto-b in the
+   THE DEFAULT VARIANT — STRICT MODERNIST GRID (was theme proto-b in the
    design-research round that produced it — see DESIGN.md).
    Josef Müller-Brockmann. A hard left meta-column (company / location /
    dates as a data column) against a right content column. Visible
@@ -222,7 +222,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   padding: 0;
 }
 
-/* Density package: the flagship's full bullet cut overflows A4 at the
+/* Density package: the default variant's full bullet cut overflows A4 at the
    default page-filling rhythm, so it runs tighter across the whole
    vertical hierarchy instead of cutting bullets. */
 .g-dense {
