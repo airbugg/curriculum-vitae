@@ -1,7 +1,8 @@
 // Loads CV content from content/*.md — frontmatter for facts, list items
 // with {#id} anchors for bullets. No markdown library needed; the format is
-// deliberately small. Loaders validate required keys at startup so the
-// components can trust the shapes in src/types.ts.
+// deliberately small. Loaders validate at startup so the components can
+// trust the shapes in src/types.ts, and so a typo fails the build by name
+// rather than quietly dropping a fact out of the PDF.
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Education, Job, Person, Publication } from '../types';
@@ -21,11 +22,23 @@ function parseFrontmatter(src: string): [Record<string, string>, string] {
   return [meta, m[2]];
 }
 
-// Frontmatter → a typed record, throwing on missing required keys. The cast
-// is honest: every non-optional key of T was just checked.
-function typed<T>(meta: Record<string, string>, required: (keyof T & string)[], file: string): T {
+// Frontmatter → a typed record. Missing required keys throw, and so do keys
+// that belong to neither list: `summry:` would otherwise parse fine, be
+// stored under a name nothing reads, and take the summary line out of the
+// PDF without a word. The cast is honest — every non-optional key of T was
+// just checked.
+function typed<T>(
+  meta: Record<string, string>,
+  required: (keyof T & string)[],
+  optional: (keyof T & string)[],
+  file: string,
+): T {
   const missing = required.filter((k) => !meta[k]);
   if (missing.length) throw new Error(`${file}: missing frontmatter key(s): ${missing.join(', ')}`);
+  const known = new Set<string>([...required, ...optional]);
+  const unknown = Object.keys(meta).filter((k) => !known.has(k));
+  if (unknown.length)
+    throw new Error(`${file}: unknown frontmatter key(s): ${unknown.join(', ')} — typo, or add it to the type`);
   return meta as T;
 }
 
@@ -33,7 +46,8 @@ const front = (file: string) => parseFrontmatter(readFileSync(join(CONTENT, file
 
 // "- text possibly\n  wrapped {#id}" → { id: text }. Anything in the body
 // that is not a bullet is a mistake (a `-text` typo would otherwise vanish
-// silently), so it throws.
+// silently), so it throws — as does a reused anchor, which would otherwise
+// overwrite the first bullet and drop it from the page.
 function parseBullets(body: string): Record<string, string> {
   const bullets: Record<string, string> = {};
   for (const block of body.split(/\n(?=- )/)) {
@@ -42,6 +56,7 @@ function parseBullets(body: string): Record<string, string> {
     if (!item.startsWith('- ')) throw new Error(`Not a bullet: ${item.slice(0, 60)}…`);
     const idMatch = item.match(/\{#([\w-]+)\}\s*$/);
     if (!idMatch) throw new Error(`Bullet missing {#id} anchor: ${item.slice(0, 60)}…`);
+    if (idMatch[1] in bullets) throw new Error(`Duplicate bullet anchor {#${idMatch[1]}}`);
     bullets[idMatch[1]] = item
       .slice(2)
       .replace(/\{#[\w-]+\}\s*$/, '')
@@ -59,7 +74,12 @@ function loadJobs(): Record<string, Job> {
   for (const file of readdirSync(dir).sort()) {
     const [meta, body] = parseFrontmatter(readFileSync(join(dir, file), 'utf8'));
     try {
-      const job = typed<Omit<Job, 'bullets'>>(meta, ['id', 'company', 'role', 'location', 'dates'], file);
+      const job = typed<Omit<Job, 'bullets'>>(
+        meta,
+        ['id', 'company', 'role', 'location', 'dates'],
+        ['blurb', 'summary'],
+        file,
+      );
       jobs[job.id] = { ...job, bullets: parseBullets(body) };
     } catch (e) {
       throw new Error(`content/jobs/${file}: ${(e as Error).message}`);
@@ -68,38 +88,42 @@ function loadJobs(): Record<string, Job> {
   return jobs;
 }
 
-// skills.md: one `## key` heading per group, the next non-empty line is the
-// value (which may itself contain `#`, e.g. "C#" — only a newline ends it).
-function loadSkills(): Record<string, string> {
-  const src = readFileSync(join(CONTENT, 'skills.md'), 'utf8');
-  const skills: Record<string, string> = {};
-  for (const m of src.matchAll(/^## (\w+)\n+(.+)/gm)) skills[m[1]] = m[2].trim();
-  return skills;
-}
-
-// intro.md: one `## key` paragraph per variant. The text reflows to a
-// single line — the layout owns the wrapping, not the source file.
-function loadIntros(): Record<string, string> {
-  const src = readFileSync(join(CONTENT, 'intro.md'), 'utf8');
-  const intros: Record<string, string> = {};
+// skills.md and intro.md share one shape: an H1 and prose preamble, then
+// `## key` / blank line / value. Values reflow to a single line, so the
+// layout owns the wrapping rather than the source file, and a value may
+// contain a `#` (as in "C#") because only the next heading ends it.
+function loadKeyed(file: string): Record<string, string> {
+  const src = readFileSync(join(CONTENT, file), 'utf8');
+  const keyed: Record<string, string> = {};
   for (const block of src.split(/^## /m).slice(1)) {
     const nl = (block + '\n').indexOf('\n');
-    intros[block.slice(0, nl).trim()] = block.slice(nl).replace(/\s+/g, ' ').trim();
+    keyed[block.slice(0, nl).trim()] = block.slice(nl).replace(/\s+/g, ' ').trim();
   }
-  return intros;
+  return keyed;
 }
 
 export const person = typed<Person>(
   front('person.md'),
   ['name', 'title', 'location', 'phone', 'email', 'github', 'linkedin', 'langLevels', 'offHours'],
+  [],
   'person.md',
 );
-export const education = typed<Education>(front('education.md'), ['school', 'degree', 'dates'], 'education.md');
-export const intros = loadIntros();
+export const education = typed<Education>(
+  front('education.md'),
+  ['school', 'degree', 'dates'],
+  ['schoolShort', 'degreeShort'],
+  'education.md',
+);
+export const intros = loadKeyed('intro.md');
 export const jobs = loadJobs();
-export const skills = loadSkills();
+export const skills = loadKeyed('skills.md');
 // Publications: one frontmatter block per paper. Returned as a list so the
 // components render uniformly whether there is one paper or several.
 export const publications: Publication[] = [
-  typed<Publication>(front('publications.md'), ['title', 'journal', 'year', 'url', 'authors'], 'publications.md'),
+  typed<Publication>(
+    front('publications.md'),
+    ['title', 'journal', 'year', 'url'],
+    ['authors'],
+    'publications.md',
+  ),
 ];

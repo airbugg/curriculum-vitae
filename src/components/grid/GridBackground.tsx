@@ -29,7 +29,8 @@ function Chips({ text }: { text: string }): ReactNode {
     .map((t, i) => (
       <React.Fragment key={t}>
         {i > 0 && <span className="bgx-sep">·</span>}
-        <span className="bgx-off">{t.trim().replace(/ /g, ' ')}</span>
+        {/* NBSP: a two-word chip must not break across lines. */}
+        <span className="bgx-off">{t.trim().replace(/ /g, '\u00A0')}</span>
       </React.Fragment>
     ));
 }
@@ -55,7 +56,8 @@ export function GridBackground({ variant }: { variant: Variant }): ReactNode {
           <React.Fragment key={k}>
             {i > 0 && <span className="bgx-sep">·</span>}
             <span className="bgx-lang">{k[0].toUpperCase() + k.slice(1)}</span>{' '}
-            <span className="bgx-level">{v.replace(/ /g, ' ')}</span>
+            {/* NBSP: "reads and speaks well" stays on one line. */}
+            <span className="bgx-level">{v.replace(/ /g, '\u00A0')}</span>
           </React.Fragment>
         ))}
       </Row>

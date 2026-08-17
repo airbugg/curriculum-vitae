@@ -2,7 +2,7 @@
 // same-company sections and deriving company-level tenure.
 import type { Section } from '../types';
 import { jobs } from './content';
-import { duration } from './dates';
+import { duration, splitRange } from './dates';
 
 // Consecutive sections sharing a company merge into one group, so a
 // promotion inside one employer stacks two roles under one company block.
@@ -23,9 +23,7 @@ export function groupSections(sections: Section[]): Section[][] {
 // role's span otherwise.
 export function groupDuration(group: Section[]): string | null {
   const first = jobs[group[0].job];
-  const span =
-    group.length > 1
-      ? `${String(jobs[group[group.length - 1].job].dates).split('–')[0].trim()} – ${String(first.dates).split('–')[1].trim()}`
-      : first.dates;
-  return duration(span);
+  if (group.length === 1) return duration(first.dates);
+  const oldest = jobs[group[group.length - 1].job];
+  return duration(`${splitRange(oldest.dates)[0]} – ${splitRange(first.dates)[1]}`);
 }

@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
-import type { Variant } from './src/types';
+import type { Job, Variant } from './src/types';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // Everything under src/ resolves paths from the working directory; pin it.
@@ -32,24 +32,19 @@ await esbuild.build({
 interface Entry {
   variants: Variant[];
   content: {
-    jobs: Record<string, { dates: string; bullets: Record<string, string> }>;
+    jobs: Record<string, Job>;
     skills: Record<string, string>;
   };
+  duration(dates: string): string | null;
   renderVariant(variant: Variant): string;
 }
-const { renderVariant, variants, content } = (await import(
+const { renderVariant, variants, content, duration } = (await import(
   pathToFileURL(join(ROOT, '.build', 'entry.mjs')).href
 )) as Entry;
 
 // Validate every cross-file reference before rendering: a bullet id, intro
 // key or skills key that went missing would otherwise render as a literal
 // "undefined" (or as silence), and the one-page check would happily pass.
-const parseableDates = (dates: string): boolean => {
-  const [from, to] = String(dates).split('–').map((s) => s.trim());
-  const month = (s: string | undefined) => !!s && /^[A-Z][a-z]{2}\w*\s+\d{4}$/.test(s);
-  return month(from) && (month(to) || /present/i.test(to || ''));
-};
-
 function validate(): void {
   const { jobs, skills } = content;
   const errors: string[] = [];
@@ -61,7 +56,10 @@ function validate(): void {
         errors.push(`${v.file}: unknown job '${s.job}'`);
         continue;
       }
-      if (!parseableDates(job.dates))
+      // Asking the real consumer, not a lookalike regex: a shape the
+      // validator accepts but duration() rejects would silently drop the
+      // tenure from the rendered page and still pass the one-page check.
+      if (duration(job.dates) === null)
         errors.push(`${v.file}: job '${s.job}' dates '${job.dates}' do not parse (need "Mon YYYY – Mon YYYY|Present" with an en dash)`);
       for (const id of s.bullets)
         if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);

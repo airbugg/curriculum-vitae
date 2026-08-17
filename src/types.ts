@@ -42,7 +42,8 @@ export interface Publication {
   journal: string;
   year: string;
   url: string;
-  authors: string;
+  /** Kept complete in the source of truth; no layout renders it. */
+  authors?: string;
 }
 
 /** One employer block in a variant: which job, which of its bullets. */

@@ -9,8 +9,10 @@ import type { Variant } from './types';
 const SRC = join(process.cwd(), 'src');
 
 export { variants } from './variants';
-// Content atoms re-exported for build.ts's pre-render validation pass.
+// Content atoms and the date parser re-exported for build.ts's pre-render
+// validation pass, so it validates with the same code that renders.
 export * as content from './lib/content';
+export { duration } from './lib/dates';
 
 export function renderVariant(variant: Variant): string {
   const css = [

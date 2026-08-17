@@ -10,8 +10,14 @@ interface YearMonth {
   m: number;
 }
 
+/** "Dec 2022 – Feb 2026" → ["Dec 2022", "Feb 2026"]. */
+export function splitRange(dates: string): [string, string | undefined] {
+  const [from, to] = dates.split('–').map((s) => s.trim());
+  return [from, to];
+}
+
 export function parseMonth(s: string): YearMonth | null {
-  const m = String(s).trim().match(/^([A-Z][a-z]{2})\w*\s+(\d{4})$/);
+  const m = s.trim().match(/^([A-Z][a-z]{2})\w*\s+(\d{4})$/);
   if (!m || !(m[1] in MONTHS)) return null;
   return { y: Number(m[2]), m: MONTHS[m[1]] };
 }
@@ -19,8 +25,9 @@ export function parseMonth(s: string): YearMonth | null {
 // "Dec 2022 – Feb 2026" → "3 yr 3 mo", computed at build time so tenure is
 // readable at a glance without mental date arithmetic. Inclusive month count
 // (the LinkedIn convention); "Present" resolves to the build date.
+// Returning null is also the build's date validity check — see build.ts.
 export function duration(dates: string): string | null {
-  const [from, to] = String(dates).split('–').map((s) => s.trim());
+  const [from, to] = splitRange(dates);
   const start = parseMonth(from);
   const now = new Date();
   const end = /present/i.test(to || '')
@@ -36,6 +43,6 @@ export function duration(dates: string): string | null {
 
 // Compact forms for data columns — "Dec 2022" → "Dec 22", "3 yr 3 mo" →
 // "3y 3m" — so a range and its derived tenure share one line.
-export const shortRange = (d: string): string => String(d).replace(/\b20(\d\d)\b/g, '$1');
+export const shortRange = (d: string): string => d.replace(/\b20(\d\d)\b/g, '$1');
 export const compactDur = (d: string | null): string | null =>
   d && d.replace(/(\d+) yr/, '$1y').replace(/(\d+) mo/, '$1m');

@@ -1,7 +1,6 @@
 ---
 id: lab
 company: Yeger-Lotem Lab, Ben-Gurion University
-blurb: ""
 role: Full-stack Developer (part-time)
 location: Be’er Sheva
 dates: Feb 2015 – Feb 2017
