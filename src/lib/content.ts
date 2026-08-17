@@ -11,13 +11,23 @@ import type { Education, Job, Person, Publication } from '../types';
 // before importing, which is what makes this hold.
 const CONTENT = join(process.cwd(), 'content');
 
+// `key: value`, one per line, value running to the end of the line. This is
+// deliberately NOT YAML: every value here is human prose, and YAML reserves
+// characters that prose uses freely. `blurb: fintech: cross-border payments`
+// throws under YAML, `[stealth]` and `{redacted}` silently become an array
+// and an object, and a leading `&` is read as an anchor and silently
+// dropped. Taking the rest of the line as a string has none of those edges.
+// A line that is neither blank nor a pair is a typo, and throws rather than
+// disappearing.
 function parseFrontmatter(src: string): [Record<string, string>, string] {
   const m = src.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
   if (!m) return [{}, src];
   const meta: Record<string, string> = {};
   for (const line of m[1].split('\n')) {
+    if (!line.trim()) continue;
     const kv = line.match(/^(\w+):\s*(.*)$/);
-    if (kv) meta[kv[1]] = kv[2].replace(/^"(.*)"$/, '$1');
+    if (!kv) throw new Error(`frontmatter line is not "key: value": ${line.trim().slice(0, 60)}`);
+    meta[kv[1]] = kv[2].replace(/^"(.*)"$/, '$1');
   }
   return [meta, m[2]];
 }
