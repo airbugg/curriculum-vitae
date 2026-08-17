@@ -1205,3 +1205,34 @@ build with its name instead of rendering as undefined.
 
 Verified the way every pass here is verified: both PDFs byte-compared
 at 150 dpi against the pre-port render — zero differing pixels.
+
+## §24 · Versioned releases, conventional commits, and the default rename
+
+Housekeeping round, all of it in one PR.
+
+Releases stopped being `cv-2026.08.16-a48591e` and became semver:
+`scripts/release.ts` reads the Conventional Commits since the last `v*`
+tag and bumps major on a breaking change, minor on a feat, patch on
+anything else, then writes the release notes as a changelog grouped by
+type. The tag is the source of truth for the current version;
+package.json's is only the seed before the first tag exists. The
+release job checks out full history so both can be derived, and the
+preview-refresh commit it makes itself is filtered out of the notes by
+its `[skip ci]` marker.
+
+Commit messages are now Conventional Commits, checked in two places:
+a `commit-msg` hook installed by `npm run prepare` (which points
+`core.hooksPath` at `.githooks`, so a fresh clone gets it on install),
+and a CI job over every commit in a PR, because a hook is advisory.
+The parser is hand-rolled in `scripts/commits.ts` and shared by the
+hook, the CI lint and the versioner: commitlint would have cost about
+fifty packages to enforce one regex, against a repo with three runtime
+dependencies.
+
+The flagship variant is now the default variant, everywhere except the
+history above. Output filename and rendering are unchanged, verified
+with the usual zero-pixel diff.
+
+The README lost its prose: title, preview, download, edit links,
+build, layout, nothing else. The `Makefile` went with it, being two
+aliases for npm scripts nobody was calling.
