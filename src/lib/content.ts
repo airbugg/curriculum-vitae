@@ -27,6 +27,7 @@ function parseFrontmatter(src: string): [Record<string, string>, string] {
     if (!line.trim()) continue;
     const kv = line.match(/^(\w+):\s*(.*)$/);
     if (!kv) throw new Error(`frontmatter line is not "key: value": ${line.trim().slice(0, 60)}`);
+    if (kv[1] in meta) throw new Error(`duplicate frontmatter key: ${kv[1]}`);
     meta[kv[1]] = kv[2].replace(/^"(.*)"$/, '$1');
   }
   return [meta, m[2]];
@@ -43,7 +44,7 @@ function typed<T>(
   optional: (keyof T & string)[],
   file: string,
 ): T {
-  const missing = required.filter((k) => !meta[k]);
+  const missing = required.filter((k) => !meta[k]?.trim());
   if (missing.length) throw new Error(`${file}: missing frontmatter key(s): ${missing.join(', ')}`);
   const known = new Set<string>([...required, ...optional]);
   const unknown = Object.keys(meta).filter((k) => !known.has(k));
@@ -52,7 +53,19 @@ function typed<T>(
   return meta as T;
 }
 
-const front = (file: string) => parseFrontmatter(readFileSync(join(CONTENT, file), 'utf8'))[0];
+// Every parse is wrapped so the thrown message names the file. Without
+// this the error points into .build/entry.mjs, a bundled artifact whoever
+// is editing content has never heard of.
+function tagErrors<T>(label: string, fn: () => T): T {
+  try {
+    return fn();
+  } catch (e) {
+    throw new Error(`${label}: ${(e as Error).message}`);
+  }
+}
+
+const front = (file: string) =>
+  tagErrors(`content/${file}`, () => parseFrontmatter(readFileSync(join(CONTENT, file), 'utf8'))[0]);
 
 // "- text possibly\n  wrapped {#id}" → { id: text }. Anything in the body
 // that is not a bullet is a mistake (a `-text` typo would otherwise vanish
@@ -82,18 +95,19 @@ function loadJobs(): Record<string, Job> {
   // The sort only makes iteration deterministic; the numeric filename
   // prefixes are documentation. Render order comes from variants.ts.
   for (const file of readdirSync(dir).sort()) {
-    const [meta, body] = parseFrontmatter(readFileSync(join(dir, file), 'utf8'));
-    try {
+    tagErrors(`content/jobs/${file}`, () => {
+      const [meta, body] = parseFrontmatter(readFileSync(join(dir, file), 'utf8'));
       const job = typed<Omit<Job, 'bullets'>>(
         meta,
         ['id', 'company', 'role', 'location', 'dates'],
         ['blurb', 'summary'],
         file,
       );
+      // Two files claiming one id would silently overwrite, and whichever
+      // sorted later would render under the other's name.
+      if (job.id in jobs) throw new Error(`duplicate job id '${job.id}'`);
       jobs[job.id] = { ...job, bullets: parseBullets(body) };
-    } catch (e) {
-      throw new Error(`content/jobs/${file}: ${(e as Error).message}`);
-    }
+    });
   }
   return jobs;
 }
@@ -103,13 +117,19 @@ function loadJobs(): Record<string, Job> {
 // layout owns the wrapping rather than the source file, and a value may
 // contain a `#` (as in "C#") because only the next heading ends it.
 function loadKeyed(file: string): Record<string, string> {
-  const src = readFileSync(join(CONTENT, file), 'utf8');
-  const keyed: Record<string, string> = {};
-  for (const block of src.split(/^## /m).slice(1)) {
-    const nl = (block + '\n').indexOf('\n');
-    keyed[block.slice(0, nl).trim()] = block.slice(nl).replace(/\s+/g, ' ').trim();
-  }
-  return keyed;
+  return tagErrors(`content/${file}`, () => {
+    const src = readFileSync(join(CONTENT, file), 'utf8');
+    const keyed: Record<string, string> = {};
+    for (const block of src.split(/^## /m).slice(1)) {
+      const nl = (block + '\n').indexOf('\n');
+      const key = block.slice(0, nl).trim();
+      // A repeated heading would replace the first value outright — a whole
+      // intro paragraph or skill row swapped, with nothing to notice it.
+      if (key in keyed) throw new Error(`duplicate '## ${key}' section`);
+      keyed[key] = block.slice(nl).replace(/\s+/g, ' ').trim();
+    }
+    return keyed;
+  });
 }
 
 export const person = typed<Person>(

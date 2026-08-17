@@ -61,8 +61,14 @@ function validate(): void {
       // tenure from the rendered page and still pass the one-page check.
       if (duration(job.dates) === null)
         errors.push(`${v.file}: job '${s.job}' dates '${job.dates}' do not parse (need "Mon YYYY – Mon YYYY|Present" with an en dash)`);
-      for (const id of s.bullets)
-        if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
+      for (const id of s.bullets) {
+        if (!(id in job.bullets)) {
+          errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
+        } else if (!job.bullets[id].trim()) {
+          // `- {#id}` parses fine and renders an empty <li> on the page.
+          errors.push(`${v.file}: job '${s.job}' bullet '${id}' has no text`);
+        }
+      }
     }
     for (const [, key] of v.stackRows ?? [])
       if (!(key in skills)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
