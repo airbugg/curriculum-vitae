@@ -117,13 +117,19 @@ jobs:
 
       # Upsert a single marker-tagged PR comment with links to the run and
       # the uploaded artifact (artifact-url output from upload-artifact@v4).
+      # The comment is a convenience, not a gate: continue-on-error keeps a
+      # GitHub API hiccup from reddening a build that actually passed, which
+      # is exactly what a 503 here did once. retries covers the transient 5xx
+      # case so it usually does not come to that.
       - name: Post / update PR comment
         if: ${{ always() && github.event_name == 'pull_request' }}
+        continue-on-error: true
         uses: actions/github-script@v7
         env:
           WEB_ARTIFACT_URL: ${{ steps.upload-web.outputs.artifact-url }}
           WEB_OUTCOME: ${{ steps.web.outcome }}
         with:
+          retries: 3
           script: |
             const fs = require('fs');
             const marker = '<!-- cv-artifacts -->';
