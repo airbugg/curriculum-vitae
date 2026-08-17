@@ -19,8 +19,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      # Full history and tags: the version and changelog are derived from
+      # the commits since the last v* tag.
       - name: Check out
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Node 22
         uses: actions/setup-node@v4
@@ -47,34 +51,37 @@ jobs:
         run: npm run check
 
       - name: Build PDFs
-        run: node build.ts 2>&1 | tee build-summary.txt
+        run: node build.ts
 
       - name: Refresh README preview banner
         run: node scripts/preview.ts
 
       # Commits only when the banner actually changed; [skip ci] stops this
-      # push from re-triggering the workflow it was made by.
+      # push from re-triggering the workflow it was made by, and the release
+      # notes filter the same marker out.
       - name: Commit the preview banner
         run: |
           if ! git diff --quiet -- docs/cv-preview.png; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add docs/cv-preview.png
-            git commit -m "Refresh README CV preview [skip ci]"
+            git commit -m "chore(readme): refresh CV preview [skip ci]"
             git push origin HEAD:master
           fi
 
-      # Date + short-SHA tags sort naturally and stay unique per push.
-      - name: Compute release tag
-        run: echo "TAG=cv-$(date -u +%Y.%m.%d)-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+      # Version and changelog from the Conventional Commits since the last
+      # v* tag: breaking → major, feat → minor, everything else → patch.
+      - name: Compute version and release notes
+        id: release
+        run: node scripts/release.ts
 
       # Marked latest, so stable URLs keep working:
       #   releases/latest/download/eugene-lerman.pdf  (and the other variants)
       - name: Create release with the PDFs
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG }}
-          name: CV ${{ env.TAG }}
+          tag_name: ${{ steps.release.outputs.tag }}
+          name: ${{ steps.release.outputs.name }}
           make_latest: true
-          body_path: build-summary.txt
+          body_path: release-notes.md
           files: dist/*.pdf

@@ -1,5 +1,4 @@
 node_modules/
 .build/
 dist/
-experiments/react-pdf/compare/
-experiments/react-pdf/*.pdf
+release-notes.md
