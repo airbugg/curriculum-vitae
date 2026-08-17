@@ -5,9 +5,10 @@
 //   wordmark — the logo IS the name (Wix, Rewire have no separate mark);
 //              it renders IN PLACE of the printed company name, sized to
 //              the company line's cap height.
-// SVGs are inlined (viewBox only, fill="currentColor" where single-color,
-// so they take the surrounding ink). PNGs become data URIs — fine for
-// print at these sizes when the source is a few hundred px or more.
+// SVGs are inlined verbatim and keep their own brand colours (Rewire's
+// indigo, Wix's black, Rylo's orange swirl); nothing here recolours them to
+// the surrounding ink. PNGs become data URIs — fine for print at these
+// sizes when the source is a few hundred px or more.
 // A missing file degrades to the plain text name; dropping the file into
 // assets/logos/ lights it up on the next build.
 import { existsSync, readFileSync } from 'node:fs';

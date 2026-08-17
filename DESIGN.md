@@ -1261,3 +1261,56 @@ two `.replace(/ /g, ' ')` calls whose second argument was an invisible
 U+00A0, load-bearing rag control disguised as a no-op that the next
 cleanup pass would have deleted: both are now `'\u00A0'` with a comment
 saying why.
+
+## §25 · The reinvented-wheel audit
+
+An agent went through the repo asking, of every hand-rolled thing, whether
+an off-the-shelf library should be doing it instead. Every number below
+was measured, not recalled.
+
+Three things changed. The grid variant was embedding Source Code Pro at
+four weights and rendering exactly one; `pdffonts` confirms only Regular
+reaches the PDF, so the theme now pulls a Regular-only mono set. That is
+850 KB off the intermediate HTML, a third of the file, with both PDFs
+byte-identical afterwards.
+
+The second is not a wheel at all, and is the most valuable thing the
+audit turned up. `HeadlessChrome/141.0.0.0` and `Skia/PDF m141` are
+literally in the PDF bytes, and CI resolves an auto-updating Chrome from
+the runner image. A GitHub image refresh would therefore change the
+pixel-tuned output with no commit in this repo, and the zero-pixel-diff
+practice this file is built on is a manual habit, not a gate that would
+catch it. Both workflows now assert the browser's major version against
+`.chrome-version` and fail if it moved, which turns a silent drift into
+a deliberate re-baseline. A harder pin is possible (a marketplace action,
+or `@puppeteer/browsers` downloading a fixed build) but both were left
+alone: the repo's actions are all GitHub-owned today, and the release
+job holds a write token.
+
+Third, a comment in `lib/logos.ts` claimed the SVGs are recoloured to
+the surrounding ink via `currentColor`. They are not; all three carry
+their own brand colours. Corrected.
+
+Everything else was left hand-rolled, and the reasoning is worth keeping
+because "it is only N lines" cuts both ways. commitlint replaced a
+hand-rolled implementation of somebody else's specification, where
+drifting from the spec is the failure mode and the package count is the
+honest price of conformance. Nothing else here is that shape.
+`pageCount` is not a PDF parser, it is a two-line assertion about output
+this pipeline itself produces, and on an object-stream PDF it fails to
+zero rather than to a plausible wrong number. `dates.ts` is not a date
+library, it is a strict validator for one documented format, and
+date-fns would accept `Dec 22` as the year 22 AD and render a
+two-thousand-year tenure that still fits one page. `validate()` checks
+cross-document references no schema library expresses. The `.githooks`
+hook is a one-line `git config`, which is all husky would do.
+
+Two measurements to carry forward. Driving the same binary over CDP with
+puppeteer produces byte-identical PDFs to the `--print-to-pdf` CLI, so
+that migration is safe if a reason for it ever appears — but only with
+`preferCSSPageSize: true`, because puppeteer's default ignores
+`@page { size: A4 }` and silently emits US Letter, and the one-page check
+passes on Letter. And font subsetting is NOT safe: subsetting all nine
+faces shifts 0.23% of subpixels with a maximum channel delta of 227.
+Anyone reading "1 MB of unused fonts" and reaching for `subset-font`
+should read this paragraph first.
