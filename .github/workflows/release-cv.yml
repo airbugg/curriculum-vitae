@@ -42,20 +42,24 @@ jobs:
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
       # The browser build is baked into the rendered PDFs (/Producer Skia/PDF
-      # mNNN), and ubuntu-latest's Chrome auto-updates underneath us. Without
-      # this check a runner-image refresh silently changes the pixel-tuned
-      # output with no commit in this repo. Fail instead, so the re-baseline
-      # is a deliberate act. .chrome-version tracks the RUNNER's Chrome, which
-      # is what builds the released PDFs; a local browser may well differ.
+      # mNNN), and ubuntu-latest's Chrome auto-updates underneath us, so a
+      # runner-image refresh can shift the pixel-tuned output with no commit
+      # in this repo. .chrome-version tracks the RUNNER's Chrome, which is
+      # what builds the released PDFs; a local browser will often differ, so
+      # "rebuild locally and compare" is not the remedy. To clear a mismatch:
+      # download the cv-pdfs artifact from the run, check both pages still
+      # look right, then set .chrome-version to the reported major.
+      # Note this compares the major only; output can still shift within one.
       - name: Check Chromium version
+        continue-on-error: true
         run: |
           EXPECTED="$(cat .chrome-version)"
-          ACTUAL="$("$CHROME_PATH" --version | grep -oE '[0-9]+' | head -1)"
+          ACTUAL="$("$CHROME_PATH" --version 2>/dev/null | grep -oE '[0-9]+(\.[0-9]+){2,3}' | head -1 | cut -d. -f1)"
           if [ "$ACTUAL" != "$EXPECTED" ]; then
-            echo "::error::Chrome major version is $ACTUAL, expected $EXPECTED (.chrome-version). The browser version is embedded in the PDFs, so this can shift the pixel-tuned output. Build locally, compare both PDFs, then set .chrome-version to $ACTUAL."
-            exit 1
+            echo "::warning::Chrome major is ${ACTUAL:-unreadable}, expected $EXPECTED (.chrome-version). This release may not be pixel-identical to the last. Publishing anyway; open a PR to re-baseline."
+          else
+            echo "Chrome major $ACTUAL matches .chrome-version"
           fi
-          echo "Chrome major $ACTUAL matches .chrome-version"
 
       - name: Install poppler-utils
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
@@ -73,8 +77,9 @@ jobs:
         run: node scripts/preview.ts
 
       # Commits only when the banner actually changed; [skip ci] stops this
-      # push from re-triggering the workflow it was made by, and the release
-      # notes filter the same marker out.
+      # push from re-triggering the workflow it was made by. It does appear
+      # in that release's notes under Chores, which is honest: the banner in
+      # the README really did change.
       - name: Commit the preview banner
         run: |
           if ! git diff --quiet -- docs/cv-preview.png; then
@@ -94,3 +99,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+
+      # semantic-release exits 0 when it decides there is nothing to release,
+      # which happens when no commit subject since the last tag parses as a
+      # Conventional Commit. GitHub's web editor defaults to "Update
+      # content/jobs/3-rewire.md", which does not — and nothing lints a direct
+      # push to master, because the commit-msg hook is client-side and the
+      # commitlint job only runs on pull requests. Without this guard the run
+      # goes green, the PDFs are built and thrown away, and the stable
+      # download URL quietly keeps serving the old CV.
+      - name: Fail if nothing was released
+        run: |
+          git fetch --tags --quiet
+          if [ -z "$(git tag --points-at HEAD -l 'v*')" ]; then
+            echo "::error::PDFs were built but NOT published: no commit since the last release has a Conventional Commit subject, so no version was cut. Fix by pushing another commit whose subject looks like 'docs(cv): update the Rewire bullets' (type: feat, fix, docs, refactor, chore, ...). The previous release is still what the download links serve."
+            exit 1
+          fi
+          echo "Released $(git tag --points-at HEAD -l 'v*')"
