@@ -1210,24 +1210,35 @@ at 150 dpi against the pre-port render — zero differing pixels.
 
 Housekeeping round, all of it in one PR.
 
-Releases stopped being `cv-2026.08.16-a48591e` and became semver:
-`scripts/release.ts` reads the Conventional Commits since the last `v*`
-tag and bumps major on a breaking change, minor on a feat, patch on
-anything else, then writes the release notes as a changelog grouped by
-type. The tag is the source of truth for the current version;
-package.json's is only the seed before the first tag exists. The
-release job checks out full history so both can be derived, and the
-preview-refresh commit it makes itself is filtered out of the notes by
-its `[skip ci]` marker.
+Releases stopped being `cv-2026.08.16-a48591e` and became semver, cut by
+semantic-release: it reads the Conventional Commits since the last `v*`
+tag, bumps major on a breaking change, minor on a feat and patch on
+anything else, writes the changelog grouped by type, and attaches both
+PDFs. Config in `.releaserc.json`. Two settings are load-bearing and
+non-obvious. The `releaseRules` exist because the stock preset does not
+release on `docs`/`chore`/`refactor` at all, and on this repo a content
+edit is usually exactly that, so without them a CV change would produce
+no new PDF. And `conventional-changelog-conventionalcommits` is pinned
+to `^8` because semantic-release 25 bundles
+`conventional-changelog-writer@8`: the preset's v10 line targets writer
+v9 and, paired with v8, silently generates release notes containing
+nothing but the version header. That failure has no error message,
+which is the only reason it was caught before shipping.
 
-Commit messages are now Conventional Commits, checked in two places:
-a `commit-msg` hook installed by `npm run prepare` (which points
+Commit messages are Conventional Commits, checked by commitlint in two
+places: a `commit-msg` hook installed by `npm run prepare` (which points
 `core.hooksPath` at `.githooks`, so a fresh clone gets it on install),
 and a CI job over every commit in a PR, because a hook is advisory.
-The parser is hand-rolled in `scripts/commits.ts` and shared by the
-hook, the CI lint and the versioner: commitlint would have cost about
-fifty packages to enforce one regex, against a repo with three runtime
-dependencies.
+
+The first pass at both of these was hand-rolled, about 230 lines of
+parser, linter and versioner with no dependencies, on the theory that
+the repo already hand-rolls its Markdown parser. The owner asked the
+obvious question, which is whether open-source tooling exists for this,
+and it does. The tradeoff was real in both directions: 372 packages
+against 230 lines nobody else has reviewed. Standard won, and the
+version-pin bug above is a decent argument that it should have from the
+start, since the equivalent bug in hand-rolled code would have been
+mine to find too, just later.
 
 The flagship variant is now the default variant, everywhere except the
 history above. Output filename and rendering are unchanged, verified
@@ -1236,3 +1247,17 @@ with the usual zero-pixel diff.
 The README lost its prose: title, preview, download, edit links,
 build, layout, nothing else. The `Makefile` went with it, being two
 aliases for npm scripts nobody was calling.
+
+A cleanup agent went over the repo afterwards. What it found that
+mattered: `build.ts` validated dates with a regex that accepted month
+names `duration()` rejects, so `Jly 2026` would have passed the build
+and silently dropped the tenure from both PDFs; the validator now calls
+`duration()` itself, which is the only way the two cannot drift. A
+duplicate `{#id}` anchor overwrote the first bullet and shipped a page
+missing it. A typo in an optional frontmatter key (`summry:`) parsed
+fine, was stored under a name nothing reads, and took the summary line
+out of the PDF without a word; `typed()` now rejects unknown keys. And
+two `.replace(/ /g, ' ')` calls whose second argument was an invisible
+U+00A0, load-bearing rag control disguised as a no-op that the next
+cleanup pass would have deleted: both are now `'\u00A0'` with a comment
+saying why.

@@ -53,7 +53,7 @@ Node 22.18+ and Chromium (`CHROME_PATH` if it is somewhere unusual). A variant t
 | `src/components/` | `grid/` and `terminal/` layouts, `shared/` primitives |
 | `src/themes/` | one CSS file per theme |
 | `src/lib/` | content loaders, dates, fonts, logos |
-| `scripts/` | preview banner, release notes, commit lint |
+| `scripts/preview.ts` | the banner above |
 | `DESIGN.md` | why it looks the way it does |
 
-Commits follow [Conventional Commits](https://www.conventionalcommits.org); a hook and CI both check. Versions and release notes come from them.
+Commits follow [Conventional Commits](https://www.conventionalcommits.org), checked by commitlint in a hook and again in CI. semantic-release turns them into the version, the tag and the release notes.
