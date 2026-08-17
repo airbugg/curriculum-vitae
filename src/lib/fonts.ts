@@ -22,11 +22,19 @@ const FONT_SETS: Record<string, FontFace[]> = {
     ['Source Code Pro', 'SourceCodePro-Semibold.ttf', 600, 'normal'],
     ['Source Code Pro', 'SourceCodePro-Bold.ttf', 700, 'normal'],
   ],
+  // The grid asks for mono at weight 400 only (the braces, the title, the
+  // section marks, the dates column, the background chips, `code` spans).
+  // Shipping the other three weights added ~850 KB of base64 to its HTML
+  // that Chromium then dropped on the way into the PDF. Confirmed with
+  // `pdffonts`: the grid PDF embeds SourceCodePro-Regular and nothing else.
+  // If a grid rule ever asks for bold or light mono, add the face back here
+  // — otherwise the browser will synthesise it and the page will shift.
+  codeProRegular: [['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal']],
 };
 
 const THEME_FONTS: Record<Theme, string[]> = {
-  grid: ['sourceSans', 'codePro'], // sans content + mono data column
-  terminal: ['codePro'], // shell — one mono family, like a terminal
+  grid: ['sourceSans', 'codeProRegular'], // sans content + mono data column
+  terminal: ['codePro'], // shell — genuinely uses all four mono weights
 };
 
 export function fontFaces(theme: Theme): string {
