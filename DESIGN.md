@@ -1275,9 +1275,15 @@ reaches the PDF, so the theme now pulls a Regular-only mono set. That is
 byte-identical afterwards.
 
 The second is not a wheel at all, and is the most valuable thing the
-audit turned up. `HeadlessChrome/141.0.0.0` and `Skia/PDF m141` are
-literally in the PDF bytes, and CI resolves an auto-updating Chrome from
-the runner image. A GitHub image refresh would therefore change the
+audit turned up. The browser build is literally in the PDF bytes, as
+`/Creator HeadlessChrome/NNN` and `/Producer Skia/PDF mNNN`, and CI
+resolves an auto-updating Chrome from the runner image. The check found
+this the first time it ran: the runner is on Chrome 151 and this
+sandbox is on 141, so every released PDF has been rendered by a
+different browser major than the local baseline used to pixel-verify
+changes against. That does not invalidate those diffs, which compare
+two local builds to each other, but it does mean local byte equality
+was never the same thing as released byte equality. A GitHub image refresh would therefore change the
 pixel-tuned output with no commit in this repo, and the zero-pixel-diff
 practice this file is built on is a manual habit, not a gate that would
 catch it. Both workflows now assert the browser's major version against

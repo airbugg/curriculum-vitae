@@ -67,10 +67,11 @@ jobs:
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
       # The browser build is baked into the rendered PDFs (/Producer Skia/PDF
-      # m141), and ubuntu-latest's Chrome auto-updates underneath us. Without
+      # mNNN), and ubuntu-latest's Chrome auto-updates underneath us. Without
       # this check a runner-image refresh silently changes the pixel-tuned
       # output with no commit in this repo. Fail instead, so the re-baseline
-      # is a deliberate act.
+      # is a deliberate act. .chrome-version tracks the RUNNER's Chrome, which
+      # is what builds the released PDFs; a local browser may well differ.
       - name: Check Chromium version
         run: |
           EXPECTED="$(cat .chrome-version)"
