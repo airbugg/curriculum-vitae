@@ -8,6 +8,13 @@ const ROOT = process.cwd();
 
 type FontFace = [family: string, file: string, weight: number, style: 'normal' | 'italic'];
 
+const CODE_PRO: FontFace[] = [
+  ['Source Code Pro', 'SourceCodePro-Light.ttf', 300, 'normal'],
+  ['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal'],
+  ['Source Code Pro', 'SourceCodePro-Semibold.ttf', 600, 'normal'],
+  ['Source Code Pro', 'SourceCodePro-Bold.ttf', 700, 'normal'],
+];
+
 const FONT_SETS: Record<string, FontFace[]> = {
   sourceSans: [
     ['Source Sans Pro', 'SourceSansPro-Light.otf', 300, 'normal'],
@@ -16,20 +23,17 @@ const FONT_SETS: Record<string, FontFace[]> = {
     ['Source Sans Pro', 'SourceSansPro-Semibold.otf', 600, 'normal'],
     ['Source Sans Pro', 'SourceSansPro-Bold.otf', 700, 'normal'],
   ],
-  codePro: [
-    ['Source Code Pro', 'SourceCodePro-Light.ttf', 300, 'normal'],
-    ['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal'],
-    ['Source Code Pro', 'SourceCodePro-Semibold.ttf', 600, 'normal'],
-    ['Source Code Pro', 'SourceCodePro-Bold.ttf', 700, 'normal'],
-  ],
+  codePro: CODE_PRO,
   // The grid asks for mono at weight 400 only (the braces, the title, the
   // section marks, the dates column, the background chips, `code` spans).
   // Shipping the other three weights added ~850 KB of base64 to its HTML
   // that Chromium then dropped on the way into the PDF. Confirmed with
   // `pdffonts`: the grid PDF embeds SourceCodePro-Regular and nothing else.
-  // If a grid rule ever asks for bold or light mono, add the face back here
-  // — otherwise the browser will synthesise it and the page will shift.
-  codeProRegular: [['Source Code Pro', 'SourceCodePro-Regular.ttf', 400, 'normal']],
+  // If a grid rule ever asks for bold or light mono, point it back at
+  // CODE_PRO — otherwise the browser synthesises the weight and the page
+  // shifts. Derived rather than copied, so a font-file rename cannot update
+  // one list and miss the other.
+  codeProRegular: CODE_PRO.filter(([, , weight]) => weight === 400),
 };
 
 const THEME_FONTS: Record<Theme, string[]> = {
