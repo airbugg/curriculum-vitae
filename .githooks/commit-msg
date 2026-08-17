@@ -1,4 +1,12 @@
 #!/bin/sh
 # Installed by `npm run prepare` (git config core.hooksPath .githooks).
 # CI re-checks every commit in a PR, because --no-verify exists.
+#
+# core.hooksPath outlives node_modules: after `npm ci --omit=dev`, a prune,
+# or an rm -rf, an unguarded `npx --no-install` would fail every commit in
+# the repo with an npx error rather than a lint message.
+[ -x node_modules/.bin/commitlint ] || {
+  echo "commit-msg: commitlint not installed, skipping (run npm install to enable it)"
+  exit 0
+}
 exec npx --no-install commitlint --edit "$1"

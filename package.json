@@ -1,7 +1,7 @@
 {
   "name": "curriculum-vitae",
   "version": "1.0.0",
-  "description": "One-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
+  "description": "One-page CV variants built from a single source of facts, rendered HTML \u2192 CSS \u2192 headless Chromium \u2192 PDF.",
   "private": true,
   "type": "module",
   "license": "ISC",
@@ -9,7 +9,7 @@
     "build": "node build.ts",
     "check": "tsc --noEmit",
     "preview": "node scripts/preview.ts",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "prepare": "git config core.hooksPath .githooks || echo \"note: could not set core.hooksPath; the commit-msg hook is not installed\""
   },
   "repository": {
     "type": "git",
