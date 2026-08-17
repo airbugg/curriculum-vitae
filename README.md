@@ -13,11 +13,11 @@
 | Default | humans, referrals | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
 | Shell | the CV as a terminal session | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
 
-Every push to `master` cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed.
+Every push to `master` with a [Conventional Commit](https://www.conventionalcommits.org) subject cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed.
 
 ## Edit
 
-Each fact lives in exactly one file. Click to edit in the browser; a commit to `master` rebuilds and re-releases both PDFs.
+Each fact lives in exactly one file. Click to edit in the browser, then **replace GitHub's default commit message** with one like `docs(cv): update the Rewire bullets`. That prefix is what cuts the release; without it the PDFs rebuild but do not publish, and CI fails saying so.
 
 | File | Holds |
 | --- | --- |
@@ -32,7 +32,7 @@ Each fact lives in exactly one file. Click to edit in the browser; a commit to `
 | [`publications.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/publications.md) | the paper |
 | [`skills.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/skills.md) | the STACK chips |
 
-Job frontmatter wants `id`, `company`, `role`, `location`, `dates`. Bullets end in a `{#id}` anchor, backticks become tech chips, and the build fails by name if an edit breaks a reference.
+Job frontmatter wants `id`, `company`, `role`, `location`, `dates` (`Mon YYYY – Mon YYYY`, or `Present`, with an en dash — a plain hyphen fails the build). Bullets end in a `{#id}` anchor and backticks become tech chips. Any broken reference, duplicate key or malformed line fails the build naming the file.
 
 ## Build
 
@@ -53,7 +53,8 @@ Node 22.18+ and Chromium (`CHROME_PATH` if it is somewhere unusual). A variant t
 | `src/components/` | `grid/` and `terminal/` layouts, `shared/` primitives |
 | `src/themes/` | one CSS file per theme |
 | `src/lib/` | content loaders, dates, fonts, logos |
+| `build.ts` | render, validate, print, check one page |
 | `scripts/preview.ts` | the banner above |
 | `DESIGN.md` | why it looks the way it does |
 
-Commits follow [Conventional Commits](https://www.conventionalcommits.org), checked by commitlint in a hook and again in CI. semantic-release turns them into the version, the tag and the release notes.
+Commits follow [Conventional Commits](https://www.conventionalcommits.org), checked by commitlint in a commit hook and again on every PR. Direct pushes to `master` skip both checks, so the release job fails loudly if a push cut no version. semantic-release turns the commits into the version, the tag and the release notes.
