@@ -36,13 +36,13 @@ jobs:
         run: |
           CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
           if [ -z "$CHROME" ]; then
-            sudo apt-get install -y chromium-browser
+            sudo apt-get update && sudo apt-get install -y chromium-browser
             CHROME="$(command -v chromium-browser)"
           fi
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
       - name: Install poppler-utils
-        run: sudo apt-get install -y poppler-utils
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
 
       - name: Install npm dependencies
         run: npm ci
@@ -69,19 +69,12 @@ jobs:
             git push origin HEAD:master
           fi
 
-      # Version and changelog from the Conventional Commits since the last
-      # v* tag: breaking → major, feat → minor, everything else → patch.
-      - name: Compute version and release notes
-        id: release
-        run: node scripts/release.ts
-
-      # Marked latest, so stable URLs keep working:
-      #   releases/latest/download/eugene-lerman.pdf  (and the other variants)
-      - name: Create release with the PDFs
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.release.outputs.tag }}
-          name: ${{ steps.release.outputs.name }}
-          make_latest: true
-          body_path: release-notes.md
-          files: dist/*.pdf
+      # semantic-release tags v<major.minor.patch>, writes the changelog from
+      # the Conventional Commits since the last tag, and attaches the PDFs.
+      # Config in .releaserc.json. Stable URLs keep working, because the
+      # newest release is the latest one:
+      #   releases/latest/download/eugene-lerman.pdf  (and the other variant)
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

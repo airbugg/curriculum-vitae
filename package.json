@@ -9,7 +9,6 @@
     "build": "node build.ts",
     "check": "tsc --noEmit",
     "preview": "node scripts/preview.ts",
-    "lint-commits": "node scripts/lint-commits.ts",
     "prepare": "git config core.hooksPath .githooks || true"
   },
   "repository": {
@@ -22,10 +21,17 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "semantic-release": "^25.0.9",
     "sharp": "^0.35.3",
     "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.18"
   }
 }

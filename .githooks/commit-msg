@@ -1,4 +1,4 @@
 #!/bin/sh
 # Installed by `npm run prepare` (git config core.hooksPath .githooks).
 # CI re-checks every commit in a PR, because --no-verify exists.
-exec node "$(dirname "$0")/../scripts/lint-commits.ts" --file "$1"
+exec npx --no-install commitlint --edit "$1"
