@@ -7,14 +7,17 @@
   "license": "ISC",
   "scripts": {
     "build": "node build.ts",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "preview": "node scripts/preview.ts",
+    "lint-commits": "node scripts/lint-commits.ts",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/airbugg/curriculum-vitae"
   },
   "dependencies": {
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

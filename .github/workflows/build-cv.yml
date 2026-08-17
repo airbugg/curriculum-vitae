@@ -17,6 +17,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Every commit in the PR must be a Conventional Commit: the release job
+  # derives the version and the changelog from them, so a malformed message
+  # is a silently wrong release later.
+  commits:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lint commit messages
+        run: node scripts/lint-commits.ts --range ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +50,7 @@ jobs:
           cache: npm
 
       # Prefer the Chrome that ships on ubuntu-latest; fall back to apt Chromium.
-      # build.mjs honors CHROME_PATH, so export it for later steps via GITHUB_ENV.
+      # build.ts honors CHROME_PATH, so export it for later steps via GITHUB_ENV.
       - name: Resolve Chromium
         run: |
           CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
