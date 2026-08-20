@@ -1,5 +1,6 @@
 // Date arithmetic for "Mon YYYY – Mon YYYY|Present" ranges (spaced en dash).
 
+// prettier-ignore
 const MONTHS: Record<string, number> = {
   Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
   Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12,

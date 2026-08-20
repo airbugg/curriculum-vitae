@@ -70,11 +70,15 @@ type Spec<T> = {
  * without a word.
  */
 function fields<T>(meta: Record<string, string>, spec: Spec<T>): T {
-  const missing = Object.keys(spec).filter((k) => spec[k as keyof T] === 'required' && !meta[k]?.trim());
+  const missing = Object.keys(spec).filter(
+    (k) => spec[k as keyof T] === 'required' && !meta[k]?.trim(),
+  );
   if (missing.length) throw new Error(`missing or empty frontmatter key(s): ${missing.join(', ')}`);
   const unknown = Object.keys(meta).filter((k) => !(k in spec));
   if (unknown.length)
-    throw new Error(`unknown frontmatter key(s): ${unknown.join(', ')} — typo, or add it to the type`);
+    throw new Error(
+      `unknown frontmatter key(s): ${unknown.join(', ')} — typo, or add it to the type`,
+    );
   return meta as T;
 }
 
@@ -103,7 +107,8 @@ function parseBullets(body: string): Record<string, string> {
     if (!text) throw new Error(`bullet {#${id}} has no text`);
     // Backticks become <code> chips downstream by splitting on them, so an
     // odd count means a chip silently renders as plain text in the PDF.
-    if (text.split('`').length % 2 === 0) throw new Error(`bullet {#${id}} has an unclosed backtick`);
+    if (text.split('`').length % 2 === 0)
+      throw new Error(`bullet {#${id}} has an unclosed backtick`);
     bullets[id] = text;
   }
   return bullets;
@@ -159,7 +164,7 @@ function loadHeadings(file: string): Record<string, string> {
   });
 }
 
-const frontmatterOf = <T,>(file: string, spec: Spec<T>): T =>
+const frontmatterOf = <T>(file: string, spec: Spec<T>): T =>
   inFile(file, (src) => fields<T>(parseFrontmatter(src)[0], spec));
 
 export const person = frontmatterOf<Person>('person.md', {

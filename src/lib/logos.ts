@@ -33,7 +33,11 @@ function load(slug: string): LogoAsset | undefined {
   if (existsSync(svg)) return { type: 'svg', slug, data: readFileSync(svg, 'utf8').trim() };
   const png = join(dir, `${slug}.png`);
   if (existsSync(png))
-    return { type: 'png', slug, data: `data:image/png;base64,${readFileSync(png).toString('base64')}` };
+    return {
+      type: 'png',
+      slug,
+      data: `data:image/png;base64,${readFileSync(png).toString('base64')}`,
+    };
   return undefined;
 }
 

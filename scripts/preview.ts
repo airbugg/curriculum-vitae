@@ -50,12 +50,30 @@ mkdirSync(dirname(RAW_PREFIX), { recursive: true });
 mkdirSync(dirname(OUT), { recursive: true });
 
 try {
-  execFileSync('pdftoppm', [
-    '-png', '-singlefile', '-r', String(DPI),
-    '-x', '0', '-y', '0', '-W', String(requestWidth), '-H', String(requestHeight),
-    '-f', '1', '-l', '1',
-    PDF, RAW_PREFIX,
-  ], { stdio: 'pipe' });
+  execFileSync(
+    'pdftoppm',
+    [
+      '-png',
+      '-singlefile',
+      '-r',
+      String(DPI),
+      '-x',
+      '0',
+      '-y',
+      '0',
+      '-W',
+      String(requestWidth),
+      '-H',
+      String(requestHeight),
+      '-f',
+      '1',
+      '-l',
+      '1',
+      PDF,
+      RAW_PREFIX,
+    ],
+    { stdio: 'pipe' },
+  );
 } catch (err) {
   if ((err as NodeJS.ErrnoException).code === 'ENOENT')
     throw new Error('pdftoppm not found — install poppler-utils (apt-get install poppler-utils).');

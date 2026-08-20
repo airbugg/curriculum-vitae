@@ -27,11 +27,13 @@ export function validate(variants: Variant[]): string[] {
             '(need "Mon YYYY – Mon YYYY|Present" with an en dash)',
         );
       for (const bullet of bullets)
-        if (!(bullet in job.bullets)) errors.push(`${v.file}: job '${id}' has no bullet '${bullet}'`);
+        if (!(bullet in job.bullets))
+          errors.push(`${v.file}: job '${id}' has no bullet '${bullet}'`);
     }
     if (v.theme === 'grid')
       for (const [, key] of v.stackRows)
-        if (!skillKeys.includes(key)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
+        if (!skillKeys.includes(key))
+          errors.push(`${v.file}: no '${key}' key in content/skills.md`);
   }
   return errors;
 }

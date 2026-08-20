@@ -7,9 +7,10 @@
   "license": "ISC",
   "scripts": {
     "build": "node build.ts",
-    "check": "tsc --noEmit",
+    "check": "tsc --noEmit && prettier --check .",
     "preview": "node scripts/preview.ts",
-    "prepare": "git config core.hooksPath .githooks || echo \"note: could not set core.hooksPath; the commit-msg hook is not installed\""
+    "prepare": "git config core.hooksPath .githooks || echo \"note: could not set core.hooksPath; the commit-msg hook is not installed\"",
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "conventional-changelog-conventionalcommits": "^8.0.0",
+    "prettier": "^3.9.6",
     "semantic-release": "^25.0.9",
     "sharp": "^0.35.3",
     "typescript": "^7.0.2"

@@ -94,12 +94,14 @@ function chromium(): string {
     try {
       const found = execFileSync('which', [name], { stdio: 'pipe' }).toString().trim();
       if (found) return found;
-    } catch { /* not found — try next */ }
+    } catch {
+      /* not found — try next */
+    }
   }
 
   throw new Error(
     'Chromium not found. Set CHROME_PATH, install it under /opt/pw-browsers, ' +
-    'or put chromium/google-chrome on PATH.'
+      'or put chromium/google-chrome on PATH.',
   );
 }
 
@@ -143,14 +145,18 @@ for (const v of variants) {
     failed = true;
   }
   try {
-    execFileSync(chrome, [
-      '--headless',
-      '--no-sandbox',
-      '--disable-gpu',
-      '--no-pdf-header-footer',
-      `--print-to-pdf=${pdfPath}`,
-      `file://${htmlPath}`,
-    ], { stdio: 'pipe' });
+    execFileSync(
+      chrome,
+      [
+        '--headless',
+        '--no-sandbox',
+        '--disable-gpu',
+        '--no-pdf-header-footer',
+        `--print-to-pdf=${pdfPath}`,
+        `file://${htmlPath}`,
+      ],
+      { stdio: 'pipe' },
+    );
   } catch (err) {
     // Chromium reports print failures on stderr only.
     const stderr = (err as { stderr?: Buffer }).stderr;

@@ -26,8 +26,7 @@ function TCmd({
   return (
     <div className="t-block">
       <div className="t-cmd">
-        <span className="t-prompt">{'›'}</span>{' '}
-        <span className="t-verb">{verb}</span>
+        <span className="t-prompt">{'›'}</span> <span className="t-verb">{verb}</span>
         {href ? <a href={href}>{argText}</a> : argText}
       </div>
       {children}
