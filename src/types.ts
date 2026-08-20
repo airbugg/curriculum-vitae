@@ -51,11 +51,17 @@ export interface Section {
   bullets: string[];
 }
 
-/** A Section with its job resolved — what components are handed. */
+/** One bullet, resolved: the anchor that named it and the text it holds. */
+export interface Bullet {
+  id: string;
+  text: string;
+}
+
+/** A Section with its job and bullets resolved — what components are handed. */
 export interface Role {
   job: Job;
-  /** Bullet ids, in the order the variant asked for them. */
-  bullets: string[];
+  /** In the order the variant asked for them. */
+  bullets: Bullet[];
 }
 
 export type Theme = 'grid' | 'terminal';

@@ -43,39 +43,13 @@ try {
   console.error(`\u2717 ${(e as Error).message}`);
   process.exit(1);
 }
-const { renderVariant, variants, content, duration } = entry;
+const { renderVariant, variants, validate } = entry;
 
-// Validate every cross-file reference before rendering: a bullet id, intro
-// key or skills key that went missing would otherwise render as a literal
-// "undefined" (or as silence), and the one-page check would happily pass.
-function validate(): void {
-  const { jobs, skills } = content;
-  const errors: string[] = [];
-  for (const v of variants) {
-    if (!v.intro) errors.push(`${v.file}: intro is empty — check content/intro.md keys`);
-    for (const s of v.sections) {
-      const job = jobs[s.job];
-      if (!job) {
-        errors.push(`${v.file}: unknown job '${s.job}'`);
-        continue;
-      }
-      // Asking the real consumer, not a lookalike regex: a shape the
-      // validator accepts but duration() rejects would silently drop the
-      // tenure from the rendered page and still pass the one-page check.
-      if (duration(job.dates) === null)
-        errors.push(`${v.file}: job '${s.job}' dates '${job.dates}' do not parse (need "Mon YYYY – Mon YYYY|Present" with an en dash)`);
-      for (const id of s.bullets)
-        if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
-    }
-    for (const [, key] of v.theme === 'grid' ? v.stackRows : [])
-      if (!(key in skills)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
-  }
-  if (errors.length) {
-    for (const e of errors) console.error(`✗ ${e}`);
-    process.exit(1);
-  }
+const errors = validate(variants);
+if (errors.length) {
+  for (const e of errors) console.error(`\u2717 ${e}`);
+  process.exit(1);
 }
-validate();
 
 function chromium(): string {
   // 1. Explicit override (used by CI): CHROME_PATH=/path/to/chrome

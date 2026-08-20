@@ -30,9 +30,9 @@ export function GridEntry({ role: { job, bullets } }: { role: Role }): ReactNode
           </div>
         )}
         <ul>
-          {bullets.map((id) => (
+          {bullets.map(({ id, text }) => (
             <li key={id}>
-              <Rich text={job.bullets[id]} />
+              <Rich text={text} />
             </li>
           ))}
         </ul>

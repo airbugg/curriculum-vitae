@@ -36,15 +36,17 @@ function parseFrontmatter(src: string): [Record<string, string>, string] {
   // not an empty block. Returning {} here would report nine missing keys
   // instead of the one mistyped `---` sitting in front of the reader.
   if (!m) throw new Error('frontmatter must open and close with a line of exactly ---');
+  const [, block = '', body = ''] = m;
   const meta: Record<string, string> = {};
-  for (const line of m[1].split('\n')) {
+  for (const line of block.split('\n')) {
     if (!line.trim()) continue;
     const kv = line.match(/^(\w+):\s*(.*)$/);
     if (!kv) throw new Error(`frontmatter line is not "key: value": ${line.trim().slice(0, 60)}…`);
-    if (kv[1] in meta) throw new Error(`duplicate frontmatter key: ${kv[1]}`);
-    meta[kv[1]] = kv[2].replace(/^"(.*)"$/, '$1');
+    const [, key = '', value = ''] = kv;
+    if (key in meta) throw new Error(`duplicate frontmatter key: ${key}`);
+    meta[key] = value.replace(/^"(.*)"$/, '$1');
   }
-  return [meta, m[2]];
+  return [meta, body];
 }
 
 /**
@@ -90,7 +92,7 @@ function parseBullets(body: string): Record<string, string> {
     if (!item.startsWith('- ')) throw new Error(`not a bullet: ${item.slice(0, 60)}…`);
     const idMatch = item.match(/\{#([\w-]+)\}\s*$/);
     if (!idMatch) throw new Error(`bullet missing {#id} anchor: ${item.slice(0, 60)}…`);
-    const id = idMatch[1];
+    const [, id = ''] = idMatch;
     if (id in bullets) throw new Error(`duplicate bullet anchor {#${id}}`);
     const text = item
       .slice(2)
@@ -188,6 +190,25 @@ export const publication = frontmatterOf<Publication>('publications.md', {
   authors: 'optional',
 });
 
-export const intros = loadHeadings('intro.md');
 export const jobs = loadJobs();
-export const skills = loadHeadings('skills.md');
+
+/** A `## key` lookup that names the file and the key it could not find. */
+function heading(file: string, groups: Record<string, string>) {
+  return (key: string): string => {
+    const value = groups[key];
+    if (value === undefined) throw new Error(`no '${key}' key in content/${file}`);
+    return value;
+  };
+}
+
+const introSections = loadHeadings('intro.md');
+const skillGroups = loadHeadings('skills.md');
+
+/** The opening paragraph for a variant, by its `## key` in content/intro.md. */
+export const intro = heading('intro.md', introSections);
+
+/** The chip list under a `## key` in content/skills.md. */
+export const skills = heading('skills.md', skillGroups);
+
+/** The keys skills() will answer to — src/validate.ts checks variants first. */
+export const skillKeys = Object.keys(skillGroups);

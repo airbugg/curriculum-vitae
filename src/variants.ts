@@ -1,7 +1,7 @@
 // The two variants: which bullets, what intro, which theme. The theme picks
 // the stylesheet, the font sets and the layout — see entry.tsx, lib/fonts.ts
 // and the dispatch in components/CVPage.tsx.
-import { intros } from './lib/content.ts';
+import { intro } from './lib/content.ts';
 import type { Section, Variant } from './types.ts';
 
 // Content parity between the two variants is an owner decree: same bullet
@@ -27,7 +27,7 @@ export const variants: Variant[] = [
       ['backend', 'stackBackend'],
       ['infra', 'stackInfra'],
     ],
-    intro: intros.default,
+    intro: intro('default'),
     sections: SECTIONS,
   },
 
@@ -36,7 +36,7 @@ export const variants: Variant[] = [
     file: 'eugene-lerman-shell',
     label: 'The Shell · full-page terminal session',
     theme: 'terminal',
-    intro: intros.shell,
+    intro: intro('shell'),
     sections: SECTIONS,
   },
 ];

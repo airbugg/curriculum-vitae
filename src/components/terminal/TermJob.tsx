@@ -8,7 +8,7 @@ import { Rich } from '../shared/Rich.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
 
 /** "Wix.com" → "Wix": the shell prints the bare company, never the domain. */
-const bareName = (company: string): string => company.split('.')[0];
+const bareName = (company: string): string => company.split('.')[0] ?? company;
 
 // experience/<start-year>-<company>.md — the fiction mirrors the repo truth
 // (the jobs really are markdown files with front matter).
@@ -48,9 +48,9 @@ export function TermJob({ role: { job, bullets } }: { role: Role }): ReactNode {
         </div>
       )}
       <ul className="t-bullets">
-        {bullets.map((id) => (
+        {bullets.map(({ id, text }) => (
           <li key={id}>
-            <Rich text={job.bullets[id]} />
+            <Rich text={text} />
           </li>
         ))}
       </ul>

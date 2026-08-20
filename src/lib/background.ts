@@ -11,4 +11,4 @@ export const langPairs: [string, string][] = person.langLevels.split(',').map((p
 export const eduYears: string = education.dates.replace(/\s*–\s*/, '–');
 
 /** The paper's short title: everything before the subtitle colon. */
-export const pubTitle: string = publication.title.split(':')[0];
+export const pubTitle: string = publication.title.split(':')[0] ?? publication.title;

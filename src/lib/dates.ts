@@ -12,14 +12,17 @@ interface YearMonth {
 
 /** "Dec 2022 – Feb 2026" → ["Dec 2022", "Feb 2026"]. */
 export function splitRange(dates: string): [string, string | undefined] {
-  const [from, to] = dates.split('–').map((s) => s.trim());
+  const [from = '', to] = dates.split('–').map((s) => s.trim());
   return [from, to];
 }
 
 export function parseMonth(s: string): YearMonth | null {
   const m = s.trim().match(/^([A-Z][a-z]{2})\w*\s+(\d{4})$/);
-  if (!m || !(m[1] in MONTHS)) return null;
-  return { y: Number(m[2]), m: MONTHS[m[1]] };
+  if (!m) return null;
+  const [, name = '', year = ''] = m;
+  const month = MONTHS[name];
+  if (month === undefined) return null;
+  return { y: Number(year), m: month };
 }
 
 // "Dec 2022 – Feb 2026" → "3 yr 3 mo", computed at build time so tenure is

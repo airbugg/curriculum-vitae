@@ -58,7 +58,7 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
         {langPairs.map(([k, v], i) => (
           <Fragment key={k}>
             {i > 0 && <span className="bgx-sep">·</span>}
-            <span className="bgx-lang">{k[0].toUpperCase() + k.slice(1)}</span>{' '}
+            <span className="bgx-lang">{k.charAt(0).toUpperCase() + k.slice(1)}</span>{' '}
             {/* NBSP: "reads and speaks well" stays on one line. */}
             <span className="bgx-level">{v.replace(/ /g, '\u00A0')}</span>
           </Fragment>
@@ -71,7 +71,7 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
         {variant.stackRows.map(([sub, key]) => (
           <div className="bgx-srow" key={sub}>
             <span className="bgx-sub">{sub}</span>
-            <Chips text={skills[key]} />
+            <Chips text={skills(key)} />
           </div>
         ))}
       </Row>
