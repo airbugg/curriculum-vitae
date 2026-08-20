@@ -1,6 +1,5 @@
-// The content and variant schema — the shapes content/*.md provides and a
-// variant selects. Loaders in lib/content.ts validate required keys at
-// startup, so downstream code can trust these without optional chaining.
+// The content and variant schema. Loaders in lib/content.ts validate these
+// at startup, so downstream code can trust them without optional chaining.
 
 export interface Person {
   name: string;
@@ -46,24 +45,44 @@ export interface Publication {
   authors?: string;
 }
 
-/** One employer block in a variant: which job, which of its bullets. */
+/** One role in a variant: which job, and which of its bullets to print. */
 export interface Section {
   job: string;
   bullets: string[];
 }
 
+/** A Section with its job resolved — what components are handed. */
+export interface Role {
+  job: Job;
+  /** Bullet ids, in the order the variant asked for them. */
+  bullets: string[];
+}
+
 export type Theme = 'grid' | 'terminal';
 
-export interface Variant {
+/** One BACKGROUND STACK sub-row: a label and a key into content/skills.md. */
+export type StackRow = [label: string, skillsKey: string];
+
+interface VariantBase {
   /** Output basename: dist/<file>.pdf */
   file: string;
   label: string;
-  /** Picks the CSS file, the font sets and the page layout. */
-  theme: Theme;
-  /** Extra class on <body> (the default variant's g-dense density package). */
-  bodyClass?: string;
-  /** BACKGROUND STACK sub-rows: [label, key into content/skills.md]. */
-  stackRows?: [label: string, skillsKey: string][];
   intro: string;
   sections: Section[];
 }
+
+/** The modernist grid — src/themes/grid.css. */
+export interface GridVariant extends VariantBase {
+  theme: 'grid';
+  /** Opts into grid.css's `.g-dense` package (a tighter --gp-* rhythm). */
+  density?: 'dense';
+  stackRows: StackRow[];
+}
+
+/** The terminal session — src/themes/terminal.css. */
+export interface TerminalVariant extends VariantBase {
+  theme: 'terminal';
+}
+
+/** Picking a theme picks a stylesheet, a font set, a layout — and a prop set. */
+export type Variant = GridVariant | TerminalVariant;

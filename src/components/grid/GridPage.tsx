@@ -1,25 +1,19 @@
-// THE DEFAULT VARIANT — modernist grid (theme 'grid').
-// A hard left meta-column (company / location / dates as a data column)
-// against a right content column. Company shows once per employer; each role
-// keeps its own dates in the meta column, aligned to its bullets.
-//
-// The braces identity joins the grid as quiet structure, not decoration:
-// mono braces in the muted data-column ink around the name and the section
-// labels, with the single functional accent staying exactly where it was.
-import React, { type ReactNode } from 'react';
-import { person } from '../../lib/content';
-import { groupSections } from '../../lib/experience';
-import type { Variant } from '../../types';
-import { Contact, contactList } from '../shared/Contact';
-import { NoBreakCompounds } from '../shared/typography';
-import { GridBackground } from './GridBackground';
-import { GridEntry } from './GridEntry';
-import { GridSecMark } from './GridSecMark';
+// The default variant: a hard left meta-column (company / blurb / location /
+// dates) against a right content column, with the braces identity carried in
+// the muted data-column ink around the name and the section marks.
+import { Fragment, type ReactNode } from 'react';
+import { person } from '../../lib/content.ts';
+import { resolve } from '../../lib/experience.ts';
+import type { GridVariant } from '../../types.ts';
+import { Contact, contacts } from '../shared/Contact.tsx';
+import { NoBreakCompounds } from '../shared/typography.tsx';
+import { GridBackground } from './GridBackground.tsx';
+import { GridEntry } from './GridEntry.tsx';
+import { GridSecMark } from './GridSecMark.tsx';
 
-export function GridPage({ variant }: { variant: Variant }): ReactNode {
-  const groups = groupSections(variant.sections);
-  const contacts = contactList();
-  const [first, last] = person.name.toUpperCase().split(' ');
+export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
+  const [first, ...rest] = person.name.toUpperCase().split(' ');
+  const last = rest.join(' ');
   return (
     <div className="page grid-page">
       {/* Centered identity above the grid: name, title, and one centered
@@ -36,10 +30,10 @@ export function GridPage({ variant }: { variant: Variant }): ReactNode {
         <div className="g-title">{person.title}</div>
         <div className="g-contactline">
           {contacts.map((c, i) => (
-            <React.Fragment key={c.text}>
+            <Fragment key={c.text}>
               {i > 0 && <span className="sep">·</span>}
               <Contact item={c} />
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       </header>
@@ -50,8 +44,8 @@ export function GridPage({ variant }: { variant: Variant }): ReactNode {
 
       <section className="g-section">
         <GridSecMark>Experience</GridSecMark>
-        {groups.map((g) => (
-          <GridEntry key={g[0].job} group={g} />
+        {variant.sections.map((section) => (
+          <GridEntry key={section.job} role={resolve(section)} />
         ))}
       </section>
 

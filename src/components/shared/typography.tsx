@@ -5,15 +5,14 @@ import type { ReactNode } from 'react';
 // unbreakable (break lands cleanly BEFORE the parenthesis), and otherwise the
 // last space goes non-breaking so no single-word orphan wraps alone.
 export function tidyLabel(text: string): string {
-  const s = String(text);
-  const paren = s.replace(/\(([^)]*)\)/g, (m) => m.replace(/ /g, '\u00A0'));
-  if (paren !== s) return paren;
-  return s.replace(/ (?=\S+$)/, '\u00A0');
+  const paren = text.replace(/\(([^)]*)\)/g, (m) => m.replace(/ /g, '\u00A0'));
+  if (paren !== text) return paren;
+  return text.replace(/ (?=\S+$)/, '\u00A0');
 }
 
 // Hyphenated compounds ("early-stage") must never break at the hyphen.
 export function NoBreakCompounds({ text }: { text: string }): ReactNode {
-  const parts = String(text).split(/(\S+-\S+)/);
+  const parts = text.split(/(\S+-\S+)/);
   return parts.map((p, i) =>
     i % 2 ? (
       <span key={i} style={{ whiteSpace: 'nowrap' }}>

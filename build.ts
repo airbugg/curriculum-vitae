@@ -67,7 +67,7 @@ function validate(): void {
       for (const id of s.bullets)
         if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
     }
-    for (const [, key] of v.stackRows ?? [])
+    for (const [, key] of v.theme === 'grid' ? v.stackRows : [])
       if (!(key in skills)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
   }
   if (errors.length) {

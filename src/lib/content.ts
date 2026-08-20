@@ -180,15 +180,13 @@ export const education = frontmatterOf<Education>('education.md', {
   dates: 'required',
 });
 
-export const publications: Publication[] = [
-  frontmatterOf<Publication>('publications.md', {
-    title: 'required',
-    journal: 'required',
-    year: 'required',
-    url: 'required',
-    authors: 'optional',
-  }),
-];
+export const publication = frontmatterOf<Publication>('publications.md', {
+  title: 'required',
+  journal: 'required',
+  year: 'required',
+  url: 'required',
+  authors: 'optional',
+});
 
 export const intros = loadHeadings('intro.md');
 export const jobs = loadJobs();

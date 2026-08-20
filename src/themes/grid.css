@@ -154,10 +154,6 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* ---- entry rows ---- */
 .g-section .g-row { margin-bottom: var(--gp-row-mb, 4.1mm); break-inside: avoid; }
 .g-section .g-row:last-child { margin-bottom: 0; }
-/* A promotion row within the same employer sits tighter to its parent, so the
-   lone dates block reads bound to the company above rather than floating. */
-.g-section .g-row.g-cont { margin-top: -1.6mm; }
-
 /* The meta column reads as TWO clusters (Gestalt proximity): an identity
    cluster (bold name + italic blurb — the prose voice, same as the
    summaries) and a data cluster (micro-caps location + mono dates), with
@@ -249,19 +245,19 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    wordmarks REPLACE the printed name, sized to the company line. Both take
    the surrounding ink when the asset is a currentColor SVG; PNG assets
    keep their own colors. */
-.g-logo { display: inline-block; }
-.g-logo svg, .g-logo img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
-.g-wordmark { display: inline-block; }
+.co-mark { display: inline-block; }
+.co-mark svg, .co-mark img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
+.co-wordmark { display: inline-block; }
 /* Wordmark sizing is derived from each file's internal metrics so all
    three read at the same letter height as the 9pt bold company names
    (cap/x-height ~2.3mm), with baselines on the text baseline. */
-.g-wordmark.g-lg-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
-.g-wordmark.g-lg-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
-.g-wordmark.g-lg-wix svg { height: 2.4mm; vertical-align: 0; }
+.co-wordmark.co-art-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
+.co-wordmark.co-art-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
+.co-wordmark.co-art-wix svg { height: 2.4mm; vertical-align: 0; }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
-.g-alt { position: absolute; color: #fff; font-size: 4pt; }
-.g-wordmark svg, .g-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }
+.co-alt { position: absolute; color: #fff; font-size: 4pt; }
+.co-wordmark svg, .co-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }
 
 /* ---- BACKGROUND: THE MANIFEST (bgx- classes) ----
    The keys survive as the page's own meta-column labels (the g-loc
@@ -298,7 +294,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .bgx-lang { color: var(--ink); }
 .bgx-level { color: var(--muted); }
 /* Stack items whisper the data voice as boxless deep-emerald mono chips. */
-.bgx-off { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; color: var(--accent-deep); }
+.bgx-chip { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; color: var(--accent-deep); }
 
 /* The STACK row's subdivision: three ledger lines inside one row, each
    led by a fixed-width mono sub-label so the chip groups share a left
