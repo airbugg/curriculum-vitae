@@ -5,11 +5,10 @@
 // Runs directly under Node ≥ 22.18 (native type stripping); type-check with
 // `npm run check`.
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
-import type { Variant } from './src/types.ts';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // Everything under src/ resolves paths from the working directory; pin it.
@@ -80,14 +79,13 @@ function chromium(): string {
   const override = process.env.CHROME_PATH;
   if (override && existsSync(override)) return override;
 
-  // 2. Local sandbox Playwright-style install.
-  const base = '/opt/pw-browsers';
-  for (const dir of ['chromium', 'chromium-1194']) {
-    const direct = join(base, dir);
-    if (existsSync(direct) && statSync(direct).isFile()) return direct;
-    const inner = join(direct, 'chrome-linux', 'chrome');
-    if (existsSync(inner)) return inner;
-  }
+  // 2. A Playwright-managed browser, via the variable Playwright itself sets.
+  const pw = process.env.PLAYWRIGHT_BROWSERS_PATH;
+  if (pw && existsSync(pw))
+    for (const dir of readdirSync(pw).filter((d) => d.startsWith('chromium'))) {
+      const bin = join(pw, dir, 'chrome-linux', 'chrome');
+      if (existsSync(bin)) return bin;
+    }
 
   // 3. Common system binaries on PATH (Linux distros / CI runners).
   for (const name of ['chromium-browser', 'chromium', 'google-chrome', 'google-chrome-stable']) {
@@ -99,10 +97,7 @@ function chromium(): string {
     }
   }
 
-  throw new Error(
-    'Chromium not found. Set CHROME_PATH, install it under /opt/pw-browsers, ' +
-      'or put chromium/google-chrome on PATH.',
-  );
+  throw new Error('Chromium not found. Set CHROME_PATH, or put it on PATH.');
 }
 
 // Counts uncompressed /Type /Page dicts — true of Skia's PDF backend

@@ -39,7 +39,8 @@ Job frontmatter wants `id`, `company`, `role`, `location`, `dates` (`Mon YYYY â€
 ```sh
 npm install
 npm run build   # dist/*.pdf
-npm run check   # types
+npm run check   # types + formatting
+npm run format  # apply formatting
 ```
 
 Node 22.18+ and Chromium (`CHROME_PATH` if it is somewhere unusual). A variant that runs past one A4 page fails the build.
@@ -53,8 +54,10 @@ Node 22.18+ and Chromium (`CHROME_PATH` if it is somewhere unusual). A variant t
 | `src/components/` | `grid/` and `terminal/` layouts, `shared/` primitives |
 | `src/themes/` | one CSS file per theme |
 | `src/lib/` | content loaders, dates, fonts, logos |
-| `build.ts` | render, validate, print, check one page |
+| `src/validate.ts` | every cross-file reference a variant makes |
+| `build.ts` | bundle, render, print, check one page |
 | `scripts/preview.ts` | the banner above |
 | `DESIGN.md` | why it looks the way it does |
+| `CLAUDE.md` | the three things that will bite you |
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org), checked by commitlint in a commit hook and again on every PR. Direct pushes to `master` skip both checks, so the release job fails loudly if a push cut no version. semantic-release turns the commits into the version, the tag and the release notes.

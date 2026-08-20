@@ -1,16 +1,11 @@
 // Company logos, inlined at build time from assets/logos/<slug>.{svg,png}.
-// Two modes:
-//   mark     — a small glyph rendered BEFORE the company name (the Remitly
-//              handshake).
-//   wordmark — the logo IS the name (Wix, Rewire have no separate mark);
-//              it renders IN PLACE of the printed company name, sized to
-//              the company line's cap height.
-// SVGs are inlined verbatim and keep their own brand colours (Rewire's
-// indigo, Wix's black, Rylo's orange swirl); nothing here recolours them to
-// the surrounding ink. PNGs become data URIs — fine for print at these
-// sizes when the source is a few hundred px or more.
-// A missing file degrades to the plain text name; dropping the file into
-// assets/logos/ lights it up on the next build.
+//   mark     — a small glyph rendered BEFORE the company name.
+//   wordmark — the logo IS the name, rendered IN PLACE of it (Wix and Rewire
+//              have no separate mark, and printing both would duplicate it).
+// SVGs are inlined verbatim and keep their own brand colours; nothing here
+// recolours them to the surrounding ink. A missing file degrades to the
+// plain text name, so dropping one into assets/logos/ lights it up on the
+// next build.
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
