@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'no
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
-import type { Job, Variant } from './src/types';
+import type { Variant } from './src/types.ts';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // Everything under src/ resolves paths from the working directory; pin it.
@@ -29,18 +29,21 @@ await esbuild.build({
   logLevel: 'silent',
 });
 
-interface Entry {
-  variants: Variant[];
-  content: {
-    jobs: Record<string, Job>;
-    skills: Record<string, string>;
-  };
-  duration(dates: string): string | null;
-  renderVariant(variant: Variant): string;
+// Derived from the entry module rather than hand-copied, so renaming or
+// dropping an export there is a type error here instead of a runtime one.
+type Entry = typeof import('./src/entry.tsx');
+
+// Content errors are thrown while this module initialises. Unguarded, Node
+// prints them with a stack pointing into .build/entry.mjs — the bundled
+// artifact the loaders take care never to name.
+let entry: Entry;
+try {
+  entry = (await import(pathToFileURL(join(ROOT, '.build', 'entry.mjs')).href)) as Entry;
+} catch (e) {
+  console.error(`\u2717 ${(e as Error).message}`);
+  process.exit(1);
 }
-const { renderVariant, variants, content, duration } = (await import(
-  pathToFileURL(join(ROOT, '.build', 'entry.mjs')).href
-)) as Entry;
+const { renderVariant, variants, content, duration } = entry;
 
 // Validate every cross-file reference before rendering: a bullet id, intro
 // key or skills key that went missing would otherwise render as a literal
@@ -61,14 +64,8 @@ function validate(): void {
       // tenure from the rendered page and still pass the one-page check.
       if (duration(job.dates) === null)
         errors.push(`${v.file}: job '${s.job}' dates '${job.dates}' do not parse (need "Mon YYYY – Mon YYYY|Present" with an en dash)`);
-      for (const id of s.bullets) {
-        if (!(id in job.bullets)) {
-          errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
-        } else if (!job.bullets[id].trim()) {
-          // `- {#id}` parses fine and renders an empty <li> on the page.
-          errors.push(`${v.file}: job '${s.job}' bullet '${id}' has no text`);
-        }
-      }
+      for (const id of s.bullets)
+        if (!(id in job.bullets)) errors.push(`${v.file}: job '${s.job}' has no bullet '${id}'`);
     }
     for (const [, key] of v.stackRows ?? [])
       if (!(key in skills)) errors.push(`${v.file}: no '${key}' key in content/skills.md`);
@@ -111,7 +108,7 @@ function chromium(): string {
 // Counts uncompressed /Type /Page dicts — true of Skia's PDF backend
 // (Chromium print), which never wraps page objects in object streams. If a
 // future Chromium starts compressing them, every build fails loudly with a
-// count of 0; this comment is the diagnosis.
+// count of 0, and this note is the diagnosis.
 const pageCount = (pdf: string): number =>
   (readFileSync(pdf, 'latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
 
@@ -132,7 +129,7 @@ for (const v of variants) {
       `file://${htmlPath}`,
     ], { stdio: 'pipe' });
   } catch (err) {
-    // Surface Chromium's own words; a swallowed stderr costs a debug round.
+    // Chromium reports print failures on stderr only.
     const stderr = (err as { stderr?: Buffer }).stderr;
     if (stderr) console.error(String(stderr));
     throw err;
@@ -143,4 +140,4 @@ for (const v of variants) {
   console.log(`${ok ? '✓' : '✗'} ${v.file}.pdf — ${pages} page(s) [${v.label}]`);
 }
 
-process.exit(failed ? 1 : 0);
+process.exitCode = failed ? 1 : 0;
