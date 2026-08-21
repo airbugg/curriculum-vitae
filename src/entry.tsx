@@ -12,6 +12,10 @@ export { variants } from './variants.ts';
 // build.ts runs this before rendering, so it validates against the same
 // modules that render.
 export { validate } from './validate.ts';
+// The PDF's /Author is the CV's own subject; it comes from content/person.md
+// rather than a literal in the toolchain, so renaming yourself is still a
+// one-file edit.
+export { person } from './lib/content.ts';
 
 export function renderVariant(variant: Variant): string {
   const css = [

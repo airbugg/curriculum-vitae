@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
+import { repairTextLayer } from './scripts/text-layer.ts';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 // Everything under src/ resolves paths from the working directory; pin it.
@@ -66,7 +67,7 @@ try {
   console.error(`\u2717 ${(e as Error).message}`);
   process.exit(1);
 }
-const { renderVariant, variants, validate } = entry;
+const { renderVariant, variants, validate, person } = entry;
 
 const errors = validate(variants);
 if (errors.length) {
@@ -99,13 +100,6 @@ function chromium(): string {
 
   throw new Error('Chromium not found. Set CHROME_PATH, or put it on PATH.');
 }
-
-// Counts uncompressed /Type /Page dicts — true of Skia's PDF backend
-// (Chromium print), which never wraps page objects in object streams. If a
-// future Chromium starts compressing them, every build fails loudly with a
-// count of 0, and this note is the diagnosis.
-const pageCount = (pdf: string): number =>
-  (readFileSync(pdf, 'latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
 
 // Every class the render emits must have a rule in the stylesheets that
 // render with it. A rename landing in the component and not the CSS drops
@@ -158,10 +152,18 @@ for (const v of variants) {
     if (stderr) console.error(String(stderr));
     throw err;
   }
-  const pages = pageCount(pdfPath);
+  // Skia's ToUnicode is faithful to the typography and wrong for a parser;
+  // repair it before the page count, so a failure here fails the build.
+  const { remapped, pages } = await repairTextLayer(pdfPath, {
+    author: person.name,
+    subject: 'Curriculum Vitae',
+  });
   const ok = pages === 1;
   if (!ok) failed = true;
-  console.log(`${ok ? '✓' : '✗'} ${v.file}.pdf — ${pages} page(s) [${v.label}]`);
+  console.log(
+    `${ok ? '✓' : '✗'} ${v.file}.pdf — ${pages} page(s) [${v.label}]` +
+      (remapped.length ? ` · text layer: ${remapped.join(', ')} remapped` : ''),
+  );
 }
 
 process.exitCode = failed ? 1 : 0;

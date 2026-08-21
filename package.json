@@ -1,7 +1,7 @@
 {
   "name": "curriculum-vitae",
   "version": "1.0.0",
-  "description": "One-page CV variants built from a single source of facts, rendered HTML \u2192 CSS \u2192 headless Chromium \u2192 PDF.",
+  "description": "One-page CV variants built from a single source of facts, rendered HTML → CSS → headless Chromium → PDF.",
   "private": true,
   "type": "module",
   "license": "ISC",
@@ -28,6 +28,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "conventional-changelog-conventionalcommits": "^8.0.0",
+    "pdf-lib": "^1.17.1",
     "prettier": "^3.9.6",
     "semantic-release": "^25.0.9",
     "sharp": "^0.35.3",
