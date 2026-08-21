@@ -3,17 +3,12 @@
 // nothing past it, so nothing reads as a section cut off mid-way. Two
 // stages:
 //
-// 1. pdftoppm crops the already-built, pixel-verified print PDF (poppler's
-//    own -x/-y/-W/-H crop) to just past the intro's last line. Rasterizing
-//    the print PDF reuses the pipeline's proven output instead of a second
-//    rendering path (screen media, no pagination) with its own paint-timing
-//    quirks.
-// 2. sharp turns that flat rectangle into a card: a few millimetres of
-//    synthetic white padding at the bottom give the fade room to work in
-//    without touching real text, a soft alpha gradient dissolves the card
-//    into the page instead of a hard crop line, and a blurred, offset dark
-//    rectangle behind it reads as a soft drop shadow. Output is a
-//    transparent PNG, so it sits naturally on GitHub's light or dark theme.
+// 1. pdftoppm crops the built print PDF to just past the intro's last line.
+// 2. sharp turns that flat rectangle into a card: synthetic white padding at
+//    the bottom gives the fade room to work in without touching real text, an
+//    alpha gradient dissolves the card into the page instead of a hard crop
+//    line, and a blurred offset rectangle behind it reads as a drop shadow.
+//    A transparent PNG, so it sits on GitHub's light or dark theme alike.
 //
 // Regenerated on every release (see .github/workflows/release-cv.yml) so
 // the README always shows the current CV, not a stale snapshot.
@@ -50,12 +45,30 @@ mkdirSync(dirname(RAW_PREFIX), { recursive: true });
 mkdirSync(dirname(OUT), { recursive: true });
 
 try {
-  execFileSync('pdftoppm', [
-    '-png', '-singlefile', '-r', String(DPI),
-    '-x', '0', '-y', '0', '-W', String(requestWidth), '-H', String(requestHeight),
-    '-f', '1', '-l', '1',
-    PDF, RAW_PREFIX,
-  ], { stdio: 'pipe' });
+  execFileSync(
+    'pdftoppm',
+    [
+      '-png',
+      '-singlefile',
+      '-r',
+      String(DPI),
+      '-x',
+      '0',
+      '-y',
+      '0',
+      '-W',
+      String(requestWidth),
+      '-H',
+      String(requestHeight),
+      '-f',
+      '1',
+      '-l',
+      '1',
+      PDF,
+      RAW_PREFIX,
+    ],
+    { stdio: 'pipe' },
+  );
 } catch (err) {
   if ((err as NodeJS.ErrnoException).code === 'ENOENT')
     throw new Error('pdftoppm not found — install poppler-utils (apt-get install poppler-utils).');

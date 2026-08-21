@@ -1,60 +1,42 @@
-// One employer on the grid: meta column (company / blurb / location / dates)
-// against the content column (role / summary / bullets), one g-row per role.
+// One role on the grid: meta column (company / blurb / location / dates)
+// against the content column (role / summary / bullets).
 import type { ReactNode } from 'react';
-import { jobs } from '../../lib/content';
-import { compactDur, shortRange } from '../../lib/dates';
-import { groupDuration } from '../../lib/experience';
-import type { Section } from '../../types';
-import { CompanyName } from '../shared/CompanyName';
-import { Rich } from '../shared/Rich';
-import { NoBreakCompounds, tidyLabel } from '../shared/typography';
+import { compactDur, duration, shortRange } from '../../lib/dates.ts';
+import type { Role } from '../../types.ts';
+import { CompanyName } from '../shared/CompanyName.tsx';
+import { Rich } from '../shared/Rich.tsx';
+import { NoBreakCompounds, tidyLabel } from '../shared/typography.tsx';
 
-export function GridEntry({ group }: { group: Section[] }): ReactNode {
-  const first = jobs[group[0].job];
+export function GridEntry({ role: { job, bullets } }: { role: Role }): ReactNode {
+  const tenure = compactDur(duration(job.dates));
   return (
-    <>
-      {group.map((s, i) => {
-        const job = jobs[s.job];
-        return (
-          // Continuation rows (a promotion within the same employer) are
-          // pulled tighter to their parent row so the lone dates block reads
-          // bound to the company above, not adrift in whitespace.
-          <div className={i === 0 ? 'g-row' : 'g-row g-cont'} key={s.job}>
-            <div className="g-meta">
-              {i === 0 && (
-                <>
-                  <div className="g-co">
-                    <CompanyName id={first.company} />
-                  </div>
-                  {first.blurb && <div className="g-mblurb">{tidyLabel(first.blurb)}</div>}
-                  <div className="g-loc">{first.location}</div>
-                </>
-              )}
-              <span className="g-dates">
-                {shortRange(job.dates)}
-                {i === 0 && groupDuration(group) && (
-                  <span className="g-dur"> ({compactDur(groupDuration(group))})</span>
-                )}
-              </span>
-            </div>
-            <div className="g-content">
-              <div className="g-role">{job.role}</div>
-              {job.summary && (
-                <div className="g-summary">
-                  <NoBreakCompounds text={job.summary} />
-                </div>
-              )}
-              <ul>
-                {s.bullets.map((id) => (
-                  <li key={id}>
-                    <Rich text={job.bullets[id]} />
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <div className="g-row">
+      <div className="g-meta">
+        <div className="g-co">
+          <CompanyName company={job.company} />
+        </div>
+        {job.blurb && <div className="g-mblurb">{tidyLabel(job.blurb)}</div>}
+        <div className="g-loc">{job.location}</div>
+        <span className="g-dates">
+          {shortRange(job.dates)}
+          {tenure && <span className="g-dur"> ({tenure})</span>}
+        </span>
+      </div>
+      <div className="g-content">
+        <div className="g-role">{job.role}</div>
+        {job.summary && (
+          <div className="g-summary">
+            <NoBreakCompounds text={job.summary} />
           </div>
-        );
-      })}
-    </>
+        )}
+        <ul>
+          {bullets.map(({ id, text }) => (
+            <li key={id}>
+              <Rich text={text} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

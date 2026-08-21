@@ -1205,3 +1205,176 @@ build with its name instead of rendering as undefined.
 
 Verified the way every pass here is verified: both PDFs byte-compared
 at 150 dpi against the pre-port render — zero differing pixels.
+
+## §24 · Versioned releases, conventional commits, and the default rename
+
+Housekeeping round, all of it in one PR.
+
+Releases stopped being `cv-2026.08.16-a48591e` and became semver, cut by
+semantic-release: it reads the Conventional Commits since the last `v*`
+tag, bumps major on a breaking change, minor on a feat and patch on
+anything else, writes the changelog grouped by type, and attaches both
+PDFs. Config in `.releaserc.json`. Three settings are load-bearing and
+non-obvious. The first is that `releaseRules` must lead with
+`{breaking: true, release: 'major'}`: user rules are evaluated before
+the built-in defaults, so without that line a `refactor!` or a
+`BREAKING CHANGE:` footer on anything but a feat lands as a patch. An
+independent review caught that; it had been shipping as a silent
+downgrade for seven of the ten commit types. The `releaseRules` exist because the stock preset does not
+release on `docs`/`chore`/`refactor` at all, and on this repo a content
+edit is usually exactly that, so without them a CV change would produce
+no new PDF. And `conventional-changelog-conventionalcommits` is pinned
+to `^8` because semantic-release 25 bundles
+`conventional-changelog-writer@8`: the preset's v10 line targets writer
+v9 and, paired with v8, silently generates release notes containing
+nothing but the version header. That failure has no error message,
+which is the only reason it was caught before shipping.
+
+Commit messages are Conventional Commits, checked by commitlint in two
+places: a `commit-msg` hook installed by `npm run prepare` (which points
+`core.hooksPath` at `.githooks`, so a fresh clone gets it on install),
+and a CI job over every commit in a PR, because a hook is advisory.
+
+The first pass at both of these was hand-rolled, about 230 lines of
+parser, linter and versioner with no dependencies, on the theory that
+the repo already hand-rolls its Markdown parser. The owner asked the
+obvious question, which is whether open-source tooling exists for this,
+and it does. The tradeoff was real in both directions: 364 packages
+added and 508 audited, against 230 lines nobody else has reviewed.
+Standard won, and the version-pin bug above is a decent argument that
+it should have from the start, since the equivalent bug in hand-rolled
+code would have been mine to find too, just later. The tree carries
+seven advisories, all under `@semantic-release/npm` — a plugin this
+repo does not even enable.
+
+The flagship variant is now the default variant, everywhere except the
+history above. Output filename and rendering are unchanged, verified
+with the usual zero-pixel diff.
+
+The README lost its prose: title, preview, download, edit links,
+build, layout, nothing else. The `Makefile` went with it, being two
+aliases for npm scripts nobody was calling.
+
+A cleanup agent went over the repo afterwards. What it found that
+mattered: `build.ts` validated dates with a regex that accepted month
+names `duration()` rejects, so `Jly 2026` would have passed the build
+and silently dropped the tenure from both PDFs; the validator now calls
+`duration()` itself, which is the only way the two cannot drift. A
+duplicate `{#id}` anchor overwrote the first bullet and shipped a page
+missing it. A typo in an optional frontmatter key (`summry:`) parsed
+fine, was stored under a name nothing reads, and took the summary line
+out of the PDF without a word; `typed()` now rejects unknown keys. And
+two `.replace(/ /g, ' ')` calls whose second argument was an invisible
+U+00A0, load-bearing rag control disguised as a no-op that the next
+cleanup pass would have deleted: both are now `'\u00A0'` with a comment
+saying why.
+
+## §25 · The reinvented-wheel audit
+
+An agent went through the repo asking, of every hand-rolled thing, whether
+an off-the-shelf library should be doing it instead. Every number below
+was measured, not recalled.
+
+Three things changed. The grid variant was embedding Source Code Pro at
+four weights and rendering exactly one; `pdffonts` confirms only Regular
+reaches the PDF, so the theme now pulls a Regular-only mono set. That is
+850 KB off the intermediate HTML, a third of the file, with both PDFs
+byte-identical afterwards.
+
+The second is not a wheel at all, and is the most valuable thing the
+audit turned up. The browser build is literally in the PDF bytes, as
+`/Creator HeadlessChrome/NNN` and `/Producer Skia/PDF mNNN`, and CI
+resolves an auto-updating Chrome from the runner image. The check found
+this the first time it ran: the runner is on Chrome 151 and this
+sandbox is on 141, so every released PDF has been rendered by a
+different browser major than the local baseline used to pixel-verify
+changes against. That does not invalidate those diffs, which compare
+two local builds to each other, but it does mean local byte equality
+was never the same thing as released byte equality. A GitHub image refresh would therefore change the
+pixel-tuned output with no commit in this repo, and the zero-pixel-diff
+practice this file is built on is a manual habit, not a gate that would
+catch it. Both workflows now assert the browser's major version against
+`.chrome-version` and fail if it moved, which turns a silent drift into
+a deliberate re-baseline. A harder pin is possible (a marketplace action,
+or `@puppeteer/browsers` downloading a fixed build) but both were left
+alone: the repo's actions are all GitHub-owned today, and the release
+job holds a write token. A reviewer rightly pushed back on that
+reasoning afterwards, and it is weaker than it sounds: the same job now
+runs 364 third-party npm packages under that same token, which is a far
+larger surface than one pinned, audited action. The honest argument for
+leaving it is that the version assertion is enough for a CV repo, not
+that the action would be the riskiest thing present.
+
+Third, a comment in `lib/logos.ts` claimed the SVGs are recoloured to
+the surrounding ink via `currentColor`. They are not; all three carry
+their own brand colours. Corrected.
+
+Everything else was left hand-rolled, and the reasoning is worth keeping
+because "it is only N lines" cuts both ways. commitlint replaced a
+hand-rolled implementation of somebody else's specification, where
+drifting from the spec is the failure mode and the package count is the
+honest price of conformance. Nothing else here is that shape.
+`pageCount` is not a PDF parser, it is a two-line assertion about output
+this pipeline itself produces, and on an object-stream PDF it fails to
+zero rather than to a plausible wrong number. `dates.ts` is not a date
+library, it is a strict validator for one documented format, and
+date-fns would accept `Dec 22` as the year 22 AD and render a
+two-thousand-year tenure that still fits one page. `validate()` checks
+cross-document references no schema library expresses. The `.githooks`
+hook is a one-line `git config`, which is all husky would do.
+
+Two measurements to carry forward. Driving the same binary over CDP with
+puppeteer produces byte-identical PDFs to the `--print-to-pdf` CLI, so
+that migration is safe if a reason for it ever appears — but only with
+`preferCSSPageSize: true`, because puppeteer's default ignores
+`@page { size: A4 }` and silently emits US Letter, and the one-page check
+passes on Letter. And font subsetting is NOT safe: subsetting all nine
+faces shifts 0.23% of subpixels with a maximum channel delta of 227.
+Anyone reading "1 MB of unused fonts" and reaching for `subset-font`
+should read this paragraph first.
+
+## §26 · The independent review
+
+An adversarial reviewer was pointed at the whole PR with instructions to
+treat every claim in it as marketing until measured. The rendering
+claims held: both PDFs differ from master by exactly four bytes, all
+inside `/CreationDate` and `/ModDate`; the grid embeds one mono face;
+the HTML shrank 32.9%. The release half, which had never executed, did
+not.
+
+The finding that mattered was a functional regression hiding behind a
+green check. semantic-release exits 0 when it decides nothing is
+releasable, and nothing is releasable when no commit subject parses as
+a Conventional Commit. GitHub's web editor defaults to
+`Update content/jobs/3-rewire.md`, which does not parse — and neither
+enforcement point covers it, because the commit-msg hook is client-side
+and the commitlint job only runs on pull requests. The README actively
+recommends that editor. So the intended workflow was: edit the CV in
+the browser, watch CI go green, and have the download link keep serving
+the old PDF, with no signal anywhere. Under the date-tag scheme it
+replaced, every push published. The release job now fails if no `v*`
+tag points at HEAD when it finishes, and the README says what a commit
+subject has to look like.
+
+Three more silent-overwrite paths turned out to be siblings of the
+duplicate-`{#id}` bug fixed earlier in the same PR, and all three were
+still open: a repeated `## key` in `intro.md` or `skills.md` replaced a
+whole intro paragraph or skill row, two job files claiming one `id`
+silently shadowed each other by filename sort order, and a repeated key
+inside one frontmatter block took the last value. Each produced a wrong
+PDF and a green build. Fixing one member of a family and not looking
+for the rest is the lesson worth keeping.
+
+Also: errors thrown while parsing frontmatter escaped the `try` that
+was supposed to name the file, so the message pointed into
+`.build/entry.mjs` — a bundled artifact a content editor has never
+heard of — while `content.ts` and the README both claimed the build
+"fails by name". Wrapped properly now.
+
+The Chrome gate was recalibrated rather than kept as written. Failing
+the release path on a browser bump is a monthly tripwire on a repo
+whose owner-facing workflow is a browser edit, and its remediation
+instruction told the reader to rebuild locally and compare, which is
+impossible when the runner is on 151 and the local machine is on 141.
+It now fails hard on pull requests, where a human is present to act on
+it, and warns without blocking on the release path.
