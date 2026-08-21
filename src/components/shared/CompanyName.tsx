@@ -1,8 +1,12 @@
-// The employer name with its official artwork. A `mark` renders before the
-// name; a `wordmark` renders IN PLACE of the name (Wix/Rewire have no
-// separate mark, and a wordmark next to the printed name would duplicate
-// it). Missing assets degrade to the plain text name. The co-art-<slug>
-// class lets themes size each asset from its own internal geometry.
+// The employer name as text, optionally preceded by the company's mark.
+//
+// The name is always real, visible, selectable text. It used to be replaced
+// by a wordmark for Rylo, Rewire and Wix, with the name kept in the text
+// layer as white 4pt out-of-flow type so parsers could still read it. That
+// backfired twice: a hidden-text scanner flags white type on a résumé as
+// keyword stuffing regardless of what it says, and absolute positioning made
+// Skia paint those names last, so stream-order extractors reported them
+// detached from the roles they belong to. Both are gone with the wordmarks.
 //
 // Rendered by both themes, so its classes take the shared co- prefix rather
 // than either theme's g-/t-.
@@ -10,8 +14,9 @@ import type { ReactNode } from 'react';
 import { logos, type LogoAsset } from '../../lib/logos.ts';
 import { tidyLabel } from './typography.tsx';
 
-function Asset({ asset, className }: { asset: LogoAsset; className: string }): ReactNode {
-  const cls = `${className} co-art-${asset.slug}`;
+function Mark({ asset }: { asset: LogoAsset }): ReactNode {
+  // co-art-<slug> lets a theme size each asset from its own geometry.
+  const cls = `co-mark co-art-${asset.slug}`;
   if (asset.type === 'svg')
     return <span className={cls} dangerouslySetInnerHTML={{ __html: asset.data }} />;
   return (
@@ -22,20 +27,10 @@ function Asset({ asset, className }: { asset: LogoAsset; className: string }): R
 }
 
 export function CompanyName({ company, label }: { company: string; label?: string }): ReactNode {
-  const logo = logos[company];
-  if (logo?.wordmark)
-    return (
-      <>
-        <Asset asset={logo.wordmark} className="co-wordmark" />
-        {/* The name stays in the PDF text layer so search and parsers still
-            find the employer: white 4pt, out of flow (see .co-alt). Only
-            invisible because the page is white. */}
-        <span className="co-alt">{label ?? company}</span>
-      </>
-    );
+  const mark = logos[company]?.mark;
   return (
     <>
-      {logo?.mark && <Asset asset={logo.mark} className="co-mark" />}
+      {mark && <Mark asset={mark} />}
       {tidyLabel(label ?? company)}
     </>
   );

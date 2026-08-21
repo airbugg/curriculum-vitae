@@ -1,11 +1,9 @@
-// Company logos, inlined at build time from assets/logos/<slug>.{svg,png}.
-//   mark     — a small glyph rendered BEFORE the company name.
-//   wordmark — the logo IS the name, rendered IN PLACE of it (Wix and Rewire
-//              have no separate mark, and printing both would duplicate it).
+// Company marks, inlined at build time from assets/logos/<slug>.{svg,png}.
+// A mark is a small glyph rendered BEFORE the company name, never instead of
+// it — the name itself is always real text (see CompanyName).
 // SVGs are inlined verbatim and keep their own brand colours; nothing here
-// recolours them to the surrounding ink. A missing file degrades to the
-// plain text name, so dropping one into assets/logos/ lights it up on the
-// next build.
+// recolours them to the surrounding ink. A missing file degrades to the name
+// alone, so dropping one into assets/logos/ lights it up on the next build.
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -18,7 +16,6 @@ export interface LogoAsset {
 
 export interface CompanyLogo {
   mark?: LogoAsset;
-  wordmark?: LogoAsset;
 }
 
 const dir = join(process.cwd(), 'assets', 'logos');
@@ -37,9 +34,9 @@ function load(slug: string): LogoAsset | undefined {
 }
 
 // Keyed by the company string as it appears in content frontmatter.
+// Keyed by the company string as it appears in content frontmatter. Only
+// Remitly ships a mark; rylo/rewire/wix.svg are wordmark lockups that contain
+// the name, so rendering one beside the name would print it twice.
 export const logos: Record<string, CompanyLogo> = {
-  Rylo: { wordmark: load('rylo') }, // full lockup (swirl + name) from rylo.com
   Remitly: { mark: load('remitly') },
-  Rewire: { wordmark: load('rewire') },
-  'Wix.com': { wordmark: load('wix') },
 };

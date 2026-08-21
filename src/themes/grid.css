@@ -247,17 +247,11 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    keep their own colors. */
 .co-mark { display: inline-block; }
 .co-mark svg, .co-mark img { height: 3.2mm; width: auto; vertical-align: -0.5mm; margin-right: 1.2mm; }
-.co-wordmark { display: inline-block; }
 /* Wordmark sizing is derived from each file's internal metrics so all
    three read at the same letter height as the 9pt bold company names
    (cap/x-height ~2.3mm), with baselines on the text baseline. */
-.co-wordmark.co-art-rewire svg { height: 3.5mm; vertical-align: -0.2mm; }
-.co-wordmark.co-art-rylo svg { height: 3.7mm; vertical-align: -0.8mm; }
-.co-wordmark.co-art-wix svg { height: 2.4mm; vertical-align: 0; }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
-.co-alt { position: absolute; color: #fff; font-size: 4pt; }
-.co-wordmark svg, .co-wordmark img { height: 3mm; width: auto; vertical-align: -0.1mm; }
 
 /* ---- BACKGROUND: THE MANIFEST (bgx- classes) ----
    The keys survive as the page's own meta-column labels (the g-loc
