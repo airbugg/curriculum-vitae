@@ -1,75 +1,63 @@
-# curriculum-vitae
+# Eugene Lerman - Curriculum Vitae
 
 <p align="center">
   <a href="https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf">
-    <img src="docs/cv-preview.png" alt="Eugene Lerman — CV preview" width="800">
+    <img src="docs/cv-preview.png" alt="Eugene Lerman, Senior Software Engineer" width="800">
   </a>
 </p>
 
-My CV, built like software: the content lives in Markdown, React components
-lay it out, headless Chromium prints it, and CI ships the PDFs. The design
-is a web-native reincarnation of the LaTeX (awesome-cv) CV I hand-crafted a
-decade ago — same `{ EUGENE : LERMAN }` braces, same emerald, fewer regrets.
+## Download
 
-## Get the PDFs
-
-**[→ Latest release](https://github.com/airbugg/curriculum-vitae/releases/latest)** — every push to `master` publishes fresh PDFs.
-
-| Variant | For | Download |
+| Variant | For | |
 | --- | --- | --- |
-| Flagship (modernist grid) | humans, referrals — the generalist CV | [eugene-lerman.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
-| Shell | the CV as a terminal session | [eugene-lerman-shell.pdf](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
+| Default | humans, referrals | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
+| Shell | the CV as a terminal session | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
 
-PDFs are build artifacts, not source — they aren't committed here.
+Every push to `master` with a [Conventional Commit](https://www.conventionalcommits.org) subject cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed.
 
-## Edit the CV
+## Edit
 
-Every fact lives in exactly one of these files. Click to edit in GitHub's
-browser editor; a commit to `master` rebuilds and re-releases both PDFs.
+Each fact lives in exactly one file. Click to edit in the browser, then **replace GitHub's default commit message** with one like `docs(cv): update the Rewire bullets`. That prefix is what cuts the release; without it the PDFs rebuild but do not publish, and CI fails saying so.
 
 | File | Holds |
 | --- | --- |
-| [`person.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/person.md) | name, contact info, languages |
-| [`intro.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/intro.md) | the opening paragraph, per variant |
+| [`person.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/person.md) | name, contact, languages |
+| [`intro.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/intro.md) | opening paragraph, per variant |
 | [`jobs/1-rylo.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/1-rylo.md) | Rylo |
 | [`jobs/2-remitly-staff.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/2-remitly-staff.md) | Remitly |
 | [`jobs/3-rewire.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/3-rewire.md) | Rewire |
 | [`jobs/4-wix.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/4-wix.md) | Wix |
-| [`jobs/5-lab.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/5-lab.md) | the Yeger-Lotem lab (unused inventory) |
+| [`jobs/5-lab.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/jobs/5-lab.md) | the lab job, kept but unused |
 | [`education.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/education.md) | degree, school, dates |
 | [`publications.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/publications.md) | the paper |
-| [`skills.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/skills.md) | the flagship's STACK chip groups |
+| [`skills.md`](https://github.com/airbugg/curriculum-vitae/edit/master/content/skills.md) | the STACK chips |
 
-A job's frontmatter needs `id`, `company`, `role`, `location`, `dates`
-(`Mon YYYY – Mon YYYY`, en dash, or `Present`); the body is bullets only,
-each ending in a `{#id}` anchor. Backticks anywhere become tech chips. The
-build fails loudly, naming the file, if an edit breaks a reference.
+Job frontmatter wants `id`, `company`, `role`, `location`, `dates` (`Mon YYYY – Mon YYYY`, or `Present`, with an en dash — a plain hyphen fails the build). Bullets end in a `{#id}` anchor and backticks become tech chips. Any broken reference, duplicate key or malformed line fails the build naming the file.
 
-## Build it yourself
+## Build
 
 ```sh
 npm install
-npm run build     # → dist/*.pdf   (also: node build.ts, or make)
-npm run check     # tsc --noEmit
+npm run build   # dist/*.pdf
+npm run check   # types + formatting
+npm run format  # apply formatting
 ```
 
-Needs Node ≥ 22.18 (the build runs TypeScript directly via native type
-stripping) and Chromium (`CHROME_PATH`, or a common install location — see
-`chromium()` in `build.ts`). The build validates every cross-file content
-reference, then fails if any variant spills past one A4 page.
+Node 22.18+ and Chromium (`CHROME_PATH` if it is somewhere unusual). A variant that runs past one A4 page fails the build.
 
-## How it works
+## Layout
 
-- `content/` — every fact exactly once, in Markdown (see the table above)
-- `src/types.ts` — the content and variant schema, typed
-- `src/lib/` — loaders and domain logic: `content.ts` parses the Markdown,
-  `dates.ts` does tenure arithmetic, `fonts.ts`/`logos.ts` embed assets
-- `src/variants.ts` — what each variant selects and emphasizes
-- `src/components/` — the React layouts, rendered with `react-dom/server`:
-  `grid/` (the Flagship), `terminal/` (the Shell), `shared/` primitives
-- `src/themes/` — a shared skeleton plus one CSS file per theme
-- `.github/workflows/` — PR pushes get PDFs attached as a comment; `master`
-  pushes get a release and a refreshed preview banner above, both gated on
-  `tsc --noEmit`
-- `DESIGN.md` — the full design history: prototypes, reimaginings, why
-  things ended up the way they did
+| | |
+| --- | --- |
+| `content/` | every fact, once |
+| `src/variants.ts` | what each variant picks |
+| `src/components/` | `grid/` and `terminal/` layouts, `shared/` primitives |
+| `src/themes/` | one CSS file per theme |
+| `src/lib/` | content loaders, dates, fonts, logos |
+| `src/validate.ts` | every cross-file reference a variant makes |
+| `build.ts` | bundle, render, print, check one page |
+| `scripts/preview.ts` | the banner above |
+| `DESIGN.md` | why it looks the way it does |
+| `CLAUDE.md` | the three things that will bite you |
+
+Commits follow [Conventional Commits](https://www.conventionalcommits.org), checked by commitlint in a commit hook and again on every PR. Direct pushes to `master` skip both checks, so the release job fails loudly if a push cut no version. semantic-release turns the commits into the version, the tag and the release notes.

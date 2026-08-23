@@ -1,7 +1,6 @@
 ---
 id: wix
 company: Wix.com
-blurb: ""
 role: Software Engineer
 location: Be’er Sheva / Tel Aviv
 dates: Feb 2017 – Nov 2019

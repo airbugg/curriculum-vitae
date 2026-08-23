@@ -1,0 +1,15 @@
+# Prettier formats code here, nothing else. content/ is hand-authored prose
+# in a format src/lib/content.ts owns, and reflowing Markdown prose is noise
+# rather than consistency.
+dist/
+.build/
+assets/
+fonts/
+docs/
+content/
+*.md
+# The stylesheets are deliberately one rule per line: a pixel-tuned sheet is
+# read as a table, and exploding each rule to four lines makes it harder to
+# scan, not easier. .editorconfig covers them instead.
+src/themes/
+package-lock.json
