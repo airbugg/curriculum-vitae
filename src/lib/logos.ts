@@ -34,9 +34,13 @@ function load(slug: string): LogoAsset | undefined {
 }
 
 // Keyed by the company string as it appears in content frontmatter.
-// Keyed by the company string as it appears in content frontmatter. Only
-// Remitly ships a mark; rylo/rewire/wix.svg are wordmark lockups that contain
-// the name, so rendering one beside the name would print it twice.
+// rylo.svg is the two-leaf mark cut from the official lockup; wix.svg is the
+// W letterform from the official wordmark (Wix publishes no standalone icon,
+// so the W is a crop, not a released asset). Rewire has no entry: its only
+// surviving artwork is the wordmark in git history, which contains the name
+// and would print it twice.
 export const logos: Record<string, CompanyLogo> = {
   Remitly: { mark: load('remitly') },
+  Rylo: { mark: load('rylo') },
+  'Wix.com': { mark: load('wix') },
 };
