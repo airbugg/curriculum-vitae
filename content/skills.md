@@ -11,7 +11,7 @@ TypeScript, React, React Native, Angular, Swift/Kotlin
 
 ## stackBackend
 
-Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL
+Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, Astro, Next.js
 
 ## stackInfra
 
