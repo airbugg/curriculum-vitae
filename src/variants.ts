@@ -43,8 +43,8 @@ export const variants: Variant[] = [
     stackPlacement: 'combined',
     stackRows: [
       ['code', 'stackLanguages'],
-      ['fullstack', 'stackFullstack'],
-      ['ai', 'stackAI'],
+      ['AI engineering', 'stackAI'],
+      ['full-stack', 'stackFullstack'],
       ['infra', 'stackInfra'],
     ],
     intro: intro('fullstack'),

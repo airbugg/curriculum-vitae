@@ -11,23 +11,23 @@ TypeScript, React, React Native, Angular, Swift/Kotlin
 
 ## stackBackend
 
-Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, Astro, Next.js
+Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, RabbitMQ, Astro, Next.js
 
 ## stackInfra
 
-GitHub Actions, Gitlab CI, Jenkins, k8s, Terraform, AWS/Cloudflare
+GitHub Actions, GitLab CI, Kubernetes, Terraform, AWS, Cloudflare
 
 ## stackLanguages
 
-TypeScript, Python, Ruby, SQL
+TypeScript, Python, Ruby, SQL (PostgreSQL)
 
 ## stackFullstack
 
-Node.js, React, React Native, Next.js, Astro, GraphQL
+Node.js, React, React Native, Next.js, Astro, GraphQL, RabbitMQ
 
 ## stackAI
 
-LLM pipelines, Claude Code, Codex, Cursor
+LLM pipelines, human-in-the-loop workflows, agentic coding, Claude Code, Cursor
 
 ## stackCore
 

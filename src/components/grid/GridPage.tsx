@@ -14,7 +14,7 @@ import { GridSecMark } from './GridSecMark.tsx';
 // Ledger-internal layout under iteration; flipped per build during the
 // design review loop, pruned once the owner picks.
 const SKL: 'meta' | 'metaRight' | 'runin' | 'plain' = 'meta';
-const INK = false;
+const INK = true;
 
 export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
   const [first, ...rest] = person.name.toUpperCase().split(' ');
