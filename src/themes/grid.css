@@ -302,7 +302,12 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
-.g-stackstrip { margin: 2.2mm 0 0; line-height: 1.55; }
-.g-ssgroup { margin-right: 4.2mm; }
-.g-sslabel { font-family: var(--font-data); font-size: 7pt; color: var(--muted); margin-right: 1.7mm; }
-.g-stackstrip .bgx-chip { white-space: nowrap; }
+/* ---- THE STACK BLOCK (g-sb*) ----
+   The stack's own construction: full measure behind a thin emerald
+   gutter, labels in a tight mono column so chip groups share one left
+   edge. Distinct from the BACKGROUND ledger on purpose; the gutter and
+   the data voice keep it of the page. */
+.g-stackblock { margin: 2.2mm 0 0.6mm; padding: 0.4mm 0 0.4mm 2.8mm; border-left: 0.7pt solid var(--accent); }
+.g-sbrow { line-height: 1.55; }
+.g-sblabel { display: inline-block; width: 16mm; font-family: var(--font-data); font-size: 7pt; color: var(--muted); }
+.g-stackblock .bgx-chip { white-space: nowrap; }

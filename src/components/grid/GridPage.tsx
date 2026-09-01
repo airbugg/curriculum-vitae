@@ -7,8 +7,7 @@ import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
-import { GridBackground, StackLedger } from './GridBackground.tsx';
-import { skills } from '../../lib/content.ts';
+import { GridBackground, StackBlock } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -43,33 +42,7 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         <NoBreakCompounds text={variant.intro} />
       </p>
 
-      {variant.stackPlacement === 'strip' && (
-        <div className="g-stackstrip bgx-crow">
-          {/* The strip borrows the ledger row's two-column grid so it sits
-              in the page's rhythm instead of interrupting it: STACK in the
-              meta column, the groups flowing in the content column. */}
-          <div className="bgx-cmeta">
-            <div className="bgx-key">Stack</div>
-          </div>
-          <div className="bgx-cval">
-            {variant.stackRows.map(([sub, key]) => (
-              <span className="g-ssgroup" key={sub}>
-                <span className="g-sslabel">{sub}</span>
-                {/* Real spaces around the separators: they are the only wrap
-                  points, since the chips themselves never break. */}
-                {skills(key)
-                  .split(',')
-                  .map((t, i) => (
-                    <Fragment key={t}>
-                      {i > 0 && <span className="bgx-sep">·</span>}{' '}
-                      <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
-                    </Fragment>
-                  ))}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+      {variant.stackPlacement === 'strip' && <StackBlock variant={variant} />}
 
       <section className="g-section">
         <GridSecMark>Experience</GridSecMark>
@@ -78,14 +51,9 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         ))}
       </section>
 
-      {variant.stackPlacement === 'section' && (
-        <section className="g-section g-bg">
-          <GridSecMark>Stack</GridSecMark>
-          <StackLedger variant={variant} />
-        </section>
-      )}
-
       <GridBackground variant={variant} />
+
+      {variant.stackPlacement === 'footer' && <StackBlock variant={variant} />}
     </div>
   );
 }

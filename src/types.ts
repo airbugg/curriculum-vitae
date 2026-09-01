@@ -85,11 +85,11 @@ export interface GridVariant extends VariantBase {
   stackRows: StackRow[];
   /**
    * Where the stack renders. 'background' (the default) keeps it a ledger
-   * row inside BACKGROUND; 'strip' is a compact band under the intro;
-   * 'section' is its own { STACK } section between EXPERIENCE and
-   * BACKGROUND. Screening-oriented variants may want it earlier.
+   * row inside BACKGROUND; 'strip' puts the StackBlock directly under the
+   * intro for screening-oriented variants; 'footer' puts the same block
+   * after BACKGROUND as a closing band.
    */
-  stackPlacement?: 'strip' | 'section' | 'background';
+  stackPlacement?: 'strip' | 'footer' | 'background';
 }
 
 /** The terminal session — src/themes/terminal.css. */

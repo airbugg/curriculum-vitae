@@ -38,6 +38,35 @@ function Chips({ text }: { text: string }): ReactNode {
   ));
 }
 
+/**
+ * The stack as its own block: full measure under a thin emerald gutter,
+ * group labels in a tight mono column so the chip groups share a left
+ * edge. Used by the 'strip' (under the intro) and 'footer' (after
+ * BACKGROUND) placements, where the ledger's 40mm meta column would
+ * waste the width.
+ */
+export function StackBlock({ variant }: { variant: GridVariant }): ReactNode {
+  return (
+    <div className="g-stackblock">
+      {variant.stackRows.map(([sub, key]) => (
+        <div className="g-sbrow" key={sub}>
+          <span className="g-sblabel">{sub}</span>
+          {/* Real spaces around the separators are the only wrap points;
+              chips themselves never break. */}
+          {skills(key)
+            .split(',')
+            .map((t, i) => (
+              <Fragment key={t}>
+                {i > 0 && <span className="bgx-sep">·</span>}{' '}
+                <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
+              </Fragment>
+            ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
 export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
   return (
