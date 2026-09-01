@@ -6,6 +6,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { eduYears, langPairs, pubTitle } from '../../lib/background.ts';
 import { education, publication, skills } from '../../lib/content.ts';
+import { educationMark } from '../../lib/logos.ts';
 import type { GridVariant } from '../../types.ts';
 import { techIcon } from '../../lib/techicons.ts';
 import { GridSecMark } from './GridSecMark.tsx';
@@ -92,6 +93,14 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <>
       <Row label="Education" year={eduYears}>
+        {educationMark &&
+          (educationMark.type === 'svg' ? (
+            <span className="bgx-emark" dangerouslySetInnerHTML={{ __html: educationMark.data }} />
+          ) : (
+            <span className="bgx-emark">
+              <img src={educationMark.data} alt="" />
+            </span>
+          ))}
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
         {education.school}

@@ -302,6 +302,11 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
+/* The university mark leads the education row the way employer marks
+   lead their entries. */
+.bgx-emark { display: inline-block; }
+.bgx-emark svg, .bgx-emark img { height: 3mm; width: auto; vertical-align: -0.6mm; margin-right: 1.2mm; }
+
 /* Tech-chip brand marks: cap-height, glued to their word inside the
    chip span, brand hexes as shipped by simple-icons. */
 .bgx-ticon { height: 2.5mm; width: 2.5mm; vertical-align: -0.35mm; margin-right: 0.8mm; }

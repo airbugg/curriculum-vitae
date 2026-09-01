@@ -45,3 +45,6 @@ export const logos: Record<string, CompanyLogo> = {
   Rylo: { mark: load('rylo') },
   Wix: { mark: load('wix') },
 };
+
+/** The university's mark for the education row; absent until the asset lands. */
+export const educationMark = load('bgu');
