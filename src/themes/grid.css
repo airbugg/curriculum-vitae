@@ -302,4 +302,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
-.g-stacktop { margin: 2.4mm 0 1.2mm; padding-bottom: 1.6mm; border-bottom: 0.3pt solid var(--rule); }
+.g-stackstrip { margin: 2mm 0 0.4mm; padding: 1.5mm 0 1.7mm; border-top: 0.3pt solid var(--rule); border-bottom: 0.3pt solid var(--rule); line-height: 1.6; }
+.g-ssgroup { margin-right: 4.2mm; }
+.g-sslabel { font-family: var(--font-data); font-size: 7pt; color: var(--muted); margin-right: 1.7mm; }
+.g-stackstrip .bgx-chip { white-space: nowrap; }

@@ -38,7 +38,7 @@ function Chips({ text }: { text: string }): ReactNode {
   ));
 }
 
-/** The subdivided stack ledger; lives in BACKGROUND unless stackFirst hoists it. */
+/** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
 export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <Row label="Stack">
@@ -81,7 +81,9 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
           </Fragment>
         ))}
       </Row>
-      {!variant.stackFirst && <StackLedger variant={variant} />}
+      {(variant.stackPlacement ?? 'background') === 'background' && (
+        <StackLedger variant={variant} />
+      )}
     </section>
   );
 }

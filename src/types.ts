@@ -84,11 +84,12 @@ export interface GridVariant extends VariantBase {
   density?: 'dense';
   stackRows: StackRow[];
   /**
-   * Render the stack ledger directly under the intro instead of inside
-   * BACKGROUND — screeners resolve "what's their stack" in the first scan,
-   * so a screening-oriented variant leads with it.
+   * Where the stack renders. 'background' (the default) keeps it a ledger
+   * row inside BACKGROUND; 'strip' is a compact band under the intro;
+   * 'section' is its own { STACK } section between EXPERIENCE and
+   * BACKGROUND. Screening-oriented variants may want it earlier.
    */
-  stackFirst?: boolean;
+  stackPlacement?: 'strip' | 'section' | 'background';
 }
 
 /** The terminal session — src/themes/terminal.css. */

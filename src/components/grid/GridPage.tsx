@@ -8,6 +8,7 @@ import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
 import { GridBackground, StackLedger } from './GridBackground.tsx';
+import { skills } from '../../lib/content.ts';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -42,9 +43,23 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         <NoBreakCompounds text={variant.intro} />
       </p>
 
-      {variant.stackFirst && (
-        <div className="g-stacktop">
-          <StackLedger variant={variant} />
+      {variant.stackPlacement === 'strip' && (
+        <div className="g-stackstrip">
+          {variant.stackRows.map(([sub, key]) => (
+            <span className="g-ssgroup" key={sub}>
+              <span className="g-sslabel">{sub}</span>
+              {/* Real spaces around the separators: they are the only wrap
+                  points, since the chips themselves never break. */}
+              {skills(key)
+                .split(',')
+                .map((t, i) => (
+                  <Fragment key={t}>
+                    {i > 0 && <span className="bgx-sep">·</span>}{' '}
+                    <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
+                  </Fragment>
+                ))}
+            </span>
+          ))}
         </div>
       )}
 
@@ -54,6 +69,13 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
           <GridEntry key={section.job} role={resolve(section)} />
         ))}
       </section>
+
+      {variant.stackPlacement === 'section' && (
+        <section className="g-section g-bg">
+          <GridSecMark>Stack</GridSecMark>
+          <StackLedger variant={variant} />
+        </section>
+      )}
 
       <GridBackground variant={variant} />
     </div>
