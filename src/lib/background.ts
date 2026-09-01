@@ -1,8 +1,9 @@
 // The background facts both layouts print, in their shared parsed forms.
 import { education, person, publication } from './content.ts';
 
-/** langLevels ("english=native, hebrew=native, …") → [[name, level]]. */
-export const langPairs: [string, string][] = person.langLevels.split(',').map((pair) => {
+/** langLevels ("English and Hebrew=natively; …") → [[name, level]]. The
+ * pair separator is ';' so a level may contain a comma. */
+export const langPairs: [string, string][] = person.langLevels.split(';').map((pair) => {
   const [k = '', v = ''] = pair.split('=').map((s) => s.trim());
   return [k, v];
 });

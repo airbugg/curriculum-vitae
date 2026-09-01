@@ -38,8 +38,8 @@ export function TermBackground(): ReactNode {
         <span className="t-jobmeta">{publication.year}</span>
       </div>
       <div>
-        <span className="t-ykey">{yKey('languages')}</span>
-        {langPairs.map(([k, v]) => (v === 'native' ? `${k} native` : `${k} (${v})`)).join(', ')}
+        <span className="t-ykey">{yKey('understands')}</span>
+        {langPairs.map(([k, v]) => `${k} (${v})`.toLowerCase()).join(', ')}
       </div>
       <div>
         <span className="t-ykey">{yKey('offHours')}</span>

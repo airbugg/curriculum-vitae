@@ -58,7 +58,9 @@ export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode
 // Hierarchy prototype switch for the design loop: 'sibling' keeps the two
 // sections; 'merged' folds the stack group rows into the top of BACKGROUND;
 // 'swapped' puts BACKGROUND before { STACK }. Pruned after the owner picks.
-export const HIER: 'sibling' | 'merged' | 'swapped' = 'swapped';
+export const HIER: 'sibling' | 'merged' | 'swapped' = 'sibling';
+// Divider prototype for the { STACK } / education seam, same lifecycle.
+export const DIV: 'marks' | 'rule' | 'subtitle' | 'subtitleIndent' = 'subtitleIndent';
 
 /** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
 export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
@@ -78,9 +80,11 @@ export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
 }
 
 export function GridBackground({ variant }: { variant: GridVariant }): ReactNode {
+  const divided = variant.stackPlacement === 'combined' && HIER === 'sibling' && DIV !== 'marks';
   return (
-    <section className="g-section g-bg">
-      <GridSecMark>Background</GridSecMark>
+    <section className={`g-section g-bg${divided ? ` g-divided g-div-${DIV}` : ''}`}>
+      {!divided && <GridSecMark>Background</GridSecMark>}
+      {divided && DIV !== 'rule' && <div className="g-divsub">background</div>}
       {HIER === 'merged' && variant.stackPlacement === 'combined' && (
         <StackGroupRows variant={variant} />
       )}
@@ -89,20 +93,23 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
         <span className="bgx-dim"> · </span>
         {education.school}
       </Row>
-      <Row label="Publication" year={publication.year}>
+      <Row
+        label={variant.nestedPublication ? '\u21b3 publication' : 'Publication'}
+        year={publication.year}
+      >
         <a href={publication.url} className="bgx-strong">
           {pubTitle}
         </a>
         <span className="bgx-dim"> · </span>
         {publication.journal}
       </Row>
-      <Row label="Languages">
+      <Row label="Understands">
         {langPairs.map(([k, v], i) => (
           <Fragment key={k}>
             {i > 0 && <span className="bgx-sep">·</span>}
-            <span className="bgx-lang">{k.charAt(0).toUpperCase() + k.slice(1)}</span>{' '}
-            {/* NBSP: "reads and speaks well" stays on one line. */}
-            <span className="bgx-level">{v.replace(/ /g, '\u00A0')}</span>
+            <span className="bgx-lang">{k}</span>{' '}
+            {/* NBSP: a level phrase must not break across lines. */}
+            <span className="bgx-level">({v.replace(/ /g, '\u00A0')})</span>
           </Fragment>
         ))}
       </Row>

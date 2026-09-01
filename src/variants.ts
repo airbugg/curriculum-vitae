@@ -41,11 +41,12 @@ export const variants: Variant[] = [
     theme: 'grid',
     density: 'dense',
     stackPlacement: 'combined',
+    nestedPublication: true,
     stackRows: [
-      ['code', 'stackLanguages'],
-      ['AI systems', 'stackAI'],
+      ['languages', 'stackLanguages'],
+      ['AI', 'stackAI'],
       ['full-stack', 'stackFullstack'],
-      ['cloud & CI', 'stackInfra'],
+      ['infra', 'stackInfra'],
     ],
     intro: intro('fullstack'),
     sections: [

@@ -94,6 +94,8 @@ export interface GridVariant extends VariantBase {
    * BACKGROUND.
    */
   stackPlacement?: 'ledger' | 'colophon' | 'masthead' | 'combined' | 'background';
+  /** Typeset the publication row as a sub-entry of education. */
+  nestedPublication?: boolean;
 }
 
 /** The terminal session — src/themes/terminal.css. */

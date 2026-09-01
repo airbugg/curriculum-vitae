@@ -334,3 +334,13 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .g-skl-meta + .g-bg, .g-skl-metaRight + .g-bg { margin-top: 2.2mm; }
 /* Merged-mode stack rows inside BACKGROUND print ink terms like B. */
 .g-bg .bgx-chip { color: var(--ink); }
+/* Divider prototypes: the education part separated from { STACK } by a
+   hairline instead of a second section mark; 'subtitle' adds a micro-label
+   on the line, 'subtitleIndent' additionally indents the education block. */
+.g-divided { border-top: 0.3pt solid var(--rule); margin-top: 2.4mm; padding-top: 1.5mm; }
+.g-divsub { font-family: var(--font-data); font-size: 6pt; text-transform: uppercase; letter-spacing: 1.1pt; color: var(--muted); margin-bottom: 1mm; }
+.g-div-rule { padding-top: 1.2mm; margin-top: 2.2mm; }
+.g-div-subtitle, .g-div-subtitleIndent { padding-top: 1mm; }
+.g-div-subtitleIndent .bgx-crow { margin-left: 3.6mm; }
+/* Publication as a sub-entry of education: swept-arrow key, tighter tie. */
+.bgx-key { white-space: pre; }
