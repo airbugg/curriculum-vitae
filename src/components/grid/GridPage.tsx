@@ -44,22 +44,30 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
       </p>
 
       {variant.stackPlacement === 'strip' && (
-        <div className="g-stackstrip">
-          {variant.stackRows.map(([sub, key]) => (
-            <span className="g-ssgroup" key={sub}>
-              <span className="g-sslabel">{sub}</span>
-              {/* Real spaces around the separators: they are the only wrap
+        <div className="g-stackstrip bgx-crow">
+          {/* The strip borrows the ledger row's two-column grid so it sits
+              in the page's rhythm instead of interrupting it: STACK in the
+              meta column, the groups flowing in the content column. */}
+          <div className="bgx-cmeta">
+            <div className="bgx-key">Stack</div>
+          </div>
+          <div className="bgx-cval">
+            {variant.stackRows.map(([sub, key]) => (
+              <span className="g-ssgroup" key={sub}>
+                <span className="g-sslabel">{sub}</span>
+                {/* Real spaces around the separators: they are the only wrap
                   points, since the chips themselves never break. */}
-              {skills(key)
-                .split(',')
-                .map((t, i) => (
-                  <Fragment key={t}>
-                    {i > 0 && <span className="bgx-sep">·</span>}{' '}
-                    <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
-                  </Fragment>
-                ))}
-            </span>
-          ))}
+                {skills(key)
+                  .split(',')
+                  .map((t, i) => (
+                    <Fragment key={t}>
+                      {i > 0 && <span className="bgx-sep">·</span>}{' '}
+                      <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
+                    </Fragment>
+                  ))}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 
