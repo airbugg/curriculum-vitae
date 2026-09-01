@@ -39,7 +39,7 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         {/* The distilled core stack as a nameplate subline: identity, not
             inventory — curated in content/skills.md ## stackCore, no
             labels, quieter than the contact line. */}
-        {(variant.stackPlacement === 'masthead' || variant.stackPlacement === 'combined') && (
+        {variant.stackPlacement === 'combined' && (
           <div className="g-mastack">
             {skills('stackCore')
               .split(',')
@@ -65,25 +65,6 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
       </section>
 
       <GridBackground variant={variant} />
-
-      {variant.stackPlacement === 'colophon' && (
-        <div className="g-colophon">
-          <div className="g-comark">{'{ STACK }'}</div>
-          {variant.stackRows.map(([sub, key]) => (
-            <div className="g-corow" key={sub}>
-              <span className="g-colabel">{sub}</span>
-              {skills(key)
-                .split(',')
-                .map((t, i) => (
-                  <Fragment key={t}>
-                    {i > 0 && <span className="g-cosep">·</span>}{' '}
-                    <span className="g-coterm">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
-                  </Fragment>
-                ))}
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

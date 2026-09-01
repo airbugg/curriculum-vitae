@@ -84,16 +84,12 @@ export interface GridVariant extends VariantBase {
   density?: 'dense';
   stackRows: StackRow[];
   /**
-   * How the stack inventory joins the page. 'background' (the default)
-   * keeps the classic single ledger row inside BACKGROUND. 'ledger' sets
-   * the groups as rows of a { STACK } section after EXPERIENCE — the
-   * inventory as more of the geometry the page already taught. 'colophon'
-   * anchors it as centered endmatter at the page's bottom margin, the
-   * masthead's bookend. 'masthead' puts a distilled one-line core stack
-   * under the contact line and the full groups as ledger rows in
-   * BACKGROUND.
+   * 'combined' is the screening cut's construction: the curated core-stack
+   * line in the masthead plus the { TECHNOLOGIES } / { BACKGROUND } section
+   * pair. 'background' (the default) keeps the classic single ledger row
+   * inside BACKGROUND, as the design variants have always printed it.
    */
-  stackPlacement?: 'ledger' | 'colophon' | 'masthead' | 'combined' | 'background';
+  stackPlacement?: 'combined' | 'background';
   /** Typeset the publication row as a sub-entry of education. */
   nestedPublication?: boolean;
 }

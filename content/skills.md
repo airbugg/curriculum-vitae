@@ -25,10 +25,6 @@ TypeScript, Python, Ruby, SQL (PostgreSQL)
 
 Node.js, React, GraphQL, RabbitMQ, Next.js, React Native, Astro
 
-## stackAI
-
-LLM pipelines, human-in-the-loop workflows, agentic coding, Claude Code, Cursor
-
 ## stackCore
 
 typescripter, pythonista, agentic looper

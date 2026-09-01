@@ -311,77 +311,18 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    what hidden-text scanners flag), opened by a tiny brace mark. */
 .g-mastack { margin-top: 1mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
 .g-mastack .g-msep { margin: 0 1.5mm; }
-.g-colophon { position: absolute; left: 17mm; right: 17mm; bottom: 7mm; text-align: center; }
-.g-comark { font-family: var(--font-data); font-size: 6.5pt; letter-spacing: 1.6pt; color: var(--muted); margin-bottom: 1mm; }
-.g-corow { font-size: 6.8pt; line-height: 1.5; }
-.g-colabel { font-family: var(--font-data); font-size: 6.4pt; letter-spacing: 0.8pt; text-transform: uppercase; color: var(--muted); margin-right: 1.6mm; }
-.g-coterm { font-family: var(--font-data); color: var(--accent-deep); white-space: nowrap; }
-.g-cosep { color: var(--accent); margin: 0 0.4mm; }
-/* { STACK } ledger internals under iteration (g-skl-*). Stack rows sit
-   tighter than BACKGROUND's: single-line data rows need less air. */
-.g-skl-meta .bgx-crow, .g-skl-metaRight .bgx-crow { margin-bottom: 1.9mm; }
-.g-skl-metaRight .bgx-key { margin-left: auto; text-align: right; }
-.g-skrun { line-height: 1.45; }
-.g-skrunlabel { font-family: var(--font-data); font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.7pt; color: var(--muted); margin-right: 2.2mm; }
-.g-skplain { line-height: 1.6; }
-.g-skslash { color: var(--muted); margin: 0 1.8mm; }
-.g-skl-runin .g-secmark, .g-skl-plain .g-secmark { margin-bottom: 1.3mm; }
 /* Ink-terms mode: the stack's terms in body ink, teal held to the
    separators, so { STACK } stops being the page's densest color block. */
 .g-skink .bgx-chip { color: var(--ink); }
-/* Two adjacent data ledgers need less separation than prose-to-data. */
-.g-skl-meta.g-section, .g-skl-metaRight.g-section { margin-top: 2.2mm; }
-.g-skl-meta + .g-bg, .g-skl-metaRight + .g-bg { margin-top: 2.2mm; }
-/* Merged-mode stack rows inside BACKGROUND print ink terms like B. */
-.g-bg .bgx-chip { color: var(--ink); }
-/* Divider prototypes: the education part separated from { STACK } by a
-   hairline instead of a second section mark; 'subtitle' adds a micro-label
-   on the line, 'subtitleIndent' additionally indents the education block. */
-.g-divided { border-top: 0.3pt solid var(--rule); margin-top: 2.4mm; padding-top: 1.5mm; }
-.g-divsub { font-family: var(--font-data); font-size: 6pt; text-transform: uppercase; letter-spacing: 1.1pt; color: var(--muted); margin-bottom: 1mm; }
-/* The winning divider (adversarial round 3): a short left-anchored dash,
-   same weight and gray as the section rules but 32mm long — demoted by
-   length, so it cannot be misread as an unnamed section rule. Optically
-   centered in its gap. */
-.g-div-rule { border-top: 0; margin-top: 2.8mm; padding-top: 0; }
-.g-div-rule::before { content: ''; display: block; width: 32mm; border-top: 0.3pt solid var(--rule); margin: 2.4mm 0 3.4mm; }
 /* The nested publication row sits closer to its parent than to what
-   follows, so the pitch asserts the same subordination as the arrow. */
+   follows, so the pitch asserts the same subordination as its arrow. */
 .bgx-nested { margin-top: -1.5mm; }
 .g-div-subtitle, .g-div-subtitleIndent { padding-top: 1mm; }
 .g-div-subtitleIndent .bgx-crow { margin-left: 3.6mm; }
 /* Publication as a sub-entry of education: swept-arrow key, tighter tie. */
 .bgx-key { white-space: pre; }
-/* ---- BOTTOM-ZONE REBUILDS (round five prototypes) ----
-   twomarks: the seam becomes the page's own grammar - a second full
-   section mark. split: asymmetric 104/8/64mm columns on the measure,
-   announced by twin heads over one hairline. bookend: a 1pt closing
-   band mirroring the masthead rule, anchored at the page foot.
-   lastentry: the zone as one final ledger entry - credentials in the
-   meta column, tools as content. */
+/* ---- THE SCREENING CUT'S BOTTOM ZONE ----
+   { TECHNOLOGIES } and { BACKGROUND } as sibling sections; ink chips
+   with muted separators so the zone's teal lives only in the marks. */
 .g-z2 { margin-top: 2.4mm; }
-.g-skink .bgx-sep, .g-z2 .bgx-sep, .g-bookend .bgx-sep { color: var(--muted); }
-.g-zsplit { margin-top: 2.2mm; }
-.g-zheads { display: flex; padding-bottom: 0.7mm; border-bottom: 0.5pt solid var(--rule); margin-bottom: 1.3mm; }
-.g-zh1, .g-zh2 { font-family: var(--font-data); font-size: 7.5pt; letter-spacing: 1.6pt; color: var(--accent); }
-.g-zh2 { margin-left: auto; width: 64mm; }
-.g-zcols { display: grid; grid-template-columns: 104mm 64mm; column-gap: 8mm; }
-.g-zgroup { margin-bottom: 1.2mm; }
-.g-zglabel { font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.7pt; color: var(--muted); margin-bottom: 0.5mm; }
-.g-zchips { line-height: 1.3; }
-.g-zfact { font-size: 8.2pt; color: var(--ink); line-height: 1.3; }
-.g-zsub { font-size: 7.8pt; }
-.g-zyear { font-family: var(--font-data); font-size: 7.4pt; letter-spacing: -0.2pt; color: var(--muted); text-transform: none; }
-.g-bookend { position: absolute; left: 17mm; right: 17mm; bottom: 9mm; border-top: 1pt solid var(--ink-strong); padding-top: 1.6mm; text-align: center; }
-.g-bkline { font-size: 8pt; color: var(--ink); line-height: 1.45; }
-.g-bkkey { font-size: 6.4pt; text-transform: uppercase; letter-spacing: 1.1pt; color: var(--muted); margin-right: 1.8mm; }
-.g-lerow { display: grid; grid-template-columns: 40mm 1fr; column-gap: 9mm; align-items: start; }
-.g-lemeta { font-size: 7.4pt; color: var(--muted); line-height: 1.35; }
-.g-ledeg { font-size: 8.2pt; font-weight: 700; color: var(--ink-strong); }
-.g-leschool { font-style: italic; }
-.g-ledates { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; margin-top: 1mm; }
-.g-lepub { font-size: 7.2pt; margin-top: 1.6mm; }
-.g-lepub a { color: var(--ink); text-decoration: none; font-weight: 600; }
-.g-lelang { font-size: 7.4pt; margin-top: 1.6mm; }
-.g-lechips { line-height: 1.5; }
-.g-zleft, .g-zright { min-width: 0; }
+.g-skink .bgx-sep, .g-z2 .bgx-sep { color: var(--muted); }
