@@ -352,3 +352,36 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .g-div-subtitleIndent .bgx-crow { margin-left: 3.6mm; }
 /* Publication as a sub-entry of education: swept-arrow key, tighter tie. */
 .bgx-key { white-space: pre; }
+/* ---- BOTTOM-ZONE REBUILDS (round five prototypes) ----
+   twomarks: the seam becomes the page's own grammar - a second full
+   section mark. split: asymmetric 104/8/64mm columns on the measure,
+   announced by twin heads over one hairline. bookend: a 1pt closing
+   band mirroring the masthead rule, anchored at the page foot.
+   lastentry: the zone as one final ledger entry - credentials in the
+   meta column, tools as content. */
+.g-z2 { margin-top: 2.4mm; }
+.g-skink .bgx-sep, .g-z2 .bgx-sep, .g-bookend .bgx-sep { color: var(--muted); }
+.g-zsplit { margin-top: 2.2mm; }
+.g-zheads { display: flex; padding-bottom: 0.7mm; border-bottom: 0.5pt solid var(--rule); margin-bottom: 1.3mm; }
+.g-zh1, .g-zh2 { font-family: var(--font-data); font-size: 7.5pt; letter-spacing: 1.6pt; color: var(--accent); }
+.g-zh2 { margin-left: auto; width: 64mm; }
+.g-zcols { display: grid; grid-template-columns: 104mm 64mm; column-gap: 8mm; }
+.g-zgroup { margin-bottom: 1.2mm; }
+.g-zglabel { font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.7pt; color: var(--muted); margin-bottom: 0.5mm; }
+.g-zchips { line-height: 1.3; }
+.g-zfact { font-size: 8.2pt; color: var(--ink); line-height: 1.3; }
+.g-zsub { font-size: 7.8pt; }
+.g-zyear { font-family: var(--font-data); font-size: 7.4pt; letter-spacing: -0.2pt; color: var(--muted); text-transform: none; }
+.g-bookend { position: absolute; left: 17mm; right: 17mm; bottom: 9mm; border-top: 1pt solid var(--ink-strong); padding-top: 1.6mm; text-align: center; }
+.g-bkline { font-size: 8pt; color: var(--ink); line-height: 1.45; }
+.g-bkkey { font-size: 6.4pt; text-transform: uppercase; letter-spacing: 1.1pt; color: var(--muted); margin-right: 1.8mm; }
+.g-lerow { display: grid; grid-template-columns: 40mm 1fr; column-gap: 9mm; align-items: start; }
+.g-lemeta { font-size: 7.4pt; color: var(--muted); line-height: 1.35; }
+.g-ledeg { font-size: 8.2pt; font-weight: 700; color: var(--ink-strong); }
+.g-leschool { font-style: italic; }
+.g-ledates { font-family: var(--font-data); font-size: 7.6pt; letter-spacing: -0.2pt; margin-top: 1mm; }
+.g-lepub { font-size: 7.2pt; margin-top: 1.6mm; }
+.g-lepub a { color: var(--ink); text-decoration: none; font-weight: 600; }
+.g-lelang { font-size: 7.4pt; margin-top: 1.6mm; }
+.g-lechips { line-height: 1.5; }
+.g-zleft, .g-zright { min-width: 0; }
