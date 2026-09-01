@@ -332,3 +332,5 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* Two adjacent data ledgers need less separation than prose-to-data. */
 .g-skl-meta.g-section, .g-skl-metaRight.g-section { margin-top: 2.2mm; }
 .g-skl-meta + .g-bg, .g-skl-metaRight + .g-bg { margin-top: 2.2mm; }
+/* Merged-mode stack rows inside BACKGROUND print ink terms like B. */
+.g-bg .bgx-chip { color: var(--ink); }

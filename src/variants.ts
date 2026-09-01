@@ -25,7 +25,7 @@ export const variants: Variant[] = [
     stackRows: [
       ['frontend', 'stackFrontend'],
       ['backend', 'stackBackend'],
-      ['infra', 'stackInfra'],
+      ['cloud & CI', 'stackInfra'],
     ],
     intro: intro('default'),
     sections: SECTIONS,
@@ -43,9 +43,9 @@ export const variants: Variant[] = [
     stackPlacement: 'combined',
     stackRows: [
       ['code', 'stackLanguages'],
-      ['AI engineering', 'stackAI'],
+      ['AI systems', 'stackAI'],
       ['full-stack', 'stackFullstack'],
-      ['infra', 'stackInfra'],
+      ['cloud & CI', 'stackInfra'],
     ],
     intro: intro('fullstack'),
     sections: [

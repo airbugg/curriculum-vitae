@@ -7,7 +7,7 @@ import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
-import { GridBackground, StackGroupRows } from './GridBackground.tsx';
+import { GridBackground, HIER, StackGroupRows } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -69,29 +69,15 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         ))}
       </section>
 
-      {(variant.stackPlacement === 'ledger' || variant.stackPlacement === 'combined') && (
-        <section className={`g-section g-bg g-skl-${SKL}${INK ? ' g-skink' : ''}`}>
-          <GridSecMark>Stack</GridSecMark>
-          {(SKL === 'meta' || SKL === 'metaRight') && <StackGroupRows variant={variant} />}
-          {SKL === 'runin' &&
-            variant.stackRows.map(([sub, key]) => (
-              <div className="g-skrun" key={sub}>
-                <span className="g-skrunlabel">{sub}</span>
-                {skills(key)
-                  .split(',')
-                  .map((t, i) => (
-                    <Fragment key={t}>
-                      {i > 0 && <span className="bgx-sep">·</span>}{' '}
-                      <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
-                    </Fragment>
-                  ))}
-              </div>
-            ))}
-          {SKL === 'plain' && (
-            <div className="g-skplain">
-              {variant.stackRows.map(([sub, key], gi) => (
-                <Fragment key={sub}>
-                  {gi > 0 && <span className="g-skslash">/</span>}
+      {(variant.stackPlacement === 'ledger' || variant.stackPlacement === 'combined') &&
+        HIER === 'sibling' && (
+          <section className={`g-section g-bg g-skl-${SKL}${INK ? ' g-skink' : ''}`}>
+            <GridSecMark>Stack</GridSecMark>
+            {(SKL === 'meta' || SKL === 'metaRight') && <StackGroupRows variant={variant} />}
+            {SKL === 'runin' &&
+              variant.stackRows.map(([sub, key]) => (
+                <div className="g-skrun" key={sub}>
+                  <span className="g-skrunlabel">{sub}</span>
                   {skills(key)
                     .split(',')
                     .map((t, i) => (
@@ -100,14 +86,37 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
                         <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
                       </Fragment>
                     ))}
-                </Fragment>
+                </div>
               ))}
-            </div>
-          )}
-        </section>
-      )}
+            {SKL === 'plain' && (
+              <div className="g-skplain">
+                {variant.stackRows.map(([sub, key], gi) => (
+                  <Fragment key={sub}>
+                    {gi > 0 && <span className="g-skslash">/</span>}
+                    {skills(key)
+                      .split(',')
+                      .map((t, i) => (
+                        <Fragment key={t}>
+                          {i > 0 && <span className="bgx-sep">·</span>}{' '}
+                          <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
+                        </Fragment>
+                      ))}
+                  </Fragment>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
 
       <GridBackground variant={variant} />
+
+      {(variant.stackPlacement === 'ledger' || variant.stackPlacement === 'combined') &&
+        HIER === 'swapped' && (
+          <section className={`g-section g-bg g-skl-${SKL}${INK ? ' g-skink' : ''}`}>
+            <GridSecMark>Stack</GridSecMark>
+            <StackGroupRows variant={variant} />
+          </section>
+        )}
 
       {variant.stackPlacement === 'colophon' && (
         <div className="g-colophon">

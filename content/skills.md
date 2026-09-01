@@ -15,7 +15,7 @@ Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, RabbitMQ, Astro, Next.js
 
 ## stackInfra
 
-GitHub Actions, GitLab CI, Kubernetes, Terraform, AWS, Cloudflare
+AWS, Kubernetes, Terraform, GitHub Actions, GitLab CI, Cloudflare
 
 ## stackLanguages
 
@@ -23,7 +23,7 @@ TypeScript, Python, Ruby, SQL (PostgreSQL)
 
 ## stackFullstack
 
-Node.js, React, React Native, Next.js, Astro, GraphQL, RabbitMQ
+Node.js, React, GraphQL, RabbitMQ, Next.js, React Native, Astro
 
 ## stackAI
 

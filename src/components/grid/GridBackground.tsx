@@ -55,6 +55,11 @@ export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode
   );
 }
 
+// Hierarchy prototype switch for the design loop: 'sibling' keeps the two
+// sections; 'merged' folds the stack group rows into the top of BACKGROUND;
+// 'swapped' puts BACKGROUND before { STACK }. Pruned after the owner picks.
+export const HIER: 'sibling' | 'merged' | 'swapped' = 'swapped';
+
 /** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
 export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
   return (
@@ -76,6 +81,9 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
   return (
     <section className="g-section g-bg">
       <GridSecMark>Background</GridSecMark>
+      {HIER === 'merged' && variant.stackPlacement === 'combined' && (
+        <StackGroupRows variant={variant} />
+      )}
       <Row label="Education" year={eduYears}>
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
