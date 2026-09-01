@@ -31,6 +31,30 @@ export const variants: Variant[] = [
     sections: SECTIONS,
   },
 
+  // The full-stack cut: same page, backend-first bullet selection. The §13
+  // parity decree was lifted for this variant only (owner, 2026-09-01) — it
+  // reframes the same true work server-side-first for backend/AI screening,
+  // and every claim in its bullets is owner-confirmed, not inferred.
+  {
+    file: 'eugene-lerman-fullstack',
+    label: 'The Full-Stack · backend-first cut',
+    theme: 'grid',
+    density: 'dense',
+    stackRows: [
+      ['languages', 'stackLanguages'],
+      ['fullstack', 'stackFullstack'],
+      ['ai', 'stackAI'],
+      ['infra', 'stackInfra'],
+    ],
+    intro: intro('fullstack'),
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'release', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'llmPipeline', 'l10nService'] },
+      { job: 'rewire', bullets: ['workflowEngine', 'ci'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+  },
+
   // The whole CV as one terminal session; commands are the structure.
   {
     file: 'eugene-lerman-shell',

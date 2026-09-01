@@ -26,3 +26,17 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps
   approves, and one click opens a PR with the changes and a non-destructive
   key migration. A tedious, error-prone process done in a week. {#semanticKeys}
 
+
+- Built an LLM pipeline with human-in-the-loop review that migrated tens of
+  thousands of UI strings to semantic keys like `header.title.text`: it
+  gathers context around each string, drafts names through the company's
+  model gateway, and validates placeholders and key collisions before a
+  human sees anything. One approving click opens a PR with a non-destructive
+  migration; reviewers accepted roughly 80% of suggestions unchanged. A
+  tedious, error-prone process done in a week. {#llmPipeline}
+
+- Designed and shipped Lokey, the localization service behind the apps:
+  dynamic translation delivery with hotfixes scoped to app versions in
+  production, and PR automation that updates `Lokalise`, opens translation
+  jobs and notifies the translators. A translation fix used to mean a full
+  release; it became editing a string. {#l10nService}

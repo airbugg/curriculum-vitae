@@ -13,3 +13,9 @@ approach to life. Twelve years of building whatever needed building: apps, servi
 Twelve years at Wix, Remitly and now an early-stage startup, building
 whatever needed building: apps, services, release systems, the
 infrastructure underneath.
+
+## fullstack
+
+Twelve years of building products end to end: the clients, the services
+behind them and the infrastructure underneath, at Wix, Remitly and now an
+early-stage startup.

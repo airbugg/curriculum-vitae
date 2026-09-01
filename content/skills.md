@@ -16,3 +16,15 @@ Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, Astro, Next.js
 ## stackInfra
 
 GitHub Actions, Gitlab CI, Jenkins, k8s, Terraform, AWS/Cloudflare
+
+## stackLanguages
+
+TypeScript, Python, Ruby, SQL
+
+## stackFullstack
+
+Node.js, React, React Native, Next.js, Astro, GraphQL
+
+## stackAI
+
+LLM pipelines, human-in-the-loop review, Claude Code, Codex, Cursor
