@@ -1,9 +1,9 @@
 // The document shell: <html>, embedded CSS, and the theme dispatch.
 import type { ReactNode } from 'react';
-import { person } from '../lib/content';
-import type { Variant } from '../types';
-import { GridPage } from './grid/GridPage';
-import { TerminalPage } from './terminal/TerminalPage';
+import { person } from '../lib/content.ts';
+import type { Variant } from '../types.ts';
+import { GridPage } from './grid/GridPage.tsx';
+import { TerminalPage } from './terminal/TerminalPage.tsx';
 
 // The <body> classes are each theme's CSS entry point: the theme name selects
 // the stylesheet's root block, and the grid's optional density package rides

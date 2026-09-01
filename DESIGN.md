@@ -596,7 +596,9 @@ them.
   Engineer" — the first variant-level title override, `variant.title ??
   person.title`), an end-to-end intro, and a bullet cut that trades
   release-engineering ink for product depth (onboarding, Apollo GraphQL,
-  XState flows, the Wix auth extraction).
+  XState flows, the Wix auth extraction). (Deleted in the great prune;
+  unrelated to the later `eugene-lerman-fullstack` screening cut — see
+  §27.)
 - **AI-Native** (`eugene-lerman-ai-native`) — rebuilt on the grid; the old
   violet flow design lives in git history and `ai.css` is unused. The
   how-I-work section went grid-native: the prose is content, and the harness
@@ -1378,3 +1380,36 @@ instruction told the reader to rebuild locally and compare, which is
 impossible when the runner is on 151 and the local machine is on 141.
 It now fails hard on pull requests, where a human is present to act on
 it, and warns without blocking on the release path.
+
+## §27 · The full-stack screening cut
+
+A third variant, `eugene-lerman-fullstack`, built for backend and AI-role
+screening (September 2026). The §13 no-full-stack-variant decree was
+lifted by the owner for this variant alone; the two design variants keep
+their bullet parity, and this one selects its own.
+
+Every claim in it is owner-confirmed, extracted in a structured interview,
+and nothing on the page implies depth the owner lacks: the Rewire XState
+engine is presented as the client/server workflow engine it was
+(definitions stored server-side, served over an API the owner designed);
+the semantic-keys migration as an LLM pipeline with human-in-the-loop
+review, automated placeholder and collision validation and a roughly 80%
+unchanged-acceptance rate; second-auth stays client-side because the owner
+only wrote the client half.
+
+The construction, after five adversarially reviewed design rounds
+(placement studies, editorial treatments, ledger internals, a divider
+loop, and four bottom-zone rebuilds — the trail lives in the branch
+history): a curated identity trio under the contact line ("typescripter ·
+pythonista · agentic looper", the `stackCore` key), then { TECHNOLOGIES }
+and { BACKGROUND } as sibling sections — the seam the page's own grammar
+draws, after every subtler divider was measured and rejected. Chips print
+in body ink with muted separators in this zone (`g-skink`), so its teal
+lives only in the marks; the publication row nests under education
+(`nestedPublication`, the ↳ arrow plus a tighter pitch); the spoken
+languages row is UNDERSTANDS, in the owner's voice.
+
+The rounds also fixed page-wide facts: full four-digit years everywhere
+(the shortened years were invisible to parsers), the brand spellings in
+the shared stack rows, and the text-layer machinery applies to all three
+variants. The release attaches all three PDFs.

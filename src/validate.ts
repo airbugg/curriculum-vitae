@@ -30,10 +30,16 @@ export function validate(variants: Variant[]): string[] {
         if (!(bullet in job.bullets))
           errors.push(`${v.file}: job '${id}' has no bullet '${bullet}'`);
     }
-    if (v.theme === 'grid')
+    if (v.theme === 'grid') {
       for (const [, key] of v.stackRows)
         if (!skillKeys.includes(key))
           errors.push(`${v.file}: no '${key}' key in content/skills.md`);
+      // The combined masthead subline reads this key outside stackRows.
+      if (v.stackPlacement === 'combined' && !skillKeys.includes('stackCore'))
+        errors.push(
+          `${v.file}: stackPlacement 'combined' needs a 'stackCore' key in content/skills.md`,
+        );
+    }
   }
   return errors;
 }

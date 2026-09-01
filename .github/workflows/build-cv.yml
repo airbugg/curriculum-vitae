@@ -72,7 +72,7 @@ jobs:
       # in this repo. .chrome-version tracks the RUNNER's Chrome, which is
       # what builds the released PDFs; a local browser will often differ, so
       # "rebuild locally and compare" is not the remedy. To clear a mismatch:
-      # download the cv-pdfs artifact from the run, check both pages still
+      # download the cv-pdfs artifact from the run, check every page still
       # look right, then set .chrome-version to the reported major.
       # Note this compares the major only; output can still shift within one.
       - name: Check Chromium version

@@ -12,6 +12,7 @@
 | --- | --- | --- |
 | Default | humans, referrals | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman.pdf) |
 | Shell | the CV as a terminal session | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
+| Full-stack | backend and AI screening | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-fullstack.pdf) |
 
 Every push to `master` with a [Conventional Commit](https://www.conventionalcommits.org) subject cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed.
 

@@ -254,7 +254,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* Selectable-but-invisible employer name behind a wordmark: stays in the
    PDF text layer for search/parsers without occupying layout space. */
 
-/* ---- BACKGROUND: THE MANIFEST (bgx- classes) ----
+/* ---- BACKGROUND: THE MANIFEST (bgx- classes; both grid variants) ----
    The keys survive as the page's own meta-column labels (the g-loc
    micro-caps voice) with the year beneath in the mono dates voice —
    BACKGROUND set on the exact grid module EXPERIENCE uses. Facts run
@@ -302,13 +302,10 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
-/* ---- STACK PLACEMENTS ----
-   'masthead': the distilled core stack as a nameplate subline — the
-   quietest line in the masthead, mono, muted, no accent (accent in a
-   nameplate subline reads decorative).
-   'colophon': endmatter anchored to the page's bottom margin on the
-   masthead's centered axis — smallest type on the page (>6pt: smaller is
-   what hidden-text scanners flag), opened by a tiny brace mark. */
+/* ---- THE COMBINED MASTHEAD SUBLINE ----
+   The curated core-stack trio under the contact line: the quietest line
+   in the masthead, mono, muted, no accent (accent in a nameplate
+   subline reads decorative), tapering inside the contact line's measure. */
 .g-mastack { margin-top: 1mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
 .g-mastack .g-msep { margin: 0 1.5mm; }
 /* Ink-terms mode: the stack's terms in body ink, teal held to the
@@ -317,8 +314,6 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* The nested publication row sits closer to its parent than to what
    follows, so the pitch asserts the same subordination as its arrow. */
 .bgx-nested { margin-top: -1.5mm; }
-.g-div-subtitle, .g-div-subtitleIndent { padding-top: 1mm; }
-.g-div-subtitleIndent .bgx-crow { margin-left: 3.6mm; }
 /* Publication as a sub-entry of education: swept-arrow key, tighter tie. */
 .bgx-key { white-space: pre; }
 /* ---- THE SCREENING CUT'S BOTTOM ZONE ----

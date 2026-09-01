@@ -46,7 +46,8 @@
         "releaseNameTemplate": "CV v<%= nextRelease.version %>",
         "assets": [
           { "path": "dist/eugene-lerman.pdf", "label": "CV (default)" },
-          { "path": "dist/eugene-lerman-shell.pdf", "label": "CV (shell)" }
+          { "path": "dist/eugene-lerman-shell.pdf", "label": "CV (shell)" },
+          { "path": "dist/eugene-lerman-fullstack.pdf", "label": "CV (full-stack)" }
         ],
         "successCommentCondition": false,
         "failComment": false,

@@ -1,7 +1,8 @@
-// { BACKGROUND }: education, publication, languages, stack. Keys are set as
-// the meta-column labels EXPERIENCE already uses, with the year beneath them
-// in the mono dates voice, so the two sections speak one dialect. Styled
-// under the bgx- prefix in grid.css.
+// The page's bottom zone. The default grid variant prints one
+// { BACKGROUND } section (education, publication, languages, stack); the
+// screening cut ('combined') prints { TECHNOLOGIES } then { BACKGROUND }.
+// Keys are set as the meta-column labels EXPERIENCE already uses, so the
+// sections speak one dialect. Styled under the bgx- prefix in grid.css.
 import { Fragment, type ReactNode } from 'react';
 import { eduYears, langPairs, pubTitle } from '../../lib/background.ts';
 import { education, publication, skills } from '../../lib/content.ts';
@@ -57,8 +58,8 @@ export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode
   );
 }
 
-/** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
-export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
+/** The default variant's one-row stack: sub-labelled ledger lines inside BACKGROUND. */
+function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <Row label="Stack">
       {/* The stack subdivides in place: ledger lines inside the one STACK
