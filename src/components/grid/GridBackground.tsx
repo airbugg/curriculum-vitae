@@ -43,11 +43,14 @@ function Chips({ text, icons }: { text: string; icons?: boolean }): ReactNode {
         {/* NBSP: a two-word chip must not break across lines; the mark
             rides inside the chip span so it can never orphan. */}
         <span className="bgx-chip">
-          {icon && (
-            <svg className="bgx-ticon" viewBox="0 0 24 24" aria-hidden>
-              <path d={icon.path} fill={`#${icon.hex}`} />
-            </svg>
-          )}
+          {icon &&
+            ('svg' in icon ? (
+              <span className="bgx-ticon" dangerouslySetInnerHTML={{ __html: icon.svg }} />
+            ) : (
+              <svg className="bgx-ticon" viewBox="0 0 24 24" aria-hidden>
+                <path d={icon.path} fill={`#${icon.hex}`} />
+              </svg>
+            ))}
           {t.replace(/ /g, '\u00A0')}
         </span>
       </Fragment>

@@ -304,12 +304,16 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 }
 /* The university mark leads the education row the way employer marks
    lead their entries. */
-.bgx-emark { display: inline-block; }
-.bgx-emark svg, .bgx-emark img { height: 2.5mm; width: auto; vertical-align: -0.25mm; margin-left: 0.2mm; margin-right: 0.4mm; }
+/* vertical-align snaps to whole CSS px at print scale (the repo's known
+   quantization, see the secmark note); the sub-pixel centering rides on a
+   transform instead, which does not snap. */
+.bgx-emark { display: inline-block; transform: translateY(0.09mm); }
+.bgx-emark svg, .bgx-emark img { height: 2.5mm; width: auto; vertical-align: -0.125mm; margin-left: 0.2mm; margin-right: 0.4mm; }
 
 /* Tech-chip brand marks: cap-height, glued to their word inside the
    chip span, brand hexes as shipped by simple-icons. */
-.bgx-ticon { height: 2.5mm; width: 2.5mm; vertical-align: -0.35mm; margin-right: 0.8mm; }
+.bgx-ticon { display: inline-block; height: 2.5mm; width: 2.5mm; vertical-align: -0.35mm; margin-right: 0.8mm; }
+.bgx-ticon svg { height: 2.5mm; width: 2.5mm; display: block; }
 
 /* ---- THE COMBINED MASTHEAD SUBLINE ----
    The curated core-stack trio under the contact line: the quietest line
