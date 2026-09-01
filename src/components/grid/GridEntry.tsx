@@ -1,7 +1,7 @@
 // One role on the grid: meta column (company / blurb / location / dates)
 // against the content column (role / summary / bullets).
 import type { ReactNode } from 'react';
-import { compactDur, duration, shortRange } from '../../lib/dates.ts';
+import { compactDur, duration } from '../../lib/dates.ts';
 import type { Role } from '../../types.ts';
 import { CompanyName } from '../shared/CompanyName.tsx';
 import { Rich } from '../shared/Rich.tsx';
@@ -18,8 +18,10 @@ export function GridEntry({ role: { job, bullets } }: { role: Role }): ReactNode
         {job.blurb && <div className="g-mblurb">{tidyLabel(job.blurb)}</div>}
         <div className="g-loc">{job.location}</div>
         <span className="g-dates">
-          {shortRange(job.dates)}
-          {tenure && <span className="g-dur"> ({tenure})</span>}
+          {job.dates}
+          {/* NBSP: the parenthetical must wrap as one unit, never "(3y" /
+              "3m)" split across meta-column lines now that years are full. */}
+          {tenure && <span className="g-dur"> ({tenure.replace(/ /g, '\u00A0')})</span>}
         </span>
       </div>
       <div className="g-content">

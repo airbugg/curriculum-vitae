@@ -1,7 +1,7 @@
 // One job record inside the shell's single `glow experience/*.md` command:
 // a bat-style file rule, the glow-rendered header row, summary and bullets.
 import type { ReactNode } from 'react';
-import { compactDur, duration, parseMonth, shortRange, splitRange } from '../../lib/dates.ts';
+import { compactDur, duration, parseMonth, splitRange } from '../../lib/dates.ts';
 import type { Job, Role } from '../../types.ts';
 import { CompanyName } from '../shared/CompanyName.tsx';
 import { Rich } from '../shared/Rich.tsx';
@@ -36,7 +36,7 @@ export function TermJob({ role: { job, bullets } }: { role: Role }): ReactNode {
           {job.role} @ <CompanyName company={job.company} label={bareName(job.company)} />
         </span>
         <span className="t-jobmeta">
-          {shortRange(job.dates)}
+          {job.dates}
           {dur ? ` (${dur})` : ''}
           {'  '}
           {job.location.toLowerCase()}

@@ -7,7 +7,7 @@ import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
-import { GridBackground } from './GridBackground.tsx';
+import { GridBackground, StackLedger } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -41,6 +41,12 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
       <p className="intro g-intro">
         <NoBreakCompounds text={variant.intro} />
       </p>
+
+      {variant.stackFirst && (
+        <div className="g-stacktop">
+          <StackLedger variant={variant} />
+        </div>
+      )}
 
       <section className="g-section">
         <GridSecMark>Experience</GridSecMark>

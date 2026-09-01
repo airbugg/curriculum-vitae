@@ -40,6 +40,7 @@ export const variants: Variant[] = [
     label: 'The Full-Stack · backend-first cut',
     theme: 'grid',
     density: 'dense',
+    stackFirst: true,
     stackRows: [
       ['languages', 'stackLanguages'],
       ['fullstack', 'stackFullstack'],

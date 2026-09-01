@@ -47,6 +47,5 @@ export function duration(dates: string): string | null {
 
 // Compact forms for data columns — "Dec 2022" → "Dec 22", "3 yr 3 mo" →
 // "3y 3m" — so a range and its derived tenure share one line.
-export const shortRange = (d: string): string => d.replace(/\b20(\d\d)\b/g, '$1');
 export const compactDur = (d: string | null): string | null =>
   d && d.replace(/(\d+) yr/, '$1y').replace(/(\d+) mo/, '$1m');

@@ -17,5 +17,5 @@ infrastructure underneath.
 ## fullstack
 
 Twelve years of building products end to end: the clients, the services
-behind them and the infrastructure underneath, at Wix, Remitly and now an
-early-stage startup.
+behind them and the infrastructure underneath. Equally at home in
+enterprise environments and in fast, lean startups.

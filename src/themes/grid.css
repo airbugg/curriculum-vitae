@@ -180,9 +180,10 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   margin-top: 1mm;
   letter-spacing: -0.2pt;
 }
-/* Tenure rides inline after the compact range ("Dec 22 – Feb 26 · 3y 3m"):
-   the shortened years buy back the width the 40mm column lacked at full
-   length, and the tenure stays a shade quieter than the range. */
+/* Tenure rides inline after the range ("Dec 2022 – Feb 2026 · 3y 3m"),
+   a shade quieter than the range. Full four-digit years are an owner
+   decree (screeners and parsers search for them); if the 40mm column
+   ever overflows again the fix is layout, not shortening the years. */
 .g-dur { opacity: 0.85; }
 
 /* At-a-glance summary between role and bullets: quieter than the role,
@@ -301,3 +302,4 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
+.g-stacktop { margin: 2.4mm 0 1.2mm; padding-bottom: 1.6mm; border-bottom: 0.3pt solid var(--rule); }

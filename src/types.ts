@@ -83,6 +83,12 @@ export interface GridVariant extends VariantBase {
   /** Opts into grid.css's `.g-dense` package (a tighter --gp-* rhythm). */
   density?: 'dense';
   stackRows: StackRow[];
+  /**
+   * Render the stack ledger directly under the intro instead of inside
+   * BACKGROUND — screeners resolve "what's their stack" in the first scan,
+   * so a screening-oriented variant leads with it.
+   */
+  stackFirst?: boolean;
 }
 
 /** The terminal session — src/themes/terminal.css. */

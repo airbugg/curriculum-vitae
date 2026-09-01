@@ -38,6 +38,23 @@ function Chips({ text }: { text: string }): ReactNode {
   ));
 }
 
+/** The subdivided stack ledger; lives in BACKGROUND unless stackFirst hoists it. */
+export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
+  return (
+    <Row label="Stack">
+      {/* The stack subdivides in place: ledger lines inside the one STACK
+          row, each led by a fixed-width muted sub-label so the chip groups
+          align on a shared left edge. */}
+      {variant.stackRows.map(([sub, key]) => (
+        <div className="bgx-srow" key={sub}>
+          <span className="bgx-sub">{sub}</span>
+          <Chips text={skills(key)} />
+        </div>
+      ))}
+    </Row>
+  );
+}
+
 export function GridBackground({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <section className="g-section g-bg">
@@ -64,17 +81,7 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
           </Fragment>
         ))}
       </Row>
-      <Row label="Stack">
-        {/* The stack subdivides in place: three ledger lines inside the
-            one STACK row, each led by a fixed-width muted sub-label so
-            the chip groups align on a shared left edge. */}
-        {variant.stackRows.map(([sub, key]) => (
-          <div className="bgx-srow" key={sub}>
-            <span className="bgx-sub">{sub}</span>
-            <Chips text={skills(key)} />
-          </div>
-        ))}
-      </Row>
+      {!variant.stackFirst && <StackLedger variant={variant} />}
     </section>
   );
 }
