@@ -317,3 +317,12 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .g-colabel { font-family: var(--font-data); font-size: 6.4pt; letter-spacing: 0.8pt; text-transform: uppercase; color: var(--muted); margin-right: 1.6mm; }
 .g-coterm { font-family: var(--font-data); color: var(--accent-deep); white-space: nowrap; }
 .g-cosep { color: var(--accent); margin: 0 0.4mm; }
+/* { STACK } ledger internals under iteration (g-skl-*). Stack rows sit
+   tighter than BACKGROUND's: single-line data rows need less air. */
+.g-skl-meta .bgx-crow, .g-skl-metaRight .bgx-crow { margin-bottom: 1.1mm; }
+.g-skl-metaRight .bgx-key { margin-left: auto; text-align: right; }
+.g-skrun { line-height: 1.45; }
+.g-skrunlabel { font-family: var(--font-data); font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.7pt; color: var(--muted); margin-right: 2.2mm; }
+.g-skplain { line-height: 1.6; }
+.g-skslash { color: var(--muted); margin: 0 1.8mm; }
+.g-skl-runin .g-secmark, .g-skl-plain .g-secmark { margin-bottom: 1.3mm; }

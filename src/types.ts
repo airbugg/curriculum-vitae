@@ -93,7 +93,7 @@ export interface GridVariant extends VariantBase {
    * under the contact line and the full groups as ledger rows in
    * BACKGROUND.
    */
-  stackPlacement?: 'ledger' | 'colophon' | 'masthead' | 'background';
+  stackPlacement?: 'ledger' | 'colophon' | 'masthead' | 'combined' | 'background';
 }
 
 /** The terminal session — src/themes/terminal.css. */
