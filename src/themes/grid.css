@@ -26,7 +26,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* Two-column grid module, repeated everywhere. Left = data, right = content.
    17mm sides: the wider measure re-wraps the long bullets a line or two
    shorter than the 18mm original, buying room for the full bullet cut. */
-.grid-page { padding: 14mm 17mm 14mm; }
+.grid-page { padding: 14mm 17mm 14mm; position: relative; }
 
 .g-row {
   display: grid;
@@ -302,12 +302,18 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   font-size: 7.2pt;
   color: var(--muted);
 }
-/* ---- THE STACK BLOCK (g-sb*) ----
-   The stack's own construction: full measure behind a thin emerald
-   gutter, labels in a tight mono column so chip groups share one left
-   edge. Distinct from the BACKGROUND ledger on purpose; the gutter and
-   the data voice keep it of the page. */
-.g-stackblock { margin: 2.2mm 0 0.6mm; padding: 0.4mm 0 0.4mm 2.8mm; border-left: 0.7pt solid var(--accent); }
-.g-sbrow { line-height: 1.55; }
-.g-sblabel { display: inline-block; width: 16mm; font-family: var(--font-data); font-size: 7pt; color: var(--muted); }
-.g-stackblock .bgx-chip { white-space: nowrap; }
+/* ---- STACK PLACEMENTS ----
+   'masthead': the distilled core stack as a nameplate subline — the
+   quietest line in the masthead, mono, muted, no accent (accent in a
+   nameplate subline reads decorative).
+   'colophon': endmatter anchored to the page's bottom margin on the
+   masthead's centered axis — smallest type on the page (>6pt: smaller is
+   what hidden-text scanners flag), opened by a tiny brace mark. */
+.g-mastack { margin-top: 1.6mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
+.g-mastack .g-msep { margin: 0 1.5mm; }
+.g-colophon { position: absolute; left: 17mm; right: 17mm; bottom: 7mm; text-align: center; }
+.g-comark { font-family: var(--font-data); font-size: 6.5pt; letter-spacing: 1.6pt; color: var(--muted); margin-bottom: 1mm; }
+.g-corow { font-size: 6.8pt; line-height: 1.5; }
+.g-colabel { font-family: var(--font-data); font-size: 6.4pt; letter-spacing: 0.8pt; text-transform: uppercase; color: var(--muted); margin-right: 1.6mm; }
+.g-coterm { font-family: var(--font-data); color: var(--accent-deep); white-space: nowrap; }
+.g-cosep { color: var(--accent); margin: 0 0.4mm; }

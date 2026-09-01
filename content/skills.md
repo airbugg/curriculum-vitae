@@ -28,3 +28,7 @@ Node.js, React, React Native, Next.js, Astro, GraphQL
 ## stackAI
 
 LLM pipelines, human-in-the-loop review, Claude Code, Codex, Cursor
+
+## stackCore
+
+TypeScript, Node.js, Python, React Native, Next.js, GraphQL, PostgreSQL, k8s, Terraform, LLM pipelines

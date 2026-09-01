@@ -84,12 +84,16 @@ export interface GridVariant extends VariantBase {
   density?: 'dense';
   stackRows: StackRow[];
   /**
-   * Where the stack renders. 'background' (the default) keeps it a ledger
-   * row inside BACKGROUND; 'strip' puts the StackBlock directly under the
-   * intro for screening-oriented variants; 'footer' puts the same block
-   * after BACKGROUND as a closing band.
+   * How the stack inventory joins the page. 'background' (the default)
+   * keeps the classic single ledger row inside BACKGROUND. 'ledger' sets
+   * the groups as rows of a { STACK } section after EXPERIENCE — the
+   * inventory as more of the geometry the page already taught. 'colophon'
+   * anchors it as centered endmatter at the page's bottom margin, the
+   * masthead's bookend. 'masthead' puts a distilled one-line core stack
+   * under the contact line and the full groups as ledger rows in
+   * BACKGROUND.
    */
-  stackPlacement?: 'strip' | 'footer' | 'background';
+  stackPlacement?: 'ledger' | 'colophon' | 'masthead' | 'background';
 }
 
 /** The terminal session — src/themes/terminal.css. */

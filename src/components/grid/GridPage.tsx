@@ -2,12 +2,12 @@
 // dates) against a right content column, with the braces identity carried in
 // the muted data-column ink around the name and the section marks.
 import { Fragment, type ReactNode } from 'react';
-import { person } from '../../lib/content.ts';
+import { person, skills } from '../../lib/content.ts';
 import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
-import { GridBackground, StackBlock } from './GridBackground.tsx';
+import { GridBackground, StackGroupRows } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -36,13 +36,26 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
             </Fragment>
           ))}
         </div>
+        {/* The distilled core stack as a nameplate subline: identity, not
+            inventory — curated in content/skills.md ## stackCore, no
+            labels, quieter than the contact line. */}
+        {variant.stackPlacement === 'masthead' && (
+          <div className="g-mastack">
+            {skills('stackCore')
+              .split(',')
+              .map((t, i) => (
+                <Fragment key={t}>
+                  {i > 0 && <span className="g-msep">·</span>}
+                  <span>{t.trim().replace(/ /g, '\u00A0')}</span>
+                </Fragment>
+              ))}
+          </div>
+        )}
       </header>
 
       <p className="intro g-intro">
         <NoBreakCompounds text={variant.intro} />
       </p>
-
-      {variant.stackPlacement === 'strip' && <StackBlock variant={variant} />}
 
       <section className="g-section">
         <GridSecMark>Experience</GridSecMark>
@@ -51,9 +64,33 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
         ))}
       </section>
 
+      {variant.stackPlacement === 'ledger' && (
+        <section className="g-section g-bg">
+          <GridSecMark>Stack</GridSecMark>
+          <StackGroupRows variant={variant} />
+        </section>
+      )}
+
       <GridBackground variant={variant} />
 
-      {variant.stackPlacement === 'footer' && <StackBlock variant={variant} />}
+      {variant.stackPlacement === 'colophon' && (
+        <div className="g-colophon">
+          <div className="g-comark">{'{ STACK }'}</div>
+          {variant.stackRows.map(([sub, key]) => (
+            <div className="g-corow" key={sub}>
+              <span className="g-colabel">{sub}</span>
+              {skills(key)
+                .split(',')
+                .map((t, i) => (
+                  <Fragment key={t}>
+                    {i > 0 && <span className="g-cosep">·</span>}{' '}
+                    <span className="g-coterm">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
+                  </Fragment>
+                ))}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

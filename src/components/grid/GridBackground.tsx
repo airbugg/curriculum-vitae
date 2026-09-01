@@ -39,31 +39,19 @@ function Chips({ text }: { text: string }): ReactNode {
 }
 
 /**
- * The stack as its own block: full measure under a thin emerald gutter,
- * group labels in a tight mono column so the chip groups share a left
- * edge. Used by the 'strip' (under the intro) and 'footer' (after
- * BACKGROUND) placements, where the ledger's 40mm meta column would
- * waste the width.
+ * The inventory as rows of the ledger the page already taught: each group
+ * name in the mono meta column, exactly where company and dates live, terms
+ * run-in in the content column. The Awesome-CV \cvskill pattern.
  */
-export function StackBlock({ variant }: { variant: GridVariant }): ReactNode {
+export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode {
   return (
-    <div className="g-stackblock">
+    <>
       {variant.stackRows.map(([sub, key]) => (
-        <div className="g-sbrow" key={sub}>
-          <span className="g-sblabel">{sub}</span>
-          {/* Real spaces around the separators are the only wrap points;
-              chips themselves never break. */}
-          {skills(key)
-            .split(',')
-            .map((t, i) => (
-              <Fragment key={t}>
-                {i > 0 && <span className="bgx-sep">·</span>}{' '}
-                <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>{' '}
-              </Fragment>
-            ))}
-        </div>
+        <Row label={sub} key={sub}>
+          <Chips text={skills(key)} />
+        </Row>
       ))}
-    </div>
+    </>
   );
 }
 
@@ -113,6 +101,7 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
       {(variant.stackPlacement ?? 'background') === 'background' && (
         <StackLedger variant={variant} />
       )}
+      {variant.stackPlacement === 'masthead' && <StackGroupRows variant={variant} />}
     </section>
   );
 }
