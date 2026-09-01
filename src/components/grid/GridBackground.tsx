@@ -93,6 +93,8 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <>
       <Row label="Education" year={eduYears}>
+        <span className="bgx-strong">{education.degree}</span>
+        <span className="bgx-dim"> · </span>
         {educationMark &&
           (educationMark.type === 'svg' ? (
             <span className="bgx-emark" dangerouslySetInnerHTML={{ __html: educationMark.data }} />
@@ -101,8 +103,6 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
               <img src={educationMark.data} alt="" />
             </span>
           ))}
-        <span className="bgx-strong">{education.degree}</span>
-        <span className="bgx-dim"> · </span>
         {education.school}
       </Row>
       <Row
