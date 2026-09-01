@@ -43,5 +43,5 @@ export const logos: Record<string, CompanyLogo> = {
   Remitly: { mark: load('remitly') },
   Rewire: { mark: load('rewire') },
   Rylo: { mark: load('rylo') },
-  'Wix.com': { mark: load('wix') },
+  Wix: { mark: load('wix') },
 };

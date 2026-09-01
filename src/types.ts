@@ -92,6 +92,8 @@ export interface GridVariant extends VariantBase {
   stackPlacement?: 'combined' | 'background';
   /** Typeset the publication row as a sub-entry of education. */
   nestedPublication?: boolean;
+  /** Prefix each tech chip with its brand mark (src/lib/techicons.ts). */
+  techIcons?: boolean;
 }
 
 /** The terminal session — src/themes/terminal.css. */

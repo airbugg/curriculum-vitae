@@ -1401,7 +1401,7 @@ The construction, after five adversarially reviewed design rounds
 (placement studies, editorial treatments, ledger internals, a divider
 loop, and four bottom-zone rebuilds — the trail lives in the branch
 history): a curated identity trio under the contact line ("typescripter ·
-pythonista · agentic looper", the `stackCore` key), then { TECHNOLOGIES }
+pythonista · agentic looper", the `stackCore` key), then { TECH }
 and { BACKGROUND } as sibling sections — the seam the page's own grammar
 draws, after every subtler divider was measured and rejected. Chips print
 in body ink with muted separators in this zone (`g-skink`), so its teal

@@ -57,6 +57,29 @@ export const variants: Variant[] = [
     ],
   },
 
+  // The screening cut again, with brand marks on the tech chips.
+  {
+    file: 'eugene-lerman-fullstack-icons',
+    label: 'The Full-Stack · tech marks',
+    theme: 'grid',
+    density: 'dense',
+    stackPlacement: 'combined',
+    nestedPublication: true,
+    techIcons: true,
+    stackRows: [
+      ['languages', 'stackLanguages'],
+      ['full-stack', 'stackFullstack'],
+      ['infra', 'stackInfra'],
+    ],
+    intro: intro('fullstack'),
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'release', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'llmPipeline', 'l10nService'] },
+      { job: 'rewire', bullets: ['workflowEngine', 'ci'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
+    ],
+  },
+
   // The whole CV as one terminal session; commands are the structure.
   {
     file: 'eugene-lerman-shell',

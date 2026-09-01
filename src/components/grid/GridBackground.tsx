@@ -1,12 +1,13 @@
 // The page's bottom zone. The default grid variant prints one
 // { BACKGROUND } section (education, publication, languages, stack); the
-// screening cut ('combined') prints { TECHNOLOGIES } then { BACKGROUND }.
+// screening cut ('combined') prints { TECH } then { BACKGROUND }.
 // Keys are set as the meta-column labels EXPERIENCE already uses, so the
 // sections speak one dialect. Styled under the bgx- prefix in grid.css.
 import { Fragment, type ReactNode } from 'react';
 import { eduYears, langPairs, pubTitle } from '../../lib/background.ts';
 import { education, publication, skills } from '../../lib/content.ts';
 import type { GridVariant } from '../../types.ts';
+import { techIcon } from '../../lib/techicons.ts';
 import { GridSecMark } from './GridSecMark.tsx';
 
 function Row({
@@ -31,14 +32,26 @@ function Row({
   );
 }
 
-function Chips({ text }: { text: string }): ReactNode {
-  return text.split(',').map((t, i) => (
-    <Fragment key={t}>
-      {i > 0 && <span className="bgx-sep">·</span>}
-      {/* NBSP: a two-word chip must not break across lines. */}
-      <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>
-    </Fragment>
-  ));
+function Chips({ text, icons }: { text: string; icons?: boolean }): ReactNode {
+  return text.split(',').map((raw, i) => {
+    const t = raw.trim();
+    const icon = icons ? techIcon(t) : null;
+    return (
+      <Fragment key={t}>
+        {i > 0 && <span className="bgx-sep">·</span>}
+        {/* NBSP: a two-word chip must not break across lines; the mark
+            rides inside the chip span so it can never orphan. */}
+        <span className="bgx-chip">
+          {icon && (
+            <svg className="bgx-ticon" viewBox="0 0 24 24" aria-hidden>
+              <path d={icon.path} fill={`#${icon.hex}`} />
+            </svg>
+          )}
+          {t.replace(/ /g, '\u00A0')}
+        </span>
+      </Fragment>
+    );
+  });
 }
 
 /**
@@ -51,7 +64,7 @@ export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode
     <>
       {variant.stackRows.map(([sub, key]) => (
         <Row label={sub} key={sub}>
-          <Chips text={skills(key)} />
+          <Chips text={skills(key)} icons={variant.techIcons} />
         </Row>
       ))}
     </>
@@ -110,14 +123,14 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
 
 /**
  * The screening cut's bottom zone: the inventory as its own
- * { TECHNOLOGIES } section, then the credentials as { BACKGROUND } —
+ * { TECH } section, then the credentials as { BACKGROUND } —
  * two honest names, two of the page's own full-measure hairlines.
  */
 function FullstackZone({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <>
       <section className="g-section g-bg g-skink">
-        <GridSecMark>Technologies</GridSecMark>
+        <GridSecMark>Tech</GridSecMark>
         <StackGroupRows variant={variant} />
       </section>
       <section className="g-section g-bg g-z2">
