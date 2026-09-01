@@ -44,7 +44,6 @@ export const variants: Variant[] = [
     nestedPublication: true,
     stackRows: [
       ['languages', 'stackLanguages'],
-      ['AI', 'stackAI'],
       ['full-stack', 'stackFullstack'],
       ['infra', 'stackInfra'],
     ],

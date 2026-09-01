@@ -343,8 +343,8 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    same weight and gray as the section rules but 32mm long — demoted by
    length, so it cannot be misread as an unnamed section rule. Optically
    centered in its gap. */
-.g-div-rule { border-top: 0; margin-top: 1.4mm; padding-top: 0; }
-.g-div-rule::before { content: ''; display: block; width: 32mm; border-top: 0.3pt solid var(--rule); margin: 1.2mm 0 2.2mm; }
+.g-div-rule { border-top: 0; margin-top: 2.8mm; padding-top: 0; }
+.g-div-rule::before { content: ''; display: block; width: 32mm; border-top: 0.3pt solid var(--rule); margin: 2.4mm 0 3.4mm; }
 /* The nested publication row sits closer to its parent than to what
    follows, so the pitch asserts the same subordination as the arrow. */
 .bgx-nested { margin-top: -1.5mm; }

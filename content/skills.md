@@ -31,4 +31,4 @@ LLM pipelines, human-in-the-loop workflows, agentic coding, Claude Code, Cursor
 
 ## stackCore
 
-TypeScript, Node.js, Python, PostgreSQL, LLM pipelines
+typescripter, pythonista, agentic looper
