@@ -31,4 +31,4 @@ LLM pipelines, Claude Code, Codex, Cursor
 
 ## stackCore
 
-TypeScript, Node.js, Python, React Native, GraphQL, PostgreSQL, LLM pipelines
+TypeScript, Node.js, Python, PostgreSQL, LLM pipelines
