@@ -339,7 +339,15 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    on the line, 'subtitleIndent' additionally indents the education block. */
 .g-divided { border-top: 0.3pt solid var(--rule); margin-top: 2.4mm; padding-top: 1.5mm; }
 .g-divsub { font-family: var(--font-data); font-size: 6pt; text-transform: uppercase; letter-spacing: 1.1pt; color: var(--muted); margin-bottom: 1mm; }
-.g-div-rule { padding-top: 1.2mm; margin-top: 2.2mm; }
+/* The winning divider (adversarial round 3): a short left-anchored dash,
+   same weight and gray as the section rules but 32mm long — demoted by
+   length, so it cannot be misread as an unnamed section rule. Optically
+   centered in its gap. */
+.g-div-rule { border-top: 0; margin-top: 1.4mm; padding-top: 0; }
+.g-div-rule::before { content: ''; display: block; width: 32mm; border-top: 0.3pt solid var(--rule); margin: 1.2mm 0 2.2mm; }
+/* The nested publication row sits closer to its parent than to what
+   follows, so the pitch asserts the same subordination as the arrow. */
+.bgx-nested { margin-top: -1.5mm; }
 .g-div-subtitle, .g-div-subtitleIndent { padding-top: 1mm; }
 .g-div-subtitleIndent .bgx-crow { margin-left: 3.6mm; }
 /* Publication as a sub-entry of education: swept-arrow key, tighter tie. */

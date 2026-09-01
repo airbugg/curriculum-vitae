@@ -11,14 +11,16 @@ import { GridSecMark } from './GridSecMark.tsx';
 function Row({
   label,
   year,
+  className,
   children,
 }: {
   label: string;
   year?: string;
+  className?: string;
   children: ReactNode;
 }): ReactNode {
   return (
-    <div className="bgx-crow">
+    <div className={className ? `bgx-crow ${className}` : 'bgx-crow'}>
       <div className="bgx-cmeta">
         <div className="bgx-key">{label}</div>
         {year && <div className="bgx-cyr">{year}</div>}
@@ -60,7 +62,7 @@ export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode
 // 'swapped' puts BACKGROUND before { STACK }. Pruned after the owner picks.
 export const HIER: 'sibling' | 'merged' | 'swapped' = 'sibling';
 // Divider prototype for the { STACK } / education seam, same lifecycle.
-export const DIV: 'marks' | 'rule' | 'subtitle' | 'subtitleIndent' = 'subtitleIndent';
+export const DIV: 'marks' | 'rule' | 'subtitle' | 'subtitleIndent' = 'rule';
 
 /** The subdivided stack ledger; lives in BACKGROUND unless stackPlacement hoists it. */
 export function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
@@ -96,6 +98,7 @@ export function GridBackground({ variant }: { variant: GridVariant }): ReactNode
       <Row
         label={variant.nestedPublication ? '\u21b3 publication' : 'Publication'}
         year={publication.year}
+        className={variant.nestedPublication ? 'bgx-nested' : undefined}
       >
         <a href={publication.url} className="bgx-strong">
           {pubTitle}
