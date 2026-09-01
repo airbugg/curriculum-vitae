@@ -13,7 +13,8 @@ import { GridSecMark } from './GridSecMark.tsx';
 
 // Ledger-internal layout under iteration; flipped per build during the
 // design review loop, pruned once the owner picks.
-const SKL: 'meta' | 'metaRight' | 'runin' | 'plain' = 'runin';
+const SKL: 'meta' | 'metaRight' | 'runin' | 'plain' = 'meta';
+const INK = true;
 
 export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
   const [first, ...rest] = person.name.toUpperCase().split(' ');
@@ -69,7 +70,7 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
       </section>
 
       {(variant.stackPlacement === 'ledger' || variant.stackPlacement === 'combined') && (
-        <section className={`g-section g-bg g-skl-${SKL}`}>
+        <section className={`g-section g-bg g-skl-${SKL}${INK ? ' g-skink' : ''}`}>
           <GridSecMark>Stack</GridSecMark>
           {(SKL === 'meta' || SKL === 'metaRight') && <StackGroupRows variant={variant} />}
           {SKL === 'runin' &&

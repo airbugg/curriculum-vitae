@@ -309,7 +309,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    'colophon': endmatter anchored to the page's bottom margin on the
    masthead's centered axis — smallest type on the page (>6pt: smaller is
    what hidden-text scanners flag), opened by a tiny brace mark. */
-.g-mastack { margin-top: 1.6mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
+.g-mastack { margin-top: 1mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
 .g-mastack .g-msep { margin: 0 1.5mm; }
 .g-colophon { position: absolute; left: 17mm; right: 17mm; bottom: 7mm; text-align: center; }
 .g-comark { font-family: var(--font-data); font-size: 6.5pt; letter-spacing: 1.6pt; color: var(--muted); margin-bottom: 1mm; }
@@ -319,10 +319,16 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .g-cosep { color: var(--accent); margin: 0 0.4mm; }
 /* { STACK } ledger internals under iteration (g-skl-*). Stack rows sit
    tighter than BACKGROUND's: single-line data rows need less air. */
-.g-skl-meta .bgx-crow, .g-skl-metaRight .bgx-crow { margin-bottom: 1.1mm; }
+.g-skl-meta .bgx-crow, .g-skl-metaRight .bgx-crow { margin-bottom: 1.9mm; }
 .g-skl-metaRight .bgx-key { margin-left: auto; text-align: right; }
 .g-skrun { line-height: 1.45; }
 .g-skrunlabel { font-family: var(--font-data); font-size: 6.8pt; text-transform: uppercase; letter-spacing: 0.7pt; color: var(--muted); margin-right: 2.2mm; }
 .g-skplain { line-height: 1.6; }
 .g-skslash { color: var(--muted); margin: 0 1.8mm; }
 .g-skl-runin .g-secmark, .g-skl-plain .g-secmark { margin-bottom: 1.3mm; }
+/* Ink-terms mode: the stack's terms in body ink, teal held to the
+   separators, so { STACK } stops being the page's densest color block. */
+.g-skink .bgx-chip { color: var(--ink); }
+/* Two adjacent data ledgers need less separation than prose-to-data. */
+.g-skl-meta.g-section, .g-skl-metaRight.g-section { margin-top: 2.2mm; }
+.g-skl-meta + .g-bg, .g-skl-metaRight + .g-bg { margin-top: 2.2mm; }
