@@ -2,11 +2,11 @@
 // dates) against a right content column, with the braces identity carried in
 // the muted data-column ink around the name and the section marks.
 import { Fragment, type ReactNode } from 'react';
-import { person, skills } from '../../lib/content.ts';
+import { person, skills, splitChips } from '../../lib/content.ts';
 import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
-import { NoBreakCompounds } from '../shared/typography.tsx';
+import { nbsp, NoBreakCompounds } from '../shared/typography.tsx';
 import { GridBackground } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
@@ -41,14 +41,12 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
             labels, quieter than the contact line. */}
         {variant.stackPlacement === 'combined' && (
           <div className="g-mastack">
-            {skills('stackCore')
-              .split(',')
-              .map((t, i) => (
-                <Fragment key={t}>
-                  {i > 0 && <span className="g-msep">·</span>}
-                  <span>{t.trim().replace(/ /g, '\u00A0')}</span>
-                </Fragment>
-              ))}
+            {splitChips(skills('stackCore')).map((t, i) => (
+              <Fragment key={t}>
+                {i > 0 && <span className="g-msep">·</span>}
+                <span>{nbsp(t)}</span>
+              </Fragment>
+            ))}
           </div>
         )}
       </header>

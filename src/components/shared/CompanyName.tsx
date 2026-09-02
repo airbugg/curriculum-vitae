@@ -11,27 +11,17 @@
 // Rendered by both themes, so its classes take the shared co- prefix rather
 // than either theme's g-/t-.
 import type { ReactNode } from 'react';
-import { logos, type LogoAsset } from '../../lib/logos.ts';
+import { logos } from '../../lib/logos.ts';
+import { InlineMark } from './InlineMark.tsx';
 import { tidyLabel } from './typography.tsx';
 
-function Mark({ asset }: { asset: LogoAsset }): ReactNode {
-  // co-art-<slug> lets a theme size each asset from its own geometry.
-  const cls = `co-mark co-art-${asset.slug}`;
-  if (asset.type === 'svg')
-    return <span className={cls} dangerouslySetInnerHTML={{ __html: asset.data }} />;
-  return (
-    <span className={cls}>
-      <img src={asset.data} alt="" />
-    </span>
-  );
-}
-
-export function CompanyName({ company, label }: { company: string; label?: string }): ReactNode {
-  const mark = logos[company]?.mark;
+export function CompanyName({ company }: { company: string }): ReactNode {
+  const mark = logos[company];
   return (
     <>
-      {mark && <Mark asset={mark} />}
-      {tidyLabel(label ?? company)}
+      {/* co-art-<slug> lets a theme size each asset from its own geometry. */}
+      {mark && <InlineMark asset={mark} className={`co-mark co-art-${mark.slug}`} />}
+      {tidyLabel(company)}
     </>
   );
 }

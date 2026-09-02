@@ -22,44 +22,23 @@ jobs:
       # Full history and tags: the version and changelog are derived from
       # the commits since the last v* tag.
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
       - name: Set up Node 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
 
-      - name: Resolve Chromium
-        run: |
-          CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
-          if [ -z "$CHROME" ]; then
-            sudo apt-get update && sudo apt-get install -y chromium-browser
-            CHROME="$(command -v chromium-browser)"
-          fi
-          echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
-
-      # The browser build is baked into the rendered PDFs (/Producer Skia/PDF
-      # mNNN), and ubuntu-latest's Chrome auto-updates underneath us, so a
-      # runner-image refresh can shift the pixel-tuned output with no commit
-      # in this repo. .chrome-version tracks the RUNNER's Chrome, which is
-      # what builds the released PDFs; a local browser will often differ, so
-      # "rebuild locally and compare" is not the remedy. To clear a mismatch:
-      # download the cv-pdfs artifact from the run, check every page still
-      # look right, then set .chrome-version to the reported major.
-      # Note this compares the major only; output can still shift within one.
-      - name: Check Chromium version
-        continue-on-error: true
-        run: |
-          EXPECTED="$(cat .chrome-version)"
-          ACTUAL="$("$CHROME_PATH" --version 2>/dev/null | grep -oE '[0-9]+(\.[0-9]+){2,3}' | head -1 | cut -d. -f1)"
-          if [ "$ACTUAL" != "$EXPECTED" ]; then
-            echo "::warning::Chrome major is ${ACTUAL:-unreadable}, expected $EXPECTED (.chrome-version). This release may not be pixel-identical to the last. Publishing anyway; open a PR to re-baseline."
-          else
-            echo "Chrome major $ACTUAL matches .chrome-version"
-          fi
+      # Resolve a browser and warn (never block) on a .chrome-version
+      # mismatch — blocking the release path helps nobody. Rationale and
+      # the re-baseline recipe live in the action itself.
+      - name: Resolve and check Chromium
+        uses: ./.github/actions/resolve-chromium
+        with:
+          strict: 'false'
 
       - name: Install poppler-utils
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
@@ -103,7 +82,7 @@ jobs:
       # semantic-release exits 0 when it decides there is nothing to release,
       # which happens when no commit subject since the last tag parses as a
       # Conventional Commit. GitHub's web editor defaults to "Update
-      # content/jobs/3-rewire.md", which does not — and nothing lints a direct
+      # content/jobs/3-rewire.md", which does not, and nothing lints a direct
       # push to master, because the commit-msg hook is client-side and the
       # commitlint job only runs on pull requests. Without this guard the run
       # goes green, the PDFs are built and thrown away, and the stable

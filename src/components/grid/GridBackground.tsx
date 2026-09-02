@@ -1,12 +1,16 @@
 // The page's bottom zone. The default grid variant prints one
 // { BACKGROUND } section (education, publication, languages, stack); the
-// screening cut ('combined') prints { TECHNOLOGIES } then { BACKGROUND }.
+// screening cut ('combined') prints { TECH } then { BACKGROUND }.
 // Keys are set as the meta-column labels EXPERIENCE already uses, so the
 // sections speak one dialect. Styled under the bgx- prefix in grid.css.
 import { Fragment, type ReactNode } from 'react';
 import { eduYears, langPairs, pubTitle } from '../../lib/background.ts';
-import { education, publication, skills } from '../../lib/content.ts';
+import { education, publication, skills, splitChips } from '../../lib/content.ts';
+import { educationMark } from '../../lib/logos.ts';
+import { techIcon } from '../../lib/techicons.ts';
 import type { GridVariant } from '../../types.ts';
+import { InlineMark } from '../shared/InlineMark.tsx';
+import { nbsp } from '../shared/typography.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
 function Row({
@@ -31,14 +35,28 @@ function Row({
   );
 }
 
-function Chips({ text }: { text: string }): ReactNode {
-  return text.split(',').map((t, i) => (
-    <Fragment key={t}>
-      {i > 0 && <span className="bgx-sep">·</span>}
-      {/* NBSP: a two-word chip must not break across lines. */}
-      <span className="bgx-chip">{t.trim().replace(/ /g, '\u00A0')}</span>
-    </Fragment>
-  ));
+function Chips({ text, icons }: { text: string; icons?: boolean }): ReactNode {
+  return splitChips(text).map((t, i) => {
+    const icon = icons ? techIcon(t) : null;
+    return (
+      <Fragment key={t}>
+        {i > 0 && <span className="bgx-sep">·</span>}
+        {/* NBSP: a two-word chip must not break across lines; the mark
+            rides inside the chip span so it can never orphan. */}
+        <span className="bgx-chip">
+          {icon &&
+            ('svg' in icon ? (
+              <span className="bgx-ticon" dangerouslySetInnerHTML={{ __html: icon.svg }} />
+            ) : (
+              <svg className="bgx-ticon" viewBox="0 0 24 24" aria-hidden>
+                <path d={icon.path} fill={`#${icon.hex}`} />
+              </svg>
+            ))}
+          {nbsp(t)}
+        </span>
+      </Fragment>
+    );
+  });
 }
 
 /**
@@ -46,12 +64,12 @@ function Chips({ text }: { text: string }): ReactNode {
  * name in the mono meta column, exactly where company and dates live, terms
  * run-in in the content column. The Awesome-CV \cvskill pattern.
  */
-export function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode {
+function StackGroupRows({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <>
       {variant.stackRows.map(([sub, key]) => (
         <Row label={sub} key={sub}>
-          <Chips text={skills(key)} />
+          <Chips text={skills(key)} icons={variant.techIcons} />
         </Row>
       ))}
     </>
@@ -76,17 +94,21 @@ function StackLedger({ variant }: { variant: GridVariant }): ReactNode {
 }
 
 function EduRows({ variant }: { variant: GridVariant }): ReactNode {
+  // The screening cut nests the publication under education (the swept arrow
+  // and a tighter pitch); the classic zone keys it as its own row.
+  const nested = variant.stackPlacement === 'combined';
   return (
     <>
       <Row label="Education" year={eduYears}>
         <span className="bgx-strong">{education.degree}</span>
         <span className="bgx-dim"> · </span>
+        {educationMark && <InlineMark asset={educationMark} className="bgx-emark" />}
         {education.school}
       </Row>
       <Row
-        label={variant.nestedPublication ? '\u21b3 publication' : 'Publication'}
+        label={nested ? '\u21b3 publication' : 'Publication'}
         year={publication.year}
-        className={variant.nestedPublication ? 'bgx-nested' : undefined}
+        className={nested ? 'bgx-nested' : undefined}
       >
         <a href={publication.url} className="bgx-strong">
           {pubTitle}
@@ -100,7 +122,7 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
             {i > 0 && <span className="bgx-sep">·</span>}
             <span className="bgx-lang">{k}</span>{' '}
             {/* NBSP: a level phrase must not break across lines. */}
-            <span className="bgx-level">({v.replace(/ /g, '\u00A0')})</span>
+            <span className="bgx-level">({nbsp(v)})</span>
           </Fragment>
         ))}
       </Row>
@@ -109,15 +131,14 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
 }
 
 /**
- * The screening cut's bottom zone: the inventory as its own
- * { TECHNOLOGIES } section, then the credentials as { BACKGROUND } —
- * two honest names, two of the page's own full-measure hairlines.
+ * The screening cut's bottom zone: the inventory as its own { TECH }
+ * section, then the credentials as { BACKGROUND }.
  */
 function FullstackZone({ variant }: { variant: GridVariant }): ReactNode {
   return (
     <>
       <section className="g-section g-bg g-skink">
-        <GridSecMark>Technologies</GridSecMark>
+        <GridSecMark>Tech</GridSecMark>
         <StackGroupRows variant={variant} />
       </section>
       <section className="g-section g-bg g-z2">

@@ -17,7 +17,7 @@
 // A ToUnicode entry may map one glyph to a multi-character string, so both are
 // fixed by rewriting the mapping alone: the painted glyph never changes, and
 // the rendered page is byte-identical. Verified by rasterising before and after
-// at 150dpi — 0 differing pixels on both variants.
+// at 150dpi — 0 differing pixels on every variant.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { PDFDocument, PDFRawStream, type PDFRef, decodePDFRawStream } from 'pdf-lib';
 
@@ -71,7 +71,7 @@ export async function repairTextLayer(
 
   for (const [ref, text] of toUnicodeStreams(doc)) {
     const fixed = text.replace(CMAP_PATTERN, (_, cp: string) => {
-      const key = cp.toUpperCase() === '00A0' ? '00A0' : cp.toUpperCase();
+      const key = cp.toUpperCase();
       remapped.add(key);
       return `<${REMAP[key]}>`;
     });

@@ -187,12 +187,19 @@ export const education = frontmatterOf<Education>('education.md', {
   dates: 'required',
 });
 
-export const publication = frontmatterOf<Publication>('publications.md', {
-  title: 'required',
-  journal: 'required',
-  year: 'required',
-  url: 'required',
-  authors: 'optional',
+export const publication = inFile('publications.md', (src) => {
+  const p = fields<Publication>(parseFrontmatter(src)[0], {
+    title: 'required',
+    journal: 'required',
+    year: 'required',
+    url: 'required',
+    authors: 'optional',
+  });
+  // The one content value that lands in an href; the page must never link
+  // anywhere but over https.
+  if (!p.url.startsWith('https://'))
+    throw new Error(`url must start with https:// (got '${p.url}')`);
+  return p;
 });
 
 export const jobs = loadJobs();
@@ -217,3 +224,7 @@ export const skills = heading('skills.md', skillGroups);
 
 /** The keys skills() will answer to — src/validate.ts checks variants first. */
 export const skillKeys = Object.keys(skillGroups);
+
+/** A skills value → its chips. The one definition of the chip format, so
+ * validate.ts checks exactly what the layouts print. */
+export const splitChips = (text: string): string[] => text.split(',').map((s) => s.trim());
