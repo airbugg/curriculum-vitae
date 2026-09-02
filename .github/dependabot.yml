@@ -1,13 +1,21 @@
-# Weekly dependency PRs: npm packages and the SHA-pinned actions in the
-# workflows, so the pins do not fossilize. Every PR still runs the full
-# build with the one-page check before anything merges.
+# Monthly, grouped PRs for the SHA-pinned actions, so the pins do not
+# fossilize. The commit-message prefix keeps the bot's commits
+# Conventional, so the commits job stays green on its PRs.
+#
+# npm has no version-update entry on purpose: the npm deps are build-time
+# only and curated by hand (simple-icons is pinned exact because brand
+# geometry moves even in minors). GitHub security alerts still arrive
+# without an entry here.
 version: 2
 updates:
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    groups:
+      actions:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: ci
+      include: scope

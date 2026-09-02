@@ -1,0 +1,65 @@
+# The one home of the Chromium resolve-and-gate logic both workflows
+# share (it drifted when it lived twice).
+#
+# The browser build is baked into the rendered PDFs (/Producer Skia/PDF
+# mNNN), and ubuntu-latest's Chrome auto-updates underneath us, so a
+# runner-image refresh can shift the pixel-tuned output with no commit in
+# this repo. .chrome-version tracks the RUNNER's Chrome, which is what
+# builds the released PDFs; a local browser will often differ, so
+# "rebuild locally and compare" is not the remedy. To clear a mismatch:
+# download the cv-pdfs artifact from the run, check every page still
+# looks right, then set .chrome-version to the reported major.
+# Note this compares the major only; output can still shift within one.
+name: Resolve Chromium
+description: >-
+  Find a Chromium, export CHROME_PATH, and gate on .chrome-version —
+  failing or warning per the strict input.
+inputs:
+  strict:
+    description: >-
+      "true" fails the job on a major mismatch (pull requests, where a
+      human can act on it); "false" warns and publishes anyway (the
+      release path, where blocking helps nobody).
+    required: true
+runs:
+  using: composite
+  steps:
+    # Prefer the Chrome that ships on ubuntu-latest; fall back to apt
+    # Chromium. build.ts honors CHROME_PATH, so export it for later
+    # steps via GITHUB_ENV.
+    - name: Resolve Chromium
+      shell: bash
+      run: |
+        CHROME="$(command -v google-chrome || command -v chromium-browser || command -v chromium || true)"
+        if [ -z "$CHROME" ]; then
+          sudo apt-get update && sudo apt-get install -y chromium-browser
+          CHROME="$(command -v chromium-browser)"
+        fi
+        echo "Using Chrome at: $CHROME"
+        "$CHROME" --version
+        echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
+
+    - name: Check Chromium version
+      shell: bash
+      env:
+        STRICT: ${{ inputs.strict }}
+      run: |
+        EXPECTED="$(cat .chrome-version)"
+        if [ ! -x "$CHROME_PATH" ] && [ "$STRICT" = "true" ]; then
+          echo "::error::CHROME_PATH ($CHROME_PATH) is not an executable; the resolve step failed."
+          exit 1
+        fi
+        ACTUAL="$("$CHROME_PATH" --version 2>/dev/null | grep -oE '[0-9]+(\.[0-9]+){2,3}' | head -1 | cut -d. -f1)"
+        if [ -z "$ACTUAL" ] && [ "$STRICT" = "true" ]; then
+          echo "::error::Could not parse a version from: $("$CHROME_PATH" --version)"
+          exit 1
+        fi
+        if [ "$ACTUAL" != "$EXPECTED" ]; then
+          if [ "$STRICT" = "true" ]; then
+            echo "::error::Chrome major is ${ACTUAL:-unreadable}, expected $EXPECTED (.chrome-version). See this action's header comment for how to clear it."
+            exit 1
+          fi
+          echo "::warning::Chrome major is ${ACTUAL:-unreadable}, expected $EXPECTED (.chrome-version). This release may not be pixel-identical to the last. Publishing anyway; open a PR to re-baseline."
+        else
+          echo "Chrome major $ACTUAL matches .chrome-version"
+        fi
