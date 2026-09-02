@@ -6,7 +6,7 @@ import { person, skills } from '../../lib/content.ts';
 import { resolve } from '../../lib/experience.ts';
 import type { GridVariant } from '../../types.ts';
 import { Contact, contacts } from '../shared/Contact.tsx';
-import { NoBreakCompounds } from '../shared/typography.tsx';
+import { nbsp, NoBreakCompounds } from '../shared/typography.tsx';
 import { GridBackground } from './GridBackground.tsx';
 import { GridEntry } from './GridEntry.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
@@ -46,7 +46,7 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
               .map((t, i) => (
                 <Fragment key={t}>
                   {i > 0 && <span className="g-msep">·</span>}
-                  <span>{t.trim().replace(/ /g, '\u00A0')}</span>
+                  <span>{nbsp(t.trim())}</span>
                 </Fragment>
               ))}
           </div>

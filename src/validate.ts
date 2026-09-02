@@ -4,8 +4,9 @@
 // would happily pass.
 //
 // Errors are collected rather than thrown so one run reports all of them.
-import { jobs, skillKeys } from './lib/content.ts';
+import { jobs, skillKeys, skills } from './lib/content.ts';
 import { duration } from './lib/dates.ts';
+import { hasTechIcon } from './lib/techicons.ts';
 import type { Variant } from './types.ts';
 
 export function validate(variants: Variant[]): string[] {
@@ -39,6 +40,16 @@ export function validate(variants: Variant[]): string[] {
         errors.push(
           `${v.file}: stackPlacement 'combined' needs a 'stackCore' key in content/skills.md`,
         );
+      // Every chip an icon-bearing variant prints must be mapped, checked
+      // here so a missing mark fails by name rather than mid-render.
+      if (v.techIcons)
+        for (const [, key] of v.stackRows)
+          if (skillKeys.includes(key))
+            for (const chip of skills(key).split(','))
+              if (!hasTechIcon(chip.trim()))
+                errors.push(
+                  `${v.file}: no tech icon mapped for chip '${chip.trim()}' — add it to src/lib/techicons.ts`,
+                );
     }
   }
   return errors;

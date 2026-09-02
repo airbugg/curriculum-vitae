@@ -5,7 +5,7 @@
 // as Amazon's own AWS Cloud logo group icon, used verbatim under CC-BY-ND -
 // provenance and license in assets/techicons/. An unmapped chip in an icon
 // variant throws by name.
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
   siAstro,
@@ -26,12 +26,15 @@ import {
 } from 'simple-icons';
 
 /** A simple-icons path in its brand hex, or a verbatim vendored SVG. */
-export type TechIcon = { path: string; hex: string } | { svg: string };
+type TechIcon = { path: string; hex: string } | { svg: string };
 
 const pick = ({ path, hex }: { path: string; hex: string }): TechIcon => ({ path, hex });
-const vendored = (file: string): TechIcon => ({
-  svg: readFileSync(join(process.cwd(), 'assets', 'techicons', file), 'utf8').trim(),
-});
+const vendored = (file: string): TechIcon => {
+  const path = join(process.cwd(), 'assets', 'techicons', file);
+  if (!existsSync(path))
+    throw new Error(`vendored icon assets/techicons/${file} is missing — see its PROVENANCE.md`);
+  return { svg: readFileSync(path, 'utf8').trim() };
+};
 
 const icons: Record<string, TechIcon | null> = {
   TypeScript: pick(siTypescript),
@@ -53,7 +56,15 @@ const icons: Record<string, TechIcon | null> = {
   Cloudflare: pick(siCloudflare),
 };
 
-/** The mark for a chip, null for a deliberate text-only chip. */
+/** Whether a chip is mapped at all — validate.ts checks every chip of an
+ * icon-bearing variant against this before anything renders. */
+export function hasTechIcon(chip: string): boolean {
+  return chip in icons;
+}
+
+/** The mark for a chip; null marks a deliberate text-only chip (an
+ * allowance no current entry uses). The throw is a backstop — validate.ts
+ * catches an unmapped chip first, by name, before render. */
 export function techIcon(chip: string): TechIcon | null {
   const icon = icons[chip];
   if (icon === undefined)

@@ -1,11 +1,16 @@
 // Rag-control typography helpers shared by both layouts.
 import type { ReactNode } from 'react';
 
+/** Every space non-breaking: the one home for CLAUDE.md's NBSP idiom. */
+export function nbsp(text: string): string {
+  return text.replace(/ /g, '\u00A0');
+}
+
 // Rag control for narrow-column labels: parenthetical groups become
 // unbreakable (break lands cleanly BEFORE the parenthesis), and otherwise the
 // last space goes non-breaking so no single-word orphan wraps alone.
 export function tidyLabel(text: string): string {
-  const paren = text.replace(/\(([^)]*)\)/g, (m) => m.replace(/ /g, '\u00A0'));
+  const paren = text.replace(/\(([^)]*)\)/g, nbsp);
   if (paren !== text) return paren;
   return text.replace(/ (?=\S+$)/, '\u00A0');
 }

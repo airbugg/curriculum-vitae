@@ -191,18 +191,8 @@ body.terminal { font-family: var(--font-data); color: var(--ink); }
    shared axis (same discipline as the job headers). */
 .t-yrow { display: flex; justify-content: space-between; align-items: baseline; }
 
-/* Company artwork on the job headers, sized from measured metrics:
-   Source Code Pro Bold capHeight = 660/1000 em -> 1.630mm at 7pt.
-   Each file's internal geometry maps its letter height onto that cap
-   and its baseline onto the text baseline (vertical-align = distance
-   from the box bottom to the artwork's own baseline):
-   - rylo lockup: letters span 21.1/33 of the box, baseline 21.7% above
-     the bottom -> box 2.55mm, align -0.55mm
-   - rewire: x-height 27/41 of the box (lowercase mark reads at cap
-     size), baseline ~5.7% up -> box 2.48mm, align -0.14mm
-   - WIX: glyph-cropped box = letter height, baseline at bottom
-   - remitly mark: icon rides slightly over cap (the grid theme's
-     1.39 ratio) */
+/* Company marks on the job headers: each icon rides slightly over the
+   7pt Source Code Pro Bold cap height (660/1000 em -> 1.630mm), the
+   same over-cap ratio the grid theme prints them at. */
 .t-role .co-mark { display: inline-block; }
 .t-role .co-mark svg, .t-role .co-mark img { height: 2.3mm; width: auto; vertical-align: -0.45mm; margin-right: 0.8mm; }
-/* Selectable-but-invisible employer name behind a wordmark. */

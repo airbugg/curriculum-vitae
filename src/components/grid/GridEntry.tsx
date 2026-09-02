@@ -5,7 +5,7 @@ import { compactDur, duration } from '../../lib/dates.ts';
 import type { Role } from '../../types.ts';
 import { CompanyName } from '../shared/CompanyName.tsx';
 import { Rich } from '../shared/Rich.tsx';
-import { NoBreakCompounds, tidyLabel } from '../shared/typography.tsx';
+import { nbsp, NoBreakCompounds, tidyLabel } from '../shared/typography.tsx';
 
 export function GridEntry({ role: { job, bullets } }: { role: Role }): ReactNode {
   const tenure = compactDur(duration(job.dates));
@@ -21,7 +21,7 @@ export function GridEntry({ role: { job, bullets } }: { role: Role }): ReactNode
           {job.dates}
           {/* NBSP: the parenthetical must wrap as one unit, never "(3y" /
               "3m)" split across meta-column lines now that years are full. */}
-          {tenure && <span className="g-dur"> ({tenure.replace(/ /g, '\u00A0')})</span>}
+          {tenure && <span className="g-dur"> ({nbsp(tenure)})</span>}
         </span>
       </div>
       <div className="g-content">

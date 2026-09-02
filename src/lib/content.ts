@@ -195,6 +195,11 @@ export const publication = frontmatterOf<Publication>('publications.md', {
   authors: 'optional',
 });
 
+// The one content value that lands in an href; the page must never link
+// anywhere but over https.
+if (!publication.url.startsWith('https://'))
+  throw new Error(`publications.md: url must start with https:// (got '${publication.url}')`);
+
 export const jobs = loadJobs();
 
 /** A `## key` lookup that names the file and the key it could not find. */

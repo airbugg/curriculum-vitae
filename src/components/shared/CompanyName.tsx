@@ -14,24 +14,31 @@ import type { ReactNode } from 'react';
 import { logos, type LogoAsset } from '../../lib/logos.ts';
 import { tidyLabel } from './typography.tsx';
 
-function Mark({ asset }: { asset: LogoAsset }): ReactNode {
-  // co-art-<slug> lets a theme size each asset from its own geometry.
-  const cls = `co-mark co-art-${asset.slug}`;
+/** An inline logo asset: SVG markup verbatim, PNG as a data-URI img. Shared
+ * by every mark on the page; the className carries each site's sizing. */
+export function InlineMark({
+  asset,
+  className,
+}: {
+  asset: LogoAsset;
+  className: string;
+}): ReactNode {
   if (asset.type === 'svg')
-    return <span className={cls} dangerouslySetInnerHTML={{ __html: asset.data }} />;
+    return <span className={className} dangerouslySetInnerHTML={{ __html: asset.data }} />;
   return (
-    <span className={cls}>
+    <span className={className}>
       <img src={asset.data} alt="" />
     </span>
   );
 }
 
-export function CompanyName({ company, label }: { company: string; label?: string }): ReactNode {
-  const mark = logos[company]?.mark;
+export function CompanyName({ company }: { company: string }): ReactNode {
+  const mark = logos[company];
   return (
     <>
-      {mark && <Mark asset={mark} />}
-      {tidyLabel(label ?? company)}
+      {/* co-art-<slug> lets a theme size each asset from its own geometry. */}
+      {mark && <InlineMark asset={mark} className={`co-mark co-art-${mark.slug}`} />}
+      {tidyLabel(company)}
     </>
   );
 }

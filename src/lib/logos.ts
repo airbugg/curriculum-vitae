@@ -14,10 +14,6 @@ export interface LogoAsset {
   data: string;
 }
 
-export interface CompanyLogo {
-  mark?: LogoAsset;
-}
-
 const dir = join(process.cwd(), 'assets', 'logos');
 
 function load(slug: string): LogoAsset | undefined {
@@ -39,12 +35,20 @@ function load(slug: string): LogoAsset | undefined {
 // wordmark (the full lockups live in git history). Neither Wix nor Rewire
 // published these as standalone icon files, so both are crops of official
 // geometry, confirmed by the owner rather than by a press kit.
-export const logos: Record<string, CompanyLogo> = {
-  Remitly: { mark: load('remitly') },
-  Rewire: { mark: load('rewire') },
-  Rylo: { mark: load('rylo') },
-  Wix: { mark: load('wix') },
+export const logos: Record<string, LogoAsset | undefined> = {
+  Remitly: load('remitly'),
+  Rewire: load('rewire'),
+  Rylo: load('rylo'),
+  Wix: load('wix'),
 };
 
-/** The university's mark for the education row; absent until the asset lands. */
+// The university's mark for the education row (assets/logos/bgu.svg); a
+// missing file degrades to the school name alone, like any mark here.
+// Provenance is campus-vetted second-hand (bgu.ac.il and Wikimedia were
+// unreachable when it was hunted): the vector is
+// BGUCompSci/CNNQuantizationThroughPDEs @ 3673709851c89bd0c3e6e49bc6ddbdc6065c8f58
+// website/assets/bgu.svg, corroborated by a geometrically identical,
+// byte-independent copy in galit20/knesset360
+// @ 68f9fc6b32f78fce6703c4d36492d59e0956ec2c
+// knesset360-frontend/public/bgu_logo.svg.
 export const educationMark = load('bgu');

@@ -7,9 +7,6 @@ import { CompanyName } from '../shared/CompanyName.tsx';
 import { Rich } from '../shared/Rich.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
 
-/** "Wix.com" → "Wix": the shell prints the bare company, never the domain. */
-const bareName = (company: string): string => company.split('.')[0] ?? company;
-
 // experience/<start-year>-<company>.md — the fiction mirrors the repo truth
 // (the jobs really are markdown files with front matter).
 function fileName(job: Job): string {
@@ -17,7 +14,7 @@ function fileName(job: Job): string {
   // build.ts rejects any job whose dates duration() cannot parse, so this
   // never fires — but it fails by name rather than as a TypeError if it does.
   if (!start) throw new Error(`job '${job.id}': unparseable dates '${job.dates}'`);
-  return `${start.y}-${bareName(job.company).toLowerCase()}.md`;
+  return `${start.y}-${job.company.toLowerCase()}.md`;
 }
 
 export function TermJob({ role: { job, bullets } }: { role: Role }): ReactNode {
@@ -30,10 +27,9 @@ export function TermJob({ role: { job, bullets } }: { role: Role }): ReactNode {
       <div className="t-frule">experience/{fileName(job)}</div>
       <div className="t-out t-jobhead">
         <span className="t-role">
-          {/* Wordmarks replace the printed name (the hidden text layer keeps
-              it searchable); marks sit before it — terminal-scale sizes live
+          {/* Marks sit before the printed name — terminal-scale sizes live
               in terminal.css. */}
-          {job.role} @ <CompanyName company={job.company} label={bareName(job.company)} />
+          {job.role} @ <CompanyName company={job.company} />
         </span>
         <span className="t-jobmeta">
           {job.dates}

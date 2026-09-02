@@ -9,7 +9,8 @@ export interface Person {
   email: string;
   github: string;
   linkedin: string;
-  /** "english=native, hebrew=native, …" — parsed by lib/background.ts. */
+  /** "English and Hebrew=natively; Russian=…" — ';'-separated pairs, so a
+   * level may contain commas; parsed by lib/background.ts. */
   langLevels: string;
   /** Comma-separated hobby list, rendered by the shell's background block. */
   offHours: string;
@@ -85,13 +86,12 @@ export interface GridVariant extends VariantBase {
   stackRows: StackRow[];
   /**
    * 'combined' is the screening cut's construction: the curated core-stack
-   * line in the masthead plus the { TECHNOLOGIES } / { BACKGROUND } section
-   * pair. 'background' (the default) keeps the classic single ledger row
-   * inside BACKGROUND, as the design variants have always printed it.
+   * line in the masthead, the { TECH } / { BACKGROUND } section pair, and
+   * the publication typeset as a sub-entry of education. 'background' (the
+   * default) keeps the classic single ledger row inside BACKGROUND, as the
+   * design variants have always printed it.
    */
   stackPlacement?: 'combined' | 'background';
-  /** Typeset the publication row as a sub-entry of education. */
-  nestedPublication?: boolean;
   /** Prefix each tech chip with its brand mark (src/lib/techicons.ts). */
   techIcons?: boolean;
 }
