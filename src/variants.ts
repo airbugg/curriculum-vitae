@@ -7,7 +7,8 @@ import type { GridVariant, Section, Variant } from './types.ts';
 // Content parity between the two design variants is an owner decree: same
 // bullet set, same summaries — the shell's terminal look does the calming,
 // not cuts. Shared here so parity cannot silently drift. The full-stack
-// screening cut is exempt (decree lifted for that cut alone, 2026-09-01).
+// screening cut is exempt (parity decree lifted for that cut alone; owner,
+// 2026-09-01).
 const SECTIONS: Section[] = [
   { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
   { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
@@ -16,11 +17,11 @@ const SECTIONS: Section[] = [
 ];
 
 // The full-stack cut, shared by its two files so the cut cannot fork: same
-// page, backend-first bullet selection. The §13 parity decree was lifted for
-// this cut only (owner, 2026-09-01) — it reframes the same true work
-// server-side-first for backend/AI screening, and every claim in its bullets
-// is owner-confirmed, not inferred.
-const FULLSTACK = {
+// page, backend-first bullet selection (its parity exemption is noted on
+// SECTIONS above). It reframes the same true work server-side-first for
+// backend/AI screening, and every claim in its bullets is owner-confirmed,
+// not inferred.
+const FULLSTACK: Omit<GridVariant, 'file' | 'label'> = {
   theme: 'grid',
   density: 'dense',
   stackPlacement: 'combined',
@@ -36,7 +37,7 @@ const FULLSTACK = {
     { job: 'rewire', bullets: ['workflowEngine', 'ci'] },
     { job: 'wix', bullets: ['forms', 'auth'] },
   ],
-} satisfies Omit<GridVariant, 'file' | 'label'>;
+};
 
 export const variants: Variant[] = [
   // The canonical variant: modernist grid, dense rhythm, three stack rows.

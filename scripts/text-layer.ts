@@ -71,7 +71,7 @@ export async function repairTextLayer(
 
   for (const [ref, text] of toUnicodeStreams(doc)) {
     const fixed = text.replace(CMAP_PATTERN, (_, cp: string) => {
-      const key = cp.toUpperCase() === '00A0' ? '00A0' : cp.toUpperCase();
+      const key = cp.toUpperCase();
       remapped.add(key);
       return `<${REMAP[key]}>`;
     });

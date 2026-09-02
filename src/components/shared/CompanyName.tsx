@@ -11,26 +11,9 @@
 // Rendered by both themes, so its classes take the shared co- prefix rather
 // than either theme's g-/t-.
 import type { ReactNode } from 'react';
-import { logos, type LogoAsset } from '../../lib/logos.ts';
+import { logos } from '../../lib/logos.ts';
+import { InlineMark } from './InlineMark.tsx';
 import { tidyLabel } from './typography.tsx';
-
-/** An inline logo asset: SVG markup verbatim, PNG as a data-URI img. Shared
- * by every mark on the page; the className carries each site's sizing. */
-export function InlineMark({
-  asset,
-  className,
-}: {
-  asset: LogoAsset;
-  className: string;
-}): ReactNode {
-  if (asset.type === 'svg')
-    return <span className={className} dangerouslySetInnerHTML={{ __html: asset.data }} />;
-  return (
-    <span className={className}>
-      <img src={asset.data} alt="" />
-    </span>
-  );
-}
 
 export function CompanyName({ company }: { company: string }): ReactNode {
   const mark = logos[company];

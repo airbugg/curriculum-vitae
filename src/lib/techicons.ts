@@ -36,7 +36,7 @@ const vendored = (file: string): TechIcon => {
   return { svg: readFileSync(path, 'utf8').trim() };
 };
 
-const icons: Record<string, TechIcon | null> = {
+const icons: Record<string, TechIcon> = {
   TypeScript: pick(siTypescript),
   Python: pick(siPython),
   Ruby: pick(siRuby),
@@ -62,12 +62,14 @@ export function hasTechIcon(chip: string): boolean {
   return chip in icons;
 }
 
-/** The mark for a chip; null marks a deliberate text-only chip (an
- * allowance no current entry uses). The throw is a backstop — validate.ts
- * catches an unmapped chip first, by name, before render. */
-export function techIcon(chip: string): TechIcon | null {
+/** The one wording of the unmapped-chip error, shared by check and backstop. */
+export const missingIcon = (chip: string): string =>
+  `no tech icon mapped for chip '${chip}' — add it to src/lib/techicons.ts`;
+
+/** The mark for a chip. The throw is a backstop — validate.ts catches an
+ * unmapped chip first, by name, before anything renders. */
+export function techIcon(chip: string): TechIcon {
   const icon = icons[chip];
-  if (icon === undefined)
-    throw new Error(`no tech icon mapped for chip '${chip}' — add it to src/lib/techicons.ts`);
+  if (icon === undefined) throw new Error(missingIcon(chip));
   return icon;
 }

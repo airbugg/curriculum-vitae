@@ -5,11 +5,11 @@
 // sections speak one dialect. Styled under the bgx- prefix in grid.css.
 import { Fragment, type ReactNode } from 'react';
 import { eduYears, langPairs, pubTitle } from '../../lib/background.ts';
-import { education, publication, skills } from '../../lib/content.ts';
+import { education, publication, skills, splitChips } from '../../lib/content.ts';
 import { educationMark } from '../../lib/logos.ts';
-import type { GridVariant } from '../../types.ts';
 import { techIcon } from '../../lib/techicons.ts';
-import { InlineMark } from '../shared/CompanyName.tsx';
+import type { GridVariant } from '../../types.ts';
+import { InlineMark } from '../shared/InlineMark.tsx';
 import { nbsp } from '../shared/typography.tsx';
 import { GridSecMark } from './GridSecMark.tsx';
 
@@ -36,8 +36,7 @@ function Row({
 }
 
 function Chips({ text, icons }: { text: string; icons?: boolean }): ReactNode {
-  return text.split(',').map((raw, i) => {
-    const t = raw.trim();
+  return splitChips(text).map((t, i) => {
     const icon = icons ? techIcon(t) : null;
     return (
       <Fragment key={t}>
