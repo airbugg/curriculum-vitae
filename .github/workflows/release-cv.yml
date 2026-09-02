@@ -22,12 +22,12 @@ jobs:
       # Full history and tags: the version and changelog are derived from
       # the commits since the last v* tag.
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
       - name: Set up Node 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -48,7 +48,7 @@ jobs:
       # what builds the released PDFs; a local browser will often differ, so
       # "rebuild locally and compare" is not the remedy. To clear a mismatch:
       # download the cv-pdfs artifact from the run, check every page still
-      # look right, then set .chrome-version to the reported major.
+      # looks right, then set .chrome-version to the reported major.
       # Note this compares the major only; output can still shift within one.
       - name: Check Chromium version
         continue-on-error: true
@@ -103,7 +103,7 @@ jobs:
       # semantic-release exits 0 when it decides there is nothing to release,
       # which happens when no commit subject since the last tag parses as a
       # Conventional Commit. GitHub's web editor defaults to "Update
-      # content/jobs/3-rewire.md", which does not — and nothing lints a direct
+      # content/jobs/3-rewire.md", which does not, and nothing lints a direct
       # push to master, because the commit-msg hook is client-side and the
       # commitlint job only runs on pull requests. Without this guard the run
       # goes green, the PDFs are built and thrown away, and the stable

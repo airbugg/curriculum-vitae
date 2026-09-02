@@ -1,0 +1,13 @@
+# Weekly dependency PRs: npm packages and the SHA-pinned actions in the
+# workflows, so the pins do not fossilize. Every PR still runs the full
+# build with the one-page check before anything merges.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
