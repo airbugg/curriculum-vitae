@@ -1,3 +1,7 @@
+Chip marks come from the simple-icons npm package and need no entry
+here. Anything vendored as a file gets one section per file: source,
+verification, license.
+
 # aws-cloud.svg
 
 The "AWS Cloud logo" group icon from Amazon's official AWS Architecture

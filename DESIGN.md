@@ -37,6 +37,12 @@ Sections 1–8 are the first design-research round (numbered plainly);
 §20 · Consolidation: one flagship again
 §21 · The great prune: two variants, one intro source
 §22 · The review refactor
+§23 · TypeScript, and the project shape
+§24 · Versioned releases, conventional commits, and the default rename
+§25 · The reinvented-wheel audit
+§26 · The independent review
+§27 · The full-stack screening cut
+§28 · The marks round, and the pre-merge review
 
 ## 1. Diagnosis — what actually makes the flagship "busy"
 
@@ -207,7 +213,7 @@ and the **braces identity amplified into the layout itself**: a 36 pt
 `{ EUGENE : LERMAN }` hero (44 pt in the first pass, reduced on owner
 feedback — see §6) and **giant emerald braces as structural section
 markers** (with a trailing gradient rule), instead of braces sprinkled as
-punctuation. Emerald soul kept vividly alive. New DOM (`EditorialPage`); the
+punctuation. The emerald accent is kept. New DOM (`EditorialPage`); the
 page's surplus is **spread as proportional inter-section and inter-entry air**,
 so mass fills the page evenly — no stranded block, no hoarded void.
 
@@ -229,7 +235,7 @@ so mass fills the page evenly — no stranded block, no hoarded void.
 
 **How they oppose each other:** A removes the identity to reach silence; B
 replaces decoration with pure structure and one signal; C amplifies the
-identity into loud editorial scale. Reduction ↔ structure ↔ expression.
+identity into loud editorial scale.
 
 ---
 
@@ -1402,8 +1408,8 @@ The construction, after five adversarially reviewed design rounds
 loop, and four bottom-zone rebuilds — the trail lives in the branch
 history): a curated identity trio under the contact line ("typescripter ·
 pythonista · agentic looper", the `stackCore` key), then { TECH }
-and { BACKGROUND } as sibling sections — the seam the page's own grammar
-draws, after every subtler divider was measured and rejected. Chips print
+and { BACKGROUND } as sibling sections; subtler dividers were tried and
+rejected by measurement. Chips print
 in body ink with muted separators in this zone (`g-skink`), so its teal
 lives only in the marks; the publication row nests under education
 (`nestedPublication`, the ↳ arrow plus a tighter pitch); the spoken
@@ -1413,3 +1419,38 @@ The rounds also fixed page-wide facts: full four-digit years everywhere
 (the shortened years were invisible to parsers), the brand spellings in
 the shared stack rows, and the text-layer machinery applies to all three
 variants. The release attaches all three PDFs.
+
+## §28 · The marks round, and the pre-merge review
+
+After the cut shipped in v1.2.0, an owner round renamed its first section
+{ TECHNOLOGIES } → { TECH }, dropped the ".com" from Wix (content and
+logo key both), and added a fourth build: `eugene-lerman-fullstack-icons`,
+the screening cut re-rendered with a brand mark on every tech chip. The
+icons build ships in PR artifacts but is not attached to releases —
+`.releaserc.json` still lists three PDFs, pending the owner's verdict on
+the look — so §27's "the release attaches all three PDFs" stays true with
+four building.
+
+The chip marks come from simple-icons (pinned exact, since the set
+redraws brand geometry even in minor releases). AWS is the one exception:
+removed from simple-icons by an Amazon trademark request, it ships as
+Amazon's own AWS Cloud group icon, vendored verbatim under CC-BY-ND with
+source, cross-verification and license in assets/techicons/. The BGU mark
+finally landed too (§12 had left it blocked on unreachable hosts):
+campus-vetted second-hand, two SHA-pinned independent sources agreeing on
+the same geometry, recorded in src/lib/logos.ts. Centering it beside the
+university name surfaced a print-engine fact now in CLAUDE.md: Chromium
+snaps vertical-align (like position offsets, §5b) to whole CSS px at
+print scale, so the mark's sub-pixel centering rides on a transform.
+
+A four-reviewer pre-merge pass (dead code, documentation, architecture,
+security) then consolidated the round: the two fullstack entries share
+one FULLSTACK base so the cut cannot fork; `nestedPublication` folded
+into the 'combined' placement it always accompanied; the education mark
+renders through the same InlineMark as the company marks; icon coverage
+is checked in validate.ts by name before anything renders; the last
+wordmark-era comments went with the machinery they described. Security
+kept its verdicts small: SHA-pinned actions, per-job workflow
+permissions, a dependabot config, and three type-level bumps — the
+conventional-changelog major is deliberately held until semantic-release
+moves its own toolchain.
