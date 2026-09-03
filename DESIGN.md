@@ -14,21 +14,22 @@ threads. Nothing there binds the present unless it is restated here.
 The variants build from one content source (`content/`, every fact
 exactly once):
 
-- `eugene-lerman` — the default: modernist grid, dense rhythm.
+- `eugene-lerman` — the default: the construction with the generalist
+  bullet set and intro.
 - `eugene-lerman-public` — the screening cut without phone and email,
   for posting in the open.
 - `eugene-lerman-staff` — the staff/tech-lead cut: leadership-first
-  bullets on the screening construction, Staff Software Engineer
-  headline.
-- `eugene-lerman-fullstack` — the screening cut: same grid, backend-first
-  bullet selection, `{ TECH }` + `{ BACKGROUND }` bottom zone.
-- `eugene-lerman-fullstack-icons` — the screening cut with brand marks on
-  the tech chips.
+  bullets, Staff Software Engineer headline, publication traded for
+  bullet space.
+- `eugene-lerman-fullstack` — the screening cut: backend-first bullet
+  selection. The separate tech-marks file was merged into this one
+  (owner, 2026-09-03) once the marks became the family formatting.
 - `eugene-lerman-shell` — the whole CV as one terminal session.
 
 `.releaserc.json` attaches three of these to releases (default,
-fullstack, shell); the rest ship in PR artifacts pending the owner's
-say-so, and README's download table matches the release list.
+fullstack, shell); `-public` and `-staff` ship in PR artifacts pending
+the owner's say-so, and README's download table matches the release
+list.
 
 Each must fit one A4 page; the build fails otherwise. The operational
 rules (byte-compare proofs, NBSP discipline, text-layer honesty, the
@@ -77,21 +78,18 @@ proximity, not by separators. Durations print in parentheses after the
 dates. Interpuncts are on a diet: they survive only where they do real
 work (header contact separators, chip separators).
 
-The bottom zone is the Manifest ledger: `{ BACKGROUND }` rows on the
-exact grid module EXPERIENCE uses, keys in the meta column where company
-and dates live, facts as single content lines. The default variant's
-STACK row subdivides in place — three ledger lines with fixed-width muted
-sub-labels sharing a left edge, chips in boxless deep-emerald mono, lists
-in `content/skills.md`.
-
-The screening cut moves the stack out: a curated identity trio under the
-contact line ("typescripter · pythonista · agentic looper", the
-`stackCore` key), then `{ TECH }` and `{ BACKGROUND }` as sibling
-sections; subtler dividers were tried and rejected by measurement. Chips
-print in body ink with muted separators there (`g-skink`), so the zone's
-teal lives only in the marks; the publication nests under education (the
-swept arrow, a tighter pitch); the languages row is UNDERSTANDS, in the
-owner's voice.
+Every grid cut prints one bottom construction (owner decree,
+2026-09-03): `{ BACKGROUND }` rows on the exact grid module EXPERIENCE
+uses, keys in the meta column where company and dates live; a curated
+identity trio under the contact line ("typescripter · pythonista ·
+agentic looper", the `stackCore` key); `{ TECH }` and `{ BACKGROUND }`
+as sibling sections (subtler dividers were tried and rejected by
+measurement) with brand marks on the chips. Chips print in body ink with
+muted separators (`g-skink`), so the zone's teal lives only in the
+marks; the publication nests under education (the swept arrow, a tighter
+pitch); the languages row is UNDERSTANDS, in the owner's voice. The
+older in-place STACK ledger is retired: its machinery (`StackLedger`,
+the `'background'` placement) stays in code, currently unused.
 
 Company and university marks are small glyphs before real, visible,
 selectable text — never instead of it (the wordmark experiment died
@@ -144,10 +142,13 @@ page bottom so the session ends the way a real terminal does, waiting.
 - **The public cut** omits phone and email (the direct channels) and
   keeps the profile links, so a name/contact pairing is never posted in
   the open; everything else is the full-stack cut, shared structurally.
-- **Every cut beside the default and the shell shares the full-stack
-  construction** (owner decree, 2026-09-03): public, staff and icons all
-  spread the FULLSTACK base, so the trio line and the { TECH } /
-  { BACKGROUND } siblings cannot drift across the family. The staff
+- **One grid construction for the whole family** (owner decree,
+  2026-09-03): every grid cut spreads the SCREEN base — the icon-marked
+  screening formatting — overriding content only, so the formatting
+  cannot drift across the family. The separate icons file merged into
+  the fullstack file the same day. Fitting the default's 11-bullet set
+  cost the dense tier ~4mm, given back evenly (section and secmark
+  pitch, page padding, crow and mastack and z2 margins). The staff
   cut's publication row is traded for bullet space (owner-authorized,
   same date).
 - **Marks provenance**: official or campus-vetted sources only, recorded

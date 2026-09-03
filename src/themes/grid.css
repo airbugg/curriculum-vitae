@@ -225,13 +225,13 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 .g-dense {
   --gp-header-pad: 1.9mm;
   --gp-intro-mt: 2.4mm;
-  --gp-section-mt: 3.1mm;
-  --gp-secmark-mb: 2.1mm;
+  --gp-section-mt: 2.95mm;
+  --gp-secmark-mb: 2mm;
   --gp-row-mb: 2mm;
   --gp-li-mb: 0.25mm;
   --gp-lh: 1.24;
 }
-.g-dense .grid-page { padding-top: 10.5mm; padding-bottom: 6.6mm; }
+.g-dense .grid-page { padding-top: 9.9mm; padding-bottom: 5.6mm; }
 .g-dense .g-content ul { margin-top: 1.15mm; }
 .g-dense .g-header h1 { font-size: 22pt; }
 
@@ -258,7 +258,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   grid-template-columns: 40mm 1fr;
   column-gap: 9mm;
   align-items: baseline;
-  margin-bottom: 1.9mm;
+  margin-bottom: 1.75mm;
 }
 .bgx-crow:last-child { margin-bottom: 0; }
 .bgx-cmeta { display: flex; align-items: baseline; }
@@ -313,7 +313,7 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
    The curated core-stack trio under the contact line: the quietest line
    in the masthead, mono, muted, no accent (accent in a nameplate
    subline reads decorative), tapering inside the contact line's measure. */
-.g-mastack { margin-top: 1mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
+.g-mastack { margin-top: 0.6mm; font-family: var(--font-data); font-size: 7pt; letter-spacing: 0.2pt; color: var(--muted); text-align: center; }
 .g-mastack .g-msep { margin: 0 1.5mm; }
 /* Ink-terms mode: the stack's terms in body ink, teal held to the
    separators, so { STACK } stops being the page's densest color block. */
@@ -326,5 +326,5 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
 /* ---- THE SCREENING CUT'S BOTTOM ZONE ----
    { TECH } and { BACKGROUND } as sibling sections; ink chips
    with muted separators so the zone's teal lives only in the marks. */
-.g-z2 { margin-top: 2.4mm; }
+.g-z2 { margin-top: 2mm; }
 .g-skink .bgx-sep, .g-z2 .bgx-sep { color: var(--muted); }
