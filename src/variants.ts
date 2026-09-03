@@ -39,21 +39,58 @@ const FULLSTACK: Omit<GridVariant, 'file' | 'label'> = {
   ],
 };
 
+// The canonical construction: modernist grid, dense rhythm, three stack
+// rows — shared by the default and its public twin so they cannot fork.
+const DEFAULT: Omit<GridVariant, 'file' | 'label'> = {
+  theme: 'grid',
+  density: 'dense',
+  // The BACKGROUND stack row, subdivided (keys in content/skills.md).
+  stackRows: [
+    ['frontend', 'stackFrontend'],
+    ['backend', 'stackBackend'],
+    ['cloud & CI', 'stackInfra'],
+  ],
+  intro: intro('default'),
+  sections: SECTIONS,
+};
+
 export const variants: Variant[] = [
-  // The canonical variant: modernist grid, dense rhythm, three stack rows.
+  // The canonical variant.
   {
+    ...DEFAULT,
     file: 'eugene-lerman',
     label: 'The Default · Modernist Grid',
-    theme: 'grid',
-    density: 'dense',
-    // The BACKGROUND stack row, subdivided (keys in content/skills.md).
-    stackRows: [
-      ['frontend', 'stackFrontend'],
-      ['backend', 'stackBackend'],
-      ['cloud & CI', 'stackInfra'],
+  },
+
+  // The default again, without the direct contact channels: for posting in
+  // the open, where a name/phone/email combination invites scraping. Builds
+  // (and ships in PR artifacts) but is not attached to releases:
+  // .releaserc.json omits it pending the owner's say-so.
+  {
+    ...DEFAULT,
+    file: 'eugene-lerman-public',
+    label: 'The Default · public contact cut',
+    publicContact: true,
+  },
+
+  // The staff cut: the canonical construction with leadership-first bullets,
+  // the staff intro, and the headline of the owner's last held level (Staff
+  // Software Engineer, Remitly, Dec 2022 – Feb 2026; owner decision,
+  // 2026-09-03 — per-role titles stay exact). Every claim owner-confirmed
+  // in a structured interview, like the full-stack cut before it. Not
+  // attached to releases yet either.
+  {
+    ...DEFAULT,
+    file: 'eugene-lerman-staff',
+    label: 'The Staff · leadership-first cut',
+    title: 'Staff Software Engineer',
+    intro: intro('staff'),
+    sections: [
+      { job: 'rylo', bullets: ['rewrite', 'direction', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['lead', 'direction', 'llmPipeline'] },
+      { job: 'rewire', bullets: ['reactNative', 'workflowEngine'] },
+      { job: 'wix', bullets: ['forms', 'auth'] },
     ],
-    intro: intro('default'),
-    sections: SECTIONS,
   },
 
   {

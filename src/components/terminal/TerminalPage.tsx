@@ -44,9 +44,9 @@ export function TerminalPage({ variant }: { variant: TerminalVariant }): ReactNo
           <span className="t-hb">{'{'}</span> <span className="t-hf">{first}</span>{' '}
           <span className="t-hc">:</span> {last} <span className="t-hb">{'}'}</span>
         </h1>
-        <div className="t-title">{person.title.toLowerCase()}</div>
+        <div className="t-title">{(variant.title ?? person.title).toLowerCase()}</div>
         <div className="t-contact">
-          {contacts.map((c, i) => (
+          {contacts(variant.publicContact).map((c, i) => (
             <Fragment key={c.text}>
               {i > 0 && '  '}
               <Contact item={c} />

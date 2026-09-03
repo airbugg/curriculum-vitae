@@ -14,7 +14,7 @@
 | Shell | the CV as a terminal session | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-shell.pdf) |
 | Full-stack | backend and AI screening | [PDF](https://github.com/airbugg/curriculum-vitae/releases/latest/download/eugene-lerman-fullstack.pdf) |
 
-Every push to `master` with a [Conventional Commit](https://www.conventionalcommits.org) subject cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed. A fourth build, `eugene-lerman-fullstack-icons`, ships in CI artifacts but is not attached to releases yet; `.releaserc.json` is the list of what a release attaches.
+Every push to `master` with a [Conventional Commit](https://www.conventionalcommits.org) subject cuts a [release](https://github.com/airbugg/curriculum-vitae/releases/latest). PDFs are built, not committed. Three further builds (`-public`, `-staff`, `-fullstack-icons`) ship in CI artifacts but are not attached to releases yet; `.releaserc.json` is the list of what a release attaches.
 
 ## Edit
 

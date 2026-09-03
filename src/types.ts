@@ -76,6 +76,11 @@ interface VariantBase {
   label: string;
   intro: string;
   sections: Section[];
+  /** Headline override for this cut; person.md's title otherwise. */
+  title?: string;
+  /** Omit the direct channels (phone, email) from the contact line — the
+   * cut for posting in the open. Profile links stay. */
+  publicContact?: boolean;
 }
 
 /** The modernist grid — src/themes/grid.css. */

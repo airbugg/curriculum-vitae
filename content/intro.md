@@ -14,6 +14,13 @@ Twelve years at Wix, Remitly and now an early-stage startup, building
 whatever needed building: apps, services, release systems, the
 infrastructure underneath.
 
+## staff
+
+Twelve years of building products and the platforms beneath them, most
+recently as Staff Engineer running client infrastructure for three apps and
+roughly ten million monthly users. Leading through code, in writing and in
+review, in enterprise environments and in fast, lean startups.
+
 ## fullstack
 
 Twelve years of building products end to end: the clients, the services

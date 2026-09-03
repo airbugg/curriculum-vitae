@@ -27,9 +27,9 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
           <span className="g-nl">{last}</span>
           <span className="g-nb">{'}'}</span>
         </h1>
-        <div className="g-title">{person.title}</div>
+        <div className="g-title">{variant.title ?? person.title}</div>
         <div className="g-contactline">
-          {contacts.map((c, i) => (
+          {contacts(variant.publicContact).map((c, i) => (
             <Fragment key={c.text}>
               {i > 0 && <span className="sep">·</span>}
               <Contact item={c} />

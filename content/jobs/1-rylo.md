@@ -31,3 +31,7 @@ summary: Building out the client platform, release engineering and complex produ
 - Restructured the team's shared coding-agent setup after measuring ~70k
   tokens of always-loaded context per session; replaced it with a handful of
   small skills that load on demand. {#agentSkills}
+
+- Set the client and platform direction for the rewrite: the architecture,
+  tooling and release decisions the task force builds on, from the monorepo
+  and design system to the release pipeline. {#direction}

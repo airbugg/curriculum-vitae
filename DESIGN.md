@@ -124,6 +124,19 @@ page bottom so the session ends the way a real terminal does, waiting.
   human-in-the-loop review, automated placeholder and collision
   validation, and a roughly 80% unchanged-acceptance rate; second-auth
   stays client-side because the owner wrote only the client half.
+- **Claim ceilings for the staff cut** (owner-confirmed, 2026-09-03):
+  the headline may say Staff Software Engineer because the owner held
+  that exact title at Remitly for over three years; per-role titles stay
+  exact. Written design docs with cross-team adoption are claimable for
+  Lokey, the GraphQL client layer and the semantic-keys migration.
+  Interviewing is claimable as a regular Remitly duty (tens, not
+  hundreds). Mentorship was real but informal: coaching through reviews
+  and onboarding, never counted promotions. The coding-agent setup is
+  the owner's own that others opted into, so it is never framed as
+  setting team practice.
+- **The public cut** omits phone and email (the direct channels) and
+  keeps the profile links, so a name/contact pairing is never posted in
+  the open; everything else is the default cut, shared structurally.
 - **Marks provenance**: official or campus-vetted sources only, recorded
   in-repo (`src/lib/logos.ts`, `assets/techicons/PROVENANCE.md`); the
   AWS icon is CC-BY-ND and is used verbatim. simple-icons is pinned
