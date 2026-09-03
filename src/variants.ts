@@ -73,17 +73,21 @@ export const variants: Variant[] = [
     publicContact: true,
   },
 
-  // The staff cut: the canonical construction with leadership-first bullets,
-  // the staff intro, and the headline of the owner's last held level (Staff
-  // Software Engineer, Remitly, Dec 2022 – Feb 2026; owner decision,
-  // 2026-09-03 — per-role titles stay exact). Every claim owner-confirmed
-  // in a structured interview, like the full-stack cut before it. Not
-  // attached to releases yet either.
+  // The staff cut: the screening construction (masthead trio, { TECH } and
+  // { BACKGROUND } as siblings — owner decree: its stack zone is identical
+  // to the full-stack cut's) with leadership-first bullets, the staff intro,
+  // and the headline of the owner's last held level (Staff Software
+  // Engineer, Remitly, Dec 2022 – Feb 2026; owner decision, 2026-09-03 —
+  // per-role titles stay exact). Every claim owner-confirmed in a
+  // structured interview, like the full-stack cut before it. Not attached
+  // to releases yet either.
   {
-    ...DEFAULT,
+    ...FULLSTACK,
     file: 'eugene-lerman-staff',
     label: 'The Staff · leadership-first cut',
     title: 'Staff Software Engineer',
+    // The publication row is traded for bullet space (owner, 2026-09-03).
+    omitPublication: true,
     intro: intro('staff'),
     sections: [
       { job: 'rylo', bullets: ['rewrite', 'direction', 'agentSkills'] },

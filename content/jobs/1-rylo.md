@@ -33,5 +33,4 @@ summary: Building out the client platform, release engineering and complex produ
   small skills that load on demand. {#agentSkills}
 
 - Set the client and platform direction for the rewrite: the architecture,
-  tooling and release decisions the task force builds on, from the monorepo
-  and design system to the release pipeline. {#direction}
+  tooling and release decisions the task force builds on. {#direction}

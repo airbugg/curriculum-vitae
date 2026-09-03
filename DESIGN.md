@@ -137,6 +137,11 @@ page bottom so the session ends the way a real terminal does, waiting.
 - **The public cut** omits phone and email (the direct channels) and
   keeps the profile links, so a name/contact pairing is never posted in
   the open; everything else is the default cut, shared structurally.
+- **The staff cut's stack zone is identical to the full-stack cut's**
+  (owner decree, 2026-09-03): it shares the FULLSTACK base, so the trio
+  line and the { TECH } / { BACKGROUND } siblings cannot drift between
+  the two. Its publication row is traded for bullet space (owner-
+  authorized, same date).
 - **Marks provenance**: official or campus-vetted sources only, recorded
   in-repo (`src/lib/logos.ts`, `assets/techicons/PROVENANCE.md`); the
   AWS icon is CC-BY-ND and is used verbatim. simple-icons is pinned

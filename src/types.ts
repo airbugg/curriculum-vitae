@@ -99,6 +99,9 @@ export interface GridVariant extends VariantBase {
   stackPlacement?: 'combined' | 'background';
   /** Prefix each tech chip with its brand mark (src/lib/techicons.ts). */
   techIcons?: boolean;
+  /** Drop the publication row from { BACKGROUND } — the staff cut trades
+   * it for bullet space (owner, 2026-09-03). */
+  omitPublication?: boolean;
 }
 
 /** The terminal session — src/themes/terminal.css. */

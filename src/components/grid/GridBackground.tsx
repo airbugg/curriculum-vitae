@@ -105,17 +105,19 @@ function EduRows({ variant }: { variant: GridVariant }): ReactNode {
         {educationMark && <InlineMark asset={educationMark} className="bgx-emark" />}
         {education.school}
       </Row>
-      <Row
-        label={nested ? '\u21b3 publication' : 'Publication'}
-        year={publication.year}
-        className={nested ? 'bgx-nested' : undefined}
-      >
-        <a href={publication.url} className="bgx-strong">
-          {pubTitle}
-        </a>
-        <span className="bgx-dim"> · </span>
-        {publication.journal}
-      </Row>
+      {!variant.omitPublication && (
+        <Row
+          label={nested ? '\u21b3 publication' : 'Publication'}
+          year={publication.year}
+          className={nested ? 'bgx-nested' : undefined}
+        >
+          <a href={publication.url} className="bgx-strong">
+            {pubTitle}
+          </a>
+          <span className="bgx-dim"> · </span>
+          {publication.journal}
+        </Row>
+      )}
       <Row label="Understands">
         {langPairs.map(([k, v], i) => (
           <Fragment key={k}>
