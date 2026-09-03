@@ -5,14 +5,14 @@ blurb:  communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
-summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite; heavily utilizing agentic workflows.
+summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite.
 ---
 
-- One of a four engineer task force on a ground-up rewrite of the company's
-  client apps: a `React Native` backbone with native `Swift` and `Kotlin`
-  components (via Expo `CNG` and `expo/ui`) where performance was critical.
-  Shipped in three months, prototype-first and spec-later, with coding agents
-  handling much of the implementation and review. {#rewrite}
+- Shipped a ground-up rewrite of the company's client apps in three months,
+  one of a four-engineer task force: a `React Native` backbone with native
+  `Swift` and `Kotlin` components (via Expo `CNG` and `expo/ui`),
+  prototype-first and spec-later, with coding agents handling much of the
+  implementation and review. {#rewrite}
 
 - Built the client platform for the rewrite from scratch: the apps monorepo
   (`bun workspaces`), a design system with automated `Figma` sync, the
@@ -24,9 +24,8 @@ summary: Building out the client platform, release engineering and complex produ
 
 - Owned the onboarding flow in the rebuilt app, one of its most complex;
   modeled it as an explicit `XState` machine to keep every branch testable,
-  plus a throw-away harness that ran the original flow on a simulator,
-  chaos-monkey-style, and compared results against the new architecture to
-  make sure the baseline was solid. {#onboarding}
+  plus a throw-away chaos-monkey harness that ran the original flow on a
+  simulator and compared results against the rewrite. {#onboarding}
 
 - Restructured the team's shared coding-agent setup after measuring ~70k
   tokens of always-loaded context per session; replaced it with a handful of

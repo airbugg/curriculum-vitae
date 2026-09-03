@@ -10,9 +10,9 @@ import type { GridVariant, Section, Variant } from './types.ts';
 // screening cut is exempt (parity decree lifted for that cut alone; owner,
 // 2026-09-01).
 const SECTIONS: Section[] = [
-  { job: 'rylo', bullets: ['rewrite', 'platform', 'release'] },
+  { job: 'rylo', bullets: ['rewrite', 'onboarding', 'release'] },
   { job: 'remitlyStaff', bullets: ['lead', 'l10n', 'semanticKeys'] },
-  { job: 'rewire', bullets: ['reactNative', 'xstate', 'secondAuth'] },
+  { job: 'rewire', bullets: ['reactNative', 'workflowEngine', 'secondAuth'] },
   { job: 'wix', bullets: ['forms', 'auth'] },
 ];
 
@@ -35,10 +35,10 @@ const SCREEN: Omit<GridVariant, 'file' | 'label'> = {
   ],
   intro: intro('fullstack'),
   sections: [
-    { job: 'rylo', bullets: ['rewrite', 'release', 'agentSkills'] },
-    { job: 'remitlyStaff', bullets: ['lead', 'llmPipeline', 'l10nService'] },
+    { job: 'rylo', bullets: ['release', 'rewrite', 'agentSkills'] },
+    { job: 'remitlyStaff', bullets: ['llmPipeline', 'lead', 'l10nService'] },
     { job: 'rewire', bullets: ['workflowEngine', 'ci'] },
-    { job: 'wix', bullets: ['forms', 'auth'] },
+    { job: 'wix', bullets: ['forms', 'authLean'] },
   ],
 };
 
@@ -47,12 +47,13 @@ const STAFF: Omit<GridVariant, 'file' | 'label'> = {
   ...SCREEN,
   title: 'Staff Software Engineer',
   omitPublication: true,
+  coreKey: 'stackCoreStaff',
   intro: intro('staff'),
   sections: [
-    { job: 'rylo', bullets: ['rewrite', 'direction', 'agentSkills'] },
-    { job: 'remitlyStaff', bullets: ['lead', 'direction', 'llmPipeline'] },
+    { job: 'rylo', bullets: ['direction', 'rewrite', 'agentSkills'] },
+    { job: 'remitlyStaff', bullets: ['leadStaff', 'direction', 'llmPipeline'] },
     { job: 'rewire', bullets: ['reactNative', 'workflowEngine'] },
-    { job: 'wix', bullets: ['forms', 'auth'] },
+    { job: 'wix', bullets: ['forms', 'authLean'] },
   ],
 };
 

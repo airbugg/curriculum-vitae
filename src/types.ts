@@ -102,6 +102,9 @@ export interface GridVariant extends VariantBase {
   /** Drop the publication row from { BACKGROUND } — the staff cut trades
    * it for bullet space (owner, 2026-09-03). */
   omitPublication?: boolean;
+  /** skills.md key for the masthead trio; 'stackCore' unless overridden
+   * (the staff cut carries its own, screener-facing trio). */
+  coreKey?: string;
 }
 
 /** The terminal session — src/themes/terminal.css. */

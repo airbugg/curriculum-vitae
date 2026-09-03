@@ -143,6 +143,19 @@ page bottom so the session ends the way a real terminal does, waiting.
 - **The public cut** omits phone and email (the direct channels) and
   keeps the profile links, so a name/contact pairing is never posted in
   the open; everything else is the full-stack cut, shared structurally.
+- **The content-review round** (expert CV-writer, applied 2026-09-03):
+  intros lead with evidence, not self-description; screening cuts lead
+  services-first (release before rewrite, the LLM pipeline first at
+  Remitly) and print the sentiment-free auth twin; the staff cut leads
+  every role with its leadership bullet, carries the numbers-first
+  leadStaff telling, and overrides the masthead trio with
+  "client platforms · technical direction · agentic tooling"
+  (`coreKey`); the playful trio stays on the other cuts. The
+  second-auth bullet says "client side" explicitly, per its ceiling.
+  Still open with the owner: the twelve-years arithmetic, printed
+  Python/Ruby evidence, exact counts (Lokey locales, semantic-keys
+  strings, the five teams), and whether the fullstack headline stays
+  Senior.
 - **One grid construction for the whole family** (owner decree,
   2026-09-03): every grid cut spreads the SCREEN base — the icon-marked
   screening formatting — overriding content only, so the formatting

@@ -19,9 +19,9 @@ summary: Core product work through the company's shift from a web app to mobile-
   deposit, re-auth) with over-the-air business-logic updates: changes reached
   users without a release. {#xstate}
 
-- Built the second-auth layer for sensitive actions: any flow could be wrapped
-  in a gate asking for Face ID, a fingerprint or a code, with the backend
-  refusing the action if the gate was somehow bypassed. {#secondAuth}
+- Built the client side of the second-auth layer for sensitive actions: any
+  flow could be wrapped in a gate asking for Face ID, a fingerprint or a
+  code, designed so the backend refuses actions that bypass the gate. {#secondAuth}
 
 - Moved all client CI/CD from `GitLab` to `GitHub Actions`, cutting pipeline
   runtimes roughly in half. The cutover took one weekend; teams started

@@ -10,10 +10,13 @@ summary: Frontend work across four products, in the middle of the company-wide A
 - Frontend work across Contacts, Forms, Editor and Bookings during the
   company-wide migration from `AngularJS` to `React`. {#modernization}
 
-- Tech lead on Wix Forms, the first first-party app built on the Editor
-  platform SDK; its architecture became the reference for the first-party
-  apps that followed. {#forms}
+- Tech lead on Wix Forms, the first of the first-party apps built on the
+  Editor platform SDK; its architecture became the reference for those that
+  followed. {#forms}
 
 - Extracted the Editor's user authentication out of the monolith into a
   standalone module, code that runs under every editor-built site. Still one
   of my proudest projects. {#auth}
+
+- Extracted the Editor's user authentication out of the monolith into a
+  standalone module, code that runs under every editor-built site. {#authLean}

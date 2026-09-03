@@ -28,3 +28,7 @@ Node.js, React, GraphQL, RabbitMQ, Next.js, React Native, Astro
 ## stackCore
 
 typescripter, pythonista, agentic looper
+
+## stackCoreStaff
+
+client platforms, technical direction, agentic tooling

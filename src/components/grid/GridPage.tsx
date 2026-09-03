@@ -41,7 +41,7 @@ export function GridPage({ variant }: { variant: GridVariant }): ReactNode {
             labels, quieter than the contact line. */}
         {variant.stackPlacement === 'combined' && (
           <div className="g-mastack">
-            {splitChips(skills('stackCore')).map((t, i) => (
+            {splitChips(skills(variant.coreKey ?? 'stackCore')).map((t, i) => (
               <Fragment key={t}>
                 {i > 0 && <span className="g-msep">·</span>}
                 <span>{nbsp(t)}</span>

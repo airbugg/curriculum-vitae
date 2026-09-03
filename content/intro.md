@@ -5,8 +5,9 @@ single line at load time — the layout owns the wrapping, not this file.
 
 ## default
 
-A curious individual and a voracious reader with a somewhat philosophical
-approach to life. Twelve years of building whatever needed building: apps, services, release systems and the infrastructure underneath.
+Twelve years at Wix, Remitly and now an early-stage startup, building
+whatever needed building: apps, services, release systems and the
+infrastructure underneath.
 
 ## shell
 
@@ -17,12 +18,12 @@ infrastructure underneath.
 ## staff
 
 Twelve years of building products and the platforms beneath them, most
-recently as Staff Engineer running client infrastructure for three apps and
-roughly ten million monthly users. Leading through code, in writing and in
+recently as Staff Software Engineer running client infrastructure for three
+apps and roughly ten million monthly users. Leading through code, in writing and in
 review, in enterprise environments and in fast, lean startups.
 
 ## fullstack
 
-Twelve years of building products end to end: the clients, the services
-behind them and the infrastructure underneath. Equally at home in
+Twelve years of building products end to end: the services, the clients
+in front of them and the infrastructure underneath. Equally at home in
 enterprise environments and in fast, lean startups.

@@ -44,9 +44,10 @@ export function validate(variants: Variant[]): string[] {
             if (!hasTechIcon(chip)) errors.push(`${v.file}: ${missingIcon(chip)}`);
       }
       // The combined masthead subline reads this key outside stackRows.
-      if (v.stackPlacement === 'combined' && !skillKeys.includes('stackCore'))
+      const coreKey = v.coreKey ?? 'stackCore';
+      if (v.stackPlacement === 'combined' && !skillKeys.includes(coreKey))
         errors.push(
-          `${v.file}: stackPlacement 'combined' needs a 'stackCore' key in content/skills.md`,
+          `${v.file}: stackPlacement 'combined' needs a '${coreKey}' key in content/skills.md`,
         );
     }
   }
