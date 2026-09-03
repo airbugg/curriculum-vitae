@@ -21,15 +21,16 @@ exactly once):
 - `eugene-lerman-staff` — the staff/tech-lead cut: leadership-first
   bullets, Staff Software Engineer headline, publication traded for
   bullet space.
+- `eugene-lerman-staff-public` — the staff cut without phone and email.
 - `eugene-lerman-fullstack` — the screening cut: backend-first bullet
   selection. The separate tech-marks file was merged into this one
   (owner, 2026-09-03) once the marks became the family formatting.
 - `eugene-lerman-shell` — the whole CV as one terminal session.
 
 `.releaserc.json` attaches three of these to releases (default,
-fullstack, shell); `-public` and `-staff` ship in PR artifacts pending
-the owner's say-so, and README's download table matches the release
-list.
+fullstack, shell); the `-public`, `-staff` and `-staff-public` cuts ship
+in PR artifacts pending the owner's say-so, and README's download table
+matches the release list.
 
 Each must fit one A4 page; the build fails otherwise. The operational
 rules (byte-compare proofs, NBSP discipline, text-layer honesty, the

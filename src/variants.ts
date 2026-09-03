@@ -42,6 +42,20 @@ const SCREEN: Omit<GridVariant, 'file' | 'label'> = {
   ],
 };
 
+// The staff cut's shared shape, spread by its two files so it cannot fork.
+const STAFF: Omit<GridVariant, 'file' | 'label'> = {
+  ...SCREEN,
+  title: 'Staff Software Engineer',
+  omitPublication: true,
+  intro: intro('staff'),
+  sections: [
+    { job: 'rylo', bullets: ['rewrite', 'direction', 'agentSkills'] },
+    { job: 'remitlyStaff', bullets: ['lead', 'direction', 'llmPipeline'] },
+    { job: 'rewire', bullets: ['reactNative', 'workflowEngine'] },
+    { job: 'wix', bullets: ['forms', 'auth'] },
+  ],
+};
+
 export const variants: Variant[] = [
   // The canonical variant: the construction above with the generalist
   // bullet set and intro.
@@ -69,20 +83,20 @@ export const variants: Variant[] = [
   // Remitly, Dec 2022 – Feb 2026; owner decision, 2026-09-03 — per-role
   // titles stay exact). Every claim owner-confirmed in a structured
   // interview. The publication row is traded for bullet space (owner,
-  // 2026-09-03). Not attached to releases yet either.
+  // 2026-09-03). Neither file is attached to releases yet.
   {
-    ...SCREEN,
+    ...STAFF,
     file: 'eugene-lerman-staff',
     label: 'The Staff · leadership-first cut',
-    title: 'Staff Software Engineer',
-    omitPublication: true,
-    intro: intro('staff'),
-    sections: [
-      { job: 'rylo', bullets: ['rewrite', 'direction', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['lead', 'direction', 'llmPipeline'] },
-      { job: 'rewire', bullets: ['reactNative', 'workflowEngine'] },
-      { job: 'wix', bullets: ['forms', 'auth'] },
-    ],
+  },
+
+  // The staff cut again, without the direct contact channels: the copy to
+  // post in the open.
+  {
+    ...STAFF,
+    file: 'eugene-lerman-staff-public',
+    label: 'The Staff · public contact cut',
+    publicContact: true,
   },
 
   // The full-stack screening cut, exactly the base construction. The
