@@ -11,17 +11,24 @@ threads. Nothing there binds the present unless it is restated here.
 
 ## The build
 
-Four variants build from one content source (`content/`, every fact
+The variants build from one content source (`content/`, every fact
 exactly once):
 
 - `eugene-lerman` — the default: modernist grid, dense rhythm.
+- `eugene-lerman-public` — the default without phone and email, for
+  posting in the open.
+- `eugene-lerman-staff` — the staff/tech-lead cut: leadership-first
+  bullets on the screening construction, Staff Software Engineer
+  headline.
 - `eugene-lerman-fullstack` — the screening cut: same grid, backend-first
   bullet selection, `{ TECH }` + `{ BACKGROUND }` bottom zone.
 - `eugene-lerman-fullstack-icons` — the screening cut with brand marks on
-  the tech chips. Builds and ships in PR artifacts, but is not attached
-  to releases: `.releaserc.json` lists three PDFs, pending the owner's
-  verdict on the look.
+  the tech chips.
 - `eugene-lerman-shell` — the whole CV as one terminal session.
+
+`.releaserc.json` attaches three of these to releases (default,
+fullstack, shell); the rest ship in PR artifacts pending the owner's
+say-so, and README's download table matches the release list.
 
 Each must fit one A4 page; the build fails otherwise. The operational
 rules (byte-compare proofs, NBSP discipline, text-layer honesty, the
