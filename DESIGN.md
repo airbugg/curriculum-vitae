@@ -15,8 +15,8 @@ The variants build from one content source (`content/`, every fact
 exactly once):
 
 - `eugene-lerman` — the default: modernist grid, dense rhythm.
-- `eugene-lerman-public` — the default without phone and email, for
-  posting in the open.
+- `eugene-lerman-public` — the screening cut without phone and email,
+  for posting in the open.
 - `eugene-lerman-staff` — the staff/tech-lead cut: leadership-first
   bullets on the screening construction, Staff Software Engineer
   headline.
@@ -143,12 +143,13 @@ page bottom so the session ends the way a real terminal does, waiting.
   setting team practice.
 - **The public cut** omits phone and email (the direct channels) and
   keeps the profile links, so a name/contact pairing is never posted in
-  the open; everything else is the default cut, shared structurally.
-- **The staff cut's stack zone is identical to the full-stack cut's**
-  (owner decree, 2026-09-03): it shares the FULLSTACK base, so the trio
-  line and the { TECH } / { BACKGROUND } siblings cannot drift between
-  the two. Its publication row is traded for bullet space (owner-
-  authorized, same date).
+  the open; everything else is the full-stack cut, shared structurally.
+- **Every cut beside the default and the shell shares the full-stack
+  construction** (owner decree, 2026-09-03): public, staff and icons all
+  spread the FULLSTACK base, so the trio line and the { TECH } /
+  { BACKGROUND } siblings cannot drift across the family. The staff
+  cut's publication row is traded for bullet space (owner-authorized,
+  same date).
 - **Marks provenance**: official or campus-vetted sources only, recorded
   in-repo (`src/lib/logos.ts`, `assets/techicons/PROVENANCE.md`); the
   AWS icon is CC-BY-ND and is used verbatim. simple-icons is pinned

@@ -62,14 +62,16 @@ export const variants: Variant[] = [
     label: 'The Default · Modernist Grid',
   },
 
-  // The default again, without the direct contact channels: for posting in
-  // the open, where a name/phone/email combination invites scraping. Builds
-  // (and ships in PR artifacts) but is not attached to releases:
-  // .releaserc.json omits it pending the owner's say-so.
+  // The screening cut without the direct contact channels: for posting in
+  // the open, where a name/phone/email combination invites scraping. Owner
+  // decree (2026-09-03): the public, staff and icons cuts all share the
+  // full-stack construction. Builds (and ships in PR artifacts) but is not
+  // attached to releases: .releaserc.json omits it pending the owner's
+  // say-so.
   {
-    ...DEFAULT,
+    ...FULLSTACK,
     file: 'eugene-lerman-public',
-    label: 'The Default · public contact cut',
+    label: 'The Full-Stack · public contact cut',
     publicContact: true,
   },
 
