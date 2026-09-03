@@ -297,12 +297,12 @@ body.grid { color: var(--ink); font-family: var(--font-body); }
   color: var(--muted);
 }
 /* The university mark leads the education row the way employer marks
-   lead their entries. */
-/* vertical-align snaps to whole CSS px at print scale (the repo's known
-   quantization, see the secmark note); the sub-pixel centering rides on a
-   transform instead, which does not snap. */
+   lead their entries. No vertical-align anywhere here: print snaps it to
+   whole CSS px with a phase that varies by page height (the same -0.125mm
+   sat 1px lower on the taller cuts), so the sub-pixel centering rides
+   entirely on the transform, which does not snap. */
 .bgx-emark { display: inline-block; transform: translateY(0.09mm); }
-.bgx-emark svg, .bgx-emark img { height: 2.5mm; width: auto; vertical-align: -0.125mm; margin-left: 0.2mm; margin-right: 0.4mm; }
+.bgx-emark svg, .bgx-emark img { height: 2.5mm; width: auto; margin-left: 0.2mm; margin-right: 0.4mm; }
 
 /* Tech-chip brand marks: cap-height, glued to their word inside the
    chip span, brand hexes as shipped by simple-icons. */

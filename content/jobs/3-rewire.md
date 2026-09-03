@@ -30,4 +30,4 @@ summary: Core product work through the company's shift from a web app to mobile-
 - Designed a client/server workflow engine for financial flows (send money,
   deposit, re-auth): `XState` machine definitions stored server-side and
   served over an API I designed, so business-logic changes reached tens of
-  thousands of users in production without an app release. {#workflowEngine}
+  thousands of production users without a release. {#workflowEngine}
