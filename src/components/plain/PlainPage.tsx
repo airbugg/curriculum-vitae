@@ -37,7 +37,7 @@ const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 function PlainJob({ role: { job, bullets } }: { role: Role }): ReactNode {
   const dur = compactDur(duration(job.dates));
   return (
-    <div className="p-job">
+    <div className={bullets.length >= 4 ? 'p-job p-tall' : 'p-job'}>
       <div className="p-jobhead">
         {/* Role and company share one inline context: as separate flex
             items the space before the middot sat at the start of a line

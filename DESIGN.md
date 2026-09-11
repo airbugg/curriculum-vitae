@@ -141,7 +141,9 @@ page bottom so the session ends the way a real terminal does, waiting.
   Lokey, the GraphQL client layer and the semantic-keys migration.
   Interviewing is claimable as a regular Remitly duty (tens, not
   hundreds). Mentorship was real but informal: coaching through reviews
-  and onboarding, never counted promotions. The coding-agent setup is
+  and onboarding, never counted promotions. Lokey: the owner was its
+  sole architect and, for much of its existence, its sole developer
+  (owner, 2026-09-11) — claimable on every cut. The coding-agent setup is
   the owner's own that others opted into, so it is never framed as
   setting team practice.
 - **The public cut** omits phone and email (the direct channels) and

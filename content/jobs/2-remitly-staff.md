@@ -36,18 +36,25 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps
   migration. Reviewers accepted roughly 80% of suggestions unchanged. A
   tedious, error-prone process done in a week. {#llmPipeline}
 
+- Set client technical direction in writing: the design docs behind Lokey
+  (a service I architected and largely built alone), the `GraphQL` client
+  layer and the semantic-keys migration were each built on by teams beyond
+  my own. Ran technical interviews regularly, and mentored engineers
+  through reviews and onboarding. {#direction}
+
 - Set client technical direction in writing: the design docs behind Lokey,
-  the `GraphQL` client layer and the semantic-keys migration were each built
-  on by teams beyond my own. Ran technical interviews regularly, and
-  mentored engineers through reviews and onboarding. {#direction}
+  the `GraphQL` client layer and the semantic-keys migration were each
+  built on by teams beyond my own. Ran technical interviews regularly, and
+  mentored engineers through reviews and onboarding. {#directionLean}
 
 - Led the Client Infrastructure team behind three products and ~10M monthly
   users: drove cross-team initiatives across roughly five teams, and built
   and ran the shared app infrastructure, the `Apollo GraphQL` layer with
   generated types and an offline-first storage engine on `MMKV`. {#leadStaff}
 
-- Designed and shipped Lokey, the localization service behind the apps:
-  dynamic translation delivery with hotfixes scoped to app versions in
-  production, and PR automation that updates `Lokalise`, opens translation
-  jobs and notifies the translators. A translation fix used to mean a full
-  release; it became editing a string. {#l10nService}
+- Sole architect of Lokey, the localization service behind the apps, and
+  for much of its life its only developer: dynamic translation delivery
+  with hotfixes scoped to app versions in production, and PR automation
+  that updates `Lokalise`, opens translation jobs and notifies the
+  translators. A translation fix used to mean a full release; it became
+  editing a string. {#l10nService}

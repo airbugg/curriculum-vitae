@@ -88,6 +88,13 @@ h2 {
 /* ---- jobs ---- */
 .p-job { margin-bottom: 6mm; break-inside: avoid; }
 .p-job:last-child { margin-bottom: 0; }
+/* A four-bullet block outgrows any page remainder: forcing it whole
+   would strand half a page of white. It may split between bullets;
+   the pieces below keep every line-group intact. */
+.p-tall { break-inside: auto; }
+.p-jobhead, .p-summary { break-after: avoid; }
+.p-bullets li { break-inside: avoid; }
+.p-tech { break-before: avoid; }
 .p-jobhead { display: flex; align-items: baseline; }
 .p-headline { font-size: var(--fs-head); line-height: 1.25; }
 .p-role { font-weight: 600; color: var(--ink-strong); }

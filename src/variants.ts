@@ -154,8 +154,13 @@ export const variants: Variant[] = [
     intro: intro('staff'),
     sections: [
       { job: 'rylo', bullets: ['direction', 'rewrite', 'agentSkills'] },
-      { job: 'remitlyStaff', bullets: ['leadStaff', 'direction', 'llmPipeline'] },
-      { job: 'rewire', bullets: ['reactNative', 'workflowEngine', 'secondAuth'] },
+      // direction prints its lean twin here: the full Lokey bullet is on
+      // this page, so the parenthetical would say it twice.
+      {
+        job: 'remitlyStaff',
+        bullets: ['leadStaff', 'directionLean', 'l10nService', 'llmPipeline'],
+      },
+      { job: 'rewire', bullets: ['workflowEngine'] },
       { job: 'wix', bullets: ['forms', 'authLean'] },
     ],
   },
