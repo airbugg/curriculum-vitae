@@ -50,6 +50,10 @@ export function validate(variants: Variant[]): string[] {
           `${v.file}: stackPlacement 'combined' needs a '${coreKey}' key in content/skills.md`,
         );
     }
+    if (v.theme === 'plain')
+      for (const [, key] of v.skillsRows)
+        if (!skillKeys.includes(key))
+          errors.push(`${v.file}: no '${key}' key in content/skills.md`);
   }
   return errors;
 }

@@ -5,6 +5,7 @@ blurb:  communication platform for the Deaf and hard-of-hearing
 role: Software Engineer
 location: Tel Aviv
 dates: Feb 2026 – Present
+tech: TypeScript, React Native, Expo, Swift, Kotlin, XState, Bun, GitHub Actions, Figma API, Claude Code, Codex, Cursor
 summary: Building out the client platform, release engineering and complex product flows of a ground-up app rewrite.
 ---
 

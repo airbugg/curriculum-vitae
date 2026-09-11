@@ -34,6 +34,7 @@ const CODE_PRO_REGULAR: FontFace[] = CODE_PRO.filter(([, , weight]) => weight ==
 const THEME_FONTS: Record<Theme, FontFace[][]> = {
   grid: [SOURCE_SANS, CODE_PRO_REGULAR], // sans content + mono data column
   terminal: [CODE_PRO], // shell — genuinely uses all four mono weights
+  plain: [SOURCE_SANS, CODE_PRO_REGULAR], // ATS cut: sans, mono for data accents
 };
 
 export function fontFaces(theme: Theme): string {

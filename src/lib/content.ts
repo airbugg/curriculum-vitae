@@ -131,6 +131,7 @@ function loadJobs(): Record<string, Job> {
           dates: 'required',
           blurb: 'optional',
           summary: 'optional',
+          tech: 'optional',
         }),
         bullets: parseBullets(body),
       };

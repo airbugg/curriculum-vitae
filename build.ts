@@ -158,7 +158,10 @@ for (const v of variants) {
     author: person.name,
     subject: 'Curriculum Vitae',
   });
-  const ok = pages === 1;
+  // One page unless the variant says otherwise (the ATS cut runs to two:
+  // the Israeli senior norm — see DESIGN.md).
+  const maxPages = 'maxPages' in v && v.maxPages ? v.maxPages : 1;
+  const ok = pages <= maxPages;
   if (!ok) failed = true;
   console.log(
     `${ok ? '✓' : '✗'} ${v.file}.pdf — ${pages} page(s) [${v.label}]` +

@@ -32,3 +32,7 @@ typescripter, pythonista, agentic looper
 ## stackCoreStaff
 
 client platforms, technical direction, agentic tooling
+
+## stackAI
+
+Production LLM pipelines with human-in-the-loop review; agentic coding workflows (Claude Code, Codex, Cursor, agents in CI); context engineering (measured ~70k-token reduction); model gateways

@@ -2,7 +2,7 @@
 // the stylesheet, the font sets and the layout — see entry.tsx, lib/fonts.ts
 // and the dispatch in components/CVPage.tsx.
 import { intro } from './lib/content.ts';
-import type { GridVariant, Section, Variant } from './types.ts';
+import type { GridVariant, PlainVariant, Section, Variant } from './types.ts';
 
 // Content parity between the default and the shell is an owner decree: same
 // bullet set, same summaries — the shell's terminal look does the calming,
@@ -57,6 +57,23 @@ const STAFF: Omit<GridVariant, 'file' | 'label'> = {
   ],
 };
 
+// The ATS cuts' shared shape: the screening bullet selection on the plain
+// linear theme, with the labeled skills lines Israeli keyword screens
+// expect. Spread by both files so they cannot fork.
+const ATS: Omit<PlainVariant, 'file' | 'label'> = {
+  theme: 'plain',
+  maxPages: 2,
+  intro: intro('fullstack'),
+  sections: SCREEN.sections,
+  skillsRows: [
+    ['Languages', 'stackLanguages'],
+    ['Backend', 'stackBackend'],
+    ['Frontend & Mobile', 'stackFrontend'],
+    ['Infrastructure & CI', 'stackInfra'],
+    ['AI & LLM', 'stackAI'],
+  ],
+};
+
 export const variants: Variant[] = [
   // The canonical variant: the construction above with the generalist
   // bullet set and intro.
@@ -107,6 +124,28 @@ export const variants: Variant[] = [
     ...SCREEN,
     file: 'eugene-lerman-fullstack',
     label: 'The Full-Stack · backend-first cut',
+  },
+
+  // The ATS twins (owner, 2026-09-11): the same screening content on the
+  // plain single-column theme, for application portals — Israeli screens
+  // keyword-match a linear page, and the designed cuts' grid and chips
+  // under-score there (research in the branch history). Two pages allowed:
+  // the market norm at this seniority. The per-role Technologies lines
+  // come from job frontmatter; the AI row is the one place the 2026
+  // screener dialect for the owner's confirmed LLM work lives.
+  {
+    ...ATS,
+    file: 'eugene-lerman-ats',
+    label: 'The ATS · plain screening cut',
+  },
+
+  {
+    ...ATS,
+    file: 'eugene-lerman-ats-staff',
+    label: 'The ATS · staff screening cut',
+    title: 'Staff Software Engineer',
+    intro: intro('staff'),
+    sections: STAFF.sections,
   },
 
   // The whole CV as one terminal session; commands are the structure.

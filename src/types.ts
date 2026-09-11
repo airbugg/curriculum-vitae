@@ -25,6 +25,9 @@ export interface Job {
   dates: string;
   blurb?: string;
   summary?: string;
+  /** Comma-separated per-role technology list — the ATS cut's
+   * "Technologies:" line; other themes ignore it. */
+  tech?: string;
   /** Bullet text keyed by the {#id} anchors in the job file. */
   bullets: Record<string, string>;
 }
@@ -65,7 +68,7 @@ export interface Role {
   bullets: Bullet[];
 }
 
-export type Theme = 'grid' | 'terminal';
+export type Theme = 'grid' | 'terminal' | 'plain';
 
 /** One BACKGROUND STACK sub-row: a label and a key into content/skills.md. */
 export type StackRow = [label: string, skillsKey: string];
@@ -112,5 +115,15 @@ export interface TerminalVariant extends VariantBase {
   theme: 'terminal';
 }
 
+/** The ATS cut — src/themes/plain.css: one linear column, standard
+ * headings, no chips or icons, built for keyword screens. */
+export interface PlainVariant extends VariantBase {
+  theme: 'plain';
+  /** Pages this cut may run to (Israeli senior norm: two). */
+  maxPages: number;
+  /** Labeled skills lines, rendered as the SKILLS section. */
+  skillsRows: StackRow[];
+}
+
 /** Picking a theme picks a stylesheet, a font set, a layout — and a prop set. */
-export type Variant = GridVariant | TerminalVariant;
+export type Variant = GridVariant | TerminalVariant | PlainVariant;

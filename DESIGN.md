@@ -26,13 +26,17 @@ exactly once):
   selection. The separate tech-marks file was merged into this one
   (owner, 2026-09-03) once the marks became the family formatting.
 - `eugene-lerman-shell` — the whole CV as one terminal session.
+- `eugene-lerman-ats` / `eugene-lerman-ats-staff` — the plain screening
+  twins: one linear column on the `plain` theme, up to two pages, for
+  application portals.
 
 `.releaserc.json` attaches three of these to releases (default,
 fullstack, shell); the `-public`, `-staff` and `-staff-public` cuts ship
 in PR artifacts pending the owner's say-so, and README's download table
 matches the release list.
 
-Each must fit one A4 page; the build fails otherwise. The operational
+Each must fit one A4 page — except the ATS twins, allowed two
+(`maxPages`); the build fails past a cut's limit. The operational
 rules (byte-compare proofs, NBSP discipline, text-layer honesty, the
 TypeScript constraints) live in CLAUDE.md, which every session loads.
 
@@ -156,6 +160,19 @@ page bottom so the session ends the way a real terminal does, waiting.
   Python/Ruby evidence, exact counts (Lokey locales, semantic-keys
   strings, the five teams), and whether the fullstack headline stays
   Senior.
+- **The ATS twins** (owner, 2026-09-11): Israeli screening pipelines
+  keyword-match a linear page (Comeet/Greenhouse/HunterAI research in
+  the branch history), and the designed grid under-scores there — grids
+  scramble extraction order and icon chips do not get read. So portal
+  submissions use the plain cuts: single column, standard headings,
+  per-role Technologies lines from job frontmatter (`tech:`), labeled
+  skills rows including the AI & LLM row (the 2026 screener dialect for
+  the owner's confirmed LLM work, `stackAI`), two pages allowed (the
+  market norm at this seniority; `maxPages`). The designed cuts remain
+  the human-facing artifacts — referrals, hiring managers, the repo
+  itself. Gate tokens still awaiting owner confirmation before they may
+  appear anywhere: named observability tooling, "microservices",
+  concrete scale numbers, the Lokey/pipeline runtime languages.
 - **One grid construction for the whole family** (owner decree,
   2026-09-03): every grid cut spreads the SCREEN base — the icon-marked
   screening formatting — overriding content only, so the formatting

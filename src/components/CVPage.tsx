@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { person } from '../lib/content.ts';
 import type { Variant } from '../types.ts';
 import { GridPage } from './grid/GridPage.tsx';
+import { PlainPage } from './plain/PlainPage.tsx';
 import { TerminalPage } from './terminal/TerminalPage.tsx';
 
 // The <body> classes are each theme's CSS entry point: the theme name selects
@@ -15,6 +16,8 @@ export function CVPage({ variant, css }: { variant: Variant; css: string }): Rea
   const body =
     variant.theme === 'terminal' ? (
       <TerminalPage variant={variant} />
+    ) : variant.theme === 'plain' ? (
+      <PlainPage variant={variant} />
     ) : (
       <GridPage variant={variant} />
     );
