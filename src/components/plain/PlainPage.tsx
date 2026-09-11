@@ -9,23 +9,35 @@ import { education, person, publication, skills, splitChips } from '../../lib/co
 import { compactDur, duration } from '../../lib/dates.ts';
 import { resolve } from '../../lib/experience.ts';
 import type { PlainVariant, Role } from '../../types.ts';
-import { Contact, contacts } from '../shared/Contact.tsx';
+import { Contact, type ContactItem, contacts } from '../shared/Contact.tsx';
 import { Rich } from '../shared/Rich.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
+
+/** Location and direct channels on one line, https profile links on the
+ * next; a group that comes up empty (the public cut) drops its line. */
+function splitContacts(items: ContactItem[]): ContactItem[][] {
+  const profile = (c: ContactItem) => c.href?.startsWith('https://');
+  return [items.filter((c) => !profile(c)), items.filter(profile)].filter((l) => l.length > 0);
+}
 
 function PlainJob({ role: { job, bullets } }: { role: Role }): ReactNode {
   const dur = compactDur(duration(job.dates));
   return (
     <div className="p-job">
       <div className="p-jobhead">
-        <span className="p-role">{job.role}</span>
-        <span className="p-co">
-          {' · '}
-          {job.company}, {job.location}
+        {/* Role and company share one inline context: as separate flex
+            items the space before the middot sat at the start of a line
+            box and collapsed away ("Engineer· Rylo"). */}
+        <span className="p-headline">
+          <span className="p-role">{job.role}</span>
+          <span className="p-co">
+            {' '}
+            · {job.company}, {job.location}
+          </span>
         </span>
         <span className="p-dates">
           {job.dates}
-          {dur ? ` (${dur})` : ''}
+          {dur && <span className="p-dur"> ({dur})</span>}
         </span>
       </div>
       {job.summary && (
@@ -56,14 +68,19 @@ export function PlainPage({ variant }: { variant: PlainVariant }): ReactNode {
       <header className="p-header">
         <h1>{person.name}</h1>
         <div className="p-title">{variant.title ?? person.title}</div>
-        <div className="p-contact">
-          {contacts(variant.publicContact).map((c, i) => (
-            <Fragment key={c.text}>
-              {i > 0 && <span className="p-sep">·</span>}
-              <Contact item={c} />
-            </Fragment>
-          ))}
-        </div>
+        {/* The full run outgrows the measure, so the split is deliberate:
+            direct channels on one line, profile links on the next — never
+            a mid-item break or a dangling separator. */}
+        {splitContacts(contacts(variant.publicContact)).map((line) => (
+          <div className="p-contact" key={line[0]?.text}>
+            {line.map((c, i) => (
+              <Fragment key={c.text}>
+                {i > 0 && <span className="p-sep"> · </span>}
+                <Contact item={c} />
+              </Fragment>
+            ))}
+          </div>
+        ))}
       </header>
 
       <p className="p-intro">

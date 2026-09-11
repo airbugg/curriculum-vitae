@@ -3,10 +3,10 @@
    Built for the Israeli screening pipeline: single column so parsers keep
    reading order, standard headings, every keyword as plain text. The
    beauty lives in the typography alone: one family (Source Sans), a
-   strict size scale, generous leading and margins, mono reserved for
-   dates. May run to two pages (variant maxPages; the norm for seniors in
-   this market) — pagination margins come from @page, not the container,
-   so page two keeps its frame.
+   strict modular scale (1.2 ratio on an 11pt base: 9.2 / 11 / 13.2 / 19),
+   generous leading and margins, mono reserved for dates. Two pages (the
+   norm for seniors in this market); pagination margins come from @page,
+   not the container, so page two keeps its frame.
    ======================================================================= */
 :root {
   --font-body: 'Source Sans Pro', sans-serif;
@@ -14,96 +14,115 @@
   --ink: #1d2229;
   --ink-strong: #0f1317;
   --muted: #5f6873;
+  --faint: #7d858f;   /* parentheticals only (durations) — never body facts */
   --accent: #00735f;
-  --rule: #d7dde2;
-  --fs: 9.5pt;
+  --rule: #c9d0d7;
+  /* The scale. Everything on the page is one of these four sizes. */
+  --fs-meta: 9.2pt;
+  --fs: 11pt;         /* base body — picked up by base.css */
+  --fs-head: 13.2pt;
+  --fs-name: 19pt;
 }
 
-/* The plain page paginates: margins belong to the printed page itself. */
-@page { size: A4; margin: 15mm 18mm 16mm; }
+/* The plain page paginates: margins belong to the printed page itself.
+   26mm sides put a full body line at ~95 characters at 11pt. */
+@page { size: A4; margin: 16mm 26mm 18mm; }
 
 body.plain { color: var(--ink); font-family: var(--font-body); }
-.plain-page { width: 174mm; }
+.plain-page { width: 158mm; }
 
 /* ---- header ---- */
 .p-header h1 {
   margin: 0;
-  font-size: 20pt;
+  font-size: var(--fs-name);
   font-weight: 600;
   letter-spacing: 0.2pt;
   color: var(--ink-strong);
-  line-height: 1.1;
+  line-height: 1.05;
 }
 .p-title {
-  margin-top: 1.4mm;
-  font-size: 10.5pt;
+  margin-top: 1.6mm;
+  font-size: var(--fs-head);
   font-weight: 400;
   color: var(--accent);
   letter-spacing: 0.3pt;
 }
 .p-contact {
-  margin-top: 1.6mm;
-  font-size: 8.5pt;
+  font-size: var(--fs-meta);
   color: var(--muted);
+  line-height: 1.5;
 }
-.p-contact .p-sep { margin: 0 1.6mm; color: var(--rule); }
+.p-title + .p-contact { margin-top: 2mm; }
+/* A contact item never breaks inside itself. */
+.p-contact a { white-space: nowrap; }
+.p-contact .p-sep { color: var(--faint); }
 
 /* ---- intro ---- */
 .p-intro {
-  margin: 4.5mm 0 0;
-  font-size: 9.8pt;
+  margin: 5mm 0 0;
   line-height: 1.45;
-  max-width: 165mm;
 }
 
+/* No single-word last lines anywhere prose wraps; summaries are
+   subtitles, so a wrapped one balances into even lines instead. */
+.p-intro, .p-bullets li, .p-tech, .p-skillrow, .p-edu {
+  text-wrap: pretty;
+}
+.p-summary { text-wrap: balance; }
+
 /* ---- sections ---- */
-section { margin-top: 5.5mm; }
+section { margin-top: 8mm; }
 h2 {
   margin: 0 0 2.6mm;
-  padding-bottom: 1.1mm;
-  border-bottom: 0.6pt solid var(--rule);
-  font-size: 9pt;
+  padding-bottom: 1mm;
+  border-bottom: 0.7pt solid var(--rule);
+  font-size: var(--fs);
   font-weight: 600;
-  letter-spacing: 1.6pt;
+  letter-spacing: 1.2pt;
   text-transform: uppercase;
   color: var(--ink-strong);
+  line-height: 1.2;
+  break-after: avoid;
 }
 
 /* ---- jobs ---- */
-.p-job { margin-bottom: 4.4mm; break-inside: avoid; }
+.p-job { margin-bottom: 6mm; break-inside: avoid; }
 .p-job:last-child { margin-bottom: 0; }
 .p-jobhead { display: flex; align-items: baseline; }
-.p-role { font-size: 10.2pt; font-weight: 700; color: var(--ink-strong); }
-.p-co { font-size: 10.2pt; color: var(--ink); }
+.p-headline { font-size: var(--fs-head); line-height: 1.25; }
+.p-role { font-weight: 600; color: var(--ink-strong); }
+.p-co { color: var(--ink); }
 .p-dates {
   margin-left: auto;
+  padding-left: 4mm;
   font-family: var(--font-data);
-  font-size: 8pt;
+  font-size: var(--fs-meta);
   color: var(--muted);
   letter-spacing: -0.2pt;
+  white-space: nowrap;
 }
+.p-dur { color: var(--faint); }
 .p-summary {
-  margin: 0.9mm 0 0;
-  font-size: 9.2pt;
+  margin: 1mm 0 0;
   font-style: italic;
   color: var(--muted);
   line-height: 1.4;
 }
-.p-bullets { margin: 1.4mm 0 0; padding-left: 4.6mm; }
-.p-bullets li { margin-bottom: 0.9mm; line-height: 1.42; }
+.p-bullets { margin: 1.6mm 0 0; padding-left: 5mm; }
+.p-bullets li { margin-bottom: 1.1mm; line-height: 1.45; }
 .p-bullets li::marker { color: var(--accent); }
 .p-bullets code { font-family: var(--font-body); font-size: inherit; }
 .p-tech {
-  margin: 1.2mm 0 0;
-  font-size: 8.7pt;
+  margin: 1.6mm 0 0;
+  font-size: var(--fs-meta);
   color: var(--muted);
   line-height: 1.4;
 }
 .p-techlabel, .p-skilllabel { font-weight: 600; color: var(--ink); }
 
 /* ---- skills ---- */
-.p-skillrow { margin: 0 0 1.3mm; line-height: 1.45; }
+.p-skillrow { margin: 0 0 1.8mm; line-height: 1.45; }
 
 /* ---- education / languages ---- */
-.p-edu, .p-langs { margin: 0 0 1.2mm; line-height: 1.45; }
+.p-edu, .p-langs { margin: 0 0 1.4mm; line-height: 1.45; }
 .p-strong { font-weight: 700; color: var(--ink-strong); }
