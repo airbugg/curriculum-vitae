@@ -10,7 +10,6 @@ import { compactDur, duration } from '../../lib/dates.ts';
 import { resolve } from '../../lib/experience.ts';
 import type { PlainVariant, Role } from '../../types.ts';
 import { Contact, type ContactItem, contacts } from '../shared/Contact.tsx';
-import { Rich } from '../shared/Rich.tsx';
 import { NoBreakCompounds } from '../shared/typography.tsx';
 
 /** Location and direct channels on one line, https profile links on the
@@ -19,6 +18,21 @@ function splitContacts(items: ContactItem[]): ContactItem[][] {
   const profile = (c: ContactItem) => c.href?.startsWith('https://');
   return [items.filter((c) => !profile(c)), items.filter(profile)].filter((l) => l.length > 0);
 }
+
+/** Rich plus rag control: backtick chips stay chips, and hyphenated
+ * compounds in prose never wrap at the hyphen — Poppler-class extractors
+ * dehyphenate line-end breaks ("cross-\nteam" reads back as "crossteam"),
+ * which costs the exact keyword a screener greps for. Plain-theme only;
+ * the grid pages are pixel-tuned around Rich as it is. */
+function RichNoBreak({ text }: { text: string }): ReactNode {
+  return text
+    .split('`')
+    .map((part, i) =>
+      i % 2 ? <code key={i}>{part}</code> : <NoBreakCompounds key={i} text={part} />,
+    );
+}
+
+const cap = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
 
 function PlainJob({ role: { job, bullets } }: { role: Role }): ReactNode {
   const dur = compactDur(duration(job.dates));
@@ -40,15 +54,16 @@ function PlainJob({ role: { job, bullets } }: { role: Role }): ReactNode {
           {dur && <span className="p-dur"> ({dur})</span>}
         </span>
       </div>
-      {job.summary && (
+      {(job.blurb || job.summary) && (
         <p className="p-summary">
-          <NoBreakCompounds text={job.summary} />
+          {job.blurb && `${cap(job.blurb)}. `}
+          {job.summary && <NoBreakCompounds text={job.summary} />}
         </p>
       )}
       <ul className="p-bullets">
         {bullets.map(({ id, text }) => (
           <li key={id}>
-            <Rich text={text} />
+            <RichNoBreak text={text} />
           </li>
         ))}
       </ul>

@@ -22,6 +22,13 @@ recently as Staff Software Engineer running client infrastructure for three
 apps and roughly ten million monthly users. Leading through code, in writing and in
 review, in enterprise environments and in fast, lean startups.
 
+## ats
+
+Twelve years of building products end to end, much of it in fintech at
+scale: the services, the clients in front of them and the infrastructure
+underneath. Equally at home in enterprise environments and in fast, lean
+startups.
+
 ## fullstack
 
 Twelve years of building products end to end: the services, the clients

@@ -63,8 +63,15 @@ const STAFF: Omit<GridVariant, 'file' | 'label'> = {
 const ATS: Omit<PlainVariant, 'file' | 'label'> = {
   theme: 'plain',
   maxPages: 2,
-  intro: intro('fullstack'),
-  sections: SCREEN.sections,
+  intro: intro('ats'),
+  // The screening selection plus the second-auth bullet: the two-page
+  // allowance has the room, and it is the page's one security-domain story.
+  sections: [
+    { job: 'rylo', bullets: ['release', 'rewrite', 'agentSkills'] },
+    { job: 'remitlyStaff', bullets: ['llmPipeline', 'lead', 'l10nService'] },
+    { job: 'rewire', bullets: ['workflowEngine', 'ci', 'secondAuth'] },
+    { job: 'wix', bullets: ['forms', 'authLean'] },
+  ],
   skillsRows: [
     ['Languages', 'stackLanguages'],
     ['Backend', 'stackBackend'],
@@ -145,7 +152,12 @@ export const variants: Variant[] = [
     label: 'The ATS · staff screening cut',
     title: 'Staff Software Engineer',
     intro: intro('staff'),
-    sections: STAFF.sections,
+    sections: [
+      { job: 'rylo', bullets: ['direction', 'rewrite', 'agentSkills'] },
+      { job: 'remitlyStaff', bullets: ['leadStaff', 'direction', 'llmPipeline'] },
+      { job: 'rewire', bullets: ['reactNative', 'workflowEngine', 'secondAuth'] },
+      { job: 'wix', bullets: ['forms', 'authLean'] },
+    ],
   },
 
   // The whole CV as one terminal session; commands are the structure.
