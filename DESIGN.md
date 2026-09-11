@@ -143,7 +143,13 @@ page bottom so the session ends the way a real terminal does, waiting.
   hundreds). Mentorship was real but informal: coaching through reviews
   and onboarding, never counted promotions. Lokey: the owner was its
   sole architect and, for much of its existence, its sole developer
-  (owner, 2026-09-11) — claimable on every cut. The coding-agent setup is
+  (owner, 2026-09-11) — claimable on every cut. Tech-stack round
+  (owner-confirmed, 2026-09-11): REST APIs, event-driven messaging and
+  microservices are defensible concept claims; Redis, MongoDB, DynamoDB
+  and SQLite were used in production work; Datadog, Grafana, Prometheus
+  and Sentry were genuinely lived in — all global skills-row claims, not
+  bound to a role. Lokey and the LLM pipeline ran on Node.js/TypeScript
+  (role-bound, printed in the Remitly line and the Lokey bullet). The coding-agent setup is
   the owner's own that others opted into, so it is never framed as
   setting team practice.
 - **The public cut** omits phone and email (the direct channels) and

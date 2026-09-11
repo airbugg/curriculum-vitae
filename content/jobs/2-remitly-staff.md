@@ -5,7 +5,7 @@ blurb: global remittances (acquired Rewire in 2022)
 role: Staff Software Engineer
 location: Tel Aviv
 dates: Dec 2022 – Feb 2026
-tech: TypeScript, React Native, Apollo GraphQL, MMKV, LLM pipelines, Lokalise, CI/CD
+tech: TypeScript, Node.js, React Native, Apollo GraphQL, MMKV, LLM pipelines, Lokalise, CI/CD
 summary: Client infrastructure lead for Circle, Rewire and Remitly apps
 ---
 
@@ -52,8 +52,8 @@ summary: Client infrastructure lead for Circle, Rewire and Remitly apps
   and ran the shared app infrastructure, the `Apollo GraphQL` layer with
   generated types and an offline-first storage engine on `MMKV`. {#leadStaff}
 
-- Sole architect of Lokey, the localization service behind the apps, and
-  for much of its life its only developer: dynamic translation delivery
+- Sole architect of Lokey, the `Node.js` localization service behind the
+  apps, and for much of its life its only developer: dynamic translation delivery
   with hotfixes scoped to app versions in production, and PR automation
   that updates `Lokalise`, opens translation jobs and notifies the
   translators. A translation fix used to mean a full release; it became

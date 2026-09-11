@@ -120,7 +120,7 @@ export function PlainPage({ variant }: { variant: PlainVariant }): ReactNode {
       </section>
 
       <section>
-        <h2>Education</h2>
+        <h2>Education & Languages</h2>
         <p className="p-edu">
           <span className="p-strong">{education.degree}</span> — {education.school}, {eduYears}
         </p>
@@ -128,11 +128,8 @@ export function PlainPage({ variant }: { variant: PlainVariant }): ReactNode {
           <span className="p-skilllabel">Publication: </span>
           <a href={publication.url}>{pubTitle}</a> — {publication.journal}, {publication.year}
         </p>
-      </section>
-
-      <section>
-        <h2>Languages</h2>
         <p className="p-langs">
+          <span className="p-skilllabel">Languages: </span>
           {langPairs.map(([k, v], i) => (
             <Fragment key={k}>
               {i > 0 && ' · '}

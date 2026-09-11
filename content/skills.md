@@ -11,7 +11,15 @@ TypeScript, React, React Native, Angular, Swift/Kotlin
 
 ## stackBackend
 
-Node.js, Python, Ruby, MySQL, PostgreSQL, GraphQL, RabbitMQ, Astro, Next.js
+Node.js, REST APIs, GraphQL, microservices, event-driven messaging (RabbitMQ), Python, Ruby, Astro, Next.js
+
+## stackData
+
+SQL (PostgreSQL, MySQL), Redis, MongoDB, DynamoDB, SQLite
+
+## stackInfraObs
+
+AWS, Kubernetes, Terraform, GitHub Actions, GitLab CI, Cloudflare, Datadog, Grafana, Prometheus, Sentry
 
 ## stackInfra
 

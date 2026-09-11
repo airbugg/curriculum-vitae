@@ -73,10 +73,10 @@ const ATS: Omit<PlainVariant, 'file' | 'label'> = {
     { job: 'wix', bullets: ['forms', 'authLean'] },
   ],
   skillsRows: [
-    ['Languages', 'stackLanguages'],
-    ['Backend', 'stackBackend'],
+    ['Backend & APIs', 'stackBackend'],
+    ['Databases', 'stackData'],
     ['Frontend & Mobile', 'stackFrontend'],
-    ['Infrastructure & CI', 'stackInfra'],
+    ['Infrastructure & Observability', 'stackInfraObs'],
     ['AI & LLM', 'stackAI'],
   ],
 };
